@@ -9,7 +9,7 @@ export default function Home() {
 
   return (
     <div>
-      <Text>{isConnected && `Your address is ${address}`}</Text>
+      <Text fontSize='20px'>{isConnected && `Your address is ${address}`}</Text>
       {isConnected === undefined ? (
         <Spinner />
       ) : isConnected ? (
