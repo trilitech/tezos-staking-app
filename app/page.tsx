@@ -1,16 +1,21 @@
 'use client'
-import { Button } from '@chakra-ui/react'
+import { Spinner } from '@chakra-ui/react'
 import { useConnection } from '@/components/ConnectionProvider'
+import { ConnectButton } from '@/components/ConnectButton'
+import { DisconnectButton } from '@/components/DisconnectButton'
 
 export default function Home() {
-  const { address, connect } = useConnection()
+  const { address, isConnected } = useConnection()
 
   return (
     <div>
-      {address ? (
-        `You're connected: ${address}`
+      {isConnected && `Your address is ${address}`}
+      {isConnected === undefined ? (
+        <Spinner />
+      ) : isConnected ? (
+        <DisconnectButton />
       ) : (
-        <Button onClick={() => connect('beacon')}>Connect</Button>
+        <ConnectButton />
       )}
     </div>
   )

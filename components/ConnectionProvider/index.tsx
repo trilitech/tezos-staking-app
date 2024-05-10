@@ -1,47 +1,64 @@
-'use client'
-import { Context, createContext, useContext, useState } from 'react'
+import { Context, createContext, useContext, useState, useEffect } from 'react'
 import { connectBeacon } from './beacon'
-import { WalletApi, WalletConnection } from './types'
-
+import { WalletApi } from './types'
+import { createBeaconWallet } from './beacon'
 interface ConnectionContextType extends Partial<WalletApi> {
-  connect: () => Promise<WalletConnection>
+  connect: () => Promise<void>
+  disconnect: () => Promise<void>
+  isConnected: boolean | undefined
 }
 
 const ConnectionContext = createContext<ConnectionContextType | null>(null)
 
 export const ConnectionProvider = ({ children }: { children: any }) => {
-  const [wallet, setWallet] = useState<WalletApi | undefined>()
+  const [address, setAddress] = useState<string | undefined>()
+  const [isConnected, setIsConnected] = useState<boolean | undefined>(undefined)
+  const wallet = createBeaconWallet()
 
-  const onInitialConnectionComplete = async (
-    wallet: WalletApi
-  ): Promise<WalletConnection> => {
-    setWallet(wallet)
-    const { connection, address } = wallet
-    return { ...connection, address }
-  }
+  // check if connected to a wallet when refresh
+  useEffect(() => {
+    const checkIsConnected = async () => {
+      const activeAccount = await wallet?.client.getActiveAccount()
+      return activeAccount
+    }
 
-  const disconnect = async function () {
-    setWallet(undefined)
+    checkIsConnected()
+      .then(activeAccount => {
+        setIsConnected(activeAccount ? true : false)
+        setAddress(activeAccount?.address)
+      })
+      .catch(error => {
+        console.error('Error:', error)
+      })
+  }, [isConnected, address])
+
+  const clearAddress = async function () {
+    setAddress(undefined)
   }
 
   return (
     <ConnectionContext.Provider
       value={{
         connect: async () => {
-          return await connectBeacon(true, {})
-            .then(onInitialConnectionComplete)
+          return await connectBeacon()
+            .then(({ address }) => {
+              setAddress(address)
+              setIsConnected(true)
+            })
             .catch(() => {
-              void disconnect()
+              void clearAddress()
               throw new Error(
                 'Error connecting to wallet, please try again later'
               )
             })
         },
-        ...wallet,
         disconnect: async () => {
-          await disconnect()
-          await wallet?.disconnect()
-        }
+          await wallet?.clearActiveAccount()
+          setAddress(undefined)
+          setIsConnected(false)
+        },
+        address,
+        isConnected
       }}
     >
       {children}
