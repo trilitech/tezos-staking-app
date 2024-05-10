@@ -13,12 +13,12 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "framer-motion": "^11.1.9",
-    "next": "14.2.3",
+    "next": "13.5.6",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "20.10.0",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
@@ -33,5 +33,6 @@
     "jsxSingleQuote": true,
     "arrowParens": "avoid",
     "semi": false
-  }
+  },
+  "packageManager": "yarn@4.2.2"
 }
