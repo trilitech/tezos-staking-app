@@ -12,9 +12,15 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@taquito/beacon-wallet": "^19.2.0",
+    "@taquito/taquito": "^19.2.0",
+    "encoding": "^0.1.13",
     "framer-motion": "^11.1.9",
-    "next": "14.2.3",
+    "kukai-embed": "^0.9.0",
+    "next": "13.5.6",
+    "pino-pretty": "^11.0.0",
     "react": "^18",
+    "react-cookie": "^7.1.4",
     "react-dom": "^18"
   },
   "devDependencies": {
