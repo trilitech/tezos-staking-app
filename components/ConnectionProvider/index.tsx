@@ -11,7 +11,7 @@ interface ConnectionContextType extends Partial<WalletApi> {
 const ConnectionContext = createContext<ConnectionContextType | null>(null)
 
 export const ConnectionProvider = ({ children }: { children: any }) => {
-  const [address, setAddress] = useState<string | undefined>()
+  const [address, setAddress] = useState<string | undefined>(undefined)
   const [isConnected, setIsConnected] = useState<boolean | undefined>(undefined)
   const wallet = createBeaconWallet()
 
@@ -29,10 +29,12 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
       })
       .catch(error => {
         console.error('Error:', error)
+        reset()
       })
   }, [isConnected, address])
 
-  const clearAddress = async function () {
+  const reset = () => {
+    setIsConnected(undefined)
     setAddress(undefined)
   }
 
@@ -46,7 +48,7 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
               setIsConnected(true)
             })
             .catch(() => {
-              void clearAddress()
+              reset()
               throw new Error(
                 'Error connecting to wallet, please try again later'
               )
