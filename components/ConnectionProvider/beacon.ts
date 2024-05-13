@@ -1,10 +1,8 @@
 import { BeaconWallet } from '@taquito/beacon-wallet'
 import { TezosToolkit } from '@taquito/taquito'
+import { DAppClientOptions } from '@airgap/beacon-dapp'
 
-const Tezos = new TezosToolkit(
-  // NEED TO CONFIRM: what is the rpc url here? parisnet?
-  'https://rpc.ghostnet.teztnets.xyz/'
-)
+const Tezos = new TezosToolkit(process.env.NEXT_PUBLIC_RPC_ENDPOINT as string)
 
 export const createBeaconWallet = () =>
   typeof window === 'undefined'
@@ -12,9 +10,9 @@ export const createBeaconWallet = () =>
     : new BeaconWallet({
         name: 'Stake XTZ',
         appUrl: '', // need to fill this
-        preferredNetwork: process.env.NEXT_PUBLIC_NETWORK, // change to Paris net later?
+        network: process.env.NEXT_PUBLIC_NETWORK, // change to Paris net later?
         featuredWallets: ['kukai', 'trust', 'temple', 'umami']
-      } as any)
+      } as DAppClientOptions)
 
 export const connectBeacon = async () => {
   const beaconWallet = createBeaconWallet()
@@ -26,7 +24,7 @@ export const connectBeacon = async () => {
 
   const response = await beaconWallet.client.requestPermissions({
     network: {
-      type: process.env.NEXT_PUBLIC_NETWORK as any
+      type: process.env.NEXT_PUBLIC_NETWORK
     }
   })
 
