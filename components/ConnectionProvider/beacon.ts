@@ -2,6 +2,7 @@ import { BeaconWallet } from '@taquito/beacon-wallet'
 import { TezosToolkit } from '@taquito/taquito'
 import { RpcClient, RpcClientCache } from '@taquito/rpc'
 import { DAppClientOptions } from '@airgap/beacon-dapp'
+import { NetworkType } from '@airgap/beacon-sdk'
 
 const rpc = new RpcClientCache(
   new RpcClient(process.env.NEXT_PUBLIC_RPC_ENDPOINT as string)
@@ -28,7 +29,7 @@ export const connectBeacon = async () => {
 
   const response = await beaconWallet.client.requestPermissions({
     network: {
-      type: process.env.NEXT_PUBLIC_NETWORK
+      type: process.env.NEXT_PUBLIC_NETWORK as NetworkType
     }
   })
 
