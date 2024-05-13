@@ -14,7 +14,7 @@ export const createBeaconWallet = () =>
     : new BeaconWallet({
         name: 'Stake XTZ',
         appUrl: '', // need to fill this
-        network: process.env.NEXT_PUBLIC_NETWORK, // change to Paris net later?
+        preferredNetwork: process.env.NEXT_PUBLIC_NETWORK, // change to Paris net later?
         featuredWallets: ['kukai', 'trust', 'temple', 'umami']
       } as DAppClientOptions)
 
