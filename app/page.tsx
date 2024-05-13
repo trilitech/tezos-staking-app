@@ -34,13 +34,12 @@ interface AddressInputProps {
 }
 
 interface DelegateData {
-  address: string;
-  balance: number;
-  stakedBalance: number;
-  unstakedBalance: number;
-  frozenDeposit: number;
+  address: string
+  balance: number
+  stakedBalance: number
+  unstakedBalance: number
+  frozenDeposit: number
 }
-
 
 const AddressInput: React.FC<AddressInputProps> = ({ address, setAddress }) => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,26 +85,21 @@ function BasicUsage() {
 export default function Home() {
   // Define your variables
   const [address, setAddress] = useState('tz1M6txwzVsUU9DCd2odaHnsc38spSHycX5r')
-  const apiUrl = String("https://api.parisnet.tzkt.io/v1/accounts/")
+  const apiUrl = String('https://api.parisnet.tzkt.io/v1/accounts/')
   const [data, setData] = useState<DelegateData | null>(null)
 
   const fetchData = async () => {
     const apiAddress = String(apiUrl + address)
     try {
-        const response = await fetch(apiAddress);
-        const data = await response.json()
-        setData(data)
-    }
-    catch(error){
-      window.alert(`Error fetching data from Tzkt API. Check api/address is correct. \nURL:${apiAddress}.\nError: ${error}`)
+      const response = await fetch(apiAddress)
+      const data = await response.json()
+      setData(data)
+    } catch (error) {
+      window.alert(
+        `Error fetching data from Tzkt API. Check api/address is correct. \nURL:${apiAddress}.\nError: ${error}`
+      )
     }
   }
-
-  useEffect(() => {
-    if (address) {
-      fetchData().then(r => null)
-    }
-  }, [address])
 
   return (
     <Box>
