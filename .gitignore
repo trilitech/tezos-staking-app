@@ -28,6 +28,7 @@
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+.yarnrc.yml
 
 # debug
 npm-debug.log*
