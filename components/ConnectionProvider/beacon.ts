@@ -1,8 +1,12 @@
 import { BeaconWallet } from '@taquito/beacon-wallet'
 import { TezosToolkit } from '@taquito/taquito'
+import { RpcClient, RpcClientCache } from '@taquito/rpc'
 import { DAppClientOptions } from '@airgap/beacon-dapp'
 
-const Tezos = new TezosToolkit(process.env.NEXT_PUBLIC_RPC_ENDPOINT as string)
+const rpc = new RpcClientCache(
+  new RpcClient(process.env.NEXT_PUBLIC_RPC_ENDPOINT as string)
+)
+const Tezos = new TezosToolkit(rpc)
 
 export const createBeaconWallet = () =>
   typeof window === 'undefined'
