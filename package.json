@@ -13,7 +13,9 @@
     "@airgap/beacon-sdk": "^4.2.1",
     "@airgap/beacon-types": "^4.2.1",
     "@airgap/beacon-utils": "^4.2.1",
+    "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/react": "^2.8.2",
+    "@chakra-ui/system": "^2.6.2",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@stablelib/blake2b": "^1.0.1",
@@ -28,6 +30,7 @@
     "axios": "^1.6.8",
     "bs58check": "^3.0.1",
     "bufferutil": "^4.0.8",
+    "debug": "^4.3.4",
     "encoding": "^0.1.13",
     "framer-motion": "^11.2.0",
     "kukai-embed": "^0.9.0",
@@ -36,10 +39,12 @@
     "react": "^18",
     "react-cookie": "^7.1.4",
     "react-dom": "^18",
+    "supports-color": "^9.4.0",
     "typedarray-to-buffer": "^4.0.0",
     "utf-8-validate": "^6.0.4"
   },
   "devDependencies": {
+    "@types/debug": "^4",
     "@types/node": "20.10.0",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -47,7 +52,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "prettier": "3.2.5",
-    "typescript": "^5"
+    "typescript": "^5.4.5"
   },
   "prettier": {
     "trailingComma": "none",
