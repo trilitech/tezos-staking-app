@@ -1,5 +1,22 @@
-import Image from 'next/image'
+'use client'
+import { Spinner, Text } from '@chakra-ui/react'
+import { useConnection } from '@/components/ConnectionProvider'
+import { ConnectButton } from '@/components/ConnectButton'
+import { DisconnectButton } from '@/components/DisconnectButton'
 
 export default function Home() {
-  return <div>Hello world</div>
+  const { address, isConnected } = useConnection()
+
+  return (
+    <div>
+      <Text fontSize='20px'>{isConnected && `Your address is ${address}`}</Text>
+      {isConnected === undefined ? (
+        <Spinner />
+      ) : isConnected ? (
+        <DisconnectButton />
+      ) : (
+        <ConnectButton />
+      )}
+    </div>
+  )
 }
