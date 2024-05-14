@@ -69,7 +69,7 @@ export default function Home() {
     if (isConnected) {
       fetchData(address)
     }
-  }, [isConnected])
+  }, [isConnected, address])
 
   return (
     <Box>
