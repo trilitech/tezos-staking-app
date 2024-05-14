@@ -1,30 +1,32 @@
-import { Context, createContext, useContext, useState, useEffect } from 'react'
-import { connectBeacon } from './beacon'
+import { Context, createContext, useContext, useEffect, useState } from 'react'
+import { connectBeacon, createBeaconWallet } from './beacon'
 import { WalletApi } from './types'
-import { createBeaconWallet } from './beacon'
+import { TezosToolkit } from '@taquito/taquito'
+
 interface ConnectionContextType extends Partial<WalletApi> {
   connect: () => Promise<void>
   disconnect: () => Promise<void>
-  isConnected: boolean | undefined
+  isConnected: boolean
+  Tezos: TezosToolkit | undefined
 }
 
 const ConnectionContext = createContext<ConnectionContextType | null>(null)
 
 export const ConnectionProvider = ({ children }: { children: any }) => {
   const [address, setAddress] = useState<string | undefined>(undefined)
-  const [isConnected, setIsConnected] = useState<boolean | undefined>(undefined)
+  const [Tezos, setTezos] = useState<TezosToolkit | undefined>(undefined)
+  const [isConnected, setIsConnected] = useState<boolean>(false)
   const wallet = createBeaconWallet()
 
   // check if connected to a wallet when refresh
   useEffect(() => {
     const checkIsConnected = async () => {
-      const activeAccount = await wallet?.client.getActiveAccount()
-      return activeAccount
+      return await wallet?.client.getActiveAccount()
     }
 
     checkIsConnected()
       .then(activeAccount => {
-        setIsConnected(activeAccount ? true : false)
+        setIsConnected(!!activeAccount)
         setAddress(activeAccount?.address)
       })
       .catch(error => {
@@ -34,7 +36,7 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
   }, [isConnected, address])
 
   const reset = () => {
-    setIsConnected(undefined)
+    setIsConnected(false)
     setAddress(undefined)
   }
 
@@ -43,9 +45,10 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
       value={{
         connect: async () => {
           return await connectBeacon()
-            .then(({ address }) => {
+            .then(({ address, Tezos }) => {
               setAddress(address)
               setIsConnected(true)
+              setTezos(Tezos)
             })
             .catch(() => {
               reset()
@@ -60,7 +63,8 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
           setIsConnected(false)
         },
         address,
-        isConnected
+        isConnected,
+        Tezos
       }}
     >
       {children}
