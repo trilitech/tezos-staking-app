@@ -52,7 +52,7 @@ export default function Home() {
   const apiUrl = String('https://api.parisnet.tzkt.io/v1/accounts/')
   const [data, setData] = useState<DelegateData | null>(null)
 
-  const fetchData = async (address: string) => {
+  const fetchData = async (address: string | undefined) => {
     const apiAddress = String(apiUrl + address)
     try {
       const response = await fetch(apiAddress)
