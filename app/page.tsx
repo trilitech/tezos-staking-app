@@ -9,20 +9,8 @@ import {
   Thead,
   Tr,
   Center,
-  Button,
   Box,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-  Input,
-  Flex,
   IconButton,
-  Text,
   Spinner
 } from '@chakra-ui/react'
 
