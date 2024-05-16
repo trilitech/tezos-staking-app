@@ -21,7 +21,14 @@ import { useState, useEffect } from 'react'
 import { useConnection } from '@/components/ConnectionProvider'
 import { ConnectButton } from '@/components/ConnectButton'
 import { DisconnectButton } from '@/components/DisconnectButton'
-import { AccountInfo, BakersList, unstakedOperations } from './tezInterfaces'
+import {
+  StakingOpsStatus,
+  AccountInfo,
+  BakersList,
+  unstakedOperations,
+  updateStakingOpsStatus,
+  blockchainHead
+} from './tezInterfaces'
 
 export default function Home() {
   const { isConnected, address } = useConnection()
@@ -29,9 +36,19 @@ export default function Home() {
   const bakersListApiUrl = tzktBaseUrl + '/v1/delegates/'
   const accountInfoApiUrl = tzktBaseUrl + '/v1/accounts/'
   const unstakedOpsApiUrl = tzktBaseUrl + '/v1/staking/unstake_requests?staker='
-  const [unstakedOps, setUnstakedOps] = useState<unstakedOperations[] | null>(
+  const blockchainHeadApiUrl = tzktBaseUrl + '/v1/head'
+  const [blockchainHead, setBlockchainHead] = useState<blockchainHead | null>(
     null
   )
+  const [unstakedOps, setUnstakedOps] = useState<unstakedOperations[]>(
+    [] as unstakedOperations[]
+  )
+  const [stakingOpsStatus, setStakingOpsStatus] = useState<StakingOpsStatus>({
+    Delegated: false,
+    CanStake: false,
+    CanUnstake: false,
+    CanFinalzeUnstake: false
+  })
   const [accountInfo, setAccountInfo] = useState<AccountInfo | null>(null)
   const [bakersList, setBakersList] = useState<BakersList[] | null>(null)
 
@@ -47,6 +64,15 @@ export default function Home() {
     }
   }
   const fetchAccountData = async (address: string | undefined) => {
+    try {
+      const response = await fetch(blockchainHeadApiUrl)
+      const data = await response.json()
+      setBlockchainHead(data)
+    } catch (error) {
+      window.alert(
+        `Error fetching data from Tzkt API. Check api/address is correct. \nBlockchain Head URL:${blockchainHeadApiUrl}. Error: ${error}`
+      )
+    }
     const accountInfoApiAddress = String(accountInfoApiUrl + address)
     try {
       const response = await fetch(accountInfoApiAddress)
@@ -58,14 +84,24 @@ export default function Home() {
       )
     }
     const unstakedOpsApiAddress = String(unstakedOpsApiUrl + address)
+    let unstakedOpsData
     try {
       const unstakedOpsResponse = await fetch(unstakedOpsApiAddress)
-      const unstakedOpsData = await unstakedOpsResponse.json()
-      setUnstakedOps(unstakedOpsData)
+      unstakedOpsData = await unstakedOpsResponse.json()
     } catch (error) {
       window.alert(
         'Error fetching data from Tzkt API. Check api/address is correct. \n UnstakedOps URL:${unstakedOpsApiAddress}\nError: ${error}'
       )
+    }
+    if (accountInfo !== null && blockchainHead !== null) {
+      let { opStatus, unstakingOps } = updateStakingOpsStatus(
+        blockchainHead,
+        accountInfo,
+        unstakedOpsData,
+        stakingOpsStatus
+      )
+      setStakingOpsStatus(opStatus)
+      setUnstakedOps(unstakingOps)
     }
   }
 
@@ -121,7 +157,6 @@ export default function Home() {
                       <Td>FrozenDeposit</Td>
                       <Td>{accountInfo?.frozenDeposit}</Td>
                     </Tr>
-                    add delegation.active
                     <Tr>
                       <Td>Delegate Selected:</Td>
                       <Td>
@@ -165,6 +200,7 @@ export default function Home() {
                       <Th>Finalized Amount</Th>
                       <Th>Slashed Amount</Th>
                       <Th>Last Operation Time</Th>
+                      <Th>Time to Finalize</Th>
                     </Tr>
                   </Thead>
                   <Tbody>
@@ -179,6 +215,7 @@ export default function Home() {
                           <Td>{operation.finalizedAmount}</Td>
                           <Td>{operation.slashedAmount}</Td>
                           <Td>{operation.lastTime}</Td>
+                          <Td>{operation.timeToFinalizeInSec}</Td>
                         </Tr>
                       ))}
                   </Tbody>

@@ -1,3 +1,10 @@
+export interface StakingOpsStatus {
+  Delegated: boolean
+  CanStake: boolean
+  CanUnstake: boolean
+  CanFinalzeUnstake: boolean
+}
+
 export interface AccountInfo {
   address: string
   balance: number
@@ -11,114 +18,113 @@ export interface AccountInfo {
     alias: string
     address: string
   }
-  counter: 0
+  counter: number
   delegate: {
     alias: string
     address: string
     active: false
   }
-  delegationLevel: 0
-  delegationTime: '2019-08-24T14:15:22Z'
-  numDelegations: 0
-  stakingOpsCount: 0
-  stakingUpdatesCount: 0
-  setDelegateParametersOpsCount: 0
-  firstActivity: 0
-  firstActivityTime: '2019-08-24T14:15:22Z'
-  lastActivity: 0
-  lastActivityTime: '2019-08-24T14:15:22Z'
-  lostBalance: 0
+  delegationLevel: number
+  delegationTime: string
+  numDelegations: number
+  stakingOpsCount: number
+  stakingUpdatesCount: number
+  setDelegateParametersOpsCount: number
+  firstActivity: number
+  firstActivityTime: string
+  lastActivity: number
+  lastActivityTime: string
+  lostBalance: number
 }
 
 export interface BakersList {
   type: string
-  id: 0
+  id: number
   address: string
   active: true
   alias: string
   publicKey: string
   revealed: true
-  balance: 0
-  rollupBonds: 0
-  smartRollupBonds: 0
-  stakedBalance: 0
-  unstakedBalance: 0
+  balance: number
+  rollupBonds: number
+  smartRollupBonds: number
+  stakedBalance: number
+  unstakedBalance: number
   unstakedBaker: {
     alias: string
     address: string
   }
-  externalStakedBalance: 0
-  externalUnstakedBalance: 0
-  roundingError: 0
-  totalStakedBalance: 0
-  stakersCount: 0
-  frozenDepositLimit: 0
-  limitOfStakingOverBaking: 0
-  edgeOfBakingOverStaking: 0
-  counter: 0
-  activationLevel: 0
-  activationTime: '2019-08-24T14:15:22Z'
-  deactivationLevel: 0
-  deactivationTime: '2019-08-24T14:15:22Z'
-  stakingBalance: 0
-  delegatedBalance: 0
-  numContracts: 0
-  rollupsCount: 0
-  smartRollupsCount: 0
-  activeTokensCount: 0
-  tokenBalancesCount: 0
-  tokenTransfersCount: 0
-  activeTicketsCount: 0
-  ticketBalancesCount: 0
-  ticketTransfersCount: 0
-  numDelegators: 0
-  numBlocks: 0
-  numEndorsements: 0
-  numPreendorsements: 0
-  numBallots: 0
-  numProposals: 0
-  numActivations: 0
-  numDoubleBaking: 0
-  numDoubleEndorsing: 0
-  numDoublePreendorsing: 0
-  numNonceRevelations: 0
-  vdfRevelationsCount: 0
-  numRevelationPenalties: 0
-  numEndorsingRewards: 0
-  numDelegations: 0
-  numOriginations: 0
-  numTransactions: 0
-  numReveals: 0
-  numRegisterConstants: 0
-  numSetDepositsLimits: 0
-  numMigrations: 0
-  transferTicketCount: 0
-  increasePaidStorageCount: 0
-  updateConsensusKeyCount: 0
-  drainDelegateCount: 0
-  smartRollupAddMessagesCount: 0
-  stakingOpsCount: 0
-  autostakingOpsCount: 0
-  stakingUpdatesCount: 0
-  setDelegateParametersOpsCount: 0
-  dalPublishCommitmentOpsCount: 0
-  firstActivity: 0
-  firstActivityTime: '2019-08-24T14:15:22Z'
-  lastActivity: 0
-  lastActivityTime: '2019-08-24T14:15:22Z'
+  externalStakedBalance: number
+  externalUnstakedBalance: number
+  roundingError: number
+  totalStakedBalance: number
+  stakersCount: number
+  frozenDepositLimit: number
+  limitOfStakingOverBaking: number
+  edgeOfBakingOverStaking: number
+  counter: number
+  activationLevel: number
+  activationTime: string
+  deactivationLevel: number
+  deactivationTime: string
+  stakingBalance: number
+  delegatedBalance: number
+  numContracts: number
+  rollupsCount: number
+  smartRollupsCount: number
+  activeTokensCount: number
+  tokenBalancesCount: number
+  tokenTransfersCount: number
+  activeTicketsCount: number
+  ticketBalancesCount: number
+  ticketTransfersCount: number
+  numDelegators: number
+  numBlocks: number
+  numEndorsements: number
+  numPreendorsements: number
+  numBallots: number
+  numProposals: number
+  numActivations: number
+  numDoubleBaking: number
+  numDoubleEndorsing: number
+  numDoublePreendorsing: number
+  numNonceRevelations: number
+  vdfRevelationsCount: number
+  numRevelationPenalties: number
+  numEndorsingRewards: number
+  numDelegations: number
+  numOriginations: number
+  numTransactions: number
+  numReveals: number
+  numRegisterConstants: number
+  numSetDepositsLimits: number
+  numMigrations: number
+  transferTicketCount: number
+  increasePaidStorageCount: number
+  updateConsensusKeyCount: number
+  drainDelegateCount: number
+  smartRollupAddMessagesCount: number
+  stakingOpsCount: number
+  autostakingOpsCount: number
+  stakingUpdatesCount: number
+  setDelegateParametersOpsCount: number
+  dalPublishCommitmentOpsCount: number
+  firstActivity: number
+  firstActivityTime: string
+  lastActivity: number
+  lastActivityTime: string
   extras: null
-  software: {}
-  lostBalance: 0
-  frozenDeposit: 0
-  frozenDeposits: 0
-  frozenRewards: 0
-  frozenFees: 0
+  lostBalance: number
+  frozenDeposit: number
+  frozenDeposits: number
+  frozenRewards: number
+  frozenFees: number
   metadata: null
 }
 
 export interface unstakedOperations {
-  id: 0
-  cycle: 0
+  id: number
+  cycle: number
   baker: {
     alias: string
     address: string
@@ -127,14 +133,72 @@ export interface unstakedOperations {
     alias: string
     address: string
   }
-  requestedAmount: 0
-  restakedAmount: 0
-  finalizedAmount: 0
-  slashedAmount: 0
-  roundingError: 0
-  updatesCount: 0
-  firstLevel: 0
-  firstTime: '2019-08-24T14:15:22Z'
-  lastLevel: 0
-  lastTime: '2019-08-24T14:15:22Z'
+  requestedAmount: number
+  restakedAmount: number
+  finalizedAmount: number
+  slashedAmount: number
+  roundingError: number
+  updatesCount: number
+  firstLevel: number
+  firstTime: string
+  lastLevel: number
+  lastTime: string
+  timeToFinalizeInSec: number
+}
+
+export interface blockchainHead {
+  chain: string
+  chainId: string
+  cycle: number
+  level: number
+  hash: string
+  protocol: string
+  nextProtocol: string
+  timestamp: string
+  votingEpoch: number
+  votingPeriod: number
+  knownLevel: number
+  lastSync: string
+  synced: true
+}
+
+export function updateStakingOpsStatus(
+  blockHead: blockchainHead,
+  accountInfo: AccountInfo,
+  unstakingOps: unstakedOperations[],
+  opStatus: StakingOpsStatus
+): { opStatus: StakingOpsStatus; unstakingOps: unstakedOperations[] } {
+  if (accountInfo?.delegate !== null) {
+    opStatus.Delegated = true
+  }
+  if (accountInfo?.balance !== undefined && accountInfo?.balance > 0) {
+    opStatus.CanStake = true
+  }
+  if (
+    accountInfo?.stakedBalance !== undefined &&
+    accountInfo.stakedBalance > 0
+  ) {
+    opStatus.CanUnstake = true
+  }
+  let totalFinalizableAmount = 0
+  if (unstakingOps !== null && unstakingOps.length > 0) {
+    for (let i = 0; i < unstakingOps.length; i++) {
+      let levelDiff = blockHead.level - unstakingOps[i].firstLevel
+      let remainingFinalizableAmount =
+        unstakingOps[i].requestedAmount -
+        unstakingOps[i].finalizedAmount -
+        unstakingOps[i].slashedAmount -
+        unstakingOps[i].restakedAmount
+
+      if (levelDiff > 16384 * 2) {
+        if (remainingFinalizableAmount > 0) {
+          opStatus.CanFinalzeUnstake = true
+          totalFinalizableAmount += remainingFinalizableAmount
+        }
+      } else {
+        unstakingOps[i].timeToFinalizeInSec = (16384 * 2 - levelDiff) * 10 // assuming 10sec block time. This is minimum time to finalize. Each block can take more than 10 sec if a consensus is not reached.
+      }
+    }
+  }
+  return { opStatus, unstakingOps }
 }
