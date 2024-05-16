@@ -2,8 +2,8 @@ import { TezosToolkit } from '@taquito/taquito'
 import { OperationResult } from './types'
 
 export const setDelegate = async (
-  delegate: string,
-  Tezos: TezosToolkit
+  Tezos: TezosToolkit,
+  delegate: string
 ): Promise<OperationResult> => {
   let opHash = ''
   try {
@@ -18,8 +18,8 @@ export const setDelegate = async (
 }
 
 export const stake = async (
-  amount: number,
-  Tezos: TezosToolkit
+  Tezos: TezosToolkit,
+  amount: number
 ): Promise<OperationResult> => {
   let opHash = ''
   try {
@@ -34,8 +34,8 @@ export const stake = async (
 }
 
 export const unstake = async (
-  amount: number,
-  Tezos: TezosToolkit
+  Tezos: TezosToolkit,
+  amount: number
 ): Promise<OperationResult> => {
   let opHash = ''
   try {
@@ -50,7 +50,8 @@ export const unstake = async (
 }
 
 export const finalizeUnstake = async (
-  Tezos: TezosToolkit
+  Tezos: TezosToolkit,
+  noArgs: undefined
 ): Promise<OperationResult> => {
   let opHash = ''
   try {

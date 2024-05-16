@@ -20,11 +20,14 @@ import { useState, useEffect } from 'react'
 import { useConnection } from '@/components/ConnectionProvider'
 import { ConnectButton } from '@/components/ConnectButton'
 import { DisconnectButton } from '@/components/DisconnectButton'
-import { StakeButton } from '@/components/StakeButton'
-import { UnstakeButton } from '@/components/UnstakeButton'
-import { DelegateButton } from '@/components/DelegateButton'
-import { FinalizeUnstakeButton } from '@/components/FinalizeUnstakeButton'
+import { StakingOpsButton } from '@/components/StakingOpsButton'
 import { OperationResult } from '@/components/Operations/types'
+import {
+  setDelegate,
+  unstake,
+  finalizeUnstake,
+  stake
+} from '@/components/Operations/operations'
 
 interface AddressInputProps {
   address: string
@@ -112,21 +115,37 @@ export default function Home() {
               />
             </TableContainer>
             {/* Mark DelegateButton grey if already delegated*/}
-            <DelegateButton
-              delegateId={'tz3Q67aMz7gSMiQRcW729sXSfuMtkyAHYfqc'}
-              Tezos={Tezos}
+            <StakingOpsButton
+              operation={setDelegate}
               setOpResult={setOpResult}
+              Tezos={Tezos}
+              operationArgs={['tz3Q67aMz7gSMiQRcW729sXSfuMtkyAHYfqc']}
+              buttonName={'Delegate'}
             />
             {/* Mark StakeButton grey if available balance is 0.*/}
-            <StakeButton setOpResult={setOpResult} amount={100} Tezos={Tezos} />
-            {/* Mark Unstake button grey if stakedbalance is 0.*/}
-            <UnstakeButton
-              amount={100}
-              Tezos={Tezos}
+            <StakingOpsButton
+              operation={stake}
               setOpResult={setOpResult}
+              Tezos={Tezos}
+              operationArgs={[100]}
+              buttonName={'Stake'}
+            />
+            {/* Mark Unstake button grey if stakedbalance is 0.*/}
+            <StakingOpsButton
+              operation={unstake}
+              setOpResult={setOpResult}
+              Tezos={Tezos}
+              operationArgs={[100]}
+              buttonName={'Unstake'}
             />
             {/* Mark Finalize Unstake button grey if unstaked - finalized funds are none. */}
-            <FinalizeUnstakeButton Tezos={Tezos} setOpResult={setOpResult} />
+            <StakingOpsButton
+              operation={finalizeUnstake}
+              setOpResult={setOpResult}
+              Tezos={Tezos}
+              operationArgs={[undefined]}
+              buttonName={'Finalize Unstake'}
+            />
           </Center>
         </>
       ) : (
