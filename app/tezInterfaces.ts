@@ -1,0 +1,140 @@
+export interface AccountInfo {
+  address: string
+  balance: number
+  stakedBalance: number
+  unstakedBalance: number
+  frozenDeposit: number
+  alias: string
+  publicKey: string
+  revealed: true
+  unstakedBaker: {
+    alias: string
+    address: string
+  }
+  counter: 0
+  delegate: {
+    alias: string
+    address: string
+    active: false
+  }
+  delegationLevel: 0
+  delegationTime: '2019-08-24T14:15:22Z'
+  numDelegations: 0
+  stakingOpsCount: 0
+  stakingUpdatesCount: 0
+  setDelegateParametersOpsCount: 0
+  firstActivity: 0
+  firstActivityTime: '2019-08-24T14:15:22Z'
+  lastActivity: 0
+  lastActivityTime: '2019-08-24T14:15:22Z'
+  lostBalance: 0
+}
+
+export interface BakersList {
+  type: string
+  id: 0
+  address: string
+  active: true
+  alias: string
+  publicKey: string
+  revealed: true
+  balance: 0
+  rollupBonds: 0
+  smartRollupBonds: 0
+  stakedBalance: 0
+  unstakedBalance: 0
+  unstakedBaker: {
+    alias: string
+    address: string
+  }
+  externalStakedBalance: 0
+  externalUnstakedBalance: 0
+  roundingError: 0
+  totalStakedBalance: 0
+  stakersCount: 0
+  frozenDepositLimit: 0
+  limitOfStakingOverBaking: 0
+  edgeOfBakingOverStaking: 0
+  counter: 0
+  activationLevel: 0
+  activationTime: '2019-08-24T14:15:22Z'
+  deactivationLevel: 0
+  deactivationTime: '2019-08-24T14:15:22Z'
+  stakingBalance: 0
+  delegatedBalance: 0
+  numContracts: 0
+  rollupsCount: 0
+  smartRollupsCount: 0
+  activeTokensCount: 0
+  tokenBalancesCount: 0
+  tokenTransfersCount: 0
+  activeTicketsCount: 0
+  ticketBalancesCount: 0
+  ticketTransfersCount: 0
+  numDelegators: 0
+  numBlocks: 0
+  numEndorsements: 0
+  numPreendorsements: 0
+  numBallots: 0
+  numProposals: 0
+  numActivations: 0
+  numDoubleBaking: 0
+  numDoubleEndorsing: 0
+  numDoublePreendorsing: 0
+  numNonceRevelations: 0
+  vdfRevelationsCount: 0
+  numRevelationPenalties: 0
+  numEndorsingRewards: 0
+  numDelegations: 0
+  numOriginations: 0
+  numTransactions: 0
+  numReveals: 0
+  numRegisterConstants: 0
+  numSetDepositsLimits: 0
+  numMigrations: 0
+  transferTicketCount: 0
+  increasePaidStorageCount: 0
+  updateConsensusKeyCount: 0
+  drainDelegateCount: 0
+  smartRollupAddMessagesCount: 0
+  stakingOpsCount: 0
+  autostakingOpsCount: 0
+  stakingUpdatesCount: 0
+  setDelegateParametersOpsCount: 0
+  dalPublishCommitmentOpsCount: 0
+  firstActivity: 0
+  firstActivityTime: '2019-08-24T14:15:22Z'
+  lastActivity: 0
+  lastActivityTime: '2019-08-24T14:15:22Z'
+  extras: null
+  software: {}
+  lostBalance: 0
+  frozenDeposit: 0
+  frozenDeposits: 0
+  frozenRewards: 0
+  frozenFees: 0
+  metadata: null
+}
+
+export interface unstakedOperations {
+  id: 0
+  cycle: 0
+  baker: {
+    alias: string
+    address: string
+  }
+  staker: {
+    alias: string
+    address: string
+  }
+  requestedAmount: 0
+  restakedAmount: 0
+  finalizedAmount: 0
+  slashedAmount: 0
+  roundingError: 0
+  updatesCount: 0
+  firstLevel: 0
+  firstTime: '2019-08-24T14:15:22Z'
+  lastLevel: 0
+  lastTime: '2019-08-24T14:15:22Z'
+}

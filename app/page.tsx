@@ -11,7 +11,8 @@ import {
   Center,
   Box,
   IconButton,
-  Spinner
+  Spinner,
+  VStack
 } from '@chakra-ui/react'
 
 import { RepeatIcon } from '@chakra-ui/icons'
@@ -20,42 +21,58 @@ import { useState, useEffect } from 'react'
 import { useConnection } from '@/components/ConnectionProvider'
 import { ConnectButton } from '@/components/ConnectButton'
 import { DisconnectButton } from '@/components/DisconnectButton'
-
-interface AddressInputProps {
-  address: string
-  setAddress: (address: string) => void
-}
-
-interface DelegateData {
-  address: string
-  balance: number
-  stakedBalance: number
-  unstakedBalance: number
-  frozenDeposit: number
-}
+import { AccountInfo, BakersList, unstakedOperations } from './tezInterfaces'
 
 export default function Home() {
   const { isConnected, address } = useConnection()
+  const tzktBaseUrl = String('https://api.parisnet.tzkt.io')
+  const bakersListApiUrl = tzktBaseUrl + '/v1/delegates/'
+  const accountInfoApiUrl = tzktBaseUrl + '/v1/accounts/'
+  const unstakedOpsApiUrl = tzktBaseUrl + '/v1/staking/unstake_requests?staker='
+  const [unstakedOps, setUnstakedOps] = useState<unstakedOperations[] | null>(
+    null
+  )
+  const [accountInfo, setAccountInfo] = useState<AccountInfo | null>(null)
+  const [bakersList, setBakersList] = useState<BakersList[] | null>(null)
 
-  const apiUrl = String('https://api.parisnet.tzkt.io/v1/accounts/')
-  const [data, setData] = useState<DelegateData | null>(null)
-
-  const fetchData = async (address: string | undefined) => {
-    const apiAddress = String(apiUrl + address)
+  const fetchBakerData = async () => {
     try {
-      const response = await fetch(apiAddress)
+      const response = await fetch(bakersListApiUrl)
       const data = await response.json()
-      setData(data)
+      setBakersList(data)
     } catch (error) {
       window.alert(
-        `Error fetching data from Tzkt API. Check api/address is correct. \nURL:${apiAddress}.\nError: ${error}`
+        `Error fetching data from Tzkt API. Check api/address is correct. \nBakers List URL:${bakersListApiUrl}. Error: ${error}`
+      )
+    }
+  }
+  const fetchAccountData = async (address: string | undefined) => {
+    const accountInfoApiAddress = String(accountInfoApiUrl + address)
+    try {
+      const response = await fetch(accountInfoApiAddress)
+      const data = await response.json()
+      setAccountInfo(data)
+    } catch (error) {
+      window.alert(
+        `Error fetching data from Tzkt API. Check api/address is correct. \nAccount Info URL:${accountInfoApiAddress}. Error: ${error}`
+      )
+    }
+    const unstakedOpsApiAddress = String(unstakedOpsApiUrl + address)
+    try {
+      const unstakedOpsResponse = await fetch(unstakedOpsApiAddress)
+      const unstakedOpsData = await unstakedOpsResponse.json()
+      setUnstakedOps(unstakedOpsData)
+    } catch (error) {
+      window.alert(
+        'Error fetching data from Tzkt API. Check api/address is correct. \n UnstakedOps URL:${unstakedOpsApiAddress}\nError: ${error}'
       )
     }
   }
 
   useEffect(() => {
     if (isConnected) {
-      fetchData(address)
+      fetchAccountData(address)
+      fetchBakerData()
     }
   }, [isConnected, address])
 
@@ -67,44 +84,131 @@ export default function Home() {
         <>
           <DisconnectButton />
           <Center>
-            <TableContainer maxW='80%'>
-              <Table variant='simple'>
-                <TableCaption>Staking Information</TableCaption>
-                <Thead>
-                  <Tr>
-                    <Th>Property</Th>
-                    <Th>Value</Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  <Tr>
-                    <Td>Address</Td>
-                    <Td>{data?.address}</Td>
-                  </Tr>
-                  <Tr>
-                    <Td>Balance</Td>
-                    <Td>{data?.balance}</Td>
-                  </Tr>
-                  <Tr>
-                    <Td>StakedBalance</Td>
-                    <Td>{data?.stakedBalance}</Td>
-                  </Tr>
-                  <Tr>
-                    <Td>UnstakedBalance</Td>
-                    <Td>{data?.unstakedBalance}</Td>
-                  </Tr>
-                  <Tr>
-                    <Td>FrozenDeposit</Td>
-                    <Td>{data?.frozenDeposit}</Td>
-                  </Tr>
-                </Tbody>
-              </Table>
-              <IconButton
-                aria-label='Refresh'
-                icon={<RepeatIcon />}
-                onClick={() => fetchData(address)}
-              />
-            </TableContainer>
+            <VStack spacing='{4}'>
+              <TableContainer maxW='80%'>
+                <Table variant='simple'>
+                  <TableCaption placement='top'>
+                    Account Information
+                  </TableCaption>
+                  <Thead>
+                    <Tr>
+                      <Th>Property</Th>
+                      <Th>Value</Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    <Tr>
+                      <Td>Account Name</Td>
+                      <Td>{accountInfo?.alias}</Td>
+                    </Tr>
+                    <Tr>
+                      <Td>Address</Td>
+                      <Td>{accountInfo?.address}</Td>
+                    </Tr>
+                    <Tr>
+                      <Td>Balance</Td>
+                      <Td>{accountInfo?.balance}</Td>
+                    </Tr>
+                    <Tr>
+                      <Td>StakedBalance</Td>
+                      <Td>{accountInfo?.stakedBalance}</Td>
+                    </Tr>
+                    <Tr>
+                      <Td>UnstakedBalance</Td>
+                      <Td>{accountInfo?.unstakedBalance}</Td>
+                    </Tr>
+                    <Tr>
+                      <Td>FrozenDeposit</Td>
+                      <Td>{accountInfo?.frozenDeposit}</Td>
+                    </Tr>
+                    add delegation.active
+                    <Tr>
+                      <Td>Delegate Selected:</Td>
+                      <Td>
+                        {accountInfo?.delegate === null
+                          ? 'Delegate not selected'
+                          : accountInfo?.delegate.active
+                            ? 'Yes'
+                            : 'No'}
+                      </Td>
+                    </Tr>
+                    <Tr>
+                      <Td>Delegate (Baker)</Td>
+                      <Td>
+                        {accountInfo?.delegate?.alias ?? 'No name assigned.'}
+                      </Td>
+                    </Tr>
+                    <Tr>
+                      <Td>Delegate Address</Td>
+                      <Td>{accountInfo?.delegate?.address}</Td>
+                    </Tr>
+                  </Tbody>
+                </Table>
+                <IconButton
+                  aria-label='Refresh'
+                  icon={<RepeatIcon />}
+                  onClick={() => fetchAccountData(address)}
+                />
+              </TableContainer>
+              <TableContainer maxW='80%'>
+                <Table variant='simple'>
+                  <TableCaption placement='top'>
+                    Unstaked Operations Information
+                  </TableCaption>
+                  <Thead>
+                    <Tr>
+                      <Th>Baker Alias</Th>
+                      <Th>Baker Address</Th>
+                      <Th>Staker Alias</Th>
+                      <Th>Staker Address</Th>
+                      <Th>Requested Amount</Th>
+                      <Th>Finalized Amount</Th>
+                      <Th>Slashed Amount</Th>
+                      <Th>Last Operation Time</Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    {unstakedOps &&
+                      unstakedOps.map((operation, index) => (
+                        <Tr key={index}>
+                          <Td>{operation.baker.alias}</Td>
+                          <Td>{operation.baker.address}</Td>
+                          <Td>{operation.staker.alias}</Td>
+                          <Td>{operation.staker.address}</Td>
+                          <Td>{operation.requestedAmount}</Td>
+                          <Td>{operation.finalizedAmount}</Td>
+                          <Td>{operation.slashedAmount}</Td>
+                          <Td>{operation.lastTime}</Td>
+                        </Tr>
+                      ))}
+                  </Tbody>
+                </Table>
+              </TableContainer>
+              <TableContainer maxW='80%'>
+                <Table variant='simple'>
+                  <TableCaption placement='top'>Bakers List</TableCaption>
+                  <Thead>
+                    <Tr>
+                      <Th>Alias</Th>
+                      <Th>Address</Th>
+                      <Th>Edge of Baking Over Staking</Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    {bakersList &&
+                      bakersList.map((baker, index) => (
+                        <Tr key={index}>
+                          <Td>{baker.alias}</Td>
+                          <Td>{baker.address}</Td>
+                          <Td>
+                            {baker.edgeOfBakingOverStaking / 1000000000.0}
+                          </Td>
+                        </Tr>
+                      ))}
+                  </Tbody>
+                </Table>
+              </TableContainer>
+            </VStack>
           </Center>
         </>
       ) : (
