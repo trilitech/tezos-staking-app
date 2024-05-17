@@ -1,8 +1,13 @@
+import {
+  NUM_OF_BLOCKS_TO_FINALIZE_AFTER_UNSTAKE,
+  BLOCK_TIME_IN_SEC
+} from '@/app/tezConstants'
+
 export interface StakingOpsStatus {
   Delegated: boolean
   CanStake: boolean
   CanUnstake: boolean
-  CanFinalzeUnstake: boolean
+  CanFinalizeUnstake: boolean
 }
 
 export interface AccountInfo {
@@ -35,9 +40,10 @@ export interface AccountInfo {
   lastActivity: number
   lastActivityTime: string
   lostBalance: number
+  totalFinalizableAmount: number
 }
 
-export interface BakersList {
+export interface BakerInfo {
   type: string
   id: number
   address: string
@@ -122,7 +128,7 @@ export interface BakersList {
   metadata: null
 }
 
-export interface unstakedOperations {
+export interface UnstakedOperation {
   id: number
   cycle: number
   baker: {
@@ -146,7 +152,7 @@ export interface unstakedOperations {
   timeToFinalizeInSec: number
 }
 
-export interface blockchainHead {
+export interface BlockchainHead {
   chain: string
   chainId: string
   cycle: number
@@ -160,45 +166,4 @@ export interface blockchainHead {
   knownLevel: number
   lastSync: string
   synced: true
-}
-
-export function updateStakingOpsStatus(
-  blockHead: blockchainHead,
-  accountInfo: AccountInfo,
-  unstakingOps: unstakedOperations[],
-  opStatus: StakingOpsStatus
-): { opStatus: StakingOpsStatus; unstakingOps: unstakedOperations[] } {
-  if (accountInfo?.delegate !== null) {
-    opStatus.Delegated = true
-  }
-  if (accountInfo?.balance !== undefined && accountInfo?.balance > 0) {
-    opStatus.CanStake = true
-  }
-  if (
-    accountInfo?.stakedBalance !== undefined &&
-    accountInfo.stakedBalance > 0
-  ) {
-    opStatus.CanUnstake = true
-  }
-  let totalFinalizableAmount = 0
-  if (unstakingOps !== null && unstakingOps.length > 0) {
-    for (let i = 0; i < unstakingOps.length; i++) {
-      let levelDiff = blockHead.level - unstakingOps[i].firstLevel
-      let remainingFinalizableAmount =
-        unstakingOps[i].requestedAmount -
-        unstakingOps[i].finalizedAmount -
-        unstakingOps[i].slashedAmount -
-        unstakingOps[i].restakedAmount
-
-      if (levelDiff > 16384 * 2) {
-        if (remainingFinalizableAmount > 0) {
-          opStatus.CanFinalzeUnstake = true
-          totalFinalizableAmount += remainingFinalizableAmount
-        }
-      } else {
-        unstakingOps[i].timeToFinalizeInSec = (16384 * 2 - levelDiff) * 10 // assuming 10sec block time. This is minimum time to finalize. Each block can take more than 10 sec if a consensus is not reached.
-      }
-    }
-  }
-  return { opStatus, unstakingOps }
 }

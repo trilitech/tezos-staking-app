@@ -21,94 +21,39 @@ import { useState, useEffect } from 'react'
 import { useConnection } from '@/components/ConnectionProvider'
 import { ConnectButton } from '@/components/ConnectButton'
 import { DisconnectButton } from '@/components/DisconnectButton'
+import { fetchData } from './tezConnections'
 import {
+  BlockchainHead,
   StakingOpsStatus,
+  UnstakedOperation,
   AccountInfo,
-  BakersList,
-  unstakedOperations,
-  updateStakingOpsStatus,
-  blockchainHead
-} from './tezInterfaces'
+  BakerInfo
+} from '@/app/tezInterfaces'
 
 export default function Home() {
   const { isConnected, address } = useConnection()
-  const tzktBaseUrl = String('https://api.parisnet.tzkt.io')
-  const bakersListApiUrl = tzktBaseUrl + '/v1/delegates/'
-  const accountInfoApiUrl = tzktBaseUrl + '/v1/accounts/'
-  const unstakedOpsApiUrl = tzktBaseUrl + '/v1/staking/unstake_requests?staker='
-  const blockchainHeadApiUrl = tzktBaseUrl + '/v1/head'
-  const [blockchainHead, setBlockchainHead] = useState<blockchainHead | null>(
-    null
-  )
-  const [unstakedOps, setUnstakedOps] = useState<unstakedOperations[]>(
-    [] as unstakedOperations[]
+  const [unstakedOps, setUnstakedOps] = useState<UnstakedOperation[]>(
+    [] as UnstakedOperation[]
   )
   const [stakingOpsStatus, setStakingOpsStatus] = useState<StakingOpsStatus>({
     Delegated: false,
     CanStake: false,
     CanUnstake: false,
-    CanFinalzeUnstake: false
+    CanFinalizeUnstake: false
   })
   const [accountInfo, setAccountInfo] = useState<AccountInfo | null>(null)
-  const [bakersList, setBakersList] = useState<BakersList[] | null>(null)
-
-  const fetchBakerData = async () => {
-    try {
-      const response = await fetch(bakersListApiUrl)
-      const data = await response.json()
-      setBakersList(data)
-    } catch (error) {
-      window.alert(
-        `Error fetching data from Tzkt API. Check api/address is correct. \nBakers List URL:${bakersListApiUrl}. Error: ${error}`
-      )
-    }
-  }
-  const fetchAccountData = async (address: string | undefined) => {
-    try {
-      const response = await fetch(blockchainHeadApiUrl)
-      const data = await response.json()
-      setBlockchainHead(data)
-    } catch (error) {
-      window.alert(
-        `Error fetching data from Tzkt API. Check api/address is correct. \nBlockchain Head URL:${blockchainHeadApiUrl}. Error: ${error}`
-      )
-    }
-    const accountInfoApiAddress = String(accountInfoApiUrl + address)
-    try {
-      const response = await fetch(accountInfoApiAddress)
-      const data = await response.json()
-      setAccountInfo(data)
-    } catch (error) {
-      window.alert(
-        `Error fetching data from Tzkt API. Check api/address is correct. \nAccount Info URL:${accountInfoApiAddress}. Error: ${error}`
-      )
-    }
-    const unstakedOpsApiAddress = String(unstakedOpsApiUrl + address)
-    let unstakedOpsData
-    try {
-      const unstakedOpsResponse = await fetch(unstakedOpsApiAddress)
-      unstakedOpsData = await unstakedOpsResponse.json()
-    } catch (error) {
-      window.alert(
-        'Error fetching data from Tzkt API. Check api/address is correct. \n UnstakedOps URL:${unstakedOpsApiAddress}\nError: ${error}'
-      )
-    }
-    if (accountInfo !== null && blockchainHead !== null) {
-      let { opStatus, unstakingOps } = updateStakingOpsStatus(
-        blockchainHead,
-        accountInfo,
-        unstakedOpsData,
-        stakingOpsStatus
-      )
-      setStakingOpsStatus(opStatus)
-      setUnstakedOps(unstakingOps)
-    }
-  }
+  const [bakersList, setBakersList] = useState<BakerInfo[] | null>(null)
 
   useEffect(() => {
     if (isConnected) {
-      fetchAccountData(address)
-      fetchBakerData()
+      fetchData(
+        address,
+        setAccountInfo,
+        setUnstakedOps,
+        setBakersList,
+        stakingOpsStatus,
+        setStakingOpsStatus
+      )
     }
   }, [isConnected, address])
 
@@ -182,7 +127,16 @@ export default function Home() {
                 <IconButton
                   aria-label='Refresh'
                   icon={<RepeatIcon />}
-                  onClick={() => fetchAccountData(address)}
+                  onClick={() =>
+                    fetchData(
+                      address,
+                      setAccountInfo,
+                      setUnstakedOps,
+                      setBakersList,
+                      stakingOpsStatus,
+                      setStakingOpsStatus
+                    )
+                  }
                 />
               </TableContainer>
               <TableContainer maxW='80%'>
