@@ -55,7 +55,12 @@ export default function Home() {
   }, [isConnected, address])
 
   return (
-    <Center h='100vh' bg='#cbd5e0' pt='20px'>
+    <Center
+      h='100vh'
+      bg='#cbd5e0'
+      bgImage={!isConnected ? '/images/login-bg.png' : ''}
+      pt='20px'
+    >
       {isConnected === undefined ? (
         <Spinner />
       ) : isConnected ? (
