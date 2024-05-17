@@ -1,12 +1,12 @@
 import React from 'react'
 import { Button, ButtonProps } from '@chakra-ui/react'
-import { useConnection } from '@/components/ConnectionProvider'
 
-export const DisconnectButton = ({ ...styles }: {} & ButtonProps) => {
-  const { disconnect } = useConnection()
-
+export const DisconnectButton = ({
+  onClick,
+  ...styles
+}: { onClick: () => void } & ButtonProps) => {
   return (
-    <Button {...styles} onClick={() => disconnect()}>
+    <Button {...styles} onClick={onClick}>
       Disconnect
     </Button>
   )

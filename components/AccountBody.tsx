@@ -10,7 +10,6 @@ export const AccountBody = ({
   balance,
   stakedBalance,
   unstakedBalance,
-  frozenDeposit,
   delegationStatus
 }: DelegateData & { delegationStatus: DelegationStatus }) => {
   return (

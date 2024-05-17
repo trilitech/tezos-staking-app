@@ -17,6 +17,7 @@ import { HamburgerIcon } from '@chakra-ui/icons'
 import { DisconnectButton } from './buttons/DisconnectButton'
 import { simplifyAddress } from './AccountBanner'
 import useClipboard from '@/utils/useClipboard'
+import { useConnection } from './ConnectionProvider'
 
 export const MobileAccountBanner = ({
   address,
@@ -25,6 +26,7 @@ export const MobileAccountBanner = ({
 }: { address: string; name: string } & FlexProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { copyTextToClipboard } = useClipboard()
+  const { disconnect } = useConnection()
 
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
@@ -106,7 +108,12 @@ export const MobileAccountBanner = ({
             </Flex>
           </DrawerBody>
           <DrawerFooter>
-            <DisconnectButton w='100%' bg='black' color='white' />
+            <DisconnectButton
+              onClick={disconnect}
+              w='100%'
+              bg='black'
+              color='white'
+            />
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
