@@ -119,7 +119,7 @@ export default function Home() {
               operation={setDelegate}
               setOpResult={setOpResult}
               Tezos={Tezos}
-              operationArgs={['tz3Q67aMz7gSMiQRcW729sXSfuMtkyAHYfqc']}
+              operationArgs={[`${process.env.NEXT_PUBLIC_DELEGATE_ADDRESS}`]}
               buttonName={'Delegate'}
             />
             {/* Mark StakeButton grey if available balance is 0.*/}
