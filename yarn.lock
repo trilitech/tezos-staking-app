@@ -5,151 +5,151 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
-"@airgap/beacon-blockchain-substrate@npm:4.2.1":
-  version: 4.2.1
-  resolution: "@airgap/beacon-blockchain-substrate@npm:4.2.1"
+"@airgap/beacon-blockchain-substrate@npm:4.2.2":
+  version: 4.2.2
+  resolution: "@airgap/beacon-blockchain-substrate@npm:4.2.2"
   dependencies:
-    "@airgap/beacon-types": "npm:4.2.1"
-    "@airgap/beacon-ui": "npm:4.2.1"
-  checksum: 10c0/19f76a72601a5f2961dd927eba5220ef0b7709a571073116a0f265677751da93d8bcc9813af5df9ae863e4e8a497f0aa9491eeac07fe6d8418770f58255f791f
+    "@airgap/beacon-types": "npm:4.2.2"
+    "@airgap/beacon-ui": "npm:4.2.2"
+  checksum: 10c0/e33414fa18714f6e9748d38d625846f2f63de904962bcca2de706748f77d3fbdf5051d3fdf7aad66e003ef50201487f6594c2594963bacf4d0ec1d08ab258c24
   languageName: node
   linkType: hard
 
-"@airgap/beacon-blockchain-tezos@npm:4.2.1":
-  version: 4.2.1
-  resolution: "@airgap/beacon-blockchain-tezos@npm:4.2.1"
+"@airgap/beacon-blockchain-tezos@npm:4.2.2":
+  version: 4.2.2
+  resolution: "@airgap/beacon-blockchain-tezos@npm:4.2.2"
   dependencies:
-    "@airgap/beacon-types": "npm:4.2.1"
-    "@airgap/beacon-ui": "npm:4.2.1"
-  checksum: 10c0/b2c69e1ab73ccc724de58a6f10258d7c5bd016330c84262606905467af2343776191c6d3efbd6e11442a129e54036f8f6f2e2841d58834f3606b80cb35a421d0
+    "@airgap/beacon-types": "npm:4.2.2"
+    "@airgap/beacon-ui": "npm:4.2.2"
+  checksum: 10c0/c1e2bc7f414b768387930e45d0e432a5344d6ff686d494d674d30d0b045bd86019de90743366887be3d274b06257d2d33d65ad7ece4a64647b591eeabf8a88a4
   languageName: node
   linkType: hard
 
-"@airgap/beacon-core@npm:4.2.1":
-  version: 4.2.1
-  resolution: "@airgap/beacon-core@npm:4.2.1"
+"@airgap/beacon-core@npm:4.2.2":
+  version: 4.2.2
+  resolution: "@airgap/beacon-core@npm:4.2.2"
   dependencies:
-    "@airgap/beacon-types": "npm:4.2.1"
-    "@airgap/beacon-utils": "npm:4.2.1"
+    "@airgap/beacon-types": "npm:4.2.2"
+    "@airgap/beacon-utils": "npm:4.2.2"
     "@stablelib/ed25519": "npm:^1.0.3"
     "@stablelib/nacl": "npm:^1.0.4"
     "@stablelib/utf8": "npm:^1.0.1"
     "@stablelib/x25519-session": "npm:^1.0.4"
     bs58check: "npm:2.1.2"
-  checksum: 10c0/d4542264ca95d23e25c2036bf0d7ed0a3983672ad78661b6a9e569ede5ee7fcf5d4ce0c454dd617757cf0bed6eecb89bf35742e9a072c8f1934beeeb0666e617
+  checksum: 10c0/4722ead43efabcb526aa29aec0c62aba4fe02055d9c3c2e7ed9363d1545eb285a72deafecc0af3cf7427722258bd42a468ba0b028f3596933e64c913d9ea1d05
   languageName: node
   linkType: hard
 
-"@airgap/beacon-dapp@npm:4.2.1, @airgap/beacon-dapp@npm:^4.2.1":
-  version: 4.2.1
-  resolution: "@airgap/beacon-dapp@npm:4.2.1"
+"@airgap/beacon-dapp@npm:4.2.2, @airgap/beacon-dapp@npm:^4.2.2-beta.4":
+  version: 4.2.2
+  resolution: "@airgap/beacon-dapp@npm:4.2.2"
   dependencies:
-    "@airgap/beacon-core": "npm:4.2.1"
-    "@airgap/beacon-transport-matrix": "npm:4.2.1"
-    "@airgap/beacon-transport-postmessage": "npm:4.2.1"
-    "@airgap/beacon-transport-walletconnect": "npm:4.2.1"
-    "@airgap/beacon-ui": "npm:4.2.1"
-  checksum: 10c0/1d238a62fe63bff31e188abf3036b24aa76fa0651f23e800852090d2f0217c785c3465c0b84e49a73984419307ccf56504a794d2de3c3de1a4bd6b84f5fdd430
+    "@airgap/beacon-core": "npm:4.2.2"
+    "@airgap/beacon-transport-matrix": "npm:4.2.2"
+    "@airgap/beacon-transport-postmessage": "npm:4.2.2"
+    "@airgap/beacon-transport-walletconnect": "npm:4.2.2"
+    "@airgap/beacon-ui": "npm:4.2.2"
+  checksum: 10c0/3a0ba01a459a09c96d9dc57c8cd11426fe4d3f613e1e9ea8c4dd8b9680efaae2c0bf3b8f9d08c72114f8590e2987ab84fda23480a9fdf3ad0239b832aa3d9935
   languageName: node
   linkType: hard
 
-"@airgap/beacon-sdk@npm:^4.2.1":
-  version: 4.2.1
-  resolution: "@airgap/beacon-sdk@npm:4.2.1"
+"@airgap/beacon-sdk@npm:^4.2.2-beta.4":
+  version: 4.2.2
+  resolution: "@airgap/beacon-sdk@npm:4.2.2"
   dependencies:
-    "@airgap/beacon-blockchain-substrate": "npm:4.2.1"
-    "@airgap/beacon-blockchain-tezos": "npm:4.2.1"
-    "@airgap/beacon-core": "npm:4.2.1"
-    "@airgap/beacon-dapp": "npm:4.2.1"
-    "@airgap/beacon-transport-matrix": "npm:4.2.1"
-    "@airgap/beacon-transport-postmessage": "npm:4.2.1"
-    "@airgap/beacon-types": "npm:4.2.1"
-    "@airgap/beacon-ui": "npm:4.2.1"
-    "@airgap/beacon-utils": "npm:4.2.1"
-    "@airgap/beacon-wallet": "npm:4.2.1"
-  checksum: 10c0/c27d00a2bf367b6c7ea048ae0c563bbd24302e28eb4e3c4a4f67ab6735355ca17d82bbb7c5d98d1a5df7a9fe9b924468be527e5c0d4e1a354db955f50f978b5c
+    "@airgap/beacon-blockchain-substrate": "npm:4.2.2"
+    "@airgap/beacon-blockchain-tezos": "npm:4.2.2"
+    "@airgap/beacon-core": "npm:4.2.2"
+    "@airgap/beacon-dapp": "npm:4.2.2"
+    "@airgap/beacon-transport-matrix": "npm:4.2.2"
+    "@airgap/beacon-transport-postmessage": "npm:4.2.2"
+    "@airgap/beacon-types": "npm:4.2.2"
+    "@airgap/beacon-ui": "npm:4.2.2"
+    "@airgap/beacon-utils": "npm:4.2.2"
+    "@airgap/beacon-wallet": "npm:4.2.2"
+  checksum: 10c0/1f1907b2fbac07788132c5cd3436030d6bced62fe1db7b18d7a27675628227e338ce50f1ccad36eb9c023810a3c82347e4ba8c12d1d288a485afa8436779bed4
   languageName: node
   linkType: hard
 
-"@airgap/beacon-transport-matrix@npm:4.2.1":
-  version: 4.2.1
-  resolution: "@airgap/beacon-transport-matrix@npm:4.2.1"
+"@airgap/beacon-transport-matrix@npm:4.2.2":
+  version: 4.2.2
+  resolution: "@airgap/beacon-transport-matrix@npm:4.2.2"
   dependencies:
-    "@airgap/beacon-core": "npm:4.2.1"
-    "@airgap/beacon-utils": "npm:4.2.1"
+    "@airgap/beacon-core": "npm:4.2.2"
+    "@airgap/beacon-utils": "npm:4.2.2"
     axios: "npm:^1.6.2"
-  checksum: 10c0/b06e8c5bf25b3e0d0bc692ec9f30ffbc57c7ce35d566bcac63ff6c43ce7b283b1d56914f1323aa8baed2029ad38157a3d03d4760d1d74e5ad21424302bc34db3
+  checksum: 10c0/92b98f86976e5bd5a76cf0e66f72988c9361918cab14aa24c35b6c205ce1a246a8de2a8909a864d7dbc820bc498222e10ca7c5a15d1ada0c3c80cc8c8f198157
   languageName: node
   linkType: hard
 
-"@airgap/beacon-transport-postmessage@npm:4.2.1":
-  version: 4.2.1
-  resolution: "@airgap/beacon-transport-postmessage@npm:4.2.1"
+"@airgap/beacon-transport-postmessage@npm:4.2.2":
+  version: 4.2.2
+  resolution: "@airgap/beacon-transport-postmessage@npm:4.2.2"
   dependencies:
-    "@airgap/beacon-core": "npm:4.2.1"
-    "@airgap/beacon-types": "npm:4.2.1"
-    "@airgap/beacon-utils": "npm:4.2.1"
-  checksum: 10c0/021940d829a4c7053ff7088f924021c413e90932a4faf9db156a2ac62d2f6edfef103522af0a71a7e315e3342184561df918954751e6ed26216b5ebd4c8d9458
+    "@airgap/beacon-core": "npm:4.2.2"
+    "@airgap/beacon-types": "npm:4.2.2"
+    "@airgap/beacon-utils": "npm:4.2.2"
+  checksum: 10c0/ec6b06923d317f802055bfb796d1e4c5d48ad8a2c7be8c1d52dc26beea7c8d23a07c7e1edc9ca05cdd2a94a11bccb3db6e4aa98a84c99d7f570a8d4e617a0ee3
   languageName: node
   linkType: hard
 
-"@airgap/beacon-transport-walletconnect@npm:4.2.1":
-  version: 4.2.1
-  resolution: "@airgap/beacon-transport-walletconnect@npm:4.2.1"
+"@airgap/beacon-transport-walletconnect@npm:4.2.2":
+  version: 4.2.2
+  resolution: "@airgap/beacon-transport-walletconnect@npm:4.2.2"
   dependencies:
-    "@airgap/beacon-core": "npm:4.2.1"
-    "@airgap/beacon-types": "npm:4.2.1"
-    "@airgap/beacon-utils": "npm:4.2.1"
+    "@airgap/beacon-core": "npm:4.2.2"
+    "@airgap/beacon-types": "npm:4.2.2"
+    "@airgap/beacon-utils": "npm:4.2.2"
     "@walletconnect/sign-client": "npm:2.11.2"
-  checksum: 10c0/0e1bc5cb32b207557bea9017c9b33f8bb9a99af37b25b71cb94b480facad4b69b85cafa0fc04cf68d6ef9a8bbb8ca3c285580608a02479335276dd75e85ec6db
+  checksum: 10c0/27a925b6a966aff4e35af558faf763e93f98834d56c783b0cd4fc2e3eb473658d14197e0646912b87b0e84b2c0fd9735dbf921a74d585bd14011a2ff7a55e116
   languageName: node
   linkType: hard
 
-"@airgap/beacon-types@npm:4.2.1":
-  version: 4.2.1
-  resolution: "@airgap/beacon-types@npm:4.2.1"
+"@airgap/beacon-types@npm:4.2.2":
+  version: 4.2.2
+  resolution: "@airgap/beacon-types@npm:4.2.2"
   dependencies:
     "@types/chrome": "npm:0.0.246"
-  checksum: 10c0/29f9bb2f6be0f7ffd08b60233b8b38aa9ca5ee3963daa636815677170d5b187ed1aac4c832f85f7131b6509c1acc4b19f5a5aa7dbcfa66c44454958b2dd01ae5
+  checksum: 10c0/02c7e336cf1385aeb28313d883418a2b88c8e5894a861a0540842360d766f9e6dfd56c28bd4ce1b07eaa38bb2c60fb41f8c2f8afeb2c213ae188641fc56cad5b
   languageName: node
   linkType: hard
 
-"@airgap/beacon-ui@npm:4.2.1":
-  version: 4.2.1
-  resolution: "@airgap/beacon-ui@npm:4.2.1"
+"@airgap/beacon-ui@npm:4.2.2":
+  version: 4.2.2
+  resolution: "@airgap/beacon-ui@npm:4.2.2"
   dependencies:
-    "@airgap/beacon-core": "npm:4.2.1"
-    "@airgap/beacon-transport-postmessage": "npm:4.2.1"
-    "@airgap/beacon-types": "npm:4.2.1"
-    "@airgap/beacon-utils": "npm:4.2.1"
+    "@airgap/beacon-core": "npm:4.2.2"
+    "@airgap/beacon-transport-postmessage": "npm:4.2.2"
+    "@airgap/beacon-types": "npm:4.2.2"
+    "@airgap/beacon-utils": "npm:4.2.2"
     "@walletconnect/utils": "npm:2.11.2"
     qrcode-svg: "npm:^1.1.0"
     solid-js: "npm:^1.7.11"
-  checksum: 10c0/c8ffc9c20eba3316dc009fc0a456219744531548318050f32a8ad68ea89f6183bb6730c27d5c513503f8df004e1b00965cc074df651c35fc9c00cd4c8efe9353
+  checksum: 10c0/d2c5de6e2c2493ac612f1ae71ee61c09598ba3ef7d05b20d614c84b21a9562d0356917a207562e5156ace60bace5b92b3e03bd9a8978b65a6b545a2f372c7d97
   languageName: node
   linkType: hard
 
-"@airgap/beacon-utils@npm:4.2.1":
-  version: 4.2.1
-  resolution: "@airgap/beacon-utils@npm:4.2.1"
+"@airgap/beacon-utils@npm:4.2.2":
+  version: 4.2.2
+  resolution: "@airgap/beacon-utils@npm:4.2.2"
   dependencies:
     "@stablelib/ed25519": "npm:^1.0.3"
     "@stablelib/nacl": "npm:^1.0.4"
     "@stablelib/random": "npm:^1.0.2"
     "@stablelib/utf8": "npm:^1.0.1"
     bs58check: "npm:2.1.2"
-  checksum: 10c0/af2be6ae783e51e0225a492202403089b977af25085ae3a464f76f3643c08fc2c036170fdbffa9178e93cdfbeb32421b053615f309941da658ceba9dc84f0d24
+  checksum: 10c0/a234bf9da73063604c7c7ce6b952c7cba3907e7e17deb17feff6d4af06fe0a6fa5a4289d36c786a59582be2e43e411b70cfa999b4f532ff19e80d40073106853
   languageName: node
   linkType: hard
 
-"@airgap/beacon-wallet@npm:4.2.1":
-  version: 4.2.1
-  resolution: "@airgap/beacon-wallet@npm:4.2.1"
+"@airgap/beacon-wallet@npm:4.2.2":
+  version: 4.2.2
+  resolution: "@airgap/beacon-wallet@npm:4.2.2"
   dependencies:
-    "@airgap/beacon-core": "npm:4.2.1"
-    "@airgap/beacon-transport-matrix": "npm:4.2.1"
-    "@airgap/beacon-transport-postmessage": "npm:4.2.1"
-  checksum: 10c0/b9451f9256365e1bf634a825b05a9d74905390b311f472bc08a0af0e4ba036b4594f6e6d7a6472482ea2a4d056db90415520df17854d6371ad2a18d6c28887b9
+    "@airgap/beacon-core": "npm:4.2.2"
+    "@airgap/beacon-transport-matrix": "npm:4.2.2"
+    "@airgap/beacon-transport-postmessage": "npm:4.2.2"
+  checksum: 10c0/74cc5955930937ac3ec126a15b1c543462c5a256609f5a2f47bf1848671d0a394380e900b7922638a75701f432b4400e6e99edbece576d8c7ac8a931fb6d8ea7
   languageName: node
   linkType: hard
 
@@ -2195,105 +2195,105 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@taquito/beacon-wallet@npm:^19.2.0":
-  version: 19.2.0
-  resolution: "@taquito/beacon-wallet@npm:19.2.0"
+"@taquito/beacon-wallet@npm:^20.0.0-beta.1":
+  version: 20.0.0-beta.1
+  resolution: "@taquito/beacon-wallet@npm:20.0.0-beta.1"
   dependencies:
-    "@airgap/beacon-dapp": "npm:^4.2.1"
-    "@taquito/core": "npm:^19.1.0"
-    "@taquito/taquito": "npm:^19.2.0"
-  checksum: 10c0/091604ddb484736c6839a5af40b8c1920078ff2d6848d85958c193f4da04e274e1641e6111de313268d1dd4669705a36164cc0e4d6d33b81f97274050a3a3864
+    "@airgap/beacon-dapp": "npm:^4.2.2-beta.4"
+    "@taquito/core": "npm:^20.0.0-beta.1"
+    "@taquito/taquito": "npm:^20.0.0-beta.1"
+  checksum: 10c0/a6461beee6c7e4ae99b451bbcdd043c0e2834fe1b48029384de64061640d9342c03d04ca2f36515c3e0074f9948f1c8d23afed12429be1ec9349ef91f44eea76
   languageName: node
   linkType: hard
 
-"@taquito/core@npm:^19.1.0":
-  version: 19.1.0
-  resolution: "@taquito/core@npm:19.1.0"
+"@taquito/core@npm:^20.0.0-beta.1":
+  version: 20.0.0-beta.1
+  resolution: "@taquito/core@npm:20.0.0-beta.1"
   dependencies:
     json-stringify-safe: "npm:^5.0.1"
-  checksum: 10c0/ebf51e2b52ae7cc893ce6985e12f7860c34279fdb0aa8a4b13469caca4729132e46a4b33b3b7b7129de60df77a67753f65a16ce8b29820fb8900f0f536c4bbce
+  checksum: 10c0/73c675339c0aa90b569b4fceab58f1d9c0e1d3e3562ceae77f850482a28992a213c7f245b08c4e9f114a945d32c480852800203b2016a2452763b3e691fb1057
   languageName: node
   linkType: hard
 
-"@taquito/http-utils@npm:^19.2.0":
-  version: 19.2.0
-  resolution: "@taquito/http-utils@npm:19.2.0"
+"@taquito/http-utils@npm:^20.0.0-beta.1":
+  version: 20.0.0-beta.1
+  resolution: "@taquito/http-utils@npm:20.0.0-beta.1"
   dependencies:
-    "@taquito/core": "npm:^19.1.0"
+    "@taquito/core": "npm:^20.0.0-beta.1"
     node-fetch: "npm:^2.7.0"
-  checksum: 10c0/b2391ce6cf3b4d759f135a65c9fb64cb70bd304d77270186be1a23dfc14841e06501c7e0a02897a4a7b4dc21f194248a4fb00f83532cf4c989788df215b6fd69
+  checksum: 10c0/2c6936c870e3df65e9b2a43e14d9ee3e8c6a34624fba2ae676b573cda3402997c8fa466d39ce5d57ff8abc6221f0555c7023ff69ff555ffb3bbd737fed389f3c
   languageName: node
   linkType: hard
 
-"@taquito/local-forging@npm:^19.2.0":
-  version: 19.2.0
-  resolution: "@taquito/local-forging@npm:19.2.0"
+"@taquito/local-forging@npm:^20.0.0-beta.1":
+  version: 20.0.0-beta.1
+  resolution: "@taquito/local-forging@npm:20.0.0-beta.1"
   dependencies:
-    "@taquito/core": "npm:^19.1.0"
-    "@taquito/utils": "npm:^19.2.0"
+    "@taquito/core": "npm:^20.0.0-beta.1"
+    "@taquito/utils": "npm:^20.0.0-beta.1"
     bignumber.js: "npm:^9.1.2"
-  checksum: 10c0/48756a26ecf79b05cbfb6229937a6720d6da9cc3a19c68360f4a3bf3ee34a4f3631f3afe26733664698184e54434ef5cee9cb9dd3c6e51d845e4d10ece20533c
+  checksum: 10c0/08bd626c6f265ef7655952f258d0439ed29cd3ae35dd4e9256a43ccf64268638aff2e9c6cd283dd2f19143e3bdb2c1da9042abd0aecd6be7aef4d0cdedd277e7
   languageName: node
   linkType: hard
 
-"@taquito/michel-codec@npm:^19.2.0":
-  version: 19.2.0
-  resolution: "@taquito/michel-codec@npm:19.2.0"
+"@taquito/michel-codec@npm:^20.0.0-beta.1":
+  version: 20.0.0-beta.1
+  resolution: "@taquito/michel-codec@npm:20.0.0-beta.1"
   dependencies:
-    "@taquito/core": "npm:^19.1.0"
-  checksum: 10c0/a80398c003f5084db21276c3ce44c4623f269215753287e6b94a7b02678ff59e517031c278fae7372429ff51a48e158d0ce6d1b4b71eb0a2af7c552674dd3683
+    "@taquito/core": "npm:^20.0.0-beta.1"
+  checksum: 10c0/8ef028ce1d459cd7237f269400d472edf1c5d6e812dc4de91119a2f600ccc7a695c21681c77764cf00ea96feea5f71523ed502dd70d12f9cbbfbc0e5202ba0a1
   languageName: node
   linkType: hard
 
-"@taquito/michelson-encoder@npm:^19.2.0":
-  version: 19.2.0
-  resolution: "@taquito/michelson-encoder@npm:19.2.0"
+"@taquito/michelson-encoder@npm:^20.0.0-beta.1":
+  version: 20.0.0-beta.1
+  resolution: "@taquito/michelson-encoder@npm:20.0.0-beta.1"
   dependencies:
-    "@taquito/core": "npm:^19.1.0"
-    "@taquito/rpc": "npm:^19.2.0"
-    "@taquito/utils": "npm:^19.2.0"
+    "@taquito/core": "npm:^20.0.0-beta.1"
+    "@taquito/rpc": "npm:^20.0.0-beta.1"
+    "@taquito/utils": "npm:^20.0.0-beta.1"
     bignumber.js: "npm:^9.1.2"
     fast-json-stable-stringify: "npm:^2.1.0"
-  checksum: 10c0/44ed9c157e78e9090138af4e5917d8c50d8e4f9376e2ffdbcf2b3ccab0e10e2ebc0184200c96b568bb674370894f6d30e1923b0d4c2424dc45c881e0553ef635
+  checksum: 10c0/f9e90068447281dd5a1a224d58d012cfb759189bc1bda0991389187a930f2da9a54a2b3f753469ed575c17cd395710a258cf7d4dc303bdeb86dcf8eb73e639d5
   languageName: node
   linkType: hard
 
-"@taquito/rpc@npm:^19.2.0":
-  version: 19.2.0
-  resolution: "@taquito/rpc@npm:19.2.0"
+"@taquito/rpc@npm:^20.0.0-beta.1":
+  version: 20.0.0-beta.1
+  resolution: "@taquito/rpc@npm:20.0.0-beta.1"
   dependencies:
-    "@taquito/core": "npm:^19.1.0"
-    "@taquito/http-utils": "npm:^19.2.0"
-    "@taquito/utils": "npm:^19.2.0"
+    "@taquito/core": "npm:^20.0.0-beta.1"
+    "@taquito/http-utils": "npm:^20.0.0-beta.1"
+    "@taquito/utils": "npm:^20.0.0-beta.1"
     bignumber.js: "npm:^9.1.2"
-  checksum: 10c0/db2a3a30971f64a443adc297405b92031d8e3f87ff3f3d4e8d584c16ee952e14ed483b44b110fcb99259a213589edf1967ece83afcfffdd0b150f0812b5a30b2
+  checksum: 10c0/96612b1a18ba5261ab7f2e3f1fce717303092562d8e0bdbe910e2276cff3bac2f1693ae781f1c3836fd7a74bddf9a1a2ab7619893942a4724916dffe6165bd12
   languageName: node
   linkType: hard
 
-"@taquito/taquito@npm:^19.2.0":
-  version: 19.2.0
-  resolution: "@taquito/taquito@npm:19.2.0"
+"@taquito/taquito@npm:^20.0.0-beta.1":
+  version: 20.0.0-beta.1
+  resolution: "@taquito/taquito@npm:20.0.0-beta.1"
   dependencies:
-    "@taquito/core": "npm:^19.1.0"
-    "@taquito/http-utils": "npm:^19.2.0"
-    "@taquito/local-forging": "npm:^19.2.0"
-    "@taquito/michel-codec": "npm:^19.2.0"
-    "@taquito/michelson-encoder": "npm:^19.2.0"
-    "@taquito/rpc": "npm:^19.2.0"
-    "@taquito/utils": "npm:^19.2.0"
+    "@taquito/core": "npm:^20.0.0-beta.1"
+    "@taquito/http-utils": "npm:^20.0.0-beta.1"
+    "@taquito/local-forging": "npm:^20.0.0-beta.1"
+    "@taquito/michel-codec": "npm:^20.0.0-beta.1"
+    "@taquito/michelson-encoder": "npm:^20.0.0-beta.1"
+    "@taquito/rpc": "npm:^20.0.0-beta.1"
+    "@taquito/utils": "npm:^20.0.0-beta.1"
     bignumber.js: "npm:^9.1.2"
     rxjs: "npm:^7.8.1"
-  checksum: 10c0/db46ec9621c65896348342785b66e04b3ceddbdfe97308a5c6853f111891e2f8926d9f5f7afb53ee17aeca6a274ff8469f10625c38ce6ba9135c990792255631
+  checksum: 10c0/debff0402d90d24b493c2a8065cfbef90db4ce7b3d6d107d85caa81dc4c28140e51f1f9e565a97dc93a3df4ed2c0ce29f74611d645fd00f2cc69fc4b18650098
   languageName: node
   linkType: hard
 
-"@taquito/utils@npm:^19.2.0":
-  version: 19.2.0
-  resolution: "@taquito/utils@npm:19.2.0"
+"@taquito/utils@npm:^20.0.0-beta.1":
+  version: 20.0.0-beta.1
+  resolution: "@taquito/utils@npm:20.0.0-beta.1"
   dependencies:
     "@stablelib/blake2b": "npm:^1.0.1"
     "@stablelib/ed25519": "npm:^1.0.3"
-    "@taquito/core": "npm:^19.1.0"
+    "@taquito/core": "npm:^20.0.0-beta.1"
     "@types/bs58check": "npm:^2.1.0"
     bignumber.js: "npm:^9.1.2"
     blakejs: "npm:^1.2.1"
@@ -2301,7 +2301,7 @@ __metadata:
     buffer: "npm:^6.0.3"
     elliptic: "npm:^6.5.4"
     typedarray-to-buffer: "npm:^4.0.0"
-  checksum: 10c0/137b518dfe106c3ecd9652df0463e937a8e4381d450af47c1d1be1e00d71986b11199f108e8e45da14eef1f689ec52de5bf410fd1d0c44f6ded3671dbf5c7aaa
+  checksum: 10c0/d4ef93521d7b43244b56a8c6139911cf4210ef56757a6222fc8ae50999603077fad6fe18bb6a6540e43fe1cbf50ccedfd94fe834a0bf02c50b3309d656533d35
   languageName: node
   linkType: hard
 
@@ -7133,15 +7133,15 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "stake@workspace:."
   dependencies:
-    "@airgap/beacon-sdk": "npm:^4.2.1"
+    "@airgap/beacon-sdk": "npm:^4.2.2-beta.4"
     "@chakra-ui/icons": "npm:^2.1.1"
     "@chakra-ui/react": "npm:^2.8.2"
     "@chakra-ui/system": "npm:^2.6.2"
     "@emotion/react": "npm:^11.11.4"
     "@emotion/styled": "npm:^11.11.5"
-    "@taquito/beacon-wallet": "npm:^19.2.0"
-    "@taquito/rpc": "npm:^19.2.0"
-    "@taquito/taquito": "npm:^19.2.0"
+    "@taquito/beacon-wallet": "npm:^20.0.0-beta.1"
+    "@taquito/rpc": "npm:^20.0.0-beta.1"
+    "@taquito/taquito": "npm:^20.0.0-beta.1"
     "@types/react": "npm:^18"
     "@types/react-dom": "npm:^18"
     bufferutil: "npm:^4.0.8"
