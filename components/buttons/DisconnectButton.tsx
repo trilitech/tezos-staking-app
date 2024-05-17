@@ -2,22 +2,11 @@ import React from 'react'
 import { Button, ButtonProps } from '@chakra-ui/react'
 import { useConnection } from '@/components/ConnectionProvider'
 
-export const DisconnectButton = ({
-  setError,
-  ...styles
-}: {
-  setError?: (error: boolean) => void
-} & ButtonProps) => {
+export const DisconnectButton = ({ ...styles }: {} & ButtonProps) => {
   const { disconnect } = useConnection()
 
   return (
-    <Button
-      {...styles}
-      onClick={() => {
-        disconnect()
-        if (setError) setError(false)
-      }}
-    >
+    <Button {...styles} onClick={() => disconnect()}>
       Disconnect
     </Button>
   )

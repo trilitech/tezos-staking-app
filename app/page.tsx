@@ -1,15 +1,5 @@
 'use client'
-import {
-  Center,
-  Spinner,
-  Flex,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalBody,
-  useDisclosure,
-  Text
-} from '@chakra-ui/react'
+import { Center, Spinner, Flex } from '@chakra-ui/react'
 import { LoginModal } from '../components/LoginModal'
 import { useState, useEffect } from 'react'
 import { useConnection } from '@/components/ConnectionProvider'
@@ -17,7 +7,7 @@ import { TermAndPolicy } from '../components/TermAndPolicy'
 import { AccountBanner } from '@/components/AccountBanner'
 import { MobileAccountBanner } from '@/components/MobileAccountBanner'
 import { AccountBody } from '@/components/AccountBody'
-import { DisconnectButton } from '@/components/buttons/DisconnectButton'
+import { ErrorModal } from '@/components/ErrorModal'
 
 export interface DelegateData {
   address: string
@@ -29,13 +19,14 @@ export interface DelegateData {
 
 export default function Home() {
   const { isConnected, address } = useConnection()
-  const { onClose } = useDisclosure()
 
   const [data, setData] = useState<DelegateData | null>(null)
   const [error, setError] = useState(false)
 
   const fetchData = async (address: string | undefined) => {
     const apiAddress = (process.env.NEXT_PUBLIC_API_URL as string) + address
+
+    if (error) setError(false)
 
     try {
       const response = await fetch(apiAddress)
@@ -65,38 +56,24 @@ export default function Home() {
         <Spinner />
       ) : isConnected ? (
         <>
-          {error ? (
-            <Modal isOpen onClose={onClose} size='lg'>
-              <ModalOverlay />
-              <ModalContent>
-                <ModalBody h='800px' py='50px' textAlign='center'>
-                  <Text fontWeight={600} mb='20px'>
-                    There are seomthing wrong
-                    <br /> Please reconnect the wallet again.
-                  </Text>
-                  <DisconnectButton setError={setError} />
-                </ModalBody>
-              </ModalContent>
-            </Modal>
-          ) : (
-            <Flex flexDir='column' w='600px' gap='15px' mx='20px'>
-              <AccountBanner
-                name='Account Name'
-                address={data?.address ?? ''}
-                display={['none', null, 'flex']}
-              />
-              <MobileAccountBanner
-                name='Account Name'
-                address={data?.address ?? ''}
-                display={['flex', null, 'none']}
-              />
-              <AccountBody
-                {...(data as DelegateData)}
-                delegationStatus='inactive'
-              />
-              <TermAndPolicy color='#718096' />
-            </Flex>
-          )}
+          {error ? <ErrorModal /> : undefined}
+          <Flex flexDir='column' w='600px' gap='15px' mx='20px'>
+            <AccountBanner
+              name='Account Name'
+              address={data?.address ?? ''}
+              display={['none', null, 'flex']}
+            />
+            <MobileAccountBanner
+              name='Account Name'
+              address={data?.address ?? ''}
+              display={['flex', null, 'none']}
+            />
+            <AccountBody
+              {...(data as DelegateData)}
+              delegationStatus='inactive'
+            />
+            <TermAndPolicy color='#718096' />
+          </Flex>
         </>
       ) : (
         <Flex

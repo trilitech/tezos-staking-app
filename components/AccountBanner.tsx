@@ -45,7 +45,7 @@ export const AccountBanner = ({
           borderRadius='10px'
         >
           <AlertIcon />
-          Copy Successfull!
+          Copied
         </Alert>
       )}
 

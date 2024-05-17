@@ -44,7 +44,7 @@ export const MobileAccountBanner = ({
     window.addEventListener('resize', handleResize)
 
     return () => window.removeEventListener('resize', handleResize)
-  }, [windowSize.width]) //
+  }, [windowSize.width])
 
   return (
     <Flex
