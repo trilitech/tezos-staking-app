@@ -2,6 +2,7 @@ import { Context, createContext, useContext, useEffect, useState } from 'react'
 import { connectBeacon, createBeaconWallet } from './beacon'
 import { WalletApi } from './types'
 import { TezosToolkit } from '@taquito/taquito'
+import { Tezos as TzosInstance } from './beacon'
 
 interface ConnectionContextType extends Partial<WalletApi> {
   connect: () => Promise<void>
@@ -28,6 +29,10 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
       .then(activeAccount => {
         setIsConnected(!!activeAccount)
         setAddress(activeAccount?.address)
+        if (isConnected) {
+          TzosInstance.setWalletProvider(wallet)
+          setTezos(TzosInstance)
+        }
       })
       .catch(error => {
         console.error('Error:', error)
