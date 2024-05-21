@@ -78,14 +78,7 @@ export const AccountBody = ({
       setUnstakedOps(unstakingOps)
       setStakingOpsStatus(opStatus)
     }
-  }, [
-    blockchainHeadData,
-    accountInfoData,
-    unstakedOpsData,
-    stakingOpsStatus,
-    setAccountInfo,
-    setUnstakedOps
-  ])
+  }, [blockchainHeadData, accountInfoData, unstakedOpsData, stakingOpsStatus])
 
   if (isLoading) return <div>Loading...</div>
   if (error) return <div>Error: {error.message}</div>
