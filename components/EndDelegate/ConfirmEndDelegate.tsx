@@ -60,7 +60,7 @@ export const ConfirmEndDelegate = ({
           const response = await setDelegate(Tezos as TezosToolkit, undefined)
           setOpResult(response)
           setDisableOnClick(false)
-          handleOneStepForward()
+          if (response.success) handleOneStepForward()
         }}
       >
         Confirm
