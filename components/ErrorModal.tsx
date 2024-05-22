@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import {
   Modal,
@@ -7,12 +8,12 @@ import {
   useDisclosure,
   Text
 } from '@chakra-ui/react'
-import { DisconnectButton } from './buttons/DisconnectButton'
-import { useConnection } from './ConnectionProvider'
+import { PrimaryButton } from './buttons/PrimaryButton'
+import { useRouter } from 'next/navigation'
 
-export const ErrorModal = () => {
+export const ErrorModal = ({ message }: { message: string }) => {
   const { onClose } = useDisclosure()
-  const { disconnect } = useConnection()
+  const router = useRouter()
 
   return (
     <Modal isOpen onClose={onClose} size='lg'>
@@ -20,10 +21,11 @@ export const ErrorModal = () => {
       <ModalContent>
         <ModalBody h='800px' py='50px' textAlign='center'>
           <Text fontWeight={600} mb='20px'>
-            Something went wrong.
-            <br /> Please reconnect your wallet.
+            {message}
           </Text>
-          <DisconnectButton onClick={disconnect} />
+          <PrimaryButton onClick={() => window.location.reload()}>
+            Refresh
+          </PrimaryButton>
         </ModalBody>
       </ModalContent>
     </Modal>

@@ -7,7 +7,7 @@ import { NetworkType } from '@airgap/beacon-sdk'
 const rpc = new RpcClientCache(
   new RpcClient(process.env.NEXT_PUBLIC_RPC_ENDPOINT as string)
 )
-const Tezos = new TezosToolkit(rpc)
+export const Tezos = new TezosToolkit(rpc)
 
 export const createBeaconWallet = () =>
   typeof window === 'undefined'
@@ -34,6 +34,7 @@ export const connectBeacon = async () => {
   })
 
   return {
-    address: response.address
+    address: response.address,
+    Tezos: Tezos
   }
 }

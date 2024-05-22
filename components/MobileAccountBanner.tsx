@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react'
 import { HamburgerIcon } from '@chakra-ui/icons'
 import { DisconnectButton } from './buttons/DisconnectButton'
-import { simplifyAddress } from './AccountBanner'
+import { simplifyAddress } from '@/utils/simpliftAddress'
 import useClipboard from '@/utils/useClipboard'
 import { useConnection } from './ConnectionProvider'
 

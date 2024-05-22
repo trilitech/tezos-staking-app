@@ -10,9 +10,7 @@ import {
 } from '@chakra-ui/react'
 import { useConnection } from '@/components/ConnectionProvider'
 import useClipboard from '@/utils/useClipboard'
-
-export const simplifyAddress = (address: string) =>
-  address.slice(0, 8) + '...' + address.slice(-4)
+import { simplifyAddress } from '@/utils/simpliftAddress'
 
 export const AccountBanner = ({
   address,

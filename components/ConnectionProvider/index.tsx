@@ -1,17 +1,21 @@
 import { Context, createContext, useContext, useState, useEffect } from 'react'
 import { connectBeacon } from './beacon'
 import { WalletApi } from './types'
+import { TezosToolkit } from '@taquito/taquito'
 import { createBeaconWallet } from './beacon'
+import { Tezos as TzosInstance } from './beacon'
 interface ConnectionContextType extends Partial<WalletApi> {
   connect: () => Promise<void>
   disconnect: () => Promise<void>
   isConnected: boolean | undefined
+  Tezos: TezosToolkit | undefined
 }
 
 const ConnectionContext = createContext<ConnectionContextType | null>(null)
 
 export const ConnectionProvider = ({ children }: { children: any }) => {
   const [address, setAddress] = useState<string | undefined>(undefined)
+  const [Tezos, setTezos] = useState<TezosToolkit | undefined>(undefined)
   const [isConnected, setIsConnected] = useState<boolean | undefined>(undefined)
   const wallet = createBeaconWallet()
 
@@ -26,6 +30,10 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
       .then(activeAccount => {
         setIsConnected(activeAccount ? true : false)
         setAddress(activeAccount?.address)
+        if (isConnected) {
+          TzosInstance.setWalletProvider(wallet)
+          setTezos(TzosInstance)
+        }
       })
       .catch(error => {
         console.error('Error:', error)
@@ -43,9 +51,10 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
       value={{
         connect: async () => {
           return await connectBeacon()
-            .then(({ address }) => {
+            .then(({ address, Tezos }) => {
               setAddress(address)
               setIsConnected(true)
+              setTezos(Tezos)
             })
             .catch(() => {
               reset()
@@ -60,7 +69,8 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
           setIsConnected(false)
         },
         address,
-        isConnected
+        isConnected,
+        Tezos
       }}
     >
       {children}
