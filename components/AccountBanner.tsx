@@ -8,7 +8,7 @@ import {
   Alert,
   AlertIcon
 } from '@chakra-ui/react'
-import { useConnection } from '@/components/ConnectionProvider'
+import { useConnection } from '@/providers/ConnectionProvider'
 import useClipboard from '@/utils/useClipboard'
 import { simplifyAddress } from '@/utils/simpliftAddress'
 
@@ -37,7 +37,7 @@ export const AccountBanner = ({
         <Alert
           pos='absolute'
           top='50px'
-          w='200px'
+          w='120px'
           textAlign='center'
           status='success'
           borderRadius='10px'

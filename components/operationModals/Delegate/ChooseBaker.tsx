@@ -1,29 +1,32 @@
 import React, { useState } from 'react'
 import {
   Button,
-  Image,
   Flex,
   Text,
   InputGroup,
   Input,
   InputRightElement,
-  Link as ChakraLink
+  InputLeftElement,
+  Link as ChakraLink,
+  Image
 } from '@chakra-ui/react'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import Link from 'next/link'
-import { PrimaryButton } from '../buttons/PrimaryButton'
+import { PrimaryButton } from '@/components/buttons/PrimaryButton'
 import { BakerListDropDown } from './BakerListDropDown'
-import { BakerInfo } from '../Operations/tezInterfaces'
+import { BakerInfo } from '@/components/Operations/tezInterfaces'
 import { CloseIcon } from '@chakra-ui/icons'
+import { Header, ColumnHeader, BalanceBox } from '@/components/modalBody'
+import { simplifyAddress } from '@/utils/simpliftAddress'
 
 export const ChooseBaker = ({
-  availableBalance,
+  spendableBalance,
   handleOneStepForward,
   selectedBaker,
   setSelectedBaker,
   bakerList
 }: {
-  availableBalance: number
+  spendableBalance: number
   handleOneStepForward: () => void
   selectedBaker: BakerInfo | null
   setSelectedBaker: (b: BakerInfo | null) => void
@@ -57,29 +60,11 @@ export const ChooseBaker = ({
 
   return (
     <Flex flexDir='column' justify='center'>
-      <Text textAlign='center' fontSize='24px' py='24px' fontWeight={600}>
-        Delegate
-      </Text>
-      <Text color='#4A5568' fontSize='14px' pb='12px'>
-        AVAILABLE
-      </Text>
-      <Flex
-        justify='space-between'
-        alignItems='center'
-        borderRadius='8px'
-        w='100%'
-        py='12px'
-        px='16px'
-        bg='#EDF2F7'
-        mb='30px'
-      >
-        <Text>{availableBalance}</Text>
-        <Image src='/images/xtz-icon.svg' alt='xtz icon' />
-      </Flex>
+      <Header py='24px'>Delegate</Header>
+      <ColumnHeader pb='12px'>AVAILABLE</ColumnHeader>
+      <BalanceBox balance={spendableBalance} />
       <Flex alignItems='center' justify='space-between' mb='12px'>
-        <Text color='#4A5568' fontSize='14px'>
-          SELECT BAKER
-        </Text>
+        <ColumnHeader>SELECT BAKER</ColumnHeader>
         <ChakraLink
           as={Link}
           href='https://parisnet.tzkt.io/bakers'
@@ -96,11 +81,22 @@ export const ChooseBaker = ({
         </ChakraLink>
       </Flex>
       <InputGroup size='md' mb='30px'>
+        {!!selectedBaker && (
+          <InputLeftElement>
+            <Image
+              w='30px'
+              h='30px'
+              src={`https://services.tzkt.io/v1/avatars/${selectedBaker.address}`}
+              alt='baker avatar'
+            />
+          </InputLeftElement>
+        )}
+
         <Input
           onChange={handleChange}
           pr='4.5rem'
           placeholder='Paste tz address'
-          value={selectedBaker ? selectedBaker.address : value}
+          value={selectedBaker ? simplifyAddress(selectedBaker.address) : value}
         />
 
         <InputRightElement width='4.5rem' pr='12px'>

@@ -1,82 +1,86 @@
 'use client'
-import { Center, Spinner, Flex, Text } from '@chakra-ui/react'
+import { Center, Spinner, Flex } from '@chakra-ui/react'
 import { LoginModal } from '../components/LoginModal'
 import { useState, useEffect } from 'react'
-import { useConnection } from '@/components/ConnectionProvider'
+import { useConnection } from '@/providers/ConnectionProvider'
 import { TermAndPolicy } from '../components/TermAndPolicy'
 import { AccountBanner } from '@/components/AccountBanner'
 import { MobileAccountBanner } from '@/components/MobileAccountBanner'
 import { AccountBody } from '@/components/AccountBody'
 import { ErrorModal } from '@/components/ErrorModal'
-
+import { useQuery } from '@tanstack/react-query'
+import { mutezToTez } from '@/utils/mutezToTez'
 export interface DelegateData {
   address: string
   balance: number
+  spendableBalance: number
   stakedBalance: number
   unstakedBalance: number
+}
+
+async function fetchDelegateData(address: string) {
+  const apiAddress = (process.env.NEXT_PUBLIC_API_URL as string) + address
+  const response = await fetch(apiAddress)
+  return response.json()
 }
 
 export default function Home() {
   const { isConnected, address } = useConnection()
 
-  const [data, setData] = useState<DelegateData | null>(null)
-  const [error, setError] = useState(false)
+  const [delegateData, setDelegateData] = useState<DelegateData | null>(null)
 
-  const fetchUserData = async (address: string | undefined) => {
-    const apiAddress = (process.env.NEXT_PUBLIC_API_URL as string) + address
-
-    if (error) setError(false)
-
-    try {
-      const response = await fetch(apiAddress)
-      const data: DelegateData = await response.json()
-      const formatData = {
-        ...data,
-        balance: data.balance / 1000000,
-        stakedBalance: data.stakedBalance / 1000000,
-        unstakedBalance: data.unstakedBalance / 1000000
+  const { data, error } = useQuery({
+    queryKey: ['accountInfoData'],
+    queryFn: async () => {
+      if (isConnected && !!address) {
+        const data = await fetchDelegateData(address)
+        return data
       }
-
-      setData(formatData)
-    } catch (error) {
-      setError(true)
-      console.error(
-        'Error fetching user data from Tzkt API. Check api/address is correct.',
-        error
-      )
-    }
-  }
+      return null
+    },
+    refetchInterval: 10000,
+    refetchIntervalInBackground: true
+  })
 
   useEffect(() => {
-    if (isConnected) fetchUserData(address)
-  }, [isConnected, address])
+    if (!!data) {
+      const formatData = {
+        ...data,
+        spendableBalance: mutezToTez(
+          data.balance - data.stakedBalance - data.unstakedBalance
+        ),
+        stakedBalance: mutezToTez(data.stakedBalance),
+        unstakedBalance: mutezToTez(data.unstakedBalance)
+      }
+
+      setDelegateData(formatData)
+    }
+  }, [isConnected, address, data])
 
   return (
     <Center
-      h='100vh'
+      h={[`${isConnected ? '100%' : '100vh'}`, '100vh']}
+      py='20px'
       bg='#cbd5e0'
       bgImage={!isConnected ? '/images/login-bg.png' : ''}
-      pt='20px'
     >
       {isConnected === undefined ? (
         <Spinner />
       ) : isConnected ? (
         <>
-          {error ? (
-            <ErrorModal message='Something went wrong. Please reconnect your wallet.' />
-          ) : undefined}
+          {error ? <ErrorModal /> : undefined}
           <Flex flexDir='column' w='600px' gap='15px' mx='20px'>
             <AccountBanner
               name='Account Name'
-              address={data?.address ?? ''}
+              address={delegateData?.address ?? ''}
               display={['none', null, 'flex']}
             />
             <MobileAccountBanner
               name='Account Name'
-              address={data?.address ?? ''}
+              address={delegateData?.address ?? ''}
               display={['flex', null, 'none']}
             />
-            <AccountBody {...(data as DelegateData)} />
+            <AccountBody {...(delegateData as DelegateData)} />
             <TermAndPolicy color='#718096' />
           </Flex>
         </>

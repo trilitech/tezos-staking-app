@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Image, Flex, Text, Link as ChakraLink } from '@chakra-ui/react'
 import { PrimaryButton } from './buttons/PrimaryButton'
 import Link from 'next/link'
@@ -59,7 +59,7 @@ export const SuccessBody = ({
           cursor: 'pointer'
         }}
       >
-        <Text fontSize='14px'>View bakers</Text>
+        <Text fontSize='14px'>View in TzKT</Text>
         <ExternalLinkIcon />
       </ChakraLink>
     </Flex>

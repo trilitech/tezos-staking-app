@@ -67,8 +67,7 @@ export const unstake = async (
 }
 
 export const finalizeUnstake = async (
-  Tezos: TezosToolkit,
-  noArgs: undefined
+  Tezos: TezosToolkit
 ): Promise<OperationResult> => {
   let opHash = ''
   try {

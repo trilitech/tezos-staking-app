@@ -14,10 +14,10 @@ import {
   useDisclosure
 } from '@chakra-ui/react'
 import { HamburgerIcon } from '@chakra-ui/icons'
-import { DisconnectButton } from './buttons/DisconnectButton'
+import { TertiaryButton } from './buttons/TertiaryButton'
 import { simplifyAddress } from '@/utils/simpliftAddress'
 import useClipboard from '@/utils/useClipboard'
-import { useConnection } from './ConnectionProvider'
+import { useConnection } from '../providers/ConnectionProvider'
 
 export const MobileAccountBanner = ({
   address,
@@ -108,12 +108,7 @@ export const MobileAccountBanner = ({
             </Flex>
           </DrawerBody>
           <DrawerFooter>
-            <DisconnectButton
-              onClick={disconnect}
-              w='100%'
-              bg='black'
-              color='white'
-            />
+            <TertiaryButton onClick={disconnect}>Disconnect</TertiaryButton>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
