@@ -9,18 +9,16 @@ import {
   Flex
 } from '@chakra-ui/react'
 import { CloseIcon } from '@chakra-ui/icons'
-import useCurrentStep from '../../utils/useCurrentStep'
-import { SuccessBody } from '../SuccessBody'
-import { OperationResult } from '../Operations/operations'
+import useCurrentStep from '@/utils/useCurrentStep'
+import { SuccessBody } from '@/components/SuccessBody'
 import { EndDelegateStart } from './EndDelegateStart'
 import { ConfirmEndDelegate } from './ConfirmEndDelegate'
 
 interface EndDelegateModal {
   isOpen: boolean
   onClose: () => void
-  setOpResult: (res: OperationResult | null) => void
   bakerAddress: string
-  balance: number
+  spendableBalance: number
 }
 
 enum EndDelegateStatus {
@@ -32,13 +30,13 @@ enum EndDelegateStatus {
 export const EndDelegationModal = ({
   isOpen,
   onClose,
-  setOpResult,
   bakerAddress,
-  balance
+  spendableBalance
 }: EndDelegateModal) => {
   const { currentStep, handleOneStepBack, handleOneStepForward, reset } =
     useCurrentStep(onClose, 3)
   const [disableOnClick, setDisableOnClick] = useState(false)
+  const [tzktLink, setTzktLink] = useState('')
 
   const getCurrentStepBody = (currentStep: number) => {
     switch (currentStep) {
@@ -53,10 +51,10 @@ export const EndDelegationModal = ({
         return (
           <ConfirmEndDelegate
             handleOneStepForward={handleOneStepForward}
-            balance={balance}
+            spendableBalance={spendableBalance}
             bakerAddress={bakerAddress}
-            setOpResult={setOpResult}
             setDisableOnClick={setDisableOnClick}
+            setTzktLink={setTzktLink}
           />
         )
       case EndDelegateStatus.EndBakerDone:
@@ -67,7 +65,7 @@ export const EndDelegationModal = ({
             desc='You have successfully ended the delegation. You can start a new delegation now.'
             buttonText='Continue'
             onClose={onClose}
-            tzktLink='/'
+            tzktLink={tzktLink}
           />
         )
       default:

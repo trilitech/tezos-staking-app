@@ -70,6 +70,7 @@ export interface UnstakedOperation {
   firstTime: string
   lastLevel: number
   lastTime: string
+  remainingFinalizableAmount: number
   timeToFinalizeInSec: number
 }
 

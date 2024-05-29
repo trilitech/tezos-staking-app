@@ -1,8 +1,7 @@
 import { BeaconWallet } from '@taquito/beacon-wallet'
 import { TezosToolkit } from '@taquito/taquito'
 import { RpcClient, RpcClientCache } from '@taquito/rpc'
-import { DAppClientOptions } from '@airgap/beacon-dapp'
-import { NetworkType } from '@airgap/beacon-sdk'
+import { NetworkType, DAppClientOptions } from '@airgap/beacon-sdk'
 
 const rpc = new RpcClientCache(
   new RpcClient(process.env.NEXT_PUBLIC_RPC_ENDPOINT as string)
@@ -15,7 +14,7 @@ export const createBeaconWallet = () =>
     : new BeaconWallet({
         name: 'Stake XTZ',
         appUrl: '', // need to fill this
-        preferredNetwork: process.env.NEXT_PUBLIC_NETWORK, // change to Paris net later?
+        network: { type: process.env.NEXT_PUBLIC_NETWORK as NetworkType },
         featuredWallets: ['kukai', 'trust', 'temple', 'umami']
       } as DAppClientOptions)
 
@@ -27,11 +26,7 @@ export const connectBeacon = async () => {
     throw new Error('Tried to connect on the server')
   }
 
-  const response = await beaconWallet.client.requestPermissions({
-    network: {
-      type: process.env.NEXT_PUBLIC_NETWORK as NetworkType
-    }
-  })
+  const response = await beaconWallet.client.requestPermissions()
 
   return {
     address: response.address,

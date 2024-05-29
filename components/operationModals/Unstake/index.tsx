@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   Modal,
   ModalOverlay,
@@ -8,106 +8,70 @@ import {
   Image,
   Flex
 } from '@chakra-ui/react'
-import { BakerInfo } from '../Operations/tezInterfaces'
 import { CloseIcon } from '@chakra-ui/icons'
-import { DelegateStart } from './DelegateStart'
-import { ChooseBaker } from './ChooseBaker'
-import { useQuery } from '@tanstack/react-query'
-import useCurrentStep from '../../utils/useCurrentStep'
-import { ConfirmDelegate } from './ConfirmDelegate'
-import { SuccessBody } from '../SuccessBody'
-import { OperationResult } from '../Operations/operations'
+import { UnstakeStart } from './UnstakeStart'
+import { SelectAmount } from './SelectAmount'
+import { ConfirmAmount } from './ConfirmAmount'
+import useCurrentStep from '@/utils/useCurrentStep'
+import { SuccessBody } from '@/components/SuccessBody'
 
-interface DelegateModal {
+interface UnstakeModal {
   isOpen: boolean
   onClose: () => void
-  balance: number
-  setOpResult: (res: OperationResult | null) => void
+  stakedAmount: number
 }
 
-enum DelegateStatus {
-  DelegationStart = 1,
-  ChooseBaker = 2,
-  ConfirmBaker = 3,
-  SetBakerDone = 4
+enum UnstakeStatus {
+  UnstakeStart = 1,
+  SelectAmount = 2,
+  ConfirmUnstake = 3,
+  UnstakeDone = 4
 }
 
-async function getBakerList() {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_TZKT_API_URL}/v1/delegates?active=true`
-  )
-  if (!response.ok) {
-    throw new Error('Failed to fetch baker list')
-  }
-  return response.json()
-}
-
-export const DelegationModal = ({
+export const UnstakeModal = ({
   isOpen,
   onClose,
-  balance,
-  setOpResult
-}: DelegateModal) => {
-  const [bakerList, setBakerList] = useState<BakerInfo[] | null>(null)
-  const [selectedBaker, setSelectedBaker] = useState<BakerInfo | null>(null)
+  stakedAmount
+}: UnstakeModal) => {
   const [disableOnClick, setDisableOnClick] = useState(false)
-
-  const { data, status } = useQuery({
-    queryKey: ['baerList'],
-    queryFn: getBakerList,
-    staleTime: 180000
-  })
-
-  useEffect(() => {
-    if (status === 'success') {
-      const bakerData = data.map((baker: BakerInfo) => {
-        return {
-          address: baker.address
-        }
-      })
-
-      setBakerList(bakerData)
-    } else if (status === 'error') {
-      throw Error('Fail to get the baker list')
-    }
-  }, [status])
-
+  const [unstakeAmount, setUnstakeAmount] = useState<number>(0)
+  const [tzktLink, setTzktLink] = useState('')
   const { currentStep, handleOneStepBack, handleOneStepForward, reset } =
     useCurrentStep(onClose, 4)
 
   const getCurrentStepBody = (currentStep: number) => {
     switch (currentStep) {
-      case DelegateStatus.DelegationStart:
-        return <DelegateStart handleOneStepForward={handleOneStepForward} />
-      case DelegateStatus.ChooseBaker:
+      case UnstakeStatus.UnstakeStart:
+        return <UnstakeStart handleOneStepForward={handleOneStepForward} />
+      case UnstakeStatus.SelectAmount:
         return (
-          <ChooseBaker
-            availableBalance={balance}
+          <SelectAmount
+            stakedAmount={stakedAmount}
+            unstakeAmount={unstakeAmount}
+            setUnstakeAmount={setUnstakeAmount}
             handleOneStepForward={handleOneStepForward}
-            selectedBaker={selectedBaker}
-            setSelectedBaker={setSelectedBaker}
-            bakerList={bakerList ?? []}
           />
         )
-      case DelegateStatus.ConfirmBaker:
+      case UnstakeStatus.ConfirmUnstake:
         return (
-          <ConfirmDelegate
-            selectedBaker={selectedBaker as BakerInfo}
-            availableBalance={balance}
-            handleOneStepForward={handleOneStepForward}
-            setOpResult={setOpResult}
+          <ConfirmAmount
+            stakedAmount={stakedAmount}
+            unstakeAmount={unstakeAmount}
+            setUnstakeAmount={setUnstakeAmount}
             setDisableOnClick={setDisableOnClick}
+            handleOneStepForward={handleOneStepForward}
+            setTzktLink={setTzktLink}
           />
         )
-      case DelegateStatus.SetBakerDone:
+      case UnstakeStatus.UnstakeDone:
         return (
           <SuccessBody
             header='Nicely Done!'
-            desc='You have successfully delegated your balance to the baker. You can now stake your balance.'
+            desc='You have successfully unstaked the funds. They will be available to finalize in 2 cycles (around 4 days).'
             buttonText='Continue'
             onClose={onClose}
             reset={reset}
-            tzktLink='/'
+            tzktLink={tzktLink}
           />
         )
       default:
@@ -126,7 +90,7 @@ export const DelegationModal = ({
       <ModalOverlay />
       <ModalContent pb='20px'>
         <ModalHeader>
-          {currentStep !== DelegateStatus.SetBakerDone && (
+          {currentStep !== UnstakeStatus.UnstakeDone && (
             <Flex justify='space-between' alignItems='center'>
               <Image
                 onClick={() => {
@@ -149,7 +113,7 @@ export const DelegationModal = ({
 
         <ModalBody>
           <Flex flexDir='column'>
-            {currentStep !== DelegateStatus.SetBakerDone && (
+            {currentStep !== UnstakeStatus.UnstakeDone && (
               <Stepper currentStep={currentStep} />
             )}
             {getCurrentStepBody(currentStep)}

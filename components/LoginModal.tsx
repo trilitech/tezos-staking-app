@@ -1,11 +1,14 @@
 import React from 'react'
 import { Box, Flex, Image, Text, FlexProps } from '@chakra-ui/react'
 import Link from 'next/link'
-import { ConnectButton } from '@/components/buttons/ConnectButton'
+import { PrimaryButton } from './buttons/PrimaryButton'
+import { useConnection } from '@/providers/ConnectionProvider'
 
 const STEPS = ['DELEGATE', 'STAKE TEZ', 'EARN TEZ']
 
 export const LoginModal = () => {
+  const { connect } = useConnection()
+
   return (
     <Flex
       pos='relative'
@@ -37,7 +40,9 @@ export const LoginModal = () => {
         ))}
       </Flex>
       <MobileSteps display={['flex', null, 'none']} mb='20px' />
-      <ConnectButton mb='24px' />
+      <PrimaryButton w={['100%', '170px']} mb='24px' onClick={connect}>
+        Connect Wallet
+      </PrimaryButton>
       <Link href='/'>
         <Text fontWeight={600} fontSize='16px' textDecor='underline'>
           Learn more

@@ -6,6 +6,7 @@ import {
   StakingOpsStatus,
   UnstakedOperation
 } from './tezInterfaces'
+import { mutezToTez } from '@/utils/mutezToTez'
 
 const BLOCK_TIME_IN_SEC = 10
 const NUM_OF_BLOCKS_TO_FINALIZE_AFTER_UNSTAKE = 32768 // 2 cycles each cycle with 16384 blocks
@@ -93,16 +94,16 @@ export function updateStakingOpsStatus(
   if (unstakingOps !== null && unstakingOps?.length > 0) {
     unstakingOps = unstakingOps.map(operation => {
       let levelDiff = blockHead.level - operation.firstLevel
-      let remainingFinalizableAmount =
+      operation.remainingFinalizableAmount =
         operation.requestedAmount -
         operation.finalizedAmount -
         operation.slashedAmount -
         operation.restakedAmount
 
       if (levelDiff > NUM_OF_BLOCKS_TO_FINALIZE_AFTER_UNSTAKE) {
-        if (remainingFinalizableAmount > 0) {
+        if (operation.remainingFinalizableAmount > 0) {
           opStatus.CanFinalizeUnstake = true
-          totalFinalizableAmount += remainingFinalizableAmount
+          totalFinalizableAmount += operation.remainingFinalizableAmount
         }
       } else {
         operation.timeToFinalizeInSec =
@@ -112,5 +113,6 @@ export function updateStakingOpsStatus(
       return operation
     })
   }
+  totalFinalizableAmount = mutezToTez(totalFinalizableAmount)
   return { opStatus, unstakingOps, totalFinalizableAmount }
 }

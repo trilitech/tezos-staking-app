@@ -1,6 +1,7 @@
 import React from 'react'
 import { Image, Box, Flex, Text } from '@chakra-ui/react'
-import { PrimaryButton } from '../buttons/PrimaryButton'
+import { PrimaryButton } from '@/components/buttons/PrimaryButton'
+import { Header, Description } from '@/components/modalBody'
 
 export const DelegateStart = ({
   handleOneStepForward
@@ -15,13 +16,11 @@ export const DelegateStart = ({
         pt='20px'
         pb='16px'
       />
-      <Text fontSize='24px' fontWeight={600}>
-        Delegation
-      </Text>
-      <Text maxW='250px' textAlign='center'>
+      <Header mb='10px'>Delegation</Header>
+      <Description>
         Earn rewards while retaining lower risk of your funds by delegating to a
         Tezos baker.
-      </Text>
+      </Description>
       <Flex pt='20px' mb='30px' gap='10px' fontSize={['14px', '16px']}>
         <RoundBorderText step={1} text='DELEGATE' />
         <RoundBorderText step={2} text='STAKE TEZ' />
@@ -31,7 +30,13 @@ export const DelegateStart = ({
   )
 }
 
-const RoundBorderText = ({ text, step }: { text: string; step: number }) => {
+export const RoundBorderText = ({
+  text,
+  step
+}: {
+  text: string
+  step: number
+}) => {
   return (
     <Flex
       justify='center'

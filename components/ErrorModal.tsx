@@ -9,11 +9,13 @@ import {
   Text
 } from '@chakra-ui/react'
 import { PrimaryButton } from './buttons/PrimaryButton'
-import { useRouter } from 'next/navigation'
 
-export const ErrorModal = ({ message }: { message: string }) => {
+export const ErrorModal = ({
+  message = 'Something went wrong. Please refresh.'
+}: {
+  message?: string
+}) => {
   const { onClose } = useDisclosure()
-  const router = useRouter()
 
   return (
     <Modal isOpen onClose={onClose} size='lg'>
