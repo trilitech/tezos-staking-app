@@ -27,7 +27,6 @@ export const connectBeacon = async () => {
   }
 
   const response = await beaconWallet.client.requestPermissions()
-
   return {
     address: response.address,
     Tezos: Tezos

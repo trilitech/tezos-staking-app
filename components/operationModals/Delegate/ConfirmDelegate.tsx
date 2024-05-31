@@ -51,7 +51,6 @@ export const ConfirmDelegate = ({
             setTzktLink(
               `$(process.env.NEXT_PUBLIC_TZKT_UI_URL)/${response.opHash}`
             )
-            setSelectedBaker(null)
             handleOneStepForward()
           } else {
             setoOerationErrorMessage(response.errorMessage)
