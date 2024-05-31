@@ -36,12 +36,12 @@ export const ConfirmAmount = ({
       <BalanceBox balance={stakedAmount} />
       <PrimaryButton
         onClick={async () => {
-          setDisableOnClick(true)
           const response = await stake(Tezos as TezosToolkit, stakedAmount)
-          setDisableOnClick(false)
 
           if (response.success) {
-            setTzktLink(`https://parisnet.tzkt.io/${response.opHash}`)
+            setTzktLink(
+              `$(process.env.NEXT_PUBLIC_TZKT_UI_URL)/${response.opHash}`
+            )
             setStakedAmount(0)
             handleOneStepForward()
           } else {

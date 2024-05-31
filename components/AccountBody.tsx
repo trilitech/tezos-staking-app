@@ -181,7 +181,7 @@ export const AccountBody = ({
               ) : (
                 <ChakraLink
                   as={Link}
-                  href='https://parisnet.tzkt.io/bakers'
+                  href='$(process.env.NEXT_PUBLIC_TZKT_UI_URL)/bakers'
                   target='_blank'
                   display='flex'
                   alignItems='center'
