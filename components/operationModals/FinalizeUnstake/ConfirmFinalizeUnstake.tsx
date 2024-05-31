@@ -32,12 +32,12 @@ export const ConfirmFinalizeUnstake = ({
       <BalanceBox balance={withdrawAmount} />
       <PrimaryButton
         onClick={async () => {
-          setDisableOnClick(true)
           const response = await finalizeUnstake(Tezos as TezosToolkit)
-          setDisableOnClick(false)
 
           if (response.success) {
-            setTzktLink(`https://parisnet.tzkt.io/${response.opHash}`)
+            setTzktLink(
+              `$(process.env.NEXT_PUBLIC_TZKT_UI_URL)/${response.opHash}`
+            )
             handleOneStepForward()
           } else {
             setoOerationErrorMessage(response.errorMessage)

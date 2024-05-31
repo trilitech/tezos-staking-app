@@ -42,16 +42,15 @@ export const ConfirmDelegate = ({
       <AddressBox address={selectedBaker.address} />
       <PrimaryButton
         onClick={async () => {
-          setDisableOnClick(true)
           const response = await setDelegate(
             Tezos as TezosToolkit,
             selectedBaker.address
           )
-          setDisableOnClick(false)
 
           if (response.success) {
-            setTzktLink(`https://parisnet.tzkt.io/${response.opHash}`)
-            setSelectedBaker(null)
+            setTzktLink(
+              `$(process.env.NEXT_PUBLIC_TZKT_UI_URL)/${response.opHash}`
+            )
             handleOneStepForward()
           } else {
             setoOerationErrorMessage(response.errorMessage)

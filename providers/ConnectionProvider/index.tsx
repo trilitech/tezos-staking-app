@@ -55,6 +55,7 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
               setAddress(address)
               setIsConnected(true)
               setTezos(Tezos)
+              location.reload()
             })
             .catch(() => {
               reset()
