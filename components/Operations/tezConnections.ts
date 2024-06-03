@@ -8,8 +8,9 @@ import {
 } from './tezInterfaces'
 import { mutezToTez } from '@/utils/mutezToTez'
 
-const BLOCK_TIME_IN_SEC = 10
-const NUM_OF_BLOCKS_TO_FINALIZE_AFTER_UNSTAKE = 32768 // 2 cycles each cycle with 16384 blocks
+const UNSTAKE_CYCLE_DIFF = Number(
+  process.env.NEXT_PUBLIC_NUM_OF_CYCLES_TO_FINALIZE_AFTER_UNSTAKE
+) // 2 cycles each cycle with 16384 blocks
 
 const tzktBaseUrl = process.env.NEXT_PUBLIC_TZKT_API_URL
 const bakersListApiUrl = `${tzktBaseUrl}/v1/delegates?active=true`
@@ -93,22 +94,20 @@ export function updateStakingOpsStatus(
   let totalFinalizableAmount = 0
   if (unstakingOps !== null && unstakingOps?.length > 0) {
     unstakingOps = unstakingOps.map(operation => {
-      let levelDiff = blockHead.level - operation.firstLevel
+      let cycleDiff = blockHead.cycle - operation.cycle
       operation.remainingFinalizableAmount =
         operation.requestedAmount -
         operation.finalizedAmount -
         operation.slashedAmount -
         operation.restakedAmount
-
-      if (levelDiff > NUM_OF_BLOCKS_TO_FINALIZE_AFTER_UNSTAKE) {
+      let cycleRemaining = UNSTAKE_CYCLE_DIFF + 1 - cycleDiff
+      if (cycleRemaining <= 0) {
         if (operation.remainingFinalizableAmount > 0) {
           opStatus.CanFinalizeUnstake = true
           totalFinalizableAmount += operation.remainingFinalizableAmount
         }
       } else {
-        operation.timeToFinalizeInSec =
-          (NUM_OF_BLOCKS_TO_FINALIZE_AFTER_UNSTAKE - levelDiff) *
-          BLOCK_TIME_IN_SEC //This is minimum time to finalize. Each block can take more than 10 sec if a consensus is not reached.
+        operation.numCyclesToFinalize = cycleRemaining
       }
       return operation
     })
