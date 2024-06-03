@@ -17,7 +17,14 @@ import { BakerListDropDown } from './BakerListDropDown'
 import { BakerInfo } from '@/components/Operations/tezInterfaces'
 import { CloseIcon } from '@chakra-ui/icons'
 import { Header, ColumnHeader, BalanceBox } from '@/components/modalBody'
-import { simplifyAddress } from '@/utils/simpliftAddress'
+
+interface ChooseBakerProps {
+  spendableBalance: number
+  handleOneStepForward: () => void
+  selectedBaker: BakerInfo | null
+  setSelectedBaker: (b: BakerInfo | null) => void
+  bakerList: BakerInfo[]
+}
 
 export const ChooseBaker = ({
   spendableBalance,
@@ -25,13 +32,7 @@ export const ChooseBaker = ({
   selectedBaker,
   setSelectedBaker,
   bakerList
-}: {
-  spendableBalance: number
-  handleOneStepForward: () => void
-  selectedBaker: BakerInfo | null
-  setSelectedBaker: (b: BakerInfo | null) => void
-  bakerList: BakerInfo[]
-}) => {
+}: ChooseBakerProps) => {
   const [value, setValue] = useState('')
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const handleChange = (event: any) => {
@@ -67,7 +68,7 @@ export const ChooseBaker = ({
         <ColumnHeader>SELECT BAKER</ColumnHeader>
         <ChakraLink
           as={Link}
-          href='$(process.env.NEXT_PUBLIC_TZKT_UI_URL)/bakers'
+          href={`${process.env.NEXT_PUBLIC_TZKT_UI_URL}/bakers`}
           target='_blank'
           display='flex'
           alignItems='center'
@@ -86,7 +87,7 @@ export const ChooseBaker = ({
             <Image
               w='30px'
               h='30px'
-              src={`https://services.tzkt.io/v1/avatars/${selectedBaker.address}`}
+              src={`${process.env.NEXT_PUBLIC_TZKT_AVATARS_URL}/${selectedBaker.address}`}
               alt='baker avatar'
             />
           </InputLeftElement>
@@ -96,7 +97,7 @@ export const ChooseBaker = ({
           onChange={handleChange}
           pr='4.5rem'
           placeholder='Paste tz address'
-          value={selectedBaker ? simplifyAddress(selectedBaker.address) : value}
+          value={selectedBaker ? selectedBaker.address : value}
         />
 
         <InputRightElement width='4.5rem' pr='12px'>

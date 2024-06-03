@@ -15,7 +15,6 @@ import { ChooseBaker } from './ChooseBaker'
 import { useQuery } from '@tanstack/react-query'
 import useCurrentStep from '@/utils/useCurrentStep'
 import { ConfirmDelegate } from './ConfirmDelegate'
-import { SuccessBody } from '@/components/SuccessBody'
 
 interface DelegateModal {
   isOpen: boolean
@@ -26,8 +25,7 @@ interface DelegateModal {
 enum DelegateStatus {
   DelegationStart = 1,
   ChooseBaker = 2,
-  ConfirmBaker = 3,
-  SetBakerDone = 4
+  ConfirmBaker = 3
 }
 
 async function getBakerList() {
@@ -48,8 +46,6 @@ export const DelegationModal = ({
 }: DelegateModal) => {
   const [bakerList, setBakerList] = useState<BakerInfo[] | null>(null)
   const [selectedBaker, setSelectedBaker] = useState<BakerInfo | null>(null)
-  const [disableOnClick, setDisableOnClick] = useState(false)
-  const [tzktLink, setTzktLink] = useState('')
 
   const { data, status } = useQuery({
     queryKey: ['baerList'],
@@ -71,8 +67,8 @@ export const DelegationModal = ({
     }
   }, [status])
 
-  const { currentStep, handleOneStepBack, handleOneStepForward, reset } =
-    useCurrentStep(onClose, 4)
+  const { currentStep, handleOneStepBack, handleOneStepForward } =
+    useCurrentStep(onClose, 3)
 
   const getCurrentStepBody = (currentStep: number) => {
     switch (currentStep) {
@@ -91,23 +87,9 @@ export const DelegationModal = ({
       case DelegateStatus.ConfirmBaker:
         return (
           <ConfirmDelegate
-            selectedBaker={selectedBaker as BakerInfo}
-            setSelectedBaker={setSelectedBaker}
-            spendableBalance={spendableBalance}
             handleOneStepForward={handleOneStepForward}
-            setDisableOnClick={setDisableOnClick}
-            setTzktLink={setTzktLink}
-          />
-        )
-      case DelegateStatus.SetBakerDone:
-        return (
-          <SuccessBody
-            header='Nicely Done!'
-            desc='You have successfully delegated your balance to the baker. You can now stake your balance.'
-            buttonText='Continue'
-            onClose={onClose}
-            reset={reset}
-            tzktLink={tzktLink}
+            selectedBaker={selectedBaker as BakerInfo}
+            spendableBalance={spendableBalance}
           />
         )
       default:
@@ -126,32 +108,24 @@ export const DelegationModal = ({
       <ModalOverlay />
       <ModalContent pb='20px'>
         <ModalHeader>
-          {currentStep !== DelegateStatus.SetBakerDone && (
-            <Flex justify='space-between' alignItems='center'>
-              <Image
-                onClick={() => {
-                  if (!disableOnClick) handleOneStepBack()
-                }}
-                src='/images/FiArrowLeftCircle.svg'
-                alt='back button'
-                _hover={{ cursor: 'pointer' }}
-              />
-              <CloseIcon
-                fontSize='14px'
-                onClick={() => {
-                  if (!disableOnClick) onClose()
-                }}
-                _hover={{ cursor: 'pointer' }}
-              />
-            </Flex>
-          )}
+          <Flex justify='space-between' alignItems='center'>
+            <Image
+              onClick={handleOneStepBack}
+              src='/images/FiArrowLeftCircle.svg'
+              alt='back button'
+              _hover={{ cursor: 'pointer' }}
+            />
+            <CloseIcon
+              fontSize='14px'
+              onClick={onClose}
+              _hover={{ cursor: 'pointer' }}
+            />
+          </Flex>
         </ModalHeader>
 
         <ModalBody>
           <Flex flexDir='column'>
-            {currentStep !== DelegateStatus.SetBakerDone && (
-              <Stepper currentStep={currentStep} />
-            )}
+            <Stepper currentStep={currentStep} />
             {getCurrentStepBody(currentStep)}
           </Flex>
         </ModalBody>

@@ -3,7 +3,7 @@ import { TezosToolkit } from '@taquito/taquito'
 export interface OperationResult {
   success: boolean
   opHash: string
-  errorMessage?: string
+  message: string
 }
 
 export const setDelegate = async (
@@ -15,13 +15,13 @@ export const setDelegate = async (
     const op = await Tezos.wallet.setDelegate({ delegate }).send()
     await op.confirmation()
     opHash = op.opHash
-    return { success: true, opHash }
+    return { success: true, opHash, message: 'Set delegate successfully' }
   } catch (error) {
     console.error(error)
     return {
       success: false,
       opHash: '',
-      errorMessage: 'Errors occur in delegate/undelegate operation, try again.'
+      message: 'Errors occur in delegate/undelegate operation, try again.'
     }
   }
 }
@@ -35,13 +35,13 @@ export const stake = async (
     const op = await Tezos.wallet.stake({ amount }).send()
     await op.confirmation()
     opHash = op.opHash
-    return { success: true, opHash }
+    return { success: true, opHash, message: 'Stake successfully' }
   } catch (error) {
     console.error(error)
     return {
       success: false,
       opHash: '',
-      errorMessage: 'Errors occur in stake operation, try again.'
+      message: 'Errors occur in stake operation, try again.'
     }
   }
 }
@@ -55,13 +55,13 @@ export const unstake = async (
     const op = await Tezos.wallet.unstake({ amount }).send()
     await op.confirmation()
     opHash = op.opHash
-    return { success: true, opHash }
+    return { success: true, opHash, message: 'Unstake successfully' }
   } catch (error) {
     console.error(error)
     return {
       success: false,
       opHash: '',
-      errorMessage: 'Errors occur in unstake operation, try again.'
+      message: 'Errors occur in unstake operation, try again.'
     }
   }
 }
@@ -74,13 +74,13 @@ export const finalizeUnstake = async (
     const op = await Tezos.wallet.finalizeUnstake({}).send()
     await op.confirmation()
     opHash = op.opHash
-    return { success: true, opHash }
+    return { success: true, opHash, message: 'Finalize unstake successfully' }
   } catch (error) {
     console.error(error)
     return {
       success: false,
       opHash: '',
-      errorMessage: 'Errors occur in finalize unstake operation, try again.'
+      message: 'Errors occur in finalize unstake operation, try again.'
     }
   }
 }

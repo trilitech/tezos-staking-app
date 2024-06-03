@@ -1,6 +1,5 @@
 import React from 'react'
 import { Flex, Text, Image } from '@chakra-ui/react'
-import { simplifyAddress } from '@/utils/simpliftAddress'
 
 export const AddressBox = ({ address }: { address: string }) => {
   return (
@@ -12,14 +11,15 @@ export const AddressBox = ({ address }: { address: string }) => {
       px='12px'
       bg='#EDF2F7'
       mb='30px'
+      gap='5px'
     >
       <Image
         w='30px'
         h='30px'
-        src={`https://services.tzkt.io/v1/avatars/${address}`}
+        src={`${process.env.NEXT_PUBLIC_TZKT_AVATARS_URL}/${address}`}
         alt='baker avatar'
       />
-      <Text>{simplifyAddress(address)}</Text>
+      <Text>{address}</Text>
     </Flex>
   )
 }

@@ -7,8 +7,8 @@ import { Tezos as TzosInstance } from './beacon'
 interface ConnectionContextType extends Partial<WalletApi> {
   connect: () => Promise<void>
   disconnect: () => Promise<void>
-  isConnected: boolean | undefined
-  Tezos: TezosToolkit | undefined
+  isConnected?: boolean
+  Tezos?: TezosToolkit
 }
 
 const ConnectionContext = createContext<ConnectionContextType | null>(null)

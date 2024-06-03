@@ -61,7 +61,7 @@ export const BakerListDropDown = ({
             <Image
               w='40px'
               h='40px'
-              src={`https://services.tzkt.io/v1/avatars/${baker.address}`}
+              src={`${process.env.NEXT_PUBLIC_TZKT_AVATARS_URL}/${baker.address}`}
               alt='baker avatar'
             />
             <Box>

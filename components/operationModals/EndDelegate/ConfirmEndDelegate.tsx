@@ -10,25 +10,21 @@ import {
   BalanceBox,
   ColumnHeader
 } from '@/components/modalBody'
-import { useOperationError } from '@/providers/OperationErrorProvider'
+import { useOperationResponse } from '@/providers/OperationResponseProvider'
 
 interface ConfirmEndDelegate {
   spendableBalance: number
   handleOneStepForward: () => void
   bakerAddress: string
-  setDisableOnClick: (arg: boolean) => void
-  setTzktLink: (arg: string) => void
 }
 
 export const ConfirmEndDelegate = ({
   spendableBalance,
   handleOneStepForward,
-  bakerAddress,
-  setDisableOnClick,
-  setTzktLink
+  bakerAddress
 }: ConfirmEndDelegate) => {
   const { Tezos } = useConnection()
-  const { setoOerationErrorMessage } = useOperationError()
+  const { setMessage, setSuccess, setOpHash, setError } = useOperationResponse()
 
   return (
     <Flex flexDir='column' justify='center'>
@@ -42,12 +38,15 @@ export const ConfirmEndDelegate = ({
           const response = await setDelegate(Tezos as TezosToolkit, undefined)
 
           if (response.success) {
-            setTzktLink(
-              `$(process.env.NEXT_PUBLIC_TZKT_UI_URL)/${response.opHash}`
+            setOpHash(response.opHash)
+            setMessage(
+              'You have successfully ended the delegation. You can start a new delegation now.'
             )
+            setSuccess(true)
             handleOneStepForward()
           } else {
-            setoOerationErrorMessage(response.errorMessage)
+            setMessage(response.message)
+            setError(true)
           }
         }}
       >

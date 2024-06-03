@@ -5,27 +5,23 @@ import { PrimaryButton } from '@/components/buttons/PrimaryButton'
 import { unstake } from '@/components/Operations/operations'
 import { useConnection } from '@/providers/ConnectionProvider'
 import { TezosToolkit } from '@taquito/taquito'
-import { useOperationError } from '@/providers/OperationErrorProvider'
+import { useOperationResponse } from '@/providers/OperationResponseProvider'
 
 interface ConfirmAmountProps {
   stakedAmount: number
   unstakeAmount: number
   setUnstakeAmount: (arg: number) => void
-  setDisableOnClick: (arg: boolean) => void
   handleOneStepForward: () => void
-  setTzktLink: (arg: string) => void
 }
 
 export const ConfirmAmount = ({
   stakedAmount,
   unstakeAmount,
   setUnstakeAmount,
-  setDisableOnClick,
-  handleOneStepForward,
-  setTzktLink
+  handleOneStepForward
 }: ConfirmAmountProps) => {
   const { Tezos } = useConnection()
-  const { setoOerationErrorMessage } = useOperationError()
+  const { setMessage, setSuccess, setOpHash, setError } = useOperationResponse()
 
   return (
     <Flex flexDir='column'>
@@ -39,13 +35,16 @@ export const ConfirmAmount = ({
           const response = await unstake(Tezos as TezosToolkit, unstakeAmount)
 
           if (response.success) {
-            setTzktLink(
-              `$(process.env.NEXT_PUBLIC_TZKT_UI_URL)/${response.opHash}`
+            setOpHash(response.opHash)
+            setMessage(
+              'You have requested to unfreeze your staked balance. You need to wait for the next cycle to finalize and withdraw your frozen tez.'
             )
+            setSuccess(true)
             setUnstakeAmount(0)
             handleOneStepForward()
           } else {
-            setoOerationErrorMessage(response.errorMessage)
+            setMessage(response.message)
+            setError(true)
           }
         }}
       >

@@ -60,16 +60,16 @@ export const MobileAccountBanner = ({
     >
       <Image w='110px' h='38px' src='/images/logo.svg' alt='Tezos Logo' />
       <Button
-        border='solid 1px #EDF2F7'
+        border='solid 1px #E2E8F0'
         px='12px'
-        borderRadius='8px'
+        borderRadius='4px'
         bg='transparent'
         _hover={{
           bg: 'transparent'
         }}
         onClick={onOpen}
       >
-        <HamburgerIcon fontSize='20px' />
+        <HamburgerIcon color='black' fontSize='20px' />
       </Button>
       <Drawer placement='bottom' onClose={onClose} isOpen={isOpen} size='xl'>
         <DrawerOverlay />

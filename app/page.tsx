@@ -68,7 +68,12 @@ export default function Home() {
         <Spinner />
       ) : isConnected ? (
         <>
-          {error ? <ErrorModal /> : undefined}
+          {error ? (
+            <ErrorModal
+              onClick={() => window.location.reload()}
+              btnText='Refresh'
+            />
+          ) : undefined}
           <Flex flexDir='column' w='600px' gap='15px' mx='20px'>
             <AccountBanner
               name='Account Name'

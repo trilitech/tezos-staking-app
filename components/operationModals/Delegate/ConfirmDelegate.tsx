@@ -11,27 +11,21 @@ import {
   AddressBox,
   BalanceBox
 } from '@/components/modalBody'
-import { useOperationError } from '@/providers/OperationErrorProvider'
+import { useOperationResponse } from '@/providers/OperationResponseProvider'
 
 interface ConfirmDelegateProps {
   spendableBalance: number
   handleOneStepForward: () => void
   selectedBaker: BakerInfo
-  setSelectedBaker: (arg: BakerInfo | null) => void
-  setDisableOnClick: (arg: boolean) => void
-  setTzktLink: (arg: string) => void
 }
 
 export const ConfirmDelegate = ({
   spendableBalance,
   handleOneStepForward,
-  selectedBaker,
-  setSelectedBaker,
-  setDisableOnClick,
-  setTzktLink
+  selectedBaker
 }: ConfirmDelegateProps) => {
   const { Tezos } = useConnection()
-  const { setoOerationErrorMessage } = useOperationError()
+  const { setMessage, setSuccess, setError, setOpHash } = useOperationResponse()
 
   return (
     <Flex flexDir='column' justify='center'>
@@ -48,12 +42,15 @@ export const ConfirmDelegate = ({
           )
 
           if (response.success) {
-            setTzktLink(
-              `$(process.env.NEXT_PUBLIC_TZKT_UI_URL)/${response.opHash}`
+            setOpHash(response.opHash)
+            setMessage(
+              'You have successfully delegated your balance to the baker. You can now stake your balance.'
             )
+            setSuccess(true)
             handleOneStepForward()
           } else {
-            setoOerationErrorMessage(response.errorMessage)
+            setMessage(response.message)
+            setError(true)
           }
         }}
       >

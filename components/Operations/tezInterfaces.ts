@@ -9,6 +9,7 @@ export interface StakingOpsStatus {
 }
 
 export interface AccountInfo {
+  type: string
   address: string
   balance: number
   stakedBalance: number
