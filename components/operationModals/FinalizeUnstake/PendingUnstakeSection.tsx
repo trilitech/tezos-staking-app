@@ -35,7 +35,7 @@ export const PendingUnstakeSection = ({
 
         {/* Remaining finalizable amount */}
         {unstOps
-          .filter(op => op.timeToFinalizeInSec > 0)
+          .filter(op => op.numCyclesToFinalize > 0)
           .map((op, index) => (
             <UnstakeOperationBox key={index} unstakeOp={op} />
           ))}

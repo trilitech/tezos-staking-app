@@ -17,7 +17,7 @@ export const UnstakeOperationBox = ({
 
   let amount = 0
   let requestedTime = ''
-  let timeRemainingInHour = 0
+  let cyclesRemaining = 0
   let canFinalize = false
 
   if (!!totalFinalizableAmount) {
@@ -28,7 +28,7 @@ export const UnstakeOperationBox = ({
   if (!!unstakeOp) {
     amount = mutezToTez(unstakeOp.remainingFinalizableAmount)
     requestedTime = format(parseISO(unstakeOp.firstTime), 'dd MMMM yyyy')
-    timeRemainingInHour = secondsToHours(unstakeOp.timeToFinalizeInSec)
+    cyclesRemaining = unstakeOp.numCyclesToFinalize
   }
 
   return (
@@ -61,11 +61,7 @@ export const UnstakeOperationBox = ({
             </Text>
             <Flex alignItems='center'>
               <Text fontSize='14px' color='#4A5568' fontStyle='italic'>
-                Awaiting next cycle in{' '}
-                {timeRemainingInHour > 24
-                  ? `${Math.round(timeRemainingInHour / 24)} days`
-                  : `${timeRemainingInHour} hours`}{' '}
-                days
+                Awaiting finalization in {cyclesRemaining} cycles
               </Text>
               <Image
                 src='/images/MdOutlineHourglassTop.svg'

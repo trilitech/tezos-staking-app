@@ -71,7 +71,7 @@ export interface UnstakedOperation {
   lastLevel: number
   lastTime: string
   remainingFinalizableAmount: number
-  timeToFinalizeInSec: number
+  numCyclesToFinalize: number
 }
 
 export interface BlockchainHead {
