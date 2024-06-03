@@ -30,6 +30,7 @@ import { DelegationModal } from '@/components/operationModals/Delegate'
 import { EndDelegationModal } from '@/components/operationModals/EndDelegate'
 import { StakeModal } from './operationModals/Stake'
 import { UnstakeModal } from './operationModals/Unstake'
+import { ChangeBakerModal } from './operationModals/ChangeBaker'
 import { PendingUnstakeSection } from './operationModals/FinalizeUnstake/PendingUnstakeSection'
 import { ErrorModal } from './ErrorModal'
 import { SuccessModal } from './SuccessModal'
@@ -52,6 +53,7 @@ export const AccountBody = ({
   stakedBalance
 }: DelegateData) => {
   const delegateModal = useDisclosure()
+  const changeBakerModal = useDisclosure()
   const endDelegateModal = useDisclosure()
   const stakeModal = useDisclosure()
   const unstakeModal = useDisclosure()
@@ -193,7 +195,7 @@ export const AccountBody = ({
                   <Text>Change</Text>
                   <Image
                     _hover={{ cursor: 'pointer' }}
-                    onClick={() => delegateModal.onOpen()}
+                    onClick={() => changeBakerModal.onOpen()}
                     src='/images/FiEdit.svg'
                     alt='edit icon'
                   />
@@ -262,6 +264,12 @@ export const AccountBody = ({
         <DelegationModal
           isOpen={delegateModal.isOpen}
           onClose={delegateModal.onClose}
+          spendableBalance={spendableBalance}
+        />
+
+        <ChangeBakerModal
+          isOpen={changeBakerModal.isOpen}
+          onClose={changeBakerModal.onClose}
           spendableBalance={spendableBalance}
         />
 
