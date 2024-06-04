@@ -112,6 +112,5 @@ export function updateStakingOpsStatus(
       return operation
     })
   }
-  totalFinalizableAmount = mutezToTez(totalFinalizableAmount)
   return { opStatus, unstakingOps, totalFinalizableAmount }
 }
