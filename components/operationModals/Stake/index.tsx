@@ -13,7 +13,6 @@ import { StakeStart } from './StakeStart'
 import { SelectAmount } from './SelectAmount'
 import { ConfirmAmount } from './ConfirmAmount'
 import useCurrentStep from '@/utils/useCurrentStep'
-import { SuccessBody } from '@/components/SuccessBody'
 
 interface StakeModal {
   isOpen: boolean
@@ -24,8 +23,7 @@ interface StakeModal {
 enum StakeStatus {
   StakeStart = 1,
   SelectAmount = 2,
-  ConfirmStake = 3,
-  StakeDone = 4
+  ConfirmStake = 3
 }
 
 export const StakeModal = ({
@@ -33,12 +31,10 @@ export const StakeModal = ({
   onClose,
   spendableBalance
 }: StakeModal) => {
-  const [disableOnClick, setDisableOnClick] = useState(false)
-  const [stakedAmount, setStakedAmount] = useState<number>(0)
-  const [tzktLink, setTzktLink] = useState('')
+  const [stakedAmount, setStakedAmount] = useState(0)
 
-  const { currentStep, handleOneStepBack, handleOneStepForward, reset } =
-    useCurrentStep(onClose, 4)
+  const { currentStep, handleOneStepBack, handleOneStepForward } =
+    useCurrentStep(onClose, 3)
 
   const getCurrentStepBody = (currentStep: number) => {
     switch (currentStep) {
@@ -59,20 +55,7 @@ export const StakeModal = ({
             spendableBalance={spendableBalance}
             stakedAmount={stakedAmount as number}
             setStakedAmount={setStakedAmount}
-            setDisableOnClick={setDisableOnClick}
             handleOneStepForward={handleOneStepForward}
-            setTzktLink={setTzktLink}
-          />
-        )
-      case StakeStatus.StakeDone:
-        return (
-          <SuccessBody
-            header='Nicely Done!'
-            desc='You have successfully staked your balance to the baker.'
-            buttonText='Continue'
-            onClose={onClose}
-            reset={reset}
-            tzktLink={tzktLink}
           />
         )
       default:
@@ -91,32 +74,24 @@ export const StakeModal = ({
       <ModalOverlay />
       <ModalContent pb='20px'>
         <ModalHeader>
-          {currentStep !== StakeStatus.StakeDone && (
-            <Flex justify='space-between' alignItems='center'>
-              <Image
-                onClick={() => {
-                  if (!disableOnClick) handleOneStepBack()
-                }}
-                src='/images/FiArrowLeftCircle.svg'
-                alt='back button'
-                _hover={{ cursor: 'pointer' }}
-              />
-              <CloseIcon
-                fontSize='14px'
-                onClick={() => {
-                  if (!disableOnClick) onClose()
-                }}
-                _hover={{ cursor: 'pointer' }}
-              />
-            </Flex>
-          )}
+          <Flex justify='space-between' alignItems='center'>
+            <Image
+              onClick={handleOneStepBack}
+              src='/images/FiArrowLeftCircle.svg'
+              alt='back button'
+              _hover={{ cursor: 'pointer' }}
+            />
+            <CloseIcon
+              fontSize='14px'
+              onClick={onClose}
+              _hover={{ cursor: 'pointer' }}
+            />
+          </Flex>
         </ModalHeader>
 
         <ModalBody>
           <Flex flexDir='column'>
-            {currentStep !== StakeStatus.StakeDone && (
-              <Stepper currentStep={currentStep} />
-            )}
+            <Stepper currentStep={currentStep} />
             {getCurrentStepBody(currentStep)}
           </Flex>
         </ModalBody>

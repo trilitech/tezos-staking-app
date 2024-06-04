@@ -13,7 +13,6 @@ import { UnstakeStart } from './UnstakeStart'
 import { SelectAmount } from './SelectAmount'
 import { ConfirmAmount } from './ConfirmAmount'
 import useCurrentStep from '@/utils/useCurrentStep'
-import { SuccessBody } from '@/components/SuccessBody'
 
 interface UnstakeModal {
   isOpen: boolean
@@ -24,8 +23,7 @@ interface UnstakeModal {
 enum UnstakeStatus {
   UnstakeStart = 1,
   SelectAmount = 2,
-  ConfirmUnstake = 3,
-  UnstakeDone = 4
+  ConfirmUnstake = 3
 }
 
 export const UnstakeModal = ({
@@ -33,11 +31,9 @@ export const UnstakeModal = ({
   onClose,
   stakedAmount
 }: UnstakeModal) => {
-  const [disableOnClick, setDisableOnClick] = useState(false)
-  const [unstakeAmount, setUnstakeAmount] = useState<number>(0)
-  const [tzktLink, setTzktLink] = useState('')
-  const { currentStep, handleOneStepBack, handleOneStepForward, reset } =
-    useCurrentStep(onClose, 4)
+  const [unstakeAmount, setUnstakeAmount] = useState(0)
+  const { currentStep, handleOneStepBack, handleOneStepForward } =
+    useCurrentStep(onClose, 3)
 
   const getCurrentStepBody = (currentStep: number) => {
     switch (currentStep) {
@@ -58,20 +54,7 @@ export const UnstakeModal = ({
             stakedAmount={stakedAmount}
             unstakeAmount={unstakeAmount}
             setUnstakeAmount={setUnstakeAmount}
-            setDisableOnClick={setDisableOnClick}
             handleOneStepForward={handleOneStepForward}
-            setTzktLink={setTzktLink}
-          />
-        )
-      case UnstakeStatus.UnstakeDone:
-        return (
-          <SuccessBody
-            header='Nicely Done!'
-            desc='You have successfully unstaked the funds. They will be available to finalize in 2 cycles (around 4 days).'
-            buttonText='Continue'
-            onClose={onClose}
-            reset={reset}
-            tzktLink={tzktLink}
           />
         )
       default:
@@ -90,32 +73,24 @@ export const UnstakeModal = ({
       <ModalOverlay />
       <ModalContent pb='20px'>
         <ModalHeader>
-          {currentStep !== UnstakeStatus.UnstakeDone && (
-            <Flex justify='space-between' alignItems='center'>
-              <Image
-                onClick={() => {
-                  if (!disableOnClick) handleOneStepBack()
-                }}
-                src='/images/FiArrowLeftCircle.svg'
-                alt='back button'
-                _hover={{ cursor: 'pointer' }}
-              />
-              <CloseIcon
-                fontSize='14px'
-                onClick={() => {
-                  if (!disableOnClick) onClose()
-                }}
-                _hover={{ cursor: 'pointer' }}
-              />
-            </Flex>
-          )}
+          <Flex justify='space-between' alignItems='center'>
+            <Image
+              onClick={handleOneStepBack}
+              src='/images/FiArrowLeftCircle.svg'
+              alt='back button'
+              _hover={{ cursor: 'pointer' }}
+            />
+            <CloseIcon
+              fontSize='14px'
+              onClick={onClose}
+              _hover={{ cursor: 'pointer' }}
+            />
+          </Flex>
         </ModalHeader>
 
         <ModalBody>
           <Flex flexDir='column'>
-            {currentStep !== UnstakeStatus.UnstakeDone && (
-              <Stepper currentStep={currentStep} />
-            )}
+            <Stepper currentStep={currentStep} />
             {getCurrentStepBody(currentStep)}
           </Flex>
         </ModalBody>

@@ -22,7 +22,7 @@ export const PendingUnstakeSection = ({
         alignItems='center'
         mb='24px'
       >
-        <Text>PENDING UNSTAKE</Text>
+        <Text>PENDING UNSTAKE REQUESTS</Text>
         <Text>({numOfPendingUnstake})</Text>
       </Flex>
       <Flex flexDir='column' gap='20px'>

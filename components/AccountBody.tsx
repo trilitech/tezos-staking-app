@@ -32,7 +32,8 @@ import { StakeModal } from './operationModals/Stake'
 import { UnstakeModal } from './operationModals/Unstake'
 import { PendingUnstakeSection } from './operationModals/FinalizeUnstake/PendingUnstakeSection'
 import { ErrorModal } from './ErrorModal'
-import { useOperationError } from '@/providers/OperationErrorProvider'
+import { SuccessModal } from './SuccessModal'
+import { useOperationResponse } from '@/providers/OperationResponseProvider'
 
 const getNumOfUnstake = (
   unstOps?: UnstakedOperation[],
@@ -56,15 +57,20 @@ export const AccountBody = ({
   const unstakeModal = useDisclosure()
 
   const { address } = useConnection()
-
-  const { operationErrorMessage } = useOperationError()
+  const {
+    success: operationSuccess,
+    error: operationError,
+    message,
+    opHash,
+    resetOperation
+  } = useOperationResponse()
 
   const {
     blockchainHeadData,
     accountInfoData,
     unstakedOpsData,
     isLoading,
-    error
+    error: fetchAccountError
   } = useFetchAccountData(address)
 
   const [stakingOpsStatus, setStakingOpsStatus] = useState<StakingOpsStatus>({
@@ -74,6 +80,7 @@ export const AccountBody = ({
     CanFinalizeUnstake: false
   })
   const [accountInfo, setAccountInfo] = useState<AccountInfo | null>(null)
+  const [isFirstTime, setIsFirstTime] = useState(false)
   const [unstakedOps, setUnstakedOps] = useState<UnstakedOperation[]>(
     [] as UnstakedOperation[]
   )
@@ -89,6 +96,7 @@ export const AccountBody = ({
         )
       accountInfoData.totalFinalizableAmount = totalFinalizableAmount
       setAccountInfo(accountInfoData)
+      setIsFirstTime(accountInfo?.type === 'empty')
       setUnstakedOps(unstakingOps)
       setStakingOpsStatus(opStatus)
     }
@@ -103,8 +111,20 @@ export const AccountBody = ({
 
   return (
     <>
-      {(error || operationErrorMessage) && (
-        <ErrorModal message={operationErrorMessage} />
+      {(fetchAccountError || operationError) && (
+        <ErrorModal
+          onClick={() => window.location.reload()}
+          btnText='Refresh'
+          message={message}
+        />
+      )}
+      {operationSuccess && (
+        <SuccessModal
+          open={operationSuccess}
+          desc={message}
+          tzktLink={`${process.env.NEXT_PUBLIC_TZKT_UI_URL}/${opHash}`}
+          resetOperation={resetOperation}
+        />
       )}
       <Flex
         flexDir='column'
@@ -126,13 +146,13 @@ export const AccountBody = ({
             <Text fontSize='14px' color='#4A5568'>
               AVAILABLE
             </Text>
-            {spendableBalance && <Text>{spendableBalance} ꜩ</Text>}
+            <Text>{!!spendableBalance ? spendableBalance : 0} ꜩ</Text>
           </Flex>
           <Flex flexDir='column' borderTop='1px solid #EDF2F7' pt='20px'>
             <Text fontSize='14px' color='#4A5568'>
               STAKED
             </Text>
-            {stakedBalance && <Text>{stakedBalance} ꜩ</Text>}
+            <Text>{!!stakedBalance ? stakedBalance : 0} ꜩ</Text>
           </Flex>
           <Flex flexDir='column' borderTop='1px solid #EDF2F7' pt='20px'>
             <Flex justify='space-between' alignItems='center'>
@@ -205,7 +225,11 @@ export const AccountBody = ({
 
         <Flex w='100%' gap='20px'>
           {!stakingOpsStatus.Delegated && (
-            <PrimaryButton onClick={() => delegateModal.onOpen()} w='100%'>
+            <PrimaryButton
+              disabled={isFirstTime}
+              onClick={() => delegateModal.onOpen()}
+              w='100%'
+            >
               Delegate
             </PrimaryButton>
           )}

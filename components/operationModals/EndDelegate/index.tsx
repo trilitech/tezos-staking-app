@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Modal,
   ModalOverlay,
@@ -10,7 +10,6 @@ import {
 } from '@chakra-ui/react'
 import { CloseIcon } from '@chakra-ui/icons'
 import useCurrentStep from '@/utils/useCurrentStep'
-import { SuccessBody } from '@/components/SuccessBody'
 import { EndDelegateStart } from './EndDelegateStart'
 import { ConfirmEndDelegate } from './ConfirmEndDelegate'
 
@@ -23,8 +22,7 @@ interface EndDelegateModal {
 
 enum EndDelegateStatus {
   EndDelegationStart = 1,
-  ConfirmEndBaker = 2,
-  EndBakerDone = 3
+  ConfirmEndBaker = 2
 }
 
 export const EndDelegationModal = ({
@@ -33,10 +31,8 @@ export const EndDelegationModal = ({
   bakerAddress,
   spendableBalance
 }: EndDelegateModal) => {
-  const { currentStep, handleOneStepBack, handleOneStepForward, reset } =
-    useCurrentStep(onClose, 3)
-  const [disableOnClick, setDisableOnClick] = useState(false)
-  const [tzktLink, setTzktLink] = useState('')
+  const { currentStep, handleOneStepBack, handleOneStepForward } =
+    useCurrentStep(onClose, 2)
 
   const getCurrentStepBody = (currentStep: number) => {
     switch (currentStep) {
@@ -53,24 +49,11 @@ export const EndDelegationModal = ({
             handleOneStepForward={handleOneStepForward}
             spendableBalance={spendableBalance}
             bakerAddress={bakerAddress}
-            setDisableOnClick={setDisableOnClick}
-            setTzktLink={setTzktLink}
-          />
-        )
-      case EndDelegateStatus.EndBakerDone:
-        return (
-          <SuccessBody
-            reset={reset}
-            header='Delegation Ended!'
-            desc='You have successfully ended the delegation. You can start a new delegation now.'
-            buttonText='Continue'
-            onClose={onClose}
-            tzktLink={tzktLink}
           />
         )
       default:
         console.error('End delegation step is not defined')
-        return
+        break
     }
   }
 
@@ -84,32 +67,24 @@ export const EndDelegationModal = ({
       <ModalOverlay />
       <ModalContent pb='20px'>
         <ModalHeader>
-          {currentStep !== EndDelegateStatus.EndBakerDone && (
-            <Flex justify='space-between' alignItems='center'>
-              <Image
-                onClick={() => {
-                  if (!disableOnClick) handleOneStepBack()
-                }}
-                src='/images/FiArrowLeftCircle.svg'
-                alt='back button'
-                _hover={{ cursor: 'pointer' }}
-              />
-              <CloseIcon
-                fontSize='14px'
-                onClick={() => {
-                  if (!disableOnClick) onClose()
-                }}
-                _hover={{ cursor: 'pointer' }}
-              />
-            </Flex>
-          )}
+          <Flex justify='space-between' alignItems='center'>
+            <Image
+              onClick={handleOneStepBack}
+              src='/images/FiArrowLeftCircle.svg'
+              alt='back button'
+              _hover={{ cursor: 'pointer' }}
+            />
+            <CloseIcon
+              fontSize='14px'
+              onClick={onClose}
+              _hover={{ cursor: 'pointer' }}
+            />
+          </Flex>
         </ModalHeader>
 
         <ModalBody>
           <Flex flexDir='column'>
-            {currentStep !== EndDelegateStatus.EndBakerDone && (
-              <Stepper currentStep={currentStep} />
-            )}
+            <Stepper currentStep={currentStep} />
             {getCurrentStepBody(currentStep)}
           </Flex>
         </ModalBody>

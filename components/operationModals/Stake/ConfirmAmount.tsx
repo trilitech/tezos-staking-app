@@ -5,27 +5,23 @@ import { PrimaryButton } from '@/components/buttons/PrimaryButton'
 import { stake } from '@/components/Operations/operations'
 import { useConnection } from '@/providers/ConnectionProvider'
 import { TezosToolkit } from '@taquito/taquito'
-import { useOperationError } from '@/providers/OperationErrorProvider'
+import { useOperationResponse } from '@/providers/OperationResponseProvider'
 
 interface ConfirmAmountProps {
   spendableBalance: number
   stakedAmount: number
   setStakedAmount: (arg: number) => void
-  setDisableOnClick: (arg: boolean) => void
   handleOneStepForward: () => void
-  setTzktLink: (arg: string) => void
 }
 
 export const ConfirmAmount = ({
   spendableBalance,
   stakedAmount,
   setStakedAmount,
-  setDisableOnClick,
-  handleOneStepForward,
-  setTzktLink
+  handleOneStepForward
 }: ConfirmAmountProps) => {
   const { Tezos } = useConnection()
-  const { setoOerationErrorMessage } = useOperationError()
+  const { setMessage, setSuccess, setOpHash, setError } = useOperationResponse()
 
   return (
     <Flex flexDir='column'>
@@ -39,13 +35,16 @@ export const ConfirmAmount = ({
           const response = await stake(Tezos as TezosToolkit, stakedAmount)
 
           if (response.success) {
-            setTzktLink(
-              `$(process.env.NEXT_PUBLIC_TZKT_UI_URL)/${response.opHash}`
+            setOpHash(response.opHash)
+            setMessage(
+              'You have successfully staked your balance to the baker.'
             )
+            setSuccess(true)
             setStakedAmount(0)
             handleOneStepForward()
           } else {
-            setoOerationErrorMessage(response.errorMessage)
+            setMessage(response.message)
+            setError(true)
           }
         }}
       >

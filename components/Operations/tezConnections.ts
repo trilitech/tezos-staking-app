@@ -9,7 +9,7 @@ import {
 import { mutezToTez } from '@/utils/mutezToTez'
 
 const UNSTAKE_CYCLE_DIFF = Number(
-  process.env.NEXT_PUBLIC_NUM_OF_CYCLES_TO_FINALIZE_AFTER_UNSTAKE
+  process.env.NEXT_PUBLIC_NUM_CYCLES_TO_FINALIZE_AFTER_UNSTAKE
 ) // 2 cycles each cycle with 16384 blocks
 
 const tzktBaseUrl = process.env.NEXT_PUBLIC_TZKT_API_URL
