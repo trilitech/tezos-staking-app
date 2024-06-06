@@ -11,19 +11,14 @@ export const UnstakeStart = ({
 }) => {
   return (
     <Flex flexDir='column' alignItems='center'>
-      <Image
-        w='25px'
-        mt='24px'
-        mb='15px'
-        src='/images/alert-icon.svg'
-        alt='alert icon'
-      />
+      <Image w='25px' mb='15px' src='/images/alert-icon.svg' alt='alert icon' />
       <Header mb='15px'>Important Notice</Header>
       <Description mb='24px'>
-        You need to unstake first and wait for the next cycle to finalize and
-        withdraw your frozen tez back to your balance
+        After submitting an unstake, the chosen amount will become finalizable
+        after 4 cycles (~10 days). Then, you will need to finalize unstaked
+        balances in order to make them spendable.
       </Description>
-      <Flex mb='24px' gap='10px' fontSize={['14px', '16px']}>
+      <Flex mb='24px' fontSize={['14px', '16px']}>
         <RoundBorderText step={1} text='UNSTAKE' />
         <RoundBorderText step={2} text='FINALIZE' />
       </Flex>

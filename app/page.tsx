@@ -59,34 +59,37 @@ export default function Home() {
 
   return (
     <Center
-      h={[`${isConnected ? '100%' : '100vh'}`, '100vh']}
       py='20px'
+      minH='100vh'
       bg='#cbd5e0'
-      bgImage={!isConnected ? '/images/login-bg.png' : ''}
+      bgImage={!isConnected ? '/images/login-bg.png' : '/images/bg-grey.png'}
+      backgroundPosition='center'
+      backgroundRepeat='no-repeat'
+      backgroundSize='cover'
     >
       {isConnected === undefined ? (
         <Spinner />
       ) : isConnected ? (
         <>
-          {error ? (
+          {error && (
             <ErrorModal
               onClick={() => window.location.reload()}
               btnText='Refresh'
             />
-          ) : undefined}
-          <Flex flexDir='column' w='600px' gap='15px' mx='20px'>
+          )}
+          <Flex flexDir='column' w='600px' gap='10px' mx='20px'>
             <AccountBanner
-              name='Account Name'
+              name='Your Wallet'
               address={delegateData?.address ?? ''}
               display={['none', null, 'flex']}
             />
             <MobileAccountBanner
-              name='Account Name'
+              name='Your Wallet'
               address={delegateData?.address ?? ''}
               display={['flex', null, 'none']}
             />
             <AccountBody {...(delegateData as DelegateData)} />
-            <TermAndPolicy color='#718096' />
+            <TermAndPolicy pt='24px' />
           </Flex>
         </>
       ) : (
@@ -98,7 +101,7 @@ export default function Home() {
           px='20px'
         >
           <LoginModal />
-          <TermAndPolicy color='white' mt='20px' />
+          <TermAndPolicy pt='30px' />
         </Flex>
       )}
     </Center>

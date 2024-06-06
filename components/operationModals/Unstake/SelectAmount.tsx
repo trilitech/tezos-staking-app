@@ -31,7 +31,7 @@ export const SelectAmount = ({
 
   return (
     <Flex flexDir='column'>
-      <Header my='24px'>Select Amount</Header>
+      <Header mb='24px'>Select Amount</Header>
       <ColumnHeader mb='12px'>STAKED</ColumnHeader>
       <BalanceBox balance={stakedAmount} mb='30px' />
       <ColumnHeader mb='12px'>ENTER AMOUNT</ColumnHeader>
@@ -43,14 +43,20 @@ export const SelectAmount = ({
           value={unstakeAmount ? unstakeAmount : undefined}
           pr='4.5rem'
           placeholder='0.00'
+          fontWeight={600}
+          h='58px'
+          _placeholder={{ fontWeight: 600, fontSize: '16px' }}
         />
-        <InputRightElement width='4.5rem' pr='12px'>
+        <InputRightElement width='4.5rem' pr='12px' h='100%'>
           <Button
             borderRadius='8px'
             bg={unstakeAmount === stakedAmount ? '#A0AEC0' : '#0052FF'}
             color='white'
-            h='1.75rem'
-            size='sm'
+            fontWeight={600}
+            fontSize='16px'
+            h='34px'
+            px='12px'
+            py='6px'
             _hover={{
               bg: unstakeAmount === stakedAmount ? '#A0AEC0' : '#0052FF'
             }}

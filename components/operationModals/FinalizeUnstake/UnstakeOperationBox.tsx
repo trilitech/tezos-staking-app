@@ -2,21 +2,22 @@ import React from 'react'
 import { Box, Text, Flex, Image, useDisclosure } from '@chakra-ui/react'
 import { UnstakedOperation } from '@/components/Operations/tezInterfaces'
 import { mutezToTez } from '@/utils/mutezToTez'
-import { secondsToHours, parseISO, format } from 'date-fns'
 import { TertiaryButton } from '@/components/buttons/TertiaryButton'
 import { FinalizeUnstakeModal } from '.'
 
 export const UnstakeOperationBox = ({
   unstakeOp,
-  totalFinalizableAmount
+  totalFinalizableAmount,
+  spendableBalance
 }: {
   unstakeOp?: UnstakedOperation
   totalFinalizableAmount?: number
+  spendableBalance: number
 }) => {
   const finalizeUnstakeModal = useDisclosure()
 
   let amount = 0
-  let requestedTime = ''
+  let requestedCycle = 0
   let cyclesRemaining = 0
   let canFinalize = false
 
@@ -27,7 +28,7 @@ export const UnstakeOperationBox = ({
 
   if (!!unstakeOp) {
     amount = mutezToTez(unstakeOp.remainingFinalizableAmount)
-    requestedTime = format(parseISO(unstakeOp.firstTime), 'dd MMMM yyyy')
+    requestedCycle = unstakeOp.cycle
     cyclesRemaining = unstakeOp.numCyclesToFinalize
   }
 
@@ -36,32 +37,44 @@ export const UnstakeOperationBox = ({
       flexDir={['column', 'row']}
       alignItems='center'
       justify='space-between'
-      pt='10px'
+      pt='24px'
       borderTop='1px solid #EDF2F7'
       gap='10px'
     >
       <Box w='100%'>
-        <Text fontSize='18px' color='#4A5568' mb='10px'>
-          <Text as='span' fontWeight={600}>
-            {amount}
-          </Text>{' '}
-          ꜩ
-        </Text>
-        {!!requestedTime && (
+        <Flex flexDir='column'>
+          <Text fontSize='18px' color='#4A5568' mb='10px'>
+            <Text as='span' fontWeight={600}>
+              {amount}
+            </Text>{' '}
+            ꜩ
+          </Text>
+          {!!totalFinalizableAmount && (
+            <Text
+              color='#4A5568'
+              fontWeight={400}
+              fontSize='14px'
+              lineHeight='18px'
+            >
+              Ready to be finalized
+            </Text>
+          )}
+        </Flex>
+        {!!requestedCycle && (
           <Flex
             flexDir={['column', 'row']}
             alignItems={['start', 'center']}
             justify='space-between'
           >
             <Text fontSize='14px' color='#4A5568'>
-              Requested on{' '}
+              Requested in{' '}
               <Text as='span' fontWeight={600}>
-                {requestedTime}
+                cycle {requestedCycle}
               </Text>
             </Text>
-            <Flex alignItems='center'>
+            <Flex alignItems='center' gap='6px'>
               <Text fontSize='14px' color='#4A5568' fontStyle='italic'>
-                Awaiting finalization in {cyclesRemaining} cycles
+                Ready to be finalized in cycle {requestedCycle + 5}
               </Text>
               <Image
                 src='/images/MdOutlineHourglassTop.svg'
@@ -79,6 +92,7 @@ export const UnstakeOperationBox = ({
 
       {!!totalFinalizableAmount && (
         <FinalizeUnstakeModal
+          spendableBalance={spendableBalance}
           withdrawAmount={mutezToTez(totalFinalizableAmount)}
           isOpen={finalizeUnstakeModal.isOpen}
           onClose={finalizeUnstakeModal.onClose}

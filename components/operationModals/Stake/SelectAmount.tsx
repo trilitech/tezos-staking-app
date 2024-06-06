@@ -1,11 +1,5 @@
 import React from 'react'
-import {
-  Flex,
-  InputGroup,
-  InputRightElement,
-  Input,
-  Button
-} from '@chakra-ui/react'
+import { Flex, InputGroup, Input, Image, Text } from '@chakra-ui/react'
 import { Header, ColumnHeader, BalanceBox } from '@/components/modalBody'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
 
@@ -27,12 +21,12 @@ export const SelectAmount = ({
     else if (val === 0) setStakedAmount(0)
   }
 
-  const setMax = () => setStakedAmount(spendableBalance)
+  const isInsufficient = spendableBalance - stakedAmount < 0.01
 
   return (
     <Flex flexDir='column'>
-      <Header my='24px'>Select Amount</Header>
-      <ColumnHeader mb='12px'>AVAILABLE</ColumnHeader>
+      <Header mb='24px'>Select Amount</Header>
+      <ColumnHeader mb='12px'>SPENDABLE BALANCE</ColumnHeader>
       <BalanceBox balance={spendableBalance} mb='30px' />
       <ColumnHeader mb='12px'>ENTER AMOUNT</ColumnHeader>
       <InputGroup size='md' mb='30px'>
@@ -43,23 +37,19 @@ export const SelectAmount = ({
           value={stakedAmount ? stakedAmount : undefined}
           pr='4.5rem'
           placeholder='0.00'
+          fontWeight={600}
+          _placeholder={{ fontWeight: 600 }}
         />
-        <InputRightElement width='4.5rem' pr='12px'>
-          <Button
-            borderRadius='8px'
-            bg={stakedAmount === spendableBalance ? '#A0AEC0' : '#0052FF'}
-            color='white'
-            h='1.75rem'
-            size='sm'
-            _hover={{
-              bg: stakedAmount === spendableBalance ? '#A0AEC0' : '#0052FF'
-            }}
-            onClick={setMax}
-          >
-            Max
-          </Button>
-        </InputRightElement>
       </InputGroup>
+      {isInsufficient && (
+        <Flex alignItems='center' gap='8px' mb='30px'>
+          <Image src='/images/AlertIcon.svg' alt='alert icon' />
+          <Text opacity={0.8} fontSize='14px' fontWeight={400} color='#C53030'>
+            Insufficient balance! Keep minimum 0.01 tez spendable to cover fees
+            for this and future operations.
+          </Text>
+        </Flex>
+      )}
       <PrimaryButton
         disabled={!stakedAmount}
         onClick={() => {

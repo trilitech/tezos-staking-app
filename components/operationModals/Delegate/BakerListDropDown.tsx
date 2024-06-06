@@ -15,17 +15,19 @@ import { BakerInfo } from '@/components/Operations/tezInterfaces'
 export const BakerListDropDown = ({
   bakerList,
   setSelectedBaker,
-  setIsDropdownOpen
+  setIsDropdownOpen,
+  setShowStepper
 }: {
   bakerList: BakerInfo[]
   setSelectedBaker: (b: BakerInfo | null) => void
   setIsDropdownOpen: (val: boolean) => void
+  setShowStepper: (arg: boolean) => void
 }) => {
   const [hoverCopyIcon, setHoverCopyIcon] = useState(false)
   const { isCopied, copyTextToClipboard } = useClipboard()
 
   return (
-    <Flex flexDir='column' alignItems='center' justify='center' mt='20px'>
+    <Flex flexDir='column' alignItems='center' justify='center'>
       {isCopied && (
         <Alert
           pos='absolute'
@@ -43,16 +45,34 @@ export const BakerListDropDown = ({
         Select Baker
       </Text>
       {bakerList.length === 0 && <Spinner />}
-      <Flex flexDir='column' maxH='300px' overflowY='auto' w='full' mt='15px'>
+      <Flex
+        flexDir='column'
+        maxH='300px'
+        w='full'
+        mt='24px'
+        overflowY='auto'
+        sx={{
+          '::-webkit-scrollbar': {
+            width: '4px'
+          },
+          '::-webkit-scrollbar-thumb': {
+            background: '#E2E8F0',
+            borderRadius: '8px',
+            height: '100px'
+          }
+        }}
+      >
         {bakerList?.map((baker, index) => (
           <Flex
             alignItems='start'
-            p='8px'
-            _hover={{ cursor: 'pointer' }}
+            p='16px'
+            borderBottom='solid 1px #EDF2F7'
+            _hover={{ cursor: 'pointer', bg: '#F7FAFC' }}
             onClick={() => {
               if (!hoverCopyIcon) {
                 setSelectedBaker(baker)
                 setIsDropdownOpen(false)
+                setShowStepper(true)
               }
             }}
             gap='10px'
@@ -65,11 +85,13 @@ export const BakerListDropDown = ({
               alt='baker avatar'
             />
             <Box>
-              <Text fontSize='16px' fontWeight={600}>
-                Private Baker
+              <Text fontSize='16px' color='#171923' fontWeight={600}>
+                {baker.alias}
               </Text>
               <Flex alignItems='center' justify='center' gap='5px'>
-                <Text fontSize='14px'>{simplifyAddress(baker.address)}</Text>
+                <Text color='#2D3748' fontWeight={400} fontSize='14px'>
+                  {simplifyAddress(baker.address)}
+                </Text>
                 <Image
                   _hover={{ cursor: 'pointer' }}
                   zIndex={10}

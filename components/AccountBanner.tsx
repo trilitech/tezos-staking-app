@@ -26,7 +26,8 @@ export const AccountBanner = ({
   return (
     <Flex
       alignItems='center'
-      justify='space-around'
+      justify='space-between'
+      px={['20px', null, '40px']}
       py='20px'
       borderRadius='16px'
       bg='#FFF'
@@ -48,14 +49,21 @@ export const AccountBanner = ({
       )}
 
       <Image w='110px' h='38px' src='/images/logo.svg' alt='Tezos Logo' />
-      <Flex flexDir='column' justify='center' alignItems='center' gap='5px'>
-        <Flex justify='center' alignItems='center' gap='5px'>
-          <Image src='/images/account-circle.svg' alt='account circle' />
-          <Text>{name}</Text>
-        </Flex>
-        <Flex alignItems='center' justify='center' gap='10px'>
-          <Text fontSize='14px'>{simplifyAddress(address)}</Text>
+      <Flex flexDir='column' gap='5px' pos='relative' right='25px'>
+        <Text
+          fontWeight={600}
+          fontSize='16px'
+          lineHeight='22px'
+          alignSelf='center'
+        >
+          {name}
+        </Text>
+        <Flex gap='4px'>
+          <Text fontWeight={400} lineHeight='18px' fontSize='14px'>
+            {simplifyAddress(address)}
+          </Text>
           <Image
+            color='#A0AEC0'
             _hover={{ cursor: 'pointer' }}
             src='/images/copy-icon.svg'
             alt='copy icon'
@@ -66,14 +74,16 @@ export const AccountBanner = ({
       <Button
         border='solid 1px #EDF2F7'
         px='12px'
+        py='24px'
         borderRadius='8px'
         bg='transparent'
         _hover={{
-          bg: 'transparent'
+          bg: '#f8fafc'
         }}
       >
         <Image
-          w='20px'
+          w='24px'
+          h='24px'
           onClick={() => disconnect()}
           src='/images/logout.svg'
           alt='logout'

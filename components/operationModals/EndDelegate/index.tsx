@@ -12,6 +12,7 @@ import { CloseIcon } from '@chakra-ui/icons'
 import useCurrentStep from '@/utils/useCurrentStep'
 import { EndDelegateStart } from './EndDelegateStart'
 import { ConfirmEndDelegate } from './ConfirmEndDelegate'
+import { Stepper } from '@/components/modalBody/Stepper'
 
 interface EndDelegateModal {
   isOpen: boolean
@@ -31,8 +32,10 @@ export const EndDelegationModal = ({
   bakerAddress,
   spendableBalance
 }: EndDelegateModal) => {
+  const totalStep = 2
+
   const { currentStep, handleOneStepBack, handleOneStepForward } =
-    useCurrentStep(onClose, 2)
+    useCurrentStep(onClose, totalStep)
 
   const getCurrentStepBody = (currentStep: number) => {
     switch (currentStep) {
@@ -65,7 +68,7 @@ export const EndDelegationModal = ({
       closeOnOverlayClick={false}
     >
       <ModalOverlay />
-      <ModalContent pb='20px'>
+      <ModalContent>
         <ModalHeader>
           <Flex justify='space-between' alignItems='center'>
             <Image
@@ -84,25 +87,11 @@ export const EndDelegationModal = ({
 
         <ModalBody>
           <Flex flexDir='column'>
-            <Stepper currentStep={currentStep} />
+            <Stepper totalStep={totalStep} currentStep={currentStep} />
             {getCurrentStepBody(currentStep)}
           </Flex>
         </ModalBody>
       </ModalContent>
     </Modal>
-  )
-}
-
-const Stepper = ({ currentStep }: { currentStep: number }) => {
-  return (
-    <Flex justify='center' alignItems='center'>
-      <Image pr='5px' src='/images/stepper/full-dot.svg' alt='dot' />
-      <Image pr='5px' src='/images/stepper/line.svg' alt='dot' />
-      {currentStep === 1 ? (
-        <Image pr='5px' src='/images/stepper/empty-dot.svg' alt='dot' />
-      ) : (
-        <Image pr='5px' src='/images/stepper/full-dot.svg' alt='dot' />
-      )}
-    </Flex>
   )
 }

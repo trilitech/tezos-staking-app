@@ -11,7 +11,8 @@ import {
   DrawerContent,
   DrawerCloseButton,
   DrawerFooter,
-  useDisclosure
+  useDisclosure,
+  Icon
 } from '@chakra-ui/react'
 import { HamburgerIcon } from '@chakra-ui/icons'
 import { TertiaryButton } from './buttons/TertiaryButton'
@@ -52,16 +53,18 @@ export const MobileAccountBanner = ({
     <Flex
       alignItems='center'
       justify='space-between'
-      p='24px'
+      px={['20px', null, '40px']}
+      py='20px'
       borderRadius='16px'
       bg='#FFF'
       w='100%'
       {...styles}
     >
-      <Image w='110px' h='38px' src='/images/logo.svg' alt='Tezos Logo' />
+      <Image w='92px' h='32px' src='/images/logo.svg' alt='Tezos Logo' />
       <Button
         border='solid 1px #E2E8F0'
-        px='12px'
+        px='15px'
+        py='8px'
         borderRadius='4px'
         bg='transparent'
         _hover={{
@@ -69,28 +72,22 @@ export const MobileAccountBanner = ({
         }}
         onClick={onOpen}
       >
-        <HamburgerIcon color='black' fontSize='20px' />
+        <Icon as={HamburgerIcon} w='18px' h='18px' color='#171923' />
       </Button>
       <Drawer placement='bottom' onClose={onClose} isOpen={isOpen} size='xl'>
         <DrawerOverlay />
         <DrawerContent borderRadius='10px' py='40px'>
           <DrawerCloseButton />
 
-          <DrawerBody mb='10px'>
+          <DrawerBody>
             <Flex flexDir='column' alignItems='center' gap='16px'>
-              <Flex flexDir='column' alignItems='center'>
-                <Image
-                  src='/images/mobile-account-circle.svg'
-                  alt='account circle'
-                />
-                <Text fontSize='18px' fontWeight={600}>
-                  {name}
-                </Text>
-              </Flex>
+              <Text fontSize='18px' fontWeight={600}>
+                {name}
+              </Text>
               <Flex
                 alignItems='center'
                 justify='center'
-                gap='10px'
+                gap='4px'
                 border='solid 1px #E2E8F0'
                 borderRadius='100px'
                 w='200px'
@@ -107,7 +104,8 @@ export const MobileAccountBanner = ({
               </Flex>
             </Flex>
           </DrawerBody>
-          <DrawerFooter>
+          <DrawerFooter display='flex' flexDir='column'>
+            <Image mb='24px' src='/images/mobile-footer-line.svg' alt='line' />
             <TertiaryButton onClick={disconnect}>Disconnect</TertiaryButton>
           </DrawerFooter>
         </DrawerContent>

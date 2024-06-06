@@ -8,7 +8,8 @@ import {
   InputRightElement,
   InputLeftElement,
   Link as ChakraLink,
-  Image
+  Image,
+  Icon
 } from '@chakra-ui/react'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import Link from 'next/link'
@@ -16,22 +17,22 @@ import { PrimaryButton } from '@/components/buttons/PrimaryButton'
 import { BakerListDropDown } from './BakerListDropDown'
 import { BakerInfo } from '@/components/Operations/tezInterfaces'
 import { CloseIcon } from '@chakra-ui/icons'
-import { Header, ColumnHeader, BalanceBox } from '@/components/modalBody'
+import { Header, ColumnHeader } from '@/components/modalBody'
 
 interface ChooseBakerProps {
-  spendableBalance: number
   handleOneStepForward: () => void
   selectedBaker: BakerInfo | null
   setSelectedBaker: (b: BakerInfo | null) => void
   bakerList: BakerInfo[]
+  setShowStepper: (arg: boolean) => void
 }
 
 export const ChooseBaker = ({
-  spendableBalance,
   handleOneStepForward,
   selectedBaker,
   setSelectedBaker,
-  bakerList
+  bakerList,
+  setShowStepper
 }: ChooseBakerProps) => {
   const [value, setValue] = useState('')
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
@@ -55,15 +56,14 @@ export const ChooseBaker = ({
         setSelectedBaker={setSelectedBaker}
         setIsDropdownOpen={setIsDropdownOpen}
         bakerList={bakerList}
+        setShowStepper={setShowStepper}
       />
     )
   }
 
   return (
     <Flex flexDir='column' justify='center'>
-      <Header py='24px'>Delegate</Header>
-      <ColumnHeader pb='12px'>AVAILABLE</ColumnHeader>
-      <BalanceBox balance={spendableBalance} />
+      <Header pb='24px'>Delegate</Header>
       <Flex alignItems='center' justify='space-between' mb='12px'>
         <ColumnHeader>SELECT BAKER</ColumnHeader>
         <ChakraLink
@@ -72,21 +72,25 @@ export const ChooseBaker = ({
           target='_blank'
           display='flex'
           alignItems='center'
-          gap='5px'
+          gap='4px'
           _hover={{
             cursor: 'pointer'
           }}
         >
-          <Text fontSize='14px'>View bakers</Text>
-          <ExternalLinkIcon />
+          <Text fontSize='14px' fontWeight={600} color='#2D3748'>
+            View bakers
+          </Text>
+          <ExternalLinkIcon color='#A0AEC0' />
         </ChakraLink>
       </Flex>
       <InputGroup size='md' mb='30px'>
         {!!selectedBaker && (
-          <InputLeftElement>
+          <InputLeftElement h='100%'>
             <Image
+              ml='5px'
               w='30px'
               h='30px'
+              objectFit='cover'
               src={`${process.env.NEXT_PUBLIC_TZKT_AVATARS_URL}/${selectedBaker.address}`}
               alt='baker avatar'
             />
@@ -97,28 +101,44 @@ export const ChooseBaker = ({
           onChange={handleChange}
           pr='4.5rem'
           placeholder='Paste tz address'
+          sx={{
+            '::placeholder': {
+              fontSize: '16px'
+            }
+          }}
           value={selectedBaker ? selectedBaker.address : value}
+          h='58px'
+          overflowX='auto'
         />
 
-        <InputRightElement width='4.5rem' pr='12px'>
+        <InputRightElement mr='12px' h='100%' w='75px'>
           {selectedBaker ? (
-            <CloseIcon
+            <Icon
+              as={CloseIcon}
               _hover={{ cursor: 'pointer' }}
               onClick={() => {
                 setSelectedBaker(null)
                 setValue('')
               }}
-              fontSize='12px'
+              w='14px'
+              h='14px'
+              transform='translateX(20px)'
             />
           ) : (
             <Button
+              h='34px'
+              px='12px'
+              py='6px'
               borderRadius='8px'
+              fontWeight={600}
+              fontSize='16px'
               bg='black'
               color='white'
-              h='1.75rem'
-              size='sm'
               _hover={{ bg: 'black' }}
-              onClick={() => setIsDropdownOpen(true)}
+              onClick={() => {
+                setIsDropdownOpen(true)
+                setShowStepper(false)
+              }}
             >
               Select
             </Button>

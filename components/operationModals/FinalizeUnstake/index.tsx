@@ -12,6 +12,7 @@ import useCurrentStep from '@/utils/useCurrentStep'
 import { ConfirmFinalizeUnstake } from './ConfirmFinalizeUnstake'
 
 interface FinalizeUnstakeModal {
+  spendableBalance: number
   withdrawAmount: number
   isOpen: boolean
   onClose: () => void
@@ -22,6 +23,7 @@ enum EndDelegateStatus {
 }
 
 export const FinalizeUnstakeModal = ({
+  spendableBalance,
   withdrawAmount,
   isOpen,
   onClose
@@ -33,6 +35,7 @@ export const FinalizeUnstakeModal = ({
       case EndDelegateStatus.ConfirmFinalizeUnstake:
         return (
           <ConfirmFinalizeUnstake
+            spendableBalance={spendableBalance}
             withdrawAmount={withdrawAmount}
             handleOneStepForward={handleOneStepForward}
           />
@@ -51,7 +54,7 @@ export const FinalizeUnstakeModal = ({
       closeOnOverlayClick={false}
     >
       <ModalOverlay />
-      <ModalContent pb='20px'>
+      <ModalContent>
         <ModalHeader>
           <Flex justify='end'>
             <CloseIcon
