@@ -1,12 +1,17 @@
 import React, { useState } from 'react'
-import { Flex } from '@chakra-ui/react'
+import { Flex, Spinner } from '@chakra-ui/react'
 import { Header, ColumnHeader, BalanceBox } from '@/components/modalBody'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
-import { stake } from '@/components/Operations/operations'
+import {
+  stake,
+  getFee,
+  OperationType
+} from '@/components/Operations/operations'
 import { useConnection } from '@/providers/ConnectionProvider'
 import { TezosToolkit } from '@taquito/taquito'
 import { useOperationResponse } from '@/providers/OperationResponseProvider'
 import { ErrorBlock } from '@/components/ErrorBlock'
+import { useQuery } from '@tanstack/react-query'
 
 interface ConfirmAmountProps {
   spendableBalance: number
@@ -21,20 +26,34 @@ export const ConfirmAmount = ({
   setStakedAmount,
   handleOneStepForward
 }: ConfirmAmountProps) => {
-  const { Tezos } = useConnection()
+  const { Tezos, address } = useConnection()
   const { setMessage, setSuccess, setOpHash } = useOperationResponse()
   const [errorMessage, setErrorMessage] = useState('')
+  const [waitingOperation, setWaitingOperation] = useState(false)
+
+  const { data, status: gasFeeStatus } = useQuery({
+    queryKey: ['stakeFee'],
+    queryFn: () => getFee(OperationType.Stake, Tezos, address, stakedAmount),
+    staleTime: 180000
+  })
 
   return (
     <Flex flexDir='column'>
       <Header mb='24px'>Confirm</Header>
       <ColumnHeader mb='12px'>SPENDABLE BALANCE</ColumnHeader>
-      <BalanceBox mb='12px' fee={0.000585} balance={spendableBalance} />
+      <BalanceBox
+        mb='12px'
+        gasFeeStatus={gasFeeStatus}
+        fee={data?.gasFee}
+        balance={spendableBalance}
+      />
       <ColumnHeader mb='12px'>STAKE AMOUNT</ColumnHeader>
       <BalanceBox mb='30px' balance={stakedAmount} />
       <PrimaryButton
         onClick={async () => {
+          setWaitingOperation(true)
           const response = await stake(Tezos as TezosToolkit, stakedAmount)
+          setWaitingOperation(false)
 
           if (response.success) {
             setOpHash(response.opHash)
@@ -47,7 +66,7 @@ export const ConfirmAmount = ({
           }
         }}
       >
-        Confirm
+        {waitingOperation ? <Spinner /> : 'Confirm'}
       </PrimaryButton>
       {!!errorMessage && <ErrorBlock errorMessage={errorMessage} />}
     </Flex>

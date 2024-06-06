@@ -10,7 +10,7 @@ import {
   Spinner
 } from '@chakra-ui/react'
 import Link from 'next/link'
-import { DelegateData } from '../app/page'
+import { DelegateData } from '@/pages'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import {
   StakingOpsStatus,
@@ -251,7 +251,7 @@ export const AccountBody = ({
                 lineHeight='18px'
               >
                 {accountInfo?.delegate.alias ??
-                  simplifyAddress(accountInfo?.delegate.address as string)}
+                  simplifyAddress(accountInfo?.delegate.address ?? '')}
               </Text>
             ) : (
               <Text
@@ -318,9 +318,9 @@ export const AccountBody = ({
           isOpen={endDelegateModal.isOpen}
           onClose={endDelegateModal.onClose}
           spendableBalance={spendableBalance}
-          bakerAddress={
-            accountInfo?.delegate.alias ??
-            (accountInfo?.delegate.address as string)
+          bakerName={
+            (accountInfo?.delegate?.alias || accountInfo?.delegate?.address) ??
+            ''
           }
         />
 
