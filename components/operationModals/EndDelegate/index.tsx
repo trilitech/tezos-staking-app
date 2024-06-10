@@ -12,6 +12,7 @@ import { CloseIcon } from '@chakra-ui/icons'
 import useCurrentStep from '@/utils/useCurrentStep'
 import { EndDelegateStart } from './EndDelegateStart'
 import { ConfirmEndDelegate } from './ConfirmEndDelegate'
+import { GetFees } from '@/components/Operations/operations'
 
 interface EndDelegateModal {
   isOpen: boolean
@@ -48,6 +49,7 @@ export const EndDelegationModal = ({
           <ConfirmEndDelegate
             handleOneStepForward={handleOneStepForward}
             spendableBalance={spendableBalance}
+            opFees={GetFees('delegate', spendableBalance)}
             bakerAddress={bakerAddress}
           />
         )

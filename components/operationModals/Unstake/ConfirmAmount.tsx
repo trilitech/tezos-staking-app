@@ -10,6 +10,7 @@ import { useOperationResponse } from '@/providers/OperationResponseProvider'
 interface ConfirmAmountProps {
   stakedAmount: number
   unstakeAmount: number
+  unstakeFees: number
   setUnstakeAmount: (arg: number) => void
   handleOneStepForward: () => void
 }
@@ -17,6 +18,7 @@ interface ConfirmAmountProps {
 export const ConfirmAmount = ({
   stakedAmount,
   unstakeAmount,
+  unstakeFees,
   setUnstakeAmount,
   handleOneStepForward
 }: ConfirmAmountProps) => {

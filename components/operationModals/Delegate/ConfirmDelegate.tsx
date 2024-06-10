@@ -15,12 +15,14 @@ import { useOperationResponse } from '@/providers/OperationResponseProvider'
 
 interface ConfirmDelegateProps {
   spendableBalance: number
+  opFees: number
   handleOneStepForward: () => void
   selectedBaker: BakerInfo
 }
 
 export const ConfirmDelegate = ({
   spendableBalance,
+  opFees,
   handleOneStepForward,
   selectedBaker
 }: ConfirmDelegateProps) => {
