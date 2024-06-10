@@ -1,10 +1,14 @@
-import { TezosToolkit } from '@taquito/taquito'
+import { Estimate, TezosToolkit } from '@taquito/taquito'
+import { mutezToTez } from '@/utils/mutezToTez'
+import { useConnection } from '@/providers/ConnectionProvider'
 
 export interface OperationResult {
   success: boolean
   opHash: string
   message: string
 }
+
+export type OperationType = 'delegate' | 'stake' | 'unstake' | 'finalizeUnstake'
 
 export const setDelegate = async (
   Tezos: TezosToolkit,
@@ -43,6 +47,70 @@ export const stake = async (
       opHash: '',
       message: 'Errors occur in stake operation, try again.'
     }
+  }
+}
+
+export const GetFees = (operation: OperationType, amount: number): number => {
+  let fees = 0
+  const { Tezos, address } = useConnection()
+  if (!Tezos) return 0
+  try {
+    switch (operation) {
+      case 'delegate':
+        Tezos.estimate
+          .setDelegate({
+            source: address ?? '',
+            fee: 0,
+            gasLimit: 10000,
+            storageLimit: 0
+          })
+          .then((res: Estimate) => {
+            fees = mutezToTez(res.totalCost)
+          })
+        break
+      case 'stake':
+        Tezos.estimate
+          .stake({
+            fee: 0,
+            gasLimit: 10000,
+            storageLimit: 0,
+            amount
+          })
+          .then((res: Estimate) => {
+            fees = mutezToTez(res.totalCost)
+          })
+        break
+      case 'unstake':
+        Tezos.estimate
+          .unstake({
+            fee: 0,
+            gasLimit: 10000,
+            storageLimit: 0,
+            amount
+          })
+          .then((res: Estimate) => {
+            fees = mutezToTez(res.totalCost)
+          })
+        break
+      case 'finalizeUnstake':
+        Tezos.estimate
+          .finalizeUnstake({
+            fee: 0,
+            gasLimit: 10000,
+            storageLimit: 0,
+            amount
+          })
+          .then((res: Estimate) => {
+            fees = mutezToTez(res.totalCost)
+          })
+        break
+      default:
+        break
+    }
+    return fees
+  } catch (error) {
+    console.error(error)
+    return 0
   }
 }
 

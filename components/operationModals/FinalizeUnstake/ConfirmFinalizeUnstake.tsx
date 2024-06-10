@@ -9,11 +9,13 @@ import { useOperationResponse } from '@/providers/OperationResponseProvider'
 
 interface ConfirmFinalizeUnstake {
   withdrawAmount: number
+  opFees: number
   handleOneStepForward: () => void
 }
 
 export const ConfirmFinalizeUnstake = ({
   withdrawAmount,
+  opFees,
   handleOneStepForward
 }: ConfirmFinalizeUnstake) => {
   const { Tezos } = useConnection()
