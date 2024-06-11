@@ -10,7 +10,6 @@ import {
 import { CloseIcon } from '@chakra-ui/icons'
 import useCurrentStep from '@/utils/useCurrentStep'
 import { ConfirmFinalizeUnstake } from './ConfirmFinalizeUnstake'
-import { GetFees } from '@/components/Operations/operations'
 
 interface FinalizeUnstakeModal {
   withdrawAmount: number
@@ -35,7 +34,6 @@ export const FinalizeUnstakeModal = ({
         return (
           <ConfirmFinalizeUnstake
             withdrawAmount={withdrawAmount}
-            opFees={GetFees('finalizeUnstake', withdrawAmount)}
             handleOneStepForward={handleOneStepForward}
           />
         )

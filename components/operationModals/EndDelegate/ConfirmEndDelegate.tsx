@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Flex } from '@chakra-ui/react'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
 import { setDelegate } from '@/components/Operations/operations'
@@ -14,14 +14,12 @@ import { useOperationResponse } from '@/providers/OperationResponseProvider'
 
 interface ConfirmEndDelegate {
   spendableBalance: number
-  opFees: number
   handleOneStepForward: () => void
   bakerAddress: string
 }
 
 export const ConfirmEndDelegate = ({
   spendableBalance,
-  opFees,
   handleOneStepForward,
   bakerAddress
 }: ConfirmEndDelegate) => {

@@ -50,67 +50,57 @@ export const stake = async (
   }
 }
 
-export const GetFees = (operation: OperationType, amount: number): number => {
+export const GetFees = async (
+  operation: OperationType,
+  amount: number
+): Promise<number> => {
   let fees = 0
   const { Tezos, address } = useConnection()
   if (!Tezos) return 0
+  let response = new Estimate(0, 0, 0, 0, 0)
   try {
     switch (operation) {
       case 'delegate':
-        Tezos.estimate
-          .setDelegate({
-            source: address ?? '',
-            fee: 0,
-            gasLimit: 10000,
-            storageLimit: 0
-          })
-          .then((res: Estimate) => {
-            fees = mutezToTez(res.totalCost)
-          })
-        break
+        response = await Tezos.estimate.setDelegate({
+          source: address ?? '',
+          fee: 0,
+          gasLimit: 10000,
+          storageLimit: 0
+        })
       case 'stake':
-        Tezos.estimate
-          .stake({
-            fee: 0,
-            gasLimit: 10000,
-            storageLimit: 0,
-            amount
-          })
-          .then((res: Estimate) => {
-            fees = mutezToTez(res.totalCost)
-          })
+        response = await Tezos.estimate.stake({
+          source: address ?? '',
+          fee: 0,
+          gasLimit: 10000,
+          storageLimit: 0,
+          amount
+        })
         break
       case 'unstake':
-        Tezos.estimate
-          .unstake({
-            fee: 0,
-            gasLimit: 10000,
-            storageLimit: 0,
-            amount
-          })
-          .then((res: Estimate) => {
-            fees = mutezToTez(res.totalCost)
-          })
+        response = await Tezos.estimate.unstake({
+          source: address ?? '',
+          fee: 0,
+          gasLimit: 10000,
+          storageLimit: 0,
+          amount
+        })
         break
       case 'finalizeUnstake':
-        Tezos.estimate
-          .finalizeUnstake({
-            fee: 0,
-            gasLimit: 10000,
-            storageLimit: 0,
-            amount
-          })
-          .then((res: Estimate) => {
-            fees = mutezToTez(res.totalCost)
-          })
+        response = await Tezos.estimate.finalizeUnstake({
+          source: address ?? '',
+          fee: 0,
+          gasLimit: 10000,
+          storageLimit: 0,
+          amount
+        })
         break
       default:
+        throw new Error('Operation type is not defined')
         break
     }
-    return fees
+    return Math.max(response.totalCost, response.suggestedFeeMutez)
   } catch (error) {
-    console.error(error)
-    return 0
+    throw new Error('Fail to estimate fees ' + error)
   }
 }
 
