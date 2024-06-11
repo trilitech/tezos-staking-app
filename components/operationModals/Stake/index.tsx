@@ -13,7 +13,6 @@ import { StakeStart } from './StakeStart'
 import { SelectAmount } from './SelectAmount'
 import { ConfirmAmount } from './ConfirmAmount'
 import useCurrentStep from '@/utils/useCurrentStep'
-import { GetFees } from '@/components/Operations/operations'
 
 interface StakeModal {
   isOpen: boolean
@@ -55,7 +54,6 @@ export const StakeModal = ({
           <ConfirmAmount
             spendableBalance={spendableBalance}
             stakedAmount={stakedAmount as number}
-            stakeFees={GetFees('stake', stakedAmount)}
             setStakedAmount={setStakedAmount}
             handleOneStepForward={handleOneStepForward}
           />

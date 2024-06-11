@@ -13,7 +13,6 @@ import { UnstakeStart } from './UnstakeStart'
 import { SelectAmount } from './SelectAmount'
 import { ConfirmAmount } from './ConfirmAmount'
 import useCurrentStep from '@/utils/useCurrentStep'
-import { GetFees } from '@/components/Operations/operations'
 
 interface UnstakeModal {
   isOpen: boolean
@@ -54,7 +53,6 @@ export const UnstakeModal = ({
           <ConfirmAmount
             stakedAmount={stakedAmount}
             unstakeAmount={unstakeAmount}
-            unstakeFees={GetFees('unstake', unstakeAmount)}
             setUnstakeAmount={setUnstakeAmount}
             handleOneStepForward={handleOneStepForward}
           />
