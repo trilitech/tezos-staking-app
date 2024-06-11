@@ -15,7 +15,6 @@ import { ChooseBaker } from '../Delegate/ChooseBaker'
 import { ConfirmDelegate } from '../Delegate/ConfirmDelegate'
 import { useQuery } from '@tanstack/react-query'
 import useCurrentStep from '@/utils/useCurrentStep'
-import { GetFees } from '@/components/Operations/operations'
 
 interface DelegateModal {
   isOpen: boolean
@@ -91,7 +90,6 @@ export const ChangeBakerModal = ({
             handleOneStepForward={handleOneStepForward}
             selectedBaker={selectedBaker as BakerInfo}
             spendableBalance={spendableBalance}
-            opFees={GetFees('delegate', spendableBalance)}
           />
         )
       default:
