@@ -17,7 +17,7 @@ import { Stepper } from '@/components/modalBody/Stepper'
 interface EndDelegateModal {
   isOpen: boolean
   onClose: () => void
-  bakerAddress: string
+  bakerName: string
   spendableBalance: number
 }
 
@@ -29,7 +29,7 @@ enum EndDelegateStatus {
 export const EndDelegationModal = ({
   isOpen,
   onClose,
-  bakerAddress,
+  bakerName,
   spendableBalance
 }: EndDelegateModal) => {
   const totalStep = 2
@@ -42,7 +42,7 @@ export const EndDelegationModal = ({
       case EndDelegateStatus.EndDelegationStart:
         return (
           <EndDelegateStart
-            bakerAddress={bakerAddress}
+            bakerName={bakerName}
             handleOneStepForward={handleOneStepForward}
           />
         )
@@ -51,7 +51,7 @@ export const EndDelegationModal = ({
           <ConfirmEndDelegate
             handleOneStepForward={handleOneStepForward}
             spendableBalance={spendableBalance}
-            bakerAddress={bakerAddress}
+            bakerName={bakerName}
           />
         )
       default:

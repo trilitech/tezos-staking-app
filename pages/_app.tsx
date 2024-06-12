@@ -1,4 +1,5 @@
-'use client'
+import '@/theme/globals.css'
+import type { AppProps } from 'next/app'
 import { ChakraProvider } from '@chakra-ui/react'
 import { ConnectionProvider } from '@/providers/ConnectionProvider'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -7,12 +8,14 @@ import theme from '@/theme/chakra-theme'
 
 const queryClient = new QueryClient()
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export default function App({ Component, pageProps }: AppProps) {
   return (
     <OperationResponseProvider>
       <QueryClientProvider client={queryClient}>
         <ConnectionProvider>
-          <ChakraProvider theme={theme}>{children}</ChakraProvider>
+          <ChakraProvider theme={theme}>
+            <Component {...pageProps} />
+          </ChakraProvider>
         </ConnectionProvider>
       </QueryClientProvider>
     </OperationResponseProvider>

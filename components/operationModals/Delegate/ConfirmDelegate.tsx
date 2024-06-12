@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
-import { Flex } from '@chakra-ui/react'
+import { Flex, Spinner } from '@chakra-ui/react'
 import { BakerInfo } from '@/components/Operations/tezInterfaces'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
-import { setDelegate } from '@/components/Operations/operations'
+import {
+  setDelegate,
+  getFee,
+  OperationType
+} from '@/components/Operations/operations'
 import { useConnection } from '@/providers/ConnectionProvider'
 import { TezosToolkit } from '@taquito/taquito'
 import {
@@ -13,6 +17,7 @@ import {
 } from '@/components/modalBody'
 import { useOperationResponse } from '@/providers/OperationResponseProvider'
 import { ErrorBlock } from '@/components/ErrorBlock'
+import { useQuery } from '@tanstack/react-query'
 
 interface ConfirmDelegateProps {
   spendableBalance: number
@@ -25,24 +30,36 @@ export const ConfirmDelegate = ({
   handleOneStepForward,
   selectedBaker
 }: ConfirmDelegateProps) => {
-  const { Tezos } = useConnection()
+  const { Tezos, address } = useConnection()
   const { setMessage, setSuccess, setOpHash } = useOperationResponse()
   const [errorMessage, setErrorMessage] = useState('')
+  const [waitingOperation, setWaitingOperation] = useState(false)
+
+  const { data, status: gasFeeStatus } = useQuery({
+    queryKey: ['delegateFee'],
+    queryFn: () => getFee(OperationType.Delegate, Tezos, address, 0),
+    staleTime: 180000
+  })
 
   return (
     <Flex flexDir='column' justify='center'>
       <Header pb='24px'>Confirm</Header>
       <ColumnHeader pb='12px'>SPENDABLE BALANCE</ColumnHeader>
-      <BalanceBox fee={0.000585} balance={spendableBalance} />
+      <BalanceBox
+        gasFeeStatus={gasFeeStatus}
+        fee={data?.gasFee}
+        balance={spendableBalance}
+      />
       <ColumnHeader>Baker</ColumnHeader>
       <AddressBox address={selectedBaker.alias} />
       <PrimaryButton
         onClick={async () => {
+          setWaitingOperation(true)
           const response = await setDelegate(
             Tezos as TezosToolkit,
             selectedBaker.address
           )
-
+          setWaitingOperation(false)
           if (response.success) {
             setOpHash(response.opHash)
             setMessage(
@@ -55,7 +72,7 @@ export const ConfirmDelegate = ({
           }
         }}
       >
-        Confirm
+        {waitingOperation ? <Spinner /> : 'Confirm'}
       </PrimaryButton>
       {!!errorMessage && <ErrorBlock errorMessage={errorMessage} />}
     </Flex>

@@ -10,13 +10,7 @@ export const ChangeStart = ({
 }) => {
   return (
     <Flex flexDir='column' alignItems='center'>
-      <Image
-        w='25px'
-        mt='24px'
-        mb='15px'
-        src='/images/alert-icon.svg'
-        alt='alert icon'
-      />
+      <Image w='25px' mb='15px' src='/images/alert-icon.svg' alt='alert icon' />
       <Header mb='15px'>Important Notice</Header>
       <Description mb='24px' maxW='340px'>
         Changing the baker will automatically unstake all the existing staked
