@@ -12,16 +12,17 @@ export const StakeStart = ({
 
   return (
     <Flex flexDir='column' alignItems='center'>
-      <Image
-        w='25px'
-        mt='24px'
-        mb='15px'
-        src='/images/alert-icon.svg'
-        alt='alert icon'
-      />
+      <Image w='25px' mb='15px' src='/images/alert-icon.svg' alt='alert icon' />
       <Header mb='15px'>Disclaimer</Header>
-      <Description>
-        By staking, you put your balance at risk and may lose all your money.
+      <Description maxW='320px'>
+        Staked balances are locked in your account until they are manually
+        unstaked and finalized. You need to wait 4 cycles to finalize after an
+        unstake.
+        <br />
+        <br />
+        Staked funds are at risk. You might lose a portion of your stake if the
+        chosen baker is slashed for not following Tezos consensus mechanism
+        rules.
       </Description>
       <Flex
         gap='24px'
@@ -29,14 +30,18 @@ export const StakeStart = ({
         bg='#EDF2F7'
         borderRadius='10px'
         py='16px'
-        px='12px'
+        px='22px'
       >
         <Checkbox
           isChecked={isChecked}
           onChange={() => setIsChecked(!isChecked)}
-          border='#2b6cb0'
         />
-        <Text color='#2D3748' fontSize='16px' fontWeight={400}>
+        <Text
+          color='#2D3748'
+          fontSize='16px'
+          fontWeight={400}
+          lineHeight='22px'
+        >
           I confirm that I have read and agreed with the{' '}
           <Text as='span' textDecor='underline' _hover={{ cursor: 'pointer' }}>
             Terms of Service.

@@ -12,6 +12,7 @@ export const AddressBox = ({ address }: { address: string }) => {
       bg='#EDF2F7'
       mb='30px'
       gap='5px'
+      overflowX='auto'
     >
       <Image
         w='30px'
@@ -19,7 +20,9 @@ export const AddressBox = ({ address }: { address: string }) => {
         src={`${process.env.NEXT_PUBLIC_TZKT_AVATARS_URL}/${address}`}
         alt='baker avatar'
       />
-      <Text>{address}</Text>
+      <Text fontSize='16px' fontWeight={600} lineHeight='22px' color='#4A5568'>
+        {address}
+      </Text>
     </Flex>
   )
 }

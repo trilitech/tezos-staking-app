@@ -13,11 +13,13 @@ import { UnstakeStart } from './UnstakeStart'
 import { SelectAmount } from './SelectAmount'
 import { ConfirmAmount } from './ConfirmAmount'
 import useCurrentStep from '@/utils/useCurrentStep'
+import { Stepper } from '@/components/modalBody/Stepper'
 
 interface UnstakeModal {
   isOpen: boolean
   onClose: () => void
   stakedAmount: number
+  spendableBalance: number
 }
 
 enum UnstakeStatus {
@@ -29,11 +31,14 @@ enum UnstakeStatus {
 export const UnstakeModal = ({
   isOpen,
   onClose,
-  stakedAmount
+  stakedAmount,
+  spendableBalance
 }: UnstakeModal) => {
+  const totalStep = 3
+
   const [unstakeAmount, setUnstakeAmount] = useState(0)
   const { currentStep, handleOneStepBack, handleOneStepForward } =
-    useCurrentStep(onClose, 3)
+    useCurrentStep(onClose, totalStep)
 
   const getCurrentStepBody = (currentStep: number) => {
     switch (currentStep) {
@@ -51,6 +56,7 @@ export const UnstakeModal = ({
       case UnstakeStatus.ConfirmUnstake:
         return (
           <ConfirmAmount
+            spendableBalance={spendableBalance}
             stakedAmount={stakedAmount}
             unstakeAmount={unstakeAmount}
             setUnstakeAmount={setUnstakeAmount}
@@ -71,7 +77,7 @@ export const UnstakeModal = ({
       closeOnOverlayClick={false}
     >
       <ModalOverlay />
-      <ModalContent pb='20px'>
+      <ModalContent>
         <ModalHeader>
           <Flex justify='space-between' alignItems='center'>
             <Image
@@ -90,31 +96,11 @@ export const UnstakeModal = ({
 
         <ModalBody>
           <Flex flexDir='column'>
-            <Stepper currentStep={currentStep} />
+            <Stepper totalStep={totalStep} currentStep={currentStep} />
             {getCurrentStepBody(currentStep)}
           </Flex>
         </ModalBody>
       </ModalContent>
     </Modal>
-  )
-}
-
-const Stepper = ({ currentStep }: { currentStep: number }) => {
-  return (
-    <Flex justify='center' alignItems='center'>
-      <Image pr='5px' src='/images/stepper/full-dot.svg' alt='dot' />
-      <Image pr='5px' src='/images/stepper/line.svg' alt='dot' />
-      {currentStep === 1 ? (
-        <Image pr='5px' src='/images/stepper/empty-dot.svg' alt='dot' />
-      ) : (
-        <Image pr='5px' src='/images/stepper/full-dot.svg' alt='dot' />
-      )}
-      <Image pr='5px' src='/images/stepper/line.svg' alt='dot' />
-      {currentStep === 3 ? (
-        <Image src='/images/stepper/full-dot.svg' alt='dot' />
-      ) : (
-        <Image src='/images/stepper/empty-dot.svg' alt='dot' />
-      )}
-    </Flex>
   )
 }

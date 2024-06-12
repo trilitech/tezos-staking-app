@@ -31,20 +31,32 @@ export const LoginModal = () => {
         textAlign='center'
         lineHeight='36px'
         mb={['30px', '40px']}
+        color='#171923'
       >
         Earn rewards with Tezos staking solutions
       </Text>
-      <Flex mb={['30px', '40px']} display={['none', null, 'flex']}>
+      <Flex
+        mb={['30px', '40px']}
+        display={['none', null, 'flex']}
+        fontWeight={600}
+        fontSize='14px'
+      >
         {STEPS.map((data, index) => (
           <TextBox text={data} step={index + 1} key={index} />
         ))}
       </Flex>
-      <MobileSteps display={['flex', null, 'none']} mb='20px' />
+      <MobileSteps display={['flex', null, 'none']} mb='40px' />
       <PrimaryButton w={['100%', '170px']} mb='24px' onClick={connect}>
         Connect Wallet
       </PrimaryButton>
       <Link href='/'>
-        <Text fontWeight={600} fontSize='16px' textDecor='underline'>
+        <Text
+          fontWeight={600}
+          fontSize='16px'
+          textDecor='underline'
+          _hover={{ color: '#003EE0' }}
+          transition='color 0.2s ease-in-out'
+        >
           Learn more
         </Text>
       </Link>
@@ -83,25 +95,39 @@ const TextBox = ({
 
 const MobileSteps = ({ ...styles }: FlexProps) => {
   return (
-    <Flex justify='space-around' w='100%' {...styles}>
-      {STEPS.map((data, index) => (
-        <Flex flexDir='column' key={index}>
-          <Flex justify='center' alignItems='center' w='100%'>
+    <Flex flexDir='column' {...styles}>
+      <Flex mb='10px'>
+        {STEPS.map((_, index) => (
+          <Flex key={index}>
             <Text
               border='solid 1px #EDF2F7'
-              borderRadius={100}
-              px='10px'
-              py='2px'
+              borderRadius='100%'
+              fontWeight={600}
+              px={index === 0 ? '10px' : '9px'}
+              py='4px'
               fontSize='14px'
+              lineHeight='18px'
+              color='#4A5568'
             >
               {index + 1}
             </Text>
+            {index !== 2 && <Image src='/images/long-vector.svg' alt='line' />}
           </Flex>
-          <Text fontSize='14px' color='#4A5568'>
+        ))}
+      </Flex>
+      <Flex justify='space-between' w='110%' pos='relative' right='10px'>
+        {STEPS.map((data, index) => (
+          <Text
+            fontWeight={600}
+            fontSize='14px'
+            lineHeight='18px'
+            color='#4A5568'
+            key={index}
+          >
             {data}
           </Text>
-        </Flex>
-      ))}
+        ))}
+      </Flex>
     </Flex>
   )
 }

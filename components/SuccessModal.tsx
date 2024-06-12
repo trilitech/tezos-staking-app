@@ -16,11 +16,13 @@ import Link from 'next/link'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 
 export const SuccessModal = ({
+  title,
   desc,
   tzktLink,
   resetOperation,
   open
 }: {
+  title?: string
   desc: string
   tzktLink: string
   resetOperation: () => void
@@ -38,7 +40,7 @@ export const SuccessModal = ({
             onClose()
           }}
         />
-        <ModalBody py='40px'>
+        <ModalBody mt='40px'>
           <Flex
             textAlign='center'
             flexDir='column'
@@ -52,10 +54,17 @@ export const SuccessModal = ({
               alt='check icon'
               mb='16px'
             />
-            <Text fontWeight={600} fontSize='24px' mb='16px'>
-              Nicely Done!
+            <Text fontWeight={600} color='#171923' fontSize='24px' mb='16px'>
+              {!!title ? title : 'Nicely Done!'}
             </Text>
-            <Text fontWeight={400} fontSize='16px' maxW='300px' mb='16px'>
+            <Text
+              fontWeight={400}
+              color='#2D3748'
+              fontSize='16px'
+              maxW='300px'
+              mb='16px'
+              lineHeight='22px'
+            >
               {desc}
             </Text>
             <PrimaryButton
@@ -78,8 +87,10 @@ export const SuccessModal = ({
                 cursor: 'pointer'
               }}
             >
-              <Text fontSize='14px'>View in TzKT</Text>
-              <ExternalLinkIcon />
+              <Text color='#2D3748' fontSize='14px' fontWeight={600}>
+                View in TzKT
+              </Text>
+              <ExternalLinkIcon color='#A0AEC0' />
             </ChakraLink>
           </Flex>
         </ModalBody>

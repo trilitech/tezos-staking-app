@@ -14,11 +14,14 @@ export const TertiaryButton = ({
   return (
     <Button
       w='100%'
+      maxW='400px'
       bg={disabled ? '#E2E8F0' : 'black'}
       color={disabled ? '#A0AEC0' : 'white'}
       fontWeight={600}
       fontSize='18px'
-      py='16px'
+      h='48px'
+      px='24px'
+      lineHeight='24px'
       _hover={{
         bg: disabled ? '#E2E8F0' : 'black',
         cursor: disabled ? 'not-allowed' : 'pointer'

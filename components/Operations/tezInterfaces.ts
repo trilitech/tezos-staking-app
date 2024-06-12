@@ -46,6 +46,7 @@ export interface BakerInfo {
   type: string
   id: number
   address: string
+  alias: string
   active: boolean
   balance: number
 }

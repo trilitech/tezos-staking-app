@@ -61,7 +61,7 @@ export const AccountBody = ({
   const { address } = useConnection()
   const {
     success: operationSuccess,
-    error: operationError,
+    title,
     message,
     opHash,
     resetOperation
@@ -113,7 +113,7 @@ export const AccountBody = ({
 
   return (
     <>
-      {(fetchAccountError || operationError) && (
+      {fetchAccountError && (
         <ErrorModal
           onClick={() => window.location.reload()}
           btnText='Refresh'
@@ -123,6 +123,7 @@ export const AccountBody = ({
       {operationSuccess && (
         <SuccessModal
           open={operationSuccess}
+          title={title}
           desc={message}
           tzktLink={`${process.env.NEXT_PUBLIC_TZKT_UI_URL}/${opHash}`}
           resetOperation={resetOperation}
@@ -132,7 +133,7 @@ export const AccountBody = ({
         flexDir='column'
         alignItems='center'
         justify='space-around'
-        p='40px'
+        p={['24px', null, '40px']}
         borderTopRadius='16px'
         borderBottomRadius={!!numOfPendingUnstake ? '' : '16px'}
         bg='#FFF'
@@ -144,56 +145,78 @@ export const AccountBody = ({
           templateColumns={['repeat(1, 1fr)', null, 'repeat(2, 1fr)']}
           gap='20px'
         >
-          <Flex flexDir='column' borderTop='1px solid #EDF2F7' pt='20px'>
-            <Text fontSize='14px' color='#4A5568'>
+          <Flex
+            flexDir='column'
+            borderTop={[null, null, '1px solid #EDF2F7']}
+            pt={[null, null, '20px']}
+          >
+            <Text fontSize='14px' color='#4A5568' fontWeight={600}>
               AVAILABLE
             </Text>
-            <Text>{!!spendableBalance ? spendableBalance : 0} ꜩ</Text>
+            <Text fontWeight={600} fontSize='18px' color='#171923'>
+              {!!spendableBalance ? spendableBalance : 0}{' '}
+              <Text as='span' fontWeight={400}>
+                ꜩ
+              </Text>
+            </Text>
           </Flex>
           <Flex flexDir='column' borderTop='1px solid #EDF2F7' pt='20px'>
-            <Text fontSize='14px' color='#4A5568'>
+            <Text fontSize='14px' color='#4A5568' fontWeight={600}>
               STAKED
             </Text>
-            <Text>{!!stakedBalance ? stakedBalance : 0} ꜩ</Text>
+            <Text fontWeight={600} fontSize='18px' color='#171923'>
+              {!!stakedBalance ? stakedBalance : 0}{' '}
+              <Text as='span' fontWeight={400}>
+                ꜩ
+              </Text>
+            </Text>
           </Flex>
           <Flex flexDir='column' borderTop='1px solid #EDF2F7' pt='20px'>
             <Flex justify='space-between' alignItems='center'>
-              <Text fontSize='14px' color='#4A5568'>
+              <Text fontSize='14px' color='#4A5568' fontWeight={600}>
                 DELEGATION
               </Text>
               {stakingOpsStatus.Delegated && (
                 <Flex
                   justify='center'
                   alignItems='center'
-                  gap='5px'
+                  gap='4px'
                   _hover={{ cursor: 'pointer' }}
                   onClick={async () => {
                     endDelegateModal.onOpen()
                   }}
                 >
-                  <Text fontSize='14px'>End </Text>
-                  <CloseIcon fontSize='10px' />
+                  <Text fontSize='14px' fontWeight={600} color='#2D3748'>
+                    End{' '}
+                  </Text>
+                  <CloseIcon fontSize='10px' color='#A0AEC0' />
                 </Flex>
               )}
             </Flex>
-            <Flex alignItems='center' gap='5px'>
+            <Flex alignItems='center' gap='6px'>
               {stakingOpsStatus.Delegated ? (
                 <Image src='/images/active-icon.svg' alt='active icon' />
               ) : (
                 <Image src='/images/inactive-icon.svg' alt='inactive icon' />
               )}
-              <Text>{stakingOpsStatus.Delegated ? 'Active ' : 'Inactive'}</Text>
+              <Text fontWeight={600} fontSize='18px' color='#171923'>
+                {stakingOpsStatus.Delegated ? 'Active ' : 'Inactive'}
+              </Text>
             </Flex>
           </Flex>
           <Flex flexDir='column' borderTop='1px solid #EDF2F7' pt='20px'>
             <Flex justify='space-between' alignItems='center'>
-              <Text fontSize='14px' color='#4A5568'>
+              <Text fontSize='14px' color='#4A5568' fontWeight={600}>
                 BAKER
               </Text>
               {!!stakingOpsStatus.Delegated ? (
                 <Flex alignItems='center' gap='4px'>
-                  <Text>Change</Text>
+                  <Text fontSize='14px' fontWeight={600} color='#2D3748'>
+                    Change
+                  </Text>
                   <Image
+                    w='14px'
+                    h='14px'
                     _hover={{ cursor: 'pointer' }}
                     onClick={() => changeBakerModal.onOpen()}
                     src='/images/FiEdit.svg'
@@ -212,20 +235,38 @@ export const AccountBody = ({
                     cursor: 'pointer'
                   }}
                 >
-                  <Text fontSize='14px'>View bakers</Text>
-                  <ExternalLinkIcon />
+                  <Text fontSize='14px' fontWeight={600}>
+                    View bakers
+                  </Text>
+                  <ExternalLinkIcon color='#A0AEC0' />
                 </ChakraLink>
               )}
             </Flex>
-            <Text>
-              {!!accountInfo?.delegate?.address
-                ? simplifyAddress(accountInfo.delegate.address)
-                : '--'}
-            </Text>
+
+            {stakingOpsStatus.Delegated ? (
+              <Text
+                color='#171923'
+                fontSize='18px'
+                fontWeight={600}
+                lineHeight='18px'
+              >
+                {accountInfo?.delegate.alias ??
+                  simplifyAddress(accountInfo?.delegate.address as string)}
+              </Text>
+            ) : (
+              <Text
+                color='#A0AEC0'
+                fontSize='18px'
+                fontWeight={600}
+                lineHeight='18px'
+              >
+                --
+              </Text>
+            )}
           </Flex>
         </Grid>
 
-        <Flex w='100%' gap='20px'>
+        <Flex w='100%' gap={['16px', null, '20px', '30px']}>
           {!stakingOpsStatus.Delegated && (
             <PrimaryButton
               disabled={isFirstTime}
@@ -278,9 +319,8 @@ export const AccountBody = ({
           onClose={endDelegateModal.onClose}
           spendableBalance={spendableBalance}
           bakerAddress={
-            !!stakingOpsStatus.Delegated && !!accountInfo?.delegate?.address
-              ? accountInfo?.delegate.address
-              : ''
+            accountInfo?.delegate.alias ??
+            (accountInfo?.delegate.address as string)
           }
         />
 
@@ -294,15 +334,22 @@ export const AccountBody = ({
           isOpen={unstakeModal.isOpen}
           onClose={unstakeModal.onClose}
           stakedAmount={stakedBalance}
+          spendableBalance={spendableBalance}
         />
       </Flex>
 
       {!!numOfPendingUnstake && (
-        <Box p='40px' borderBottomRadius='16px' bg='#FFF' w='100%'>
+        <Box
+          p={['24px', null, '40px']}
+          borderBottomRadius='16px'
+          bg='#FFF'
+          w='100%'
+        >
           <PendingUnstakeSection
             totalFinalizableAmount={accountInfo?.totalFinalizableAmount}
             unstOps={unstakedOps}
             numOfPendingUnstake={numOfPendingUnstake}
+            spendableBalance={spendableBalance}
           />
         </Box>
       )}

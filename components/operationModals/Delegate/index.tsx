@@ -15,6 +15,7 @@ import { ChooseBaker } from './ChooseBaker'
 import { useQuery } from '@tanstack/react-query'
 import useCurrentStep from '@/utils/useCurrentStep'
 import { ConfirmDelegate } from './ConfirmDelegate'
+import { Stepper } from '@/components/modalBody/Stepper'
 
 interface DelegateModal {
   isOpen: boolean
@@ -46,9 +47,11 @@ export const DelegationModal = ({
 }: DelegateModal) => {
   const [bakerList, setBakerList] = useState<BakerInfo[] | null>(null)
   const [selectedBaker, setSelectedBaker] = useState<BakerInfo | null>(null)
+  const [showStepper, setShowStepper] = useState(true)
+  const totalStep = 3
 
   const { data, status } = useQuery({
-    queryKey: ['baerList'],
+    queryKey: ['bakerList'],
     queryFn: getBakerList,
     staleTime: 180000
   })
@@ -57,6 +60,7 @@ export const DelegationModal = ({
     if (status === 'success') {
       const bakerData = data.map((baker: BakerInfo) => {
         return {
+          alias: baker.alias ?? 'Private Baker',
           address: baker.address
         }
       })
@@ -68,7 +72,7 @@ export const DelegationModal = ({
   }, [status])
 
   const { currentStep, handleOneStepBack, handleOneStepForward } =
-    useCurrentStep(onClose, 3)
+    useCurrentStep(onClose, totalStep)
 
   const getCurrentStepBody = (currentStep: number) => {
     switch (currentStep) {
@@ -77,11 +81,11 @@ export const DelegationModal = ({
       case DelegateStatus.ChooseBaker:
         return (
           <ChooseBaker
-            spendableBalance={spendableBalance}
             handleOneStepForward={handleOneStepForward}
             selectedBaker={selectedBaker}
             setSelectedBaker={setSelectedBaker}
             bakerList={bakerList ?? []}
+            setShowStepper={setShowStepper}
           />
         )
       case DelegateStatus.ConfirmBaker:
@@ -106,7 +110,7 @@ export const DelegationModal = ({
       closeOnOverlayClick={false}
     >
       <ModalOverlay />
-      <ModalContent pb='20px'>
+      <ModalContent>
         <ModalHeader>
           <Flex justify='space-between' alignItems='center'>
             <Image
@@ -125,31 +129,14 @@ export const DelegationModal = ({
 
         <ModalBody>
           <Flex flexDir='column'>
-            <Stepper currentStep={currentStep} />
+            {showStepper && (
+              <Stepper totalStep={totalStep} currentStep={currentStep} />
+            )}
+
             {getCurrentStepBody(currentStep)}
           </Flex>
         </ModalBody>
       </ModalContent>
     </Modal>
-  )
-}
-
-const Stepper = ({ currentStep }: { currentStep: number }) => {
-  return (
-    <Flex justify='center' alignItems='center'>
-      <Image pr='5px' src='/images/stepper/full-dot.svg' alt='dot' />
-      <Image pr='5px' src='/images/stepper/line.svg' alt='dot' />
-      {currentStep === 1 ? (
-        <Image pr='5px' src='/images/stepper/empty-dot.svg' alt='dot' />
-      ) : (
-        <Image pr='5px' src='/images/stepper/full-dot.svg' alt='dot' />
-      )}
-      <Image pr='5px' src='/images/stepper/line.svg' alt='dot' />
-      {currentStep === 3 ? (
-        <Image src='/images/stepper/full-dot.svg' alt='dot' />
-      ) : (
-        <Image src='/images/stepper/empty-dot.svg' alt='dot' />
-      )}
-    </Flex>
   )
 }

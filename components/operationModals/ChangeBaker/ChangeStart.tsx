@@ -19,9 +19,8 @@ export const ChangeStart = ({
       />
       <Header mb='15px'>Important Notice</Header>
       <Description mb='24px' maxW='340px'>
-        Changing bakers will automatically unstake any funds staked while
-        delegating to the previous baker. You will need to finalize them before
-        being able to stake these funds again.
+        Changing the baker will automatically unstake all the existing staked
+        balance. This balance will be finalizable after 4 cycles.
       </Description>
       <PrimaryButton onClick={handleOneStepForward}>I Understand</PrimaryButton>
     </Flex>

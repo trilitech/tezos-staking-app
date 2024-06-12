@@ -14,12 +14,15 @@ export const SecondaryButton = ({
   return (
     <Button
       w='100%'
+      maxW='400px'
       bg={disabled ? '#E2E8F0' : 'white'}
       color={disabled ? '#A0AEC0' : '#0052FF'}
       border={disabled ? '#E2E8F0' : '#0052FF 2px solid'}
       fontWeight={600}
       fontSize='18px'
-      py='16px'
+      h='48px'
+      px='24px'
+      lineHeight='24px'
       _hover={{
         bg: disabled ? '#E2E8F0' : 'white',
         cursor: disabled ? 'not-allowed' : 'pointer'

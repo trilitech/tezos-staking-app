@@ -3,10 +3,10 @@ import React, { createContext, useContext, useState } from 'react'
 interface OperationResponseContextType {
   success: boolean
   setSuccess: (arg: boolean) => void
-  error: boolean
-  setError: (arg: boolean) => void
   opHash?: string
   setOpHash: (arg?: string) => void
+  title?: string
+  setTitle: (title: string) => void
   message: string
   setMessage: (message: string) => void
   resetOperation: () => void
@@ -28,14 +28,14 @@ export const useOperationResponse = (): OperationResponseContextType => {
 
 export const OperationResponseProvider = ({ children }: { children: any }) => {
   const [message, setMessage] = useState('')
+  const [title, setTitle] = useState('')
   const [success, setSuccess] = useState(false)
-  const [error, setError] = useState(false)
   const [opHash, setOpHash] = useState<string | undefined>(undefined)
 
   const resetOperation = () => {
     setMessage('')
+    setTitle('')
     setSuccess(false)
-    setError(false)
     setOpHash(undefined)
   }
 
@@ -44,10 +44,10 @@ export const OperationResponseProvider = ({ children }: { children: any }) => {
       value={{
         success,
         setSuccess,
-        error,
-        setError,
         opHash,
         setOpHash,
+        title,
+        setTitle,
         message,
         setMessage,
         resetOperation

@@ -9,7 +9,8 @@ export const Header = ({
 } & TextProps) => {
   return (
     <Text
-      fontSize='24px'
+      color='#171923'
+      fontSize='20px'
       fontWeight={600}
       textAlign='center'
       lineHeight='26px'
