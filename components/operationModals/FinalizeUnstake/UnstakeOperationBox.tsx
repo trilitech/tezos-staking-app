@@ -4,6 +4,7 @@ import { UnstakedOperation } from '@/components/Operations/tezInterfaces'
 import { mutezToTez } from '@/utils/mutezToTez'
 import { TertiaryButton } from '@/components/buttons/TertiaryButton'
 import { FinalizeUnstakeModal } from '.'
+import Link from 'next/link'
 
 export const UnstakeOperationBox = ({
   unstakeOp,
@@ -74,7 +75,12 @@ export const UnstakeOperationBox = ({
             </Text>
             <Flex alignItems='center' gap='6px'>
               <Text fontSize='14px' color='#4A5568' fontStyle='italic'>
-                Ready to be finalized in cycle {requestedCycle + 5}
+                Ready to be finalized in cycle{' '}
+                <Link href='https://ghostnet.tzkt.io/cycles' target='_blank'>
+                  <Text as='span' _hover={{ cursor: 'pointer' }}>
+                    {requestedCycle + 5}
+                  </Text>
+                </Link>
               </Text>
               <Image
                 src='/images/MdOutlineHourglassTop.svg'
