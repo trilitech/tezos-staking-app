@@ -80,7 +80,7 @@ export const ChooseBaker = ({
           <Text fontSize='14px' fontWeight={600} color='#2D3748'>
             View bakers
           </Text>
-          <ExternalLinkIcon color='#A0AEC0' />
+          <Image src='/images/external.svg' alt='external icon' />
         </ChakraLink>
       </Flex>
       <InputGroup size='md' mb='30px'>

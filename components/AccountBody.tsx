@@ -13,7 +13,6 @@ import {
 } from '@chakra-ui/react'
 import Link from 'next/link'
 import { DelegateData } from '@/pages'
-import { ExternalLinkIcon } from '@chakra-ui/icons'
 import {
   StakingOpsStatus,
   AccountInfo,
@@ -22,7 +21,6 @@ import {
 import { useConnection } from '../providers/ConnectionProvider'
 import { simplifyAddress } from '@/utils/simpliftAddress'
 import { PrimaryButton } from './buttons/PrimaryButton'
-import { CloseIcon } from '@chakra-ui/icons'
 import {
   useFetchAccountData,
   updateStakingOpsStatus
@@ -217,7 +215,7 @@ export const AccountBody = ({
                   <Text fontSize='14px' fontWeight={600} color='#2D3748'>
                     End{' '}
                   </Text>
-                  <CloseIcon fontSize='10px' color='#A0AEC0' />
+                  <Image src='/images/close.svg' alt='close icon' />
                 </Flex>
               )}
             </Flex>
@@ -238,18 +236,16 @@ export const AccountBody = ({
                 BAKER
               </Text>
               {!!stakingOpsStatus.Delegated ? (
-                <Flex alignItems='center' gap='4px'>
+                <Flex
+                  alignItems='center'
+                  gap='4px'
+                  onClick={() => changeBakerModal.onOpen()}
+                  _hover={{ cursor: 'pointer' }}
+                >
                   <Text fontSize='14px' fontWeight={600} color='#2D3748'>
                     Change
                   </Text>
-                  <Image
-                    w='14px'
-                    h='14px'
-                    _hover={{ cursor: 'pointer' }}
-                    onClick={() => changeBakerModal.onOpen()}
-                    src='/images/FiEdit.svg'
-                    alt='edit icon'
-                  />
+                  <Image src='/images/FiEdit.svg' alt='edit icon' />
                 </Flex>
               ) : (
                 <ChakraLink
@@ -266,7 +262,7 @@ export const AccountBody = ({
                   <Text fontSize='14px' fontWeight={600}>
                     View bakers
                   </Text>
-                  <ExternalLinkIcon color='#A0AEC0' />
+                  <Image src='/images/external.svg' alt='external icon' />
                 </ChakraLink>
               )}
             </Flex>
