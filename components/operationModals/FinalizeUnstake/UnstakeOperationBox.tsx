@@ -16,6 +16,9 @@ export const UnstakeOperationBox = ({
   spendableBalance: number
 }) => {
   const finalizeUnstakeModal = useDisclosure()
+  const consensusRightDelay = Number(
+    process.env.NEXT_PUBLIC_CONSENSUS_RIGHTS_DELAY
+  )
 
   let amount = 0
   let requestedCycle = 0
@@ -76,9 +79,12 @@ export const UnstakeOperationBox = ({
             <Flex alignItems='center' gap='6px'>
               <Text fontSize='14px' color='#4A5568' fontStyle='italic'>
                 Ready to be finalized in cycle{' '}
-                <Link href='https://ghostnet.tzkt.io/cycles' target='_blank'>
+                <Link
+                  href={process.env.NEXT_PUBLIC_TZKT_CYCLES_URL ?? ''}
+                  target='_blank'
+                >
                   <Text as='span' _hover={{ cursor: 'pointer' }}>
-                    {requestedCycle + 5}
+                    {requestedCycle + consensusRightDelay + 2}
                   </Text>
                 </Link>
               </Text>
