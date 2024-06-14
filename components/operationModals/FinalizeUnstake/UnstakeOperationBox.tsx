@@ -19,6 +19,7 @@ export const UnstakeOperationBox = ({
   const consensusRightDelay = Number(
     process.env.NEXT_PUBLIC_CONSENSUS_RIGHTS_DELAY
   )
+  const maxSlashingPeriod = 2
 
   let amount = 0
   let requestedCycle = 0
@@ -80,11 +81,16 @@ export const UnstakeOperationBox = ({
               <Text fontSize='14px' color='#4A5568' fontStyle='italic'>
                 Ready to be finalized in cycle{' '}
                 <Link
-                  href={process.env.NEXT_PUBLIC_TZKT_CYCLES_URL ?? ''}
+                  href={
+                    (process.env.NEXT_PUBLIC_TZKT_UI_URL ?? 'tzkt.io') +
+                    '/cycles'
+                  }
                   target='_blank'
                 >
                   <Text as='span' _hover={{ cursor: 'pointer' }}>
-                    {requestedCycle + consensusRightDelay + 2}
+                    {requestedCycle +
+                      (consensusRightDelay + maxSlashingPeriod) +
+                      1}
                   </Text>
                 </Link>
               </Text>

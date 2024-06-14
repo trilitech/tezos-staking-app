@@ -1,11 +1,7 @@
 import React, { useState } from 'react'
 import { Flex, Spinner } from '@chakra-ui/react'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
-import {
-  setDelegate,
-  getFee,
-  OperationType
-} from '@/components/Operations/operations'
+import { setDelegate } from '@/components/Operations/operations'
 import { useConnection } from '@/providers/ConnectionProvider'
 import { TezosToolkit } from '@taquito/taquito'
 import {
@@ -16,7 +12,6 @@ import {
 } from '@/components/modalBody'
 import { useOperationResponse } from '@/providers/OperationResponseProvider'
 import { ErrorBlock } from '@/components/ErrorBlock'
-import { useQuery } from '@tanstack/react-query'
 
 interface ConfirmEndDelegate {
   spendableBalance: number
@@ -34,21 +29,11 @@ export const ConfirmEndDelegate = ({
   const [errorMessage, setErrorMessage] = useState('')
   const [waitingOperation, setWaitingOperation] = useState(false)
 
-  const { data, status: gasFeeStatus } = useQuery({
-    queryKey: ['endDelegateFee'],
-    queryFn: () => getFee(OperationType.Delegate, Tezos, address, 0),
-    staleTime: 180000
-  })
-
   return (
     <Flex flexDir='column' justify='center'>
       <Header my='24px'>Confirm</Header>
       <ColumnHeader mb='12px'>SPENDABLE BALANCE</ColumnHeader>
-      <BalanceBox
-        gasFeeStatus={gasFeeStatus}
-        fee={data?.gasFee}
-        balance={spendableBalance}
-      />
+      <BalanceBox balance={spendableBalance} />
       <ColumnHeader mb='12px'>BAKER</ColumnHeader>
       <AddressBox address={bakerName} />
       <PrimaryButton

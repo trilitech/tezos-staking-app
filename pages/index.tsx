@@ -19,7 +19,8 @@ export interface DelegateData {
 }
 
 async function fetchDelegateData(address: string) {
-  const apiAddress = (process.env.NEXT_PUBLIC_API_URL as string) + address
+  const apiAddress =
+    (process.env.NEXT_PUBLIC_TZKT_API_URL as string) + '/v1/accounts/' + address
   const response = await fetch(apiAddress)
   return response.json()
 }
