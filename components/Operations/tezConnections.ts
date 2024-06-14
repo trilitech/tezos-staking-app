@@ -8,10 +8,10 @@ import {
 } from './tezInterfaces'
 import { mutezToTez } from '@/utils/mutezToTez'
 
-const UNSTAKE_CYCLE_DIFF = Number(
-  process.env.NEXT_PUBLIC_NUM_CYCLES_TO_FINALIZE_AFTER_UNSTAKE
-) // 2 cycles each cycle with 16384 blocks
-
+const consensusRightsDelay = Number(
+  process.env.NEXT_PUBLIC_CONSENSUS_RIGHTS_DELAY
+)
+const maxSlashingPeriod = 2
 const tzktBaseUrl = process.env.NEXT_PUBLIC_TZKT_API_URL
 const bakersListApiUrl = `${tzktBaseUrl}/v1/delegates?active=true`
 const accountInfoApiUrl = `${tzktBaseUrl}/v1/accounts/`
@@ -100,7 +100,8 @@ export function updateStakingOpsStatus(
         operation.finalizedAmount -
         operation.slashedAmount -
         operation.restakedAmount
-      let cycleRemaining = UNSTAKE_CYCLE_DIFF + 1 - cycleDiff
+      let cycleRemaining =
+        consensusRightsDelay + maxSlashingPeriod + 1 - cycleDiff
       if (cycleRemaining <= 0) {
         if (operation.remainingFinalizableAmount > 0) {
           opStatus.CanFinalizeUnstake = true

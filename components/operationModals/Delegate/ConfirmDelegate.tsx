@@ -2,11 +2,7 @@ import React, { useState } from 'react'
 import { Flex, Spinner } from '@chakra-ui/react'
 import { BakerInfo } from '@/components/Operations/tezInterfaces'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
-import {
-  setDelegate,
-  getFee,
-  OperationType
-} from '@/components/Operations/operations'
+import { setDelegate } from '@/components/Operations/operations'
 import { useConnection } from '@/providers/ConnectionProvider'
 import { TezosToolkit } from '@taquito/taquito'
 import {
@@ -35,21 +31,11 @@ export const ConfirmDelegate = ({
   const [errorMessage, setErrorMessage] = useState('')
   const [waitingOperation, setWaitingOperation] = useState(false)
 
-  const { data, status: gasFeeStatus } = useQuery({
-    queryKey: ['delegateFee'],
-    queryFn: () => getFee(OperationType.Delegate, Tezos, address, 0),
-    staleTime: 180000
-  })
-
   return (
     <Flex flexDir='column' justify='center'>
       <Header pb='24px'>Confirm</Header>
       <ColumnHeader pb='12px'>SPENDABLE BALANCE</ColumnHeader>
-      <BalanceBox
-        gasFeeStatus={gasFeeStatus}
-        fee={data?.gasFee}
-        balance={spendableBalance}
-      />
+      <BalanceBox balance={spendableBalance} />
       <ColumnHeader>Baker</ColumnHeader>
       <AddressBox address={selectedBaker.alias} />
       <PrimaryButton

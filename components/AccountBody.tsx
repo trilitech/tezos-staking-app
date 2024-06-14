@@ -7,11 +7,12 @@ import {
   useDisclosure,
   Link as ChakraLink,
   Box,
-  Spinner
+  Spinner,
+  Alert,
+  AlertIcon
 } from '@chakra-ui/react'
 import Link from 'next/link'
 import { DelegateData } from '@/pages'
-import { ExternalLinkIcon } from '@chakra-ui/icons'
 import {
   StakingOpsStatus,
   AccountInfo,
@@ -20,7 +21,6 @@ import {
 import { useConnection } from '../providers/ConnectionProvider'
 import { simplifyAddress } from '@/utils/simpliftAddress'
 import { PrimaryButton } from './buttons/PrimaryButton'
-import { CloseIcon } from '@chakra-ui/icons'
 import {
   useFetchAccountData,
   updateStakingOpsStatus
@@ -35,6 +35,7 @@ import { PendingUnstakeSection } from './operationModals/FinalizeUnstake/Pending
 import { ErrorModal } from './ErrorModal'
 import { SuccessModal } from './SuccessModal'
 import { useOperationResponse } from '@/providers/OperationResponseProvider'
+import useClipboard from '@/utils/useClipboard'
 
 const getNumOfUnstake = (
   unstOps?: UnstakedOperation[],
@@ -58,6 +59,7 @@ export const AccountBody = ({
   const stakeModal = useDisclosure()
   const unstakeModal = useDisclosure()
 
+  const { isCopied, copyTextToClipboard } = useClipboard()
   const { address } = useConnection()
   const {
     success: operationSuccess,
@@ -113,6 +115,20 @@ export const AccountBody = ({
 
   return (
     <>
+      {isCopied && (
+        <Alert
+          pos='absolute'
+          top='50px'
+          w='120px'
+          textAlign='center'
+          status='success'
+          borderRadius='10px'
+        >
+          <AlertIcon />
+          Copied
+        </Alert>
+      )}
+
       {fetchAccountError && (
         <ErrorModal
           onClick={() => window.location.reload()}
@@ -164,12 +180,22 @@ export const AccountBody = ({
             <Text fontSize='14px' color='#4A5568' fontWeight={600}>
               STAKED
             </Text>
-            <Text fontWeight={600} fontSize='18px' color='#171923'>
-              {!!stakedBalance ? stakedBalance : 0}{' '}
-              <Text as='span' fontWeight={400}>
-                ꜩ
+            <Flex gap='6px' alignItems='center'>
+              {!!stakedBalance && (
+                <Image
+                  w='18px'
+                  h='18px'
+                  src='/images/lock.svg'
+                  alt='lock icon'
+                />
+              )}
+              <Text fontWeight={600} fontSize='18px' color='#171923'>
+                {!!stakedBalance ? stakedBalance : 0}{' '}
+                <Text as='span' fontWeight={400}>
+                  ꜩ
+                </Text>
               </Text>
-            </Text>
+            </Flex>
           </Flex>
           <Flex flexDir='column' borderTop='1px solid #EDF2F7' pt='20px'>
             <Flex justify='space-between' alignItems='center'>
@@ -189,7 +215,7 @@ export const AccountBody = ({
                   <Text fontSize='14px' fontWeight={600} color='#2D3748'>
                     End{' '}
                   </Text>
-                  <CloseIcon fontSize='10px' color='#A0AEC0' />
+                  <Image src='/images/close.svg' alt='close icon' />
                 </Flex>
               )}
             </Flex>
@@ -210,18 +236,16 @@ export const AccountBody = ({
                 BAKER
               </Text>
               {!!stakingOpsStatus.Delegated ? (
-                <Flex alignItems='center' gap='4px'>
+                <Flex
+                  alignItems='center'
+                  gap='4px'
+                  onClick={() => changeBakerModal.onOpen()}
+                  _hover={{ cursor: 'pointer' }}
+                >
                   <Text fontSize='14px' fontWeight={600} color='#2D3748'>
                     Change
                   </Text>
-                  <Image
-                    w='14px'
-                    h='14px'
-                    _hover={{ cursor: 'pointer' }}
-                    onClick={() => changeBakerModal.onOpen()}
-                    src='/images/FiEdit.svg'
-                    alt='edit icon'
-                  />
+                  <Image src='/images/FiEdit.svg' alt='edit icon' />
                 </Flex>
               ) : (
                 <ChakraLink
@@ -238,21 +262,34 @@ export const AccountBody = ({
                   <Text fontSize='14px' fontWeight={600}>
                     View bakers
                   </Text>
-                  <ExternalLinkIcon color='#A0AEC0' />
+                  <Image src='/images/external.svg' alt='external icon' />
                 </ChakraLink>
               )}
             </Flex>
 
             {stakingOpsStatus.Delegated ? (
-              <Text
-                color='#171923'
-                fontSize='18px'
-                fontWeight={600}
-                lineHeight='18px'
-              >
-                {accountInfo?.delegate.alias ??
-                  simplifyAddress(accountInfo?.delegate.address ?? '')}
-              </Text>
+              <Flex gap='6px' alignItems='center'>
+                <Text
+                  color='#171923'
+                  fontSize='18px'
+                  fontWeight={600}
+                  lineHeight='18px'
+                >
+                  {accountInfo?.delegate.alias ??
+                    simplifyAddress(accountInfo?.delegate.address ?? '')}
+                </Text>
+                <Image
+                  h='18px'
+                  w='18px'
+                  color='#A0AEC0'
+                  _hover={{ cursor: 'pointer' }}
+                  src='/images/copy-icon.svg'
+                  alt='copy icon'
+                  onClick={() =>
+                    copyTextToClipboard(accountInfo?.delegate.address ?? '')
+                  }
+                />
+              </Flex>
             ) : (
               <Text
                 color='#A0AEC0'

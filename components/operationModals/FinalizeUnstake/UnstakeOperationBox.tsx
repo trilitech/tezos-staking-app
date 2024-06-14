@@ -4,6 +4,7 @@ import { UnstakedOperation } from '@/components/Operations/tezInterfaces'
 import { mutezToTez } from '@/utils/mutezToTez'
 import { TertiaryButton } from '@/components/buttons/TertiaryButton'
 import { FinalizeUnstakeModal } from '.'
+import Link from 'next/link'
 
 export const UnstakeOperationBox = ({
   unstakeOp,
@@ -15,6 +16,10 @@ export const UnstakeOperationBox = ({
   spendableBalance: number
 }) => {
   const finalizeUnstakeModal = useDisclosure()
+  const consensusRightDelay = Number(
+    process.env.NEXT_PUBLIC_CONSENSUS_RIGHTS_DELAY
+  )
+  const maxSlashingPeriod = 2
 
   let amount = 0
   let requestedCycle = 0
@@ -74,7 +79,20 @@ export const UnstakeOperationBox = ({
             </Text>
             <Flex alignItems='center' gap='6px'>
               <Text fontSize='14px' color='#4A5568' fontStyle='italic'>
-                Ready to be finalized in cycle {requestedCycle + 5}
+                Ready to be finalized in cycle{' '}
+                <Link
+                  href={
+                    (process.env.NEXT_PUBLIC_TZKT_UI_URL ?? 'tzkt.io') +
+                    '/cycles'
+                  }
+                  target='_blank'
+                >
+                  <Text as='span' _hover={{ cursor: 'pointer' }}>
+                    {requestedCycle +
+                      (consensusRightDelay + maxSlashingPeriod) +
+                      1}
+                  </Text>
+                </Link>
               </Text>
               <Image
                 src='/images/MdOutlineHourglassTop.svg'
