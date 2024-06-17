@@ -33,7 +33,7 @@ export const SelectAmount = ({
     <Flex flexDir='column'>
       <Header mb='24px'>Select Amount</Header>
       <ColumnHeader mb='12px'>STAKED</ColumnHeader>
-      <BalanceBox balance={stakedAmount} mb='30px' />
+      <BalanceBox balance={stakedAmount} />
       <ColumnHeader mb='12px'>ENTER AMOUNT</ColumnHeader>
       <InputGroup size='md' mb='30px'>
         <Input

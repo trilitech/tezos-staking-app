@@ -7,9 +7,9 @@ import {
   ModalBody,
   Flex
 } from '@chakra-ui/react'
-import { CloseIcon } from '@chakra-ui/icons'
 import useCurrentStep from '@/utils/useCurrentStep'
 import { ConfirmFinalizeUnstake } from './ConfirmFinalizeUnstake'
+import { CloseIcon } from '@/components/icons'
 
 interface FinalizeUnstakeModal {
   spendableBalance: number
@@ -57,11 +57,7 @@ export const FinalizeUnstakeModal = ({
       <ModalContent>
         <ModalHeader>
           <Flex justify='end'>
-            <CloseIcon
-              fontSize='14px'
-              onClick={onClose}
-              _hover={{ cursor: 'pointer' }}
-            />
+            <CloseIcon onClick={onClose} />
           </Flex>
         </ModalHeader>
 

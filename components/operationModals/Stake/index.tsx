@@ -5,15 +5,14 @@ import {
   ModalContent,
   ModalHeader,
   ModalBody,
-  Image,
   Flex
 } from '@chakra-ui/react'
-import { CloseIcon } from '@chakra-ui/icons'
 import { StakeStart } from './StakeStart'
 import { SelectAmount } from './SelectAmount'
 import { ConfirmAmount } from './ConfirmAmount'
 import useCurrentStep from '@/utils/useCurrentStep'
 import { Stepper } from '@/components/modalBody/Stepper'
+import { BackIcon, CloseIcon } from '@/components/icons'
 
 interface StakeModal {
   isOpen: boolean
@@ -77,17 +76,8 @@ export const StakeModal = ({
       <ModalContent>
         <ModalHeader>
           <Flex justify='space-between' alignItems='center'>
-            <Image
-              onClick={handleOneStepBack}
-              src='/images/FiArrowLeftCircle.svg'
-              alt='back button'
-              _hover={{ cursor: 'pointer' }}
-            />
-            <CloseIcon
-              fontSize='14px'
-              onClick={onClose}
-              _hover={{ cursor: 'pointer' }}
-            />
+            <BackIcon onClick={handleOneStepBack} />
+            <CloseIcon onClick={onClose} />
           </Flex>
         </ModalHeader>
 

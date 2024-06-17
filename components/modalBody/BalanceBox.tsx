@@ -11,7 +11,7 @@ export const BalanceBox = ({
   balance: number
 } & FlexProps) => {
   return (
-    <Flex flexDir='column' gap='12px' {...styles}>
+    <Flex flexDir='column' gap='12px' mb='30px' {...styles}>
       <Flex
         justify='space-between'
         alignItems='center'

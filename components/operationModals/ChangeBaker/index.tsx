@@ -5,17 +5,16 @@ import {
   ModalContent,
   ModalHeader,
   ModalBody,
-  Image,
   Flex
 } from '@chakra-ui/react'
 import { BakerInfo } from '@/components/Operations/tezInterfaces'
-import { CloseIcon } from '@chakra-ui/icons'
 import { ChangeStart } from './ChangeStart'
 import { ChooseBaker } from '../Delegate/ChooseBaker'
 import { ConfirmDelegate } from '../Delegate/ConfirmDelegate'
 import { useQuery } from '@tanstack/react-query'
 import useCurrentStep from '@/utils/useCurrentStep'
 import { Stepper } from '@/components/modalBody/Stepper'
+import { BackIcon, CloseIcon } from '@/components/icons'
 
 interface DelegateModal {
   isOpen: boolean
@@ -113,17 +112,8 @@ export const ChangeBakerModal = ({
       <ModalContent>
         <ModalHeader>
           <Flex justify='space-between' alignItems='center'>
-            <Image
-              onClick={handleOneStepBack}
-              src='/images/FiArrowLeftCircle.svg'
-              alt='back button'
-              _hover={{ cursor: 'pointer' }}
-            />
-            <CloseIcon
-              fontSize='14px'
-              onClick={onClose}
-              _hover={{ cursor: 'pointer' }}
-            />
+            <BackIcon onClick={handleOneStepBack} />
+            <CloseIcon onClick={onClose} />
           </Flex>
         </ModalHeader>
 

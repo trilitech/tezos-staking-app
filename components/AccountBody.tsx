@@ -36,6 +36,7 @@ import { ErrorModal } from './ErrorModal'
 import { SuccessModal } from './SuccessModal'
 import { useOperationResponse } from '@/providers/OperationResponseProvider'
 import useClipboard from '@/utils/useClipboard'
+import { Change, End, ViewBakers } from './ctas'
 
 const getNumOfUnstake = (
   unstOps?: UnstakedOperation[],
@@ -203,20 +204,11 @@ export const AccountBody = ({
                 DELEGATION
               </Text>
               {stakingOpsStatus.Delegated && (
-                <Flex
-                  justify='center'
-                  alignItems='center'
-                  gap='4px'
-                  _hover={{ cursor: 'pointer' }}
-                  onClick={async () => {
+                <End
+                  onClick={() => {
                     endDelegateModal.onOpen()
                   }}
-                >
-                  <Text fontSize='14px' fontWeight={600} color='#2D3748'>
-                    End{' '}
-                  </Text>
-                  <Image src='/images/close.svg' alt='close icon' />
-                </Flex>
+                />
               )}
             </Flex>
             <Flex alignItems='center' gap='6px'>
@@ -236,34 +228,9 @@ export const AccountBody = ({
                 BAKER
               </Text>
               {!!stakingOpsStatus.Delegated ? (
-                <Flex
-                  alignItems='center'
-                  gap='4px'
-                  onClick={() => changeBakerModal.onOpen()}
-                  _hover={{ cursor: 'pointer' }}
-                >
-                  <Text fontSize='14px' fontWeight={600} color='#2D3748'>
-                    Change
-                  </Text>
-                  <Image src='/images/FiEdit.svg' alt='edit icon' />
-                </Flex>
+                <Change onClick={() => changeBakerModal.onOpen()} />
               ) : (
-                <ChakraLink
-                  as={Link}
-                  href={`${process.env.NEXT_PUBLIC_TZKT_UI_URL}/bakers`}
-                  target='_blank'
-                  display='flex'
-                  alignItems='center'
-                  gap='5px'
-                  _hover={{
-                    cursor: 'pointer'
-                  }}
-                >
-                  <Text fontSize='14px' fontWeight={600}>
-                    View bakers
-                  </Text>
-                  <Image src='/images/external.svg' alt='external icon' />
-                </ChakraLink>
+                <ViewBakers />
               )}
             </Flex>
 

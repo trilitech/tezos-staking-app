@@ -100,8 +100,7 @@ export function updateStakingOpsStatus(
         operation.finalizedAmount -
         operation.slashedAmount -
         operation.restakedAmount
-      let cycleRemaining =
-        consensusRightsDelay + maxSlashingPeriod + 1 - cycleDiff
+      let cycleRemaining = consensusRightsDelay + maxSlashingPeriod - cycleDiff
       if (cycleRemaining <= 0) {
         if (operation.remainingFinalizableAmount > 0) {
           opStatus.CanFinalizeUnstake = true

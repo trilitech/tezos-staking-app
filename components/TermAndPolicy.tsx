@@ -27,7 +27,7 @@ export const TermAndPolicy = ({ ...styles }: FlexProps) => {
           <Text
             as='span'
             textDecor='underline'
-            _hover={{ color: 'white' }}
+            _hover={{ color: `${isConnected ? '#003ee0' : 'white'}` }}
             transition='color 0.2s ease-in-out'
           >
             Tezos

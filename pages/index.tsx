@@ -90,7 +90,7 @@ export default function Home() {
               display={['flex', null, 'none']}
             />
             <AccountBody {...(delegateData as DelegateData)} />
-            <TermAndPolicy pt='24px' />
+            <TermAndPolicy pt='10px' />
           </Flex>
         </>
       ) : (

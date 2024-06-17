@@ -27,7 +27,7 @@ export const SelectAmount = ({
     <Flex flexDir='column'>
       <Header mb='24px'>Select Amount</Header>
       <ColumnHeader mb='12px'>SPENDABLE BALANCE</ColumnHeader>
-      <BalanceBox balance={spendableBalance} mb='30px' />
+      <BalanceBox balance={spendableBalance} />
       <ColumnHeader mb='12px'>ENTER AMOUNT</ColumnHeader>
       <InputGroup size='md' mb='30px'>
         <Input

@@ -21,7 +21,7 @@ export const ConfirmAmount = ({
   setStakedAmount,
   handleOneStepForward
 }: ConfirmAmountProps) => {
-  const { Tezos, address } = useConnection()
+  const { Tezos } = useConnection()
   const { setMessage, setSuccess, setOpHash } = useOperationResponse()
   const [errorMessage, setErrorMessage] = useState('')
   const [waitingOperation, setWaitingOperation] = useState(false)
@@ -30,9 +30,9 @@ export const ConfirmAmount = ({
     <Flex flexDir='column'>
       <Header mb='24px'>Confirm</Header>
       <ColumnHeader mb='12px'>SPENDABLE BALANCE</ColumnHeader>
-      <BalanceBox mb='12px' balance={spendableBalance} />
+      <BalanceBox balance={spendableBalance} />
       <ColumnHeader mb='12px'>STAKE AMOUNT</ColumnHeader>
-      <BalanceBox mb='30px' balance={stakedAmount} />
+      <BalanceBox balance={stakedAmount} />
       <PrimaryButton
         onClick={async () => {
           setWaitingOperation(true)
