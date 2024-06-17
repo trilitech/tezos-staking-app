@@ -29,8 +29,8 @@ export const ConfirmFinalizeUnstake = ({
       <Header mb='24px'>Finalize</Header>
       <ColumnHeader mb='12px'>SPENDABLE BALANCE</ColumnHeader>
       <BalanceBox balance={spendableBalance} />
-      <ColumnHeader mb='12px'>Finalizable Balance</ColumnHeader>
-      <BalanceBox mb='30px' balance={withdrawAmount} />
+      <ColumnHeader mb='12px'>FINALIZABLE BALANCE</ColumnHeader>
+      <BalanceBox balance={withdrawAmount} />
       <PrimaryButton
         onClick={async () => {
           setWaitingOperation(true)

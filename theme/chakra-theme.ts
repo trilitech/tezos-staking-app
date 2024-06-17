@@ -37,7 +37,7 @@ const theme = extendTheme({
         control: {
           width: '20px',
           height: '20px',
-          borderColor: '#E0E0E0',
+          borderColor: '#b8bec4',
           _checked: {
             bg: '#0052FF',
             borderColor: '#0052FF',

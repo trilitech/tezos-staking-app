@@ -32,11 +32,11 @@ export const ConfirmAmount = ({
     <Flex flexDir='column'>
       <Header mb='24px'>Confirm</Header>
       <ColumnHeader mb='12px'>SPENDABLE BALANCE</ColumnHeader>
-      <BalanceBox mb='30px' balance={spendableBalance} />
+      <BalanceBox balance={spendableBalance} />
       <ColumnHeader mb='12px'>STAKED</ColumnHeader>
-      <BalanceBox mb='30px' balance={stakedAmount} />
+      <BalanceBox balance={stakedAmount} />
       <ColumnHeader mb='12px'>AMOUNT TO UNSTAKE</ColumnHeader>
-      <BalanceBox mb='30px' balance={unstakeAmount} />
+      <BalanceBox balance={unstakeAmount} />
       <PrimaryButton
         onClick={async () => {
           setWaitingOperation(true)

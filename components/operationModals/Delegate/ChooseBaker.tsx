@@ -11,7 +11,7 @@ import {
   Image,
   Icon
 } from '@chakra-ui/react'
-import { ExternalLinkIcon } from '@chakra-ui/icons'
+import { ViewBakers } from '@/components/ctas'
 import Link from 'next/link'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
 import { BakerListDropDown } from './BakerListDropDown'
@@ -66,22 +66,7 @@ export const ChooseBaker = ({
       <Header pb='24px'>Delegate</Header>
       <Flex alignItems='center' justify='space-between' mb='12px'>
         <ColumnHeader>SELECT BAKER</ColumnHeader>
-        <ChakraLink
-          as={Link}
-          href={`${process.env.NEXT_PUBLIC_TZKT_UI_URL}/bakers`}
-          target='_blank'
-          display='flex'
-          alignItems='center'
-          gap='4px'
-          _hover={{
-            cursor: 'pointer'
-          }}
-        >
-          <Text fontSize='14px' fontWeight={600} color='#2D3748'>
-            View bakers
-          </Text>
-          <Image src='/images/external.svg' alt='external icon' />
-        </ChakraLink>
+        <ViewBakers />
       </Flex>
       <InputGroup size='md' mb='30px'>
         {!!selectedBaker && (
