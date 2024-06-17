@@ -88,9 +88,7 @@ export const UnstakeOperationBox = ({
                   target='_blank'
                 >
                   <Text as='span' _hover={{ cursor: 'pointer' }}>
-                    {requestedCycle +
-                      (consensusRightDelay + maxSlashingPeriod) +
-                      1}
+                    {requestedCycle + (consensusRightDelay + maxSlashingPeriod)}
                   </Text>
                 </Link>
               </Text>
