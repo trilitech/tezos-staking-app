@@ -18,7 +18,8 @@ export const TermAndPolicy = ({ ...styles }: FlexProps) => {
       {...styles}
     >
       <Text color={isConnected ? '#2D3748' : '#FFFFFF'}>
-        © 2024 Tezos <Divider mx='5px' /> Terms <Divider mx='5px' /> Privacy
+        © 2024 Trilitech Limited
+        <Divider mx='5px' /> Terms <Divider mx='5px' /> Privacy
       </Text>
 
       <Text color={isConnected ? '#718096' : '#E2E8F0'}>
