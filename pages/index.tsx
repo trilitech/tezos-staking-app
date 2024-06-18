@@ -10,6 +10,7 @@ import { AccountBody } from '@/components/AccountBody'
 import { ErrorModal } from '@/components/ErrorModal'
 import { useQuery } from '@tanstack/react-query'
 import { mutezToTez } from '@/utils/mutezToTez'
+import Head from 'next/head'
 export interface DelegateData {
   address: string
   balance: number
@@ -24,6 +25,8 @@ async function fetchDelegateData(address: string) {
   const response = await fetch(apiAddress)
   return response.json()
 }
+
+const metaDescription = 'Tezos Staking App - Delegate and stake with ease.'
 
 export default function Home() {
   const { isConnected, address } = useConnection()
@@ -59,52 +62,63 @@ export default function Home() {
   }, [isConnected, address, data])
 
   return (
-    <Center
-      py='20px'
-      minH='100vh'
-      bg='#cbd5e0'
-      bgImage={!isConnected ? '/images/login-bg.png' : '/images/bg-grey.png'}
-      backgroundPosition='center'
-      backgroundRepeat='no-repeat'
-      backgroundSize='cover'
-    >
-      {isConnected === undefined ? (
-        <Spinner />
-      ) : isConnected ? (
-        <>
-          {error && (
-            <ErrorModal
-              onClick={() => window.location.reload()}
-              btnText='Refresh'
-            />
-          )}
-          <Flex flexDir='column' w='600px' gap='10px' mx='20px'>
-            <AccountBanner
-              name='Your Wallet'
-              address={delegateData?.address ?? ''}
-              display={['none', null, 'flex']}
-            />
-            <MobileAccountBanner
-              name='Your Wallet'
-              address={delegateData?.address ?? ''}
-              display={['flex', null, 'none']}
-            />
-            <AccountBody {...(delegateData as DelegateData)} />
-            <TermAndPolicy pt='10px' />
+    <>
+      <Head>
+        <title>Staking App | Tezos</title>
+        <meta key='og.site_name' property='og:site_name' content='Tezos' />
+        <meta name='description' content={metaDescription} />
+        <meta property='og:description' content={metaDescription} />
+        <meta property='twitter:description' content={metaDescription} />
+        <meta property='og:image' content='' />
+        <meta property='twitter:image' content='' />
+      </Head>
+      <Center
+        py='20px'
+        minH='100vh'
+        bg='#cbd5e0'
+        bgImage={!isConnected ? '/images/login-bg.png' : '/images/bg-grey.png'}
+        backgroundPosition='center'
+        backgroundRepeat='no-repeat'
+        backgroundSize='cover'
+      >
+        {isConnected === undefined ? (
+          <Spinner />
+        ) : isConnected ? (
+          <>
+            {error && (
+              <ErrorModal
+                onClick={() => window.location.reload()}
+                btnText='Refresh'
+              />
+            )}
+            <Flex flexDir='column' w='600px' gap='10px' mx='20px'>
+              <AccountBanner
+                name='Your Wallet'
+                address={delegateData?.address ?? ''}
+                display={['none', null, 'flex']}
+              />
+              <MobileAccountBanner
+                name='Your Wallet'
+                address={delegateData?.address ?? ''}
+                display={['flex', null, 'none']}
+              />
+              <AccountBody {...(delegateData as DelegateData)} />
+              <TermAndPolicy pt='10px' />
+            </Flex>
+          </>
+        ) : (
+          <Flex
+            flexDir='column'
+            justify='center'
+            alignItems='center'
+            alignSelf='center'
+            px='20px'
+          >
+            <LoginModal />
+            <TermAndPolicy pt='30px' />
           </Flex>
-        </>
-      ) : (
-        <Flex
-          flexDir='column'
-          justify='center'
-          alignItems='center'
-          alignSelf='center'
-          px='20px'
-        >
-          <LoginModal />
-          <TermAndPolicy pt='30px' />
-        </Flex>
-      )}
-    </Center>
+        )}
+      </Center>
+    </>
   )
 }
