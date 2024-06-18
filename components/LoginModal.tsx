@@ -82,6 +82,7 @@ const TextBox = ({
         borderRadius='100px'
         px='20px'
         py='10px'
+        whiteSpace='nowrap'
       >
         <Box border='solid 1px #EDF2F7' borderRadius={100} px='8px'>
           {step}
