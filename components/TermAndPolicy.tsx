@@ -40,8 +40,7 @@ export const TermAndPolicy = ({ ...styles }: FlexProps) => {
             _hover={{ cursor: 'pointer' }}
           >
             Terms
-          </Text>{' '}
-          <Divider mx='5px' /> Privacy
+          </Text>
         </Text>
 
         <Text color={isConnected ? '#718096' : '#E2E8F0'}>
