@@ -28,7 +28,14 @@ export const FinalizeUnstakeModal = ({
   isOpen,
   onClose
 }: FinalizeUnstakeModal) => {
-  const { currentStep, handleOneStepForward } = useCurrentStep(onClose, 1)
+  const { currentStep, handleOneStepForward, resetStep } = useCurrentStep(
+    onClose,
+    1
+  )
+
+  const closeReset = () => {
+    resetStep()
+  }
 
   const getCurrentStepBody = (currentStep: number) => {
     switch (currentStep) {
@@ -57,7 +64,12 @@ export const FinalizeUnstakeModal = ({
       <ModalContent>
         <ModalHeader>
           <Flex justify='end'>
-            <CloseIcon onClick={onClose} />
+            <CloseIcon
+              onClick={() => {
+                closeReset()
+                onClose()
+              }}
+            />
           </Flex>
         </ModalHeader>
 

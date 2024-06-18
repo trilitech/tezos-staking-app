@@ -36,8 +36,13 @@ export const UnstakeModal = ({
   const totalStep = 3
 
   const [unstakeAmount, setUnstakeAmount] = useState(0)
-  const { currentStep, handleOneStepBack, handleOneStepForward } =
+  const { currentStep, handleOneStepBack, handleOneStepForward, resetStep } =
     useCurrentStep(onClose, totalStep)
+
+  const closeReset = () => {
+    resetStep()
+    setUnstakeAmount(0)
+  }
 
   const getCurrentStepBody = (currentStep: number) => {
     switch (currentStep) {
@@ -80,7 +85,12 @@ export const UnstakeModal = ({
         <ModalHeader>
           <Flex justify='space-between' alignItems='center'>
             <BackIcon onClick={handleOneStepBack} />
-            <CloseIcon onClick={onClose} />
+            <CloseIcon
+              onClick={() => {
+                closeReset()
+                onClose()
+              }}
+            />
           </Flex>
         </ModalHeader>
 
