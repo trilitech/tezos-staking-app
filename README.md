@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Tezos Staking app
 
-## Getting Started
+## Introduction
+This app helps you to perform stake,unstake, finalize operations introduced in paris protocol of Tezos.
 
-First, run the development server:
+## Usage
+### Website: 
+[stake.tezos.com](stake.tezos.com) (mainnet) <br>
+[stake-ghostnet.tezos.com](stake-ghostnet.tezos.com) (ghostnet)
 
+### Steps:
+1. Connect your wallet. <br>
+   Most of the wallets are supported for connection like kukai, umami, temple and other beacon supported wallets.<br>
+   :heavy_check_mark: Tested with Umami v2.2.0 on 18 Jun 2024 for stake,unstake and finalize operations. 
+<br>Other wallets will add support for these operations gradually.
+2. Choose baker and delegate your tez. 
+3. Stake your tez.
+4. Unstake your tez tokens whenever you want.
+5. Wait for 4 cycles (5 for ghostnet) and finalize your unstaked tez.
+6. Change baker or end delegation whenever you want.
+
+## Features
+
+- [x] Support connecting with beacon 
+- [x] Support all Tezos Paris protocol operations (stake, unstake, finalize)
+- [ ] Show detailed information about bakers ( Who accepts staking, staking fees, rewards history etc.)
+- [ ] Show slashing history of bakers
+- [ ] Show staking rewards for your account
+- [ ] Show delegation rewards for your account
+- [ ] Show slashed rewards for your account
+
+## Development
+Run
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+$ yarn install
+$ yarn run dev
+
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+To learn more about staking and tezos protocol visit [Tezos Documentation](tezos.gitlab.io)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Support
+Create an issue in the repository for any queries or support.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Contribution
+Create a pull request for any new feature or bug fix.
 
-## Deploy on Vercel
+## License
+MIT
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+See the LICENSE.txt for license and copyright information.
+Copyright (c) 2024 Trilitech Limited. 
+```

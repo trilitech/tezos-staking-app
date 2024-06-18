@@ -49,7 +49,7 @@ export const LoginModal = () => {
       <PrimaryButton w={['100%', '170px']} mb='24px' onClick={connect}>
         Connect Wallet
       </PrimaryButton>
-      <Link href='/'>
+      <Link href='https://tezos.gitlab.io/paris/adaptive_issuance.html#new-staking-mechanism'>
         <Text
           fontWeight={600}
           fontSize='16px'
