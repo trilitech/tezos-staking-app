@@ -11,7 +11,7 @@ This app helps you to perform stake,unstake, finalize operations introduced in p
 ### Steps:
 1. Connect your wallet. <br>
    Most of the wallets are supported for connection like kukai, umami, temple and other beacon supported wallets.<br>
-   :heavy_check_mark: Tested with Umami v2.2.0 on 18 Jun 2024 for stake,unstake and finalize operations. 
+   :heavy_check_mark: Tested with Umami v2.3.0 and Kukai on 18 Jun 2024 for stake,unstake and finalize operations. 
 <br>Other wallets will add support for these operations gradually.
 2. Choose baker and delegate your tez. 
 3. Stake your tez.
@@ -30,7 +30,10 @@ This app helps you to perform stake,unstake, finalize operations introduced in p
 - [ ] Show slashed rewards for your account
 
 ## Development
-Run
+1. Clone the repository. 
+2. Install yarn. 
+3. Rename .env-mainnet(or .env-ghostnet) to .env
+4. Run the following commands:
 ```bash
 
 $ yarn install
