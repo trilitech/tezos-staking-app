@@ -24,7 +24,7 @@ export const ConfirmEndDelegate = ({
   handleOneStepForward,
   bakerName
 }: ConfirmEndDelegate) => {
-  const { Tezos, address } = useConnection()
+  const { Tezos } = useConnection()
   const { setMessage, setSuccess, setOpHash, setTitle } = useOperationResponse()
   const [errorMessage, setErrorMessage] = useState('')
   const [waitingOperation, setWaitingOperation] = useState(false)

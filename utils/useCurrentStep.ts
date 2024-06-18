@@ -20,10 +20,13 @@ const useCurrentStep = (onClose: () => void, totalSteps: number) => {
     }
   }
 
+  const resetStep = () => setCurrentStep(1)
+
   return {
     currentStep,
     handleOneStepBack,
-    handleOneStepForward
+    handleOneStepForward,
+    resetStep
   }
 }
 
