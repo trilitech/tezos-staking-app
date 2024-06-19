@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import {
   Flex,
   Text,
@@ -39,7 +40,7 @@ export const TermAndPolicy = ({ ...styles }: FlexProps) => {
             onClick={termsModal.onOpen}
             _hover={{ cursor: 'pointer' }}
           >
-            Terms
+            Terms of Use
           </Text>
         </Text>
 
@@ -84,40 +85,29 @@ const TermsModal = ({
   isOpen: boolean
   onClose: () => void
 }) => {
+  const [htmlContent, setHtmlContent] = useState('')
+
+  useEffect(() => {
+    const fetchHtmlContent = async () => {
+      try {
+        const response = await axios.get('/termsOfUseStakingApp.html')
+        setHtmlContent(response.data)
+      } catch (error) {
+        console.error('Failed to fetch HTML content:', error)
+      }
+    }
+
+    fetchHtmlContent()
+  }, [])
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>Terms and Use</ModalHeader>
+      <ModalContent maxH='80vh'>
+        <ModalHeader>Terms of use</ModalHeader>
         <ModalCloseButton />
-        <ModalBody>
-          <Text mb={4}>
-            MIT License Copyright (c) 2018-2024 Trilitech Limited
-            &lt;tezos-staking-app@trili.tech&gt;
-          </Text>
-          <Text mb={4}>
-            Permission is hereby granted, free of charge, to any person
-            obtaining a copy of this software and associated documentation files
-            (the &quot;Software&quot;), to deal in the Software without
-            restriction, including without limitation the rights to use, copy,
-            modify, merge, publish, distribute, sublicense, and/or sell copies
-            of the Software, and to permit persons to whom the Software is
-            furnished to do so, subject to the following conditions:
-          </Text>
-          <Text mb={4}>
-            The above copyright notice and this permission notice shall be
-            included in all copies or substantial portions of the Software.
-          </Text>
-          <Text>
-            THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY
-            KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
-            WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-            NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-            BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-            ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-            CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-            SOFTWARE.
-          </Text>
+        <ModalBody overflowY='auto'>
+          <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
         </ModalBody>
       </ModalContent>
     </Modal>
