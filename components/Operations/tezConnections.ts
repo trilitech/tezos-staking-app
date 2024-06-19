@@ -13,7 +13,6 @@ const consensusRightsDelay = Number(
 )
 const maxSlashingPeriod = 2
 const tzktBaseUrl = process.env.NEXT_PUBLIC_TZKT_API_URL
-const bakersListApiUrl = `${tzktBaseUrl}/v1/delegates?active=true`
 const accountInfoApiUrl = `${tzktBaseUrl}/v1/accounts/`
 const unstakedOpsApiUrl = `${tzktBaseUrl}/v1/staking/unstake_requests?staker=`
 const blockchainHeadApiUrl = `${tzktBaseUrl}/v1/head`
