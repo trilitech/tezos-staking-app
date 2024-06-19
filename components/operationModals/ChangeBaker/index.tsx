@@ -57,7 +57,7 @@ export const ChangeBakerModal = ({
 
   useEffect(() => {
     if (status === 'success') {
-      const bakerData = data.map((baker: BakerInfo) => {
+      const bakerData = data?.map((baker: BakerInfo) => {
         return {
           alias: baker.alias ?? 'Private Baker',
           address: baker.address
