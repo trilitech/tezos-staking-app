@@ -21,7 +21,7 @@ export const TermAndPolicy = ({ ...styles }: FlexProps) => {
         <Text color={isConnected ? '#2D3748' : '#FFFFFF'}>
           © 2024 Trilitech Limited
           <Divider mx='5px' />{' '}
-          <Link href='/termsOfUseStakingApp.html'>
+          <Link href='/termsOfUseStakingApp/'>
             <Text as='span' _hover={{ cursor: 'pointer' }}>
               Terms of Use
             </Text>
