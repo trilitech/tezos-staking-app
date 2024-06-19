@@ -1,16 +1,9 @@
 import React from 'react'
-import {
-  Flex,
-  FlexProps,
-  Image,
-  Text,
-  Button,
-  Alert,
-  AlertIcon
-} from '@chakra-ui/react'
+import { Flex, FlexProps, Image, Text, Button } from '@chakra-ui/react'
 import { useConnection } from '@/providers/ConnectionProvider'
 import useClipboard from '@/utils/useClipboard'
 import { simplifyAddress } from '@/utils/simpliftAddress'
+import { CopyAlert } from './CopyAlert'
 
 export const AccountBanner = ({
   address,
@@ -34,19 +27,7 @@ export const AccountBanner = ({
       w='100%'
       {...styles}
     >
-      {isCopied && (
-        <Alert
-          pos='absolute'
-          top='50px'
-          w='120px'
-          textAlign='center'
-          status='success'
-          borderRadius='10px'
-        >
-          <AlertIcon />
-          Copied
-        </Alert>
-      )}
+      {isCopied && <CopyAlert />}
 
       <Image w='110px' h='38px' src='/images/logo.svg' alt='Tezos Logo' />
       <Flex flexDir='column' gap='5px' pos='relative' right='25px'>

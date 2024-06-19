@@ -11,6 +11,7 @@ import { BakerInfo } from '@/components/Operations/tezInterfaces'
 import { ChangeStart } from './ChangeStart'
 import { ChooseBaker } from '../Delegate/ChooseBaker'
 import { ConfirmDelegate } from '../Delegate/ConfirmDelegate'
+import { getBakerList } from '@/components/operationModals/Delegate'
 import { useQuery } from '@tanstack/react-query'
 import useCurrentStep from '@/utils/useCurrentStep'
 import { Stepper } from '@/components/modalBody/Stepper'
@@ -26,17 +27,6 @@ enum DelegateStatus {
   ChangeStart = 1,
   ChooseBaker = 2,
   ConfirmBaker = 3
-}
-
-async function getBakerList() {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_TZKT_API_URL}/v1/delegates?active=true`
-  )
-  if (!response.ok) {
-    console.error('Failed to fetch baker list')
-    return null
-  }
-  return response.json()
 }
 
 export const ChangeBakerModal = ({
@@ -57,7 +47,7 @@ export const ChangeBakerModal = ({
 
   useEffect(() => {
     if (status === 'success') {
-      const bakerData = data.map((baker: BakerInfo) => {
+      const bakerData = data?.map((baker: BakerInfo) => {
         return {
           alias: baker.alias ?? 'Private Baker',
           address: baker.address

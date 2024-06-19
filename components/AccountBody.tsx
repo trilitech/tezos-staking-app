@@ -5,13 +5,9 @@ import {
   Text,
   Grid,
   useDisclosure,
-  Link as ChakraLink,
   Box,
-  Spinner,
-  Alert,
-  AlertIcon
+  Spinner
 } from '@chakra-ui/react'
-import Link from 'next/link'
 import { DelegateData } from '@/pages'
 import {
   StakingOpsStatus,
@@ -37,6 +33,7 @@ import { SuccessModal } from './SuccessModal'
 import { useOperationResponse } from '@/providers/OperationResponseProvider'
 import useClipboard from '@/utils/useClipboard'
 import { Change, End, ViewBakers } from './ctas'
+import { CopyAlert } from './CopyAlert'
 
 const getNumOfUnstake = (
   unstOps?: UnstakedOperation[],
@@ -116,19 +113,7 @@ export const AccountBody = ({
 
   return (
     <>
-      {isCopied && (
-        <Alert
-          pos='absolute'
-          top='50px'
-          w='120px'
-          textAlign='center'
-          status='success'
-          borderRadius='10px'
-        >
-          <AlertIcon />
-          Copied
-        </Alert>
-      )}
+      {isCopied && <CopyAlert />}
 
       {fetchAccountError && (
         <ErrorModal

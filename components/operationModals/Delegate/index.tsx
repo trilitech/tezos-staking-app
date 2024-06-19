@@ -28,10 +28,9 @@ enum DelegateStatus {
   ConfirmBaker = 3
 }
 
-async function getBakerList() {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_TZKT_API_URL}/v1/delegates?active=true`
-  )
+const bakersListApiUrl = `${process.env.NEXT_PUBLIC_TZKT_API_URL}/v1/delegates?active=true&limit=1000`
+export async function getBakerList() {
+  const response = await fetch(bakersListApiUrl)
   if (!response.ok) {
     console.error('Failed to fetch baker list')
     return null
@@ -57,7 +56,7 @@ export const DelegationModal = ({
 
   useEffect(() => {
     if (status === 'success') {
-      const bakerData = data.map((baker: BakerInfo) => {
+      const bakerData = data?.map((baker: BakerInfo) => {
         return {
           alias: baker.alias ?? 'Private Baker',
           address: baker.address

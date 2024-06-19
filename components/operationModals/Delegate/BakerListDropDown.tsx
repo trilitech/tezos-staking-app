@@ -1,16 +1,9 @@
 import React, { useState } from 'react'
-import {
-  Image,
-  Box,
-  Flex,
-  Text,
-  Spinner,
-  Alert,
-  AlertIcon
-} from '@chakra-ui/react'
+import { Image, Box, Flex, Text, Spinner } from '@chakra-ui/react'
 import useClipboard from '@/utils/useClipboard'
 import { simplifyAddress } from '@/utils/simpliftAddress'
 import { BakerInfo } from '@/components/Operations/tezInterfaces'
+import { CopyAlert } from '@/components/CopyAlert'
 
 export const BakerListDropDown = ({
   bakerList,
@@ -28,19 +21,7 @@ export const BakerListDropDown = ({
 
   return (
     <Flex flexDir='column' alignItems='center' justify='center'>
-      {isCopied && (
-        <Alert
-          pos='absolute'
-          top='-100px'
-          w='120px'
-          textAlign='center'
-          status='success'
-          borderRadius='10px'
-        >
-          <AlertIcon />
-          Copied
-        </Alert>
-      )}
+      {isCopied && <CopyAlert />}
       <Text color='#171923' fontSize='20px' fontWeight={600}>
         Select Baker
       </Text>
