@@ -44,7 +44,7 @@ export const StakeStart = ({
         >
           I confirm that I have read and agreed with the{' '}
           <Text as='span' textDecor='underline' _hover={{ cursor: 'pointer' }}>
-            Terms of Service.
+            Terms of Use.
           </Text>
         </Text>
       </Flex>

@@ -3210,7 +3210,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.6.2":
+"axios@npm:^1.6.2, axios@npm:^1.7.2":
   version: 1.7.2
   resolution: "axios@npm:1.7.2"
   dependencies:
@@ -7332,6 +7332,7 @@ __metadata:
     "@taquito/taquito": "npm:^20.0.0-beta.1"
     "@types/react": "npm:^18"
     "@types/react-dom": "npm:^18"
+    axios: "npm:^1.7.2"
     bufferutil: "npm:^4.0.8"
     date-fns: "npm:^3.6.0"
     eslint: "npm:^8"
