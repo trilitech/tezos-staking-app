@@ -73,23 +73,25 @@ export const BakerDetailsTable = ({
                 </Flex>
               </Td>
             </Tr>
-            <Tr>
-              <Td borderBottom='1px solid #E2E8F0'>
-                <Text
-                  color='#4A5568'
-                  fontSize='14px'
-                  textTransform='uppercase'
-                  fontWeight={600}
-                >
-                  Delegation Fee:
-                </Text>
-              </Td>
-              <Td borderBottom='1px solid #E2E8F0'>
-                <Text color='#10121B' fontWeight={600} fontSize='14px'>
-                  {isNaN(fee) ? 0 : fee}%
-                </Text>
-              </Td>
-            </Tr>
+            {acceptStaking && (
+              <Tr>
+                <Td borderBottom='1px solid #E2E8F0'>
+                  <Text
+                    color='#4A5568'
+                    fontSize='14px'
+                    textTransform='uppercase'
+                    fontWeight={600}
+                  >
+                    Delegation Fee:
+                  </Text>
+                </Td>
+                <Td borderBottom='1px solid #E2E8F0'>
+                  <Text color='#10121B' fontWeight={600} fontSize='14px'>
+                    {fee}%
+                  </Text>
+                </Td>
+              </Tr>
+            )}
             <Tr>
               <Td borderBottom='1px solid #E2E8F0'>
                 <Text
@@ -107,28 +109,30 @@ export const BakerDetailsTable = ({
                 </Text>
               </Td>
             </Tr>
-            <Tr>
-              <Td>
-                <Text
-                  color='#4A5568'
-                  fontSize='14px'
-                  textTransform='uppercase'
-                  fontWeight={600}
-                >
-                  Remaining Capacity:
-                </Text>
-              </Td>
-              <Td>
-                <Text
-                  color='#10121B'
-                  fontWeight={600}
-                  fontSize='14px'
-                  justifySelf='start'
-                >
-                  {isNaN(capacity) ? 0 : Math.floor(capacity)} ꜩ
-                </Text>
-              </Td>
-            </Tr>
+            {acceptStaking && (
+              <Tr>
+                <Td>
+                  <Text
+                    color='#4A5568'
+                    fontSize='14px'
+                    textTransform='uppercase'
+                    fontWeight={600}
+                  >
+                    Remaining Capacity:
+                  </Text>
+                </Td>
+                <Td>
+                  <Text
+                    color='#10121B'
+                    fontWeight={600}
+                    fontSize='14px'
+                    justifySelf='start'
+                  >
+                    {Math.floor(capacity)} ꜩ
+                  </Text>
+                </Td>
+              </Tr>
+            )}
           </Tbody>
         </Table>
       </TableContainer>
