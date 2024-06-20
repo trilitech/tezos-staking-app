@@ -35,7 +35,7 @@ export const ConfirmDelegate = ({
       <Header pb='24px'>Confirm</Header>
       <ColumnHeader pb='12px'>SPENDABLE BALANCE</ColumnHeader>
       <BalanceBox balance={spendableBalance} />
-      <ColumnHeader>Baker</ColumnHeader>
+      <ColumnHeader mb='12px'>Baker</ColumnHeader>
       <BakerDetailsTable
         alias={selectedBaker.alias}
         address={selectedBaker.address}
