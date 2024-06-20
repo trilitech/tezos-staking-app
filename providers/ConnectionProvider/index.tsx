@@ -1,14 +1,18 @@
 import { Context, createContext, useContext, useState, useEffect } from 'react'
-import { connectBeacon } from './beacon'
 import { WalletApi } from './types'
 import { TezosToolkit } from '@taquito/taquito'
-import { createBeaconWallet } from './beacon'
-import { Tezos as TzosInstance } from './beacon'
+import {
+  createBeaconWallet,
+  Tezos as TzosInstance,
+  connectBeacon
+} from './beacon'
+import { BeaconWallet } from '@taquito/beacon-wallet'
 interface ConnectionContextType extends Partial<WalletApi> {
   connect: () => Promise<void>
   disconnect: () => Promise<void>
   isConnected?: boolean
   Tezos?: TezosToolkit
+  beaconWallet?: BeaconWallet
 }
 
 const ConnectionContext = createContext<ConnectionContextType | null>(null)
@@ -17,6 +21,9 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
   const [address, setAddress] = useState<string | undefined>(undefined)
   const [Tezos, setTezos] = useState<TezosToolkit | undefined>(undefined)
   const [isConnected, setIsConnected] = useState<boolean | undefined>(undefined)
+  const [beaconWallet, setBeaconWallet] = useState<BeaconWallet | undefined>(
+    undefined
+  )
   const wallet = createBeaconWallet()
 
   // check if connected to a wallet when refresh
@@ -30,6 +37,7 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
       .then(activeAccount => {
         setIsConnected(activeAccount ? true : false)
         setAddress(activeAccount?.address)
+        setBeaconWallet(wallet)
         if (isConnected) {
           TzosInstance.setWalletProvider(wallet)
           setTezos(TzosInstance)
@@ -44,6 +52,8 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
   const reset = () => {
     setIsConnected(undefined)
     setAddress(undefined)
+    setBeaconWallet(undefined)
+    setTezos(undefined)
   }
 
   return (
@@ -51,10 +61,11 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
       value={{
         connect: async () => {
           return await connectBeacon()
-            .then(({ address, Tezos }) => {
+            .then(({ address, Tezos, beaconWallet }) => {
               setAddress(address)
               setIsConnected(true)
               setTezos(Tezos)
+              setBeaconWallet(beaconWallet)
               location.reload()
             })
             .catch(() => {
@@ -71,7 +82,8 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
         },
         address,
         isConnected,
-        Tezos
+        Tezos,
+        beaconWallet
       }}
     >
       {children}

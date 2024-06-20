@@ -4,7 +4,6 @@ import { Header, ColumnHeader, BalanceBox } from '@/components/modalBody'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
 import { unstake } from '@/components/Operations/operations'
 import { useConnection } from '@/providers/ConnectionProvider'
-import { TezosToolkit } from '@taquito/taquito'
 import { useOperationResponse } from '@/providers/OperationResponseProvider'
 import { ErrorBlock } from '@/components/ErrorBlock'
 
@@ -23,7 +22,7 @@ export const ConfirmAmount = ({
   setUnstakeAmount,
   handleOneStepForward
 }: ConfirmAmountProps) => {
-  const { Tezos, address } = useConnection()
+  const { Tezos, beaconWallet } = useConnection()
   const { setMessage, setSuccess, setOpHash, setTitle } = useOperationResponse()
   const [errorMessage, setErrorMessage] = useState('')
   const [waitingOperation, setWaitingOperation] = useState(false)
@@ -39,8 +38,13 @@ export const ConfirmAmount = ({
       <BalanceBox balance={unstakeAmount} />
       <PrimaryButton
         onClick={async () => {
+          if (!Tezos || !beaconWallet) {
+            setErrorMessage('Wallet is not initialized, log out to try again.')
+            return
+          }
+
           setWaitingOperation(true)
-          const response = await unstake(Tezos as TezosToolkit, unstakeAmount)
+          const response = await unstake(Tezos, unstakeAmount, beaconWallet)
           setWaitingOperation(false)
 
           if (response.success) {

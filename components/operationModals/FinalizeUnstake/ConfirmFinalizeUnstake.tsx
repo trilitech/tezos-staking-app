@@ -3,7 +3,6 @@ import { Flex, Spinner } from '@chakra-ui/react'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
 import { finalizeUnstake } from '@/components/Operations/operations'
 import { useConnection } from '@/providers/ConnectionProvider'
-import { TezosToolkit } from '@taquito/taquito'
 import { Header, BalanceBox, ColumnHeader } from '@/components/modalBody'
 import { useOperationResponse } from '@/providers/OperationResponseProvider'
 import { ErrorBlock } from '@/components/ErrorBlock'
@@ -19,7 +18,7 @@ export const ConfirmFinalizeUnstake = ({
   handleOneStepForward,
   spendableBalance
 }: ConfirmFinalizeUnstake) => {
-  const { Tezos, address } = useConnection()
+  const { Tezos, beaconWallet } = useConnection()
   const { setMessage, setSuccess, setOpHash } = useOperationResponse()
   const [errorMessage, setErrorMessage] = useState('')
   const [waitingOperation, setWaitingOperation] = useState(false)
@@ -33,8 +32,13 @@ export const ConfirmFinalizeUnstake = ({
       <BalanceBox balance={withdrawAmount} />
       <PrimaryButton
         onClick={async () => {
+          if (!Tezos || !beaconWallet) {
+            setErrorMessage('Wallet is not initialized, log out to try again.')
+            return
+          }
+
           setWaitingOperation(true)
-          const response = await finalizeUnstake(Tezos as TezosToolkit)
+          const response = await finalizeUnstake(Tezos, beaconWallet)
           setWaitingOperation(false)
 
           if (response.success) {

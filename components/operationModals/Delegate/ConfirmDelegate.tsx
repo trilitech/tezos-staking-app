@@ -4,7 +4,6 @@ import { BakerInfo } from '@/components/Operations/tezInterfaces'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
 import { setDelegate } from '@/components/Operations/operations'
 import { useConnection } from '@/providers/ConnectionProvider'
-import { TezosToolkit } from '@taquito/taquito'
 import {
   Header,
   ColumnHeader,
@@ -13,7 +12,7 @@ import {
 } from '@/components/modalBody'
 import { useOperationResponse } from '@/providers/OperationResponseProvider'
 import { ErrorBlock } from '@/components/ErrorBlock'
-import { useQuery } from '@tanstack/react-query'
+import { BeaconWallet } from '@taquito/beacon-wallet'
 
 interface ConfirmDelegateProps {
   spendableBalance: number
@@ -26,7 +25,7 @@ export const ConfirmDelegate = ({
   handleOneStepForward,
   selectedBaker
 }: ConfirmDelegateProps) => {
-  const { Tezos, address } = useConnection()
+  const { Tezos, beaconWallet } = useConnection()
   const { setMessage, setSuccess, setOpHash } = useOperationResponse()
   const [errorMessage, setErrorMessage] = useState('')
   const [waitingOperation, setWaitingOperation] = useState(false)
@@ -40,10 +39,16 @@ export const ConfirmDelegate = ({
       <AddressBox address={selectedBaker.alias} />
       <PrimaryButton
         onClick={async () => {
+          if (!Tezos || !beaconWallet) {
+            setErrorMessage('Wallet is not initialized, log out to try again.')
+            return
+          }
+
           setWaitingOperation(true)
           const response = await setDelegate(
-            Tezos as TezosToolkit,
-            selectedBaker.address
+            Tezos,
+            selectedBaker.address,
+            beaconWallet
           )
           setWaitingOperation(false)
           if (response.success) {

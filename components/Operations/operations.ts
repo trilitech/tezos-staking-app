@@ -1,4 +1,6 @@
-import { Estimate, TezosToolkit } from '@taquito/taquito'
+import { PermissionScope } from '@airgap/beacon-sdk'
+import { TezosToolkit } from '@taquito/taquito'
+import { BeaconWallet } from '@taquito/beacon-wallet'
 export interface OperationResult {
   success: boolean
   opHash: string
@@ -7,10 +9,20 @@ export interface OperationResult {
 
 export const setDelegate = async (
   Tezos: TezosToolkit,
-  delegate: string | undefined
+  delegate: string | undefined,
+  wallet: BeaconWallet
 ): Promise<OperationResult> => {
   let opHash = ''
   try {
+    if (!wallet.account) {
+      await wallet.requestPermissions({
+        network: {
+          type: process.env.NEXT_PUBLIC_NETWORK as any
+        },
+        scopes: [PermissionScope.OPERATION_REQUEST, PermissionScope.SIGN]
+      })
+    }
+
     const op = await Tezos.wallet.setDelegate({ delegate }).send()
     const response = await op.confirmation()
     opHash = op.opHash
@@ -28,10 +40,20 @@ export const setDelegate = async (
 
 export const stake = async (
   Tezos: TezosToolkit,
-  amount: number
+  amount: number,
+  wallet: BeaconWallet
 ): Promise<OperationResult> => {
   let opHash = ''
   try {
+    if (!wallet.account) {
+      await wallet.requestPermissions({
+        network: {
+          type: process.env.NEXT_PUBLIC_NETWORK as any
+        },
+        scopes: [PermissionScope.OPERATION_REQUEST, PermissionScope.SIGN]
+      })
+    }
+
     const op = await Tezos.wallet.stake({ amount }).send()
     const response = await op.confirmation()
     opHash = op.opHash
@@ -49,10 +71,20 @@ export const stake = async (
 
 export const unstake = async (
   Tezos: TezosToolkit,
-  amount: number
+  amount: number,
+  wallet: BeaconWallet
 ): Promise<OperationResult> => {
   let opHash = ''
   try {
+    if (!wallet.account) {
+      await wallet.requestPermissions({
+        network: {
+          type: process.env.NEXT_PUBLIC_NETWORK as any
+        },
+        scopes: [PermissionScope.OPERATION_REQUEST, PermissionScope.SIGN]
+      })
+    }
+
     const op = await Tezos.wallet.unstake({ amount }).send()
     const response = await op.confirmation()
     opHash = op.opHash
@@ -69,10 +101,20 @@ export const unstake = async (
 }
 
 export const finalizeUnstake = async (
-  Tezos: TezosToolkit
+  Tezos: TezosToolkit,
+  wallet: BeaconWallet
 ): Promise<OperationResult> => {
   let opHash = ''
   try {
+    if (!wallet.account) {
+      await wallet.requestPermissions({
+        network: {
+          type: process.env.NEXT_PUBLIC_NETWORK as any
+        },
+        scopes: [PermissionScope.OPERATION_REQUEST, PermissionScope.SIGN]
+      })
+    }
+
     const op = await Tezos.wallet.finalizeUnstake({}).send()
     const response = await op.confirmation()
     opHash = op.opHash
