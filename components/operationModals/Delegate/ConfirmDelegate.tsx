@@ -12,28 +12,12 @@ import {
 } from '@/components/modalBody'
 import { useOperationResponse } from '@/providers/OperationResponseProvider'
 import { ErrorBlock } from '@/components/ErrorBlock'
-import { BeaconWallet } from '@taquito/beacon-wallet'
+import { BakerDetailsTable } from '@/components/modalBody/BakerDetailsTable'
 
 interface ConfirmDelegateProps {
   spendableBalance: number
   handleOneStepForward: () => void
   selectedBaker: BakerInfo
-}
-
-// Create a new component to display the baker's details
-const BakerDetails = ({ baker }: { baker: BakerInfo }) => {
-  console.log(baker)
-  return (
-    <div>
-      <p>Accepts Staking: {baker.acceptsStaking ? 'Yes' : 'No'}</p>
-      {baker.acceptsStaking && (
-        <>
-          <p>Staking Fees: {baker.stakingFees} %</p>
-          <p>Remaining Staking Capacity: {baker.stakingFreeSpace} tz</p>
-        </>
-      )}
-    </div>
-  )
 }
 
 export const ConfirmDelegate = ({
@@ -52,8 +36,13 @@ export const ConfirmDelegate = ({
       <ColumnHeader pb='12px'>SPENDABLE BALANCE</ColumnHeader>
       <BalanceBox balance={spendableBalance} />
       <ColumnHeader>Baker</ColumnHeader>
-      <AddressBox address={selectedBaker.alias} />
-      <BakerDetails baker={selectedBaker} />
+      <BakerDetailsTable
+        alias={selectedBaker.alias}
+        address={selectedBaker.address}
+        fee={selectedBaker.stakingFees}
+        acceptStaking={selectedBaker.acceptsStaking}
+        capacity={selectedBaker.stakingFreeSpace}
+      />
       <PrimaryButton
         onClick={async () => {
           if (!Tezos || !beaconWallet) {
