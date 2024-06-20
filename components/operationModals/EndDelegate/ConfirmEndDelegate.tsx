@@ -24,7 +24,7 @@ export const ConfirmEndDelegate = ({
   handleOneStepForward,
   bakerName
 }: ConfirmEndDelegate) => {
-  const { Tezos } = useConnection()
+  const { Tezos, beaconWallet } = useConnection()
   const { setMessage, setSuccess, setOpHash, setTitle } = useOperationResponse()
   const [errorMessage, setErrorMessage] = useState('')
   const [waitingOperation, setWaitingOperation] = useState(false)
@@ -38,8 +38,13 @@ export const ConfirmEndDelegate = ({
       <AddressBox address={bakerName} />
       <PrimaryButton
         onClick={async () => {
+          if (!Tezos || !beaconWallet) {
+            setErrorMessage('Wallet is not initialized, log out to try again.')
+            return
+          }
+
           setWaitingOperation(true)
-          const response = await setDelegate(Tezos as TezosToolkit, undefined)
+          const response = await setDelegate(Tezos, undefined, beaconWallet)
           setWaitingOperation(false)
           if (response.success) {
             setOpHash(response.opHash)
