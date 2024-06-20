@@ -20,6 +20,22 @@ interface ConfirmDelegateProps {
   selectedBaker: BakerInfo
 }
 
+// Create a new component to display the baker's details
+const BakerDetails = ({ baker }: { baker: BakerInfo }) => {
+  console.log(baker)
+  return (
+    <div>
+      <p>Accepts Staking: {baker.acceptsStaking ? 'Yes' : 'No'}</p>
+      {baker.acceptsStaking && (
+        <>
+          <p>Staking Fees: {baker.stakingFees} %</p>
+          <p>Remaining Staking Capacity: {baker.stakingFreeSpace} tz</p>
+        </>
+      )}
+    </div>
+  )
+}
+
 export const ConfirmDelegate = ({
   spendableBalance,
   handleOneStepForward,
@@ -37,6 +53,7 @@ export const ConfirmDelegate = ({
       <BalanceBox balance={spendableBalance} />
       <ColumnHeader>Baker</ColumnHeader>
       <AddressBox address={selectedBaker.alias} />
+      <BakerDetails baker={selectedBaker} />
       <PrimaryButton
         onClick={async () => {
           if (!Tezos || !beaconWallet) {
