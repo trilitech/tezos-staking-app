@@ -15,6 +15,7 @@ import useCurrentStep from '@/utils/useCurrentStep'
 import { ConfirmDelegate } from './ConfirmDelegate'
 import { Stepper } from '@/components/modalBody/Stepper'
 import { BackIcon, CloseIcon } from '@/components/icons'
+import { mutezToTez } from '@/utils/mutezToTez'
 
 interface DelegateModal {
   isOpen: boolean
@@ -59,7 +60,13 @@ export const DelegationModal = ({
       const bakerData = data?.map((baker: BakerInfo) => {
         return {
           alias: baker.alias ?? 'Private Baker',
-          address: baker.address
+          address: baker.address,
+          acceptsStaking: mutezToTez(baker.limitOfStakingOverBaking) > 0,
+          stakingFees: baker.edgeOfBakingOverStaking / 10000000,
+          stakingFreeSpace: mutezToTez(
+            baker.stakedBalance * mutezToTez(baker.limitOfStakingOverBaking) -
+              baker.externalStakedBalance
+          )
         }
       })
 

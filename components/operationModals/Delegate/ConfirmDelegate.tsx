@@ -12,7 +12,7 @@ import {
 } from '@/components/modalBody'
 import { useOperationResponse } from '@/providers/OperationResponseProvider'
 import { ErrorBlock } from '@/components/ErrorBlock'
-import { BeaconWallet } from '@taquito/beacon-wallet'
+import { BakerDetailsTable } from '@/components/modalBody/BakerDetailsTable'
 
 interface ConfirmDelegateProps {
   spendableBalance: number
@@ -35,8 +35,14 @@ export const ConfirmDelegate = ({
       <Header pb='24px'>Confirm</Header>
       <ColumnHeader pb='12px'>SPENDABLE BALANCE</ColumnHeader>
       <BalanceBox balance={spendableBalance} />
-      <ColumnHeader>Baker</ColumnHeader>
-      <AddressBox address={selectedBaker.alias} />
+      <ColumnHeader mb='12px'>Baker</ColumnHeader>
+      <BakerDetailsTable
+        alias={selectedBaker.alias}
+        address={selectedBaker.address}
+        fee={selectedBaker.stakingFees}
+        acceptStaking={selectedBaker.acceptsStaking}
+        capacity={selectedBaker.stakingFreeSpace}
+      />
       <PrimaryButton
         onClick={async () => {
           if (!Tezos || !beaconWallet) {

@@ -49,6 +49,18 @@ export interface BakerInfo {
   alias: string
   active: boolean
   balance: number
+  totalStakedBalance: number
+  stakedBalance: number
+  externalStakedBalance: number
+  delegatedBalance: number
+  frozenDepositLimit: number
+  unstakedBalance: number
+  externalUnstakedBalance: number
+  limitOfStakingOverBaking: number
+  edgeOfBakingOverStaking: number
+  acceptsStaking: boolean
+  stakingFees: number
+  stakingFreeSpace: number
 }
 
 export interface UnstakedOperation {
