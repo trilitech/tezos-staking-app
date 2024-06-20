@@ -86,7 +86,7 @@ export const BakerDetailsTable = ({
               </Td>
               <Td borderBottom='1px solid #E2E8F0'>
                 <Text color='#10121B' fontWeight={600} fontSize='14px'>
-                  {fee ?? 0}%
+                  {isNaN(fee) ? 0 : fee}%
                 </Text>
               </Td>
             </Tr>
@@ -125,7 +125,7 @@ export const BakerDetailsTable = ({
                   fontSize='14px'
                   justifySelf='start'
                 >
-                  {Math.floor(capacity) ?? 0} ꜩ
+                  {isNaN(capacity) ? 0 : Math.floor(capacity)} ꜩ
                 </Text>
               </Td>
             </Tr>
