@@ -73,25 +73,6 @@ export const BakerDetailsTable = ({
                 </Flex>
               </Td>
             </Tr>
-            {acceptStaking && (
-              <Tr>
-                <Td borderBottom='1px solid #E2E8F0'>
-                  <Text
-                    color='#4A5568'
-                    fontSize='14px'
-                    textTransform='uppercase'
-                    fontWeight={600}
-                  >
-                    Delegation Fee:
-                  </Text>
-                </Td>
-                <Td borderBottom='1px solid #E2E8F0'>
-                  <Text color='#10121B' fontWeight={600} fontSize='14px'>
-                    {fee}%
-                  </Text>
-                </Td>
-              </Tr>
-            )}
             <Tr>
               <Td borderBottom='1px solid #E2E8F0'>
                 <Text
@@ -109,6 +90,25 @@ export const BakerDetailsTable = ({
                 </Text>
               </Td>
             </Tr>
+            {acceptStaking && (
+              <Tr>
+                <Td borderBottom='1px solid #E2E8F0'>
+                  <Text
+                    color='#4A5568'
+                    fontSize='14px'
+                    textTransform='uppercase'
+                    fontWeight={600}
+                  >
+                    Staking Fee:
+                  </Text>
+                </Td>
+                <Td borderBottom='1px solid #E2E8F0'>
+                  <Text color='#10121B' fontWeight={600} fontSize='14px'>
+                    {fee}%
+                  </Text>
+                </Td>
+              </Tr>
+            )}
             {acceptStaking && (
               <Tr>
                 <Td>
