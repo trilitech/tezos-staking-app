@@ -14,12 +14,14 @@ export const setDelegate = async (
 ): Promise<OperationResult> => {
   let opHash = ''
   try {
-    await wallet.requestPermissions({
-      network: {
-        type: process.env.NEXT_PUBLIC_NETWORK as any
-      },
-      scopes: [PermissionScope.OPERATION_REQUEST, PermissionScope.SIGN]
-    })
+    if (!wallet.account) {
+      await wallet.requestPermissions({
+        network: {
+          type: process.env.NEXT_PUBLIC_NETWORK as any
+        },
+        scopes: [PermissionScope.OPERATION_REQUEST, PermissionScope.SIGN]
+      })
+    }
 
     const op = await Tezos.wallet.setDelegate({ delegate }).send()
     const response = await op.confirmation()
@@ -43,12 +45,14 @@ export const stake = async (
 ): Promise<OperationResult> => {
   let opHash = ''
   try {
-    await wallet.requestPermissions({
-      network: {
-        type: process.env.NEXT_PUBLIC_NETWORK as any
-      },
-      scopes: [PermissionScope.OPERATION_REQUEST, PermissionScope.SIGN]
-    })
+    if (!wallet.account) {
+      await wallet.requestPermissions({
+        network: {
+          type: process.env.NEXT_PUBLIC_NETWORK as any
+        },
+        scopes: [PermissionScope.OPERATION_REQUEST, PermissionScope.SIGN]
+      })
+    }
 
     const op = await Tezos.wallet.stake({ amount }).send()
     const response = await op.confirmation()
@@ -72,12 +76,14 @@ export const unstake = async (
 ): Promise<OperationResult> => {
   let opHash = ''
   try {
-    await wallet.requestPermissions({
-      network: {
-        type: process.env.NEXT_PUBLIC_NETWORK as any
-      },
-      scopes: [PermissionScope.OPERATION_REQUEST, PermissionScope.SIGN]
-    })
+    if (!wallet.account) {
+      await wallet.requestPermissions({
+        network: {
+          type: process.env.NEXT_PUBLIC_NETWORK as any
+        },
+        scopes: [PermissionScope.OPERATION_REQUEST, PermissionScope.SIGN]
+      })
+    }
 
     const op = await Tezos.wallet.unstake({ amount }).send()
     const response = await op.confirmation()
@@ -100,12 +106,14 @@ export const finalizeUnstake = async (
 ): Promise<OperationResult> => {
   let opHash = ''
   try {
-    await wallet.requestPermissions({
-      network: {
-        type: process.env.NEXT_PUBLIC_NETWORK as any
-      },
-      scopes: [PermissionScope.OPERATION_REQUEST, PermissionScope.SIGN]
-    })
+    if (!wallet.account) {
+      await wallet.requestPermissions({
+        network: {
+          type: process.env.NEXT_PUBLIC_NETWORK as any
+        },
+        scopes: [PermissionScope.OPERATION_REQUEST, PermissionScope.SIGN]
+      })
+    }
 
     const op = await Tezos.wallet.finalizeUnstake({}).send()
     const response = await op.confirmation()
