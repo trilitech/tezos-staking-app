@@ -27,8 +27,7 @@ export const BakerDetailsTable = ({
   address,
   fee,
   acceptStaking,
-  capacity,
-  ...styles
+  capacity
 }: BakerDetailsTableProps & FlexProps) => {
   const { isCopied, copyTextToClipboard } = useClipboard()
 
@@ -87,7 +86,7 @@ export const BakerDetailsTable = ({
               </Td>
               <Td borderBottom='1px solid #E2E8F0'>
                 <Text color='#10121B' fontWeight={600} fontSize='14px'>
-                  {fee}%
+                  {fee ?? 0}%
                 </Text>
               </Td>
             </Tr>
@@ -126,7 +125,7 @@ export const BakerDetailsTable = ({
                   fontSize='14px'
                   justifySelf='start'
                 >
-                  {Math.floor(capacity)} ꜩ
+                  {Math.floor(capacity) ?? 0} ꜩ
                 </Text>
               </Td>
             </Tr>

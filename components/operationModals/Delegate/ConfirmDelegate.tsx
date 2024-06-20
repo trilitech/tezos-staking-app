@@ -4,12 +4,7 @@ import { BakerInfo } from '@/components/Operations/tezInterfaces'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
 import { setDelegate } from '@/components/Operations/operations'
 import { useConnection } from '@/providers/ConnectionProvider'
-import {
-  Header,
-  ColumnHeader,
-  AddressBox,
-  BalanceBox
-} from '@/components/modalBody'
+import { Header, ColumnHeader, BalanceBox } from '@/components/modalBody'
 import { useOperationResponse } from '@/providers/OperationResponseProvider'
 import { ErrorBlock } from '@/components/ErrorBlock'
 import { BakerDetailsTable } from '@/components/modalBody/BakerDetailsTable'
