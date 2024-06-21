@@ -17,7 +17,6 @@ interface UnstakeModal {
   isOpen: boolean
   onClose: () => void
   stakedAmount: number
-  spendableBalance: number
 }
 
 enum UnstakeStatus {
@@ -28,8 +27,7 @@ enum UnstakeStatus {
 export const UnstakeModal = ({
   isOpen,
   onClose,
-  stakedAmount,
-  spendableBalance
+  stakedAmount
 }: UnstakeModal) => {
   const totalStep = 2
 

@@ -45,7 +45,6 @@ export const BakerListDropDown = ({
       >
         {bakerList?.map((baker, index) => (
           <Flex
-            alignItems='start'
             p='16px'
             borderBottom='solid 1px #EDF2F7'
             _hover={{ cursor: 'pointer', bg: '#F7FAFC' }}
@@ -56,34 +55,50 @@ export const BakerListDropDown = ({
                 setShowStepper(true)
               }
             }}
-            gap='10px'
+            justify='space-between'
             key={index}
           >
-            <Image
-              w='40px'
-              h='40px'
-              src={`${process.env.NEXT_PUBLIC_TZKT_AVATARS_URL}/${baker.address}`}
-              alt='baker avatar'
-            />
-            <Box>
-              <Text fontSize='16px' color='#171923' fontWeight={600}>
-                {baker.alias}
-              </Text>
-              <Flex alignItems='center' justify='center' gap='5px'>
-                <Text color='#2D3748' fontWeight={400} fontSize='14px'>
-                  {simplifyAddress(baker.address)}
+            <Flex alignItems='start' gap='10px'>
+              <Image
+                w='40px'
+                h='40px'
+                src={`${process.env.NEXT_PUBLIC_TZKT_AVATARS_URL}/${baker.address}`}
+                alt='baker avatar'
+              />
+              <Box>
+                <Text fontSize='16px' color='#171923' fontWeight={600}>
+                  {baker.alias}
+                </Text>
+                <Flex alignItems='center' justify='center' gap='5px'>
+                  <Text color='#2D3748' fontWeight={400} fontSize='14px'>
+                    {simplifyAddress(baker.address)}
+                  </Text>
+                  <Image
+                    _hover={{ cursor: 'pointer' }}
+                    zIndex={10}
+                    onClick={() => copyTextToClipboard(baker.address)}
+                    onMouseEnter={() => setHoverCopyIcon(true)}
+                    onMouseLeave={() => setHoverCopyIcon(false)}
+                    src='/images/copy-icon.svg'
+                    alt='copy icon'
+                  />
+                </Flex>
+              </Box>
+            </Flex>
+
+            {baker.acceptsStaking && (
+              <Flex alignSelf='end'>
+                <Text fontSize='14px' color='#4A5568'>
+                  Staking
                 </Text>
                 <Image
-                  _hover={{ cursor: 'pointer' }}
-                  zIndex={10}
-                  onClick={() => copyTextToClipboard(baker.address)}
-                  onMouseEnter={() => setHoverCopyIcon(true)}
-                  onMouseLeave={() => setHoverCopyIcon(false)}
-                  src='/images/copy-icon.svg'
-                  alt='copy icon'
+                  w='18px'
+                  h='18px'
+                  src='/images/Done.svg'
+                  alt='done icon'
                 />
               </Flex>
-            </Box>
+            )}
           </Flex>
         ))}
       </Flex>

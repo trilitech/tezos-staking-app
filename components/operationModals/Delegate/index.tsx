@@ -19,7 +19,6 @@ import { mutezToTez } from '@/utils/mutezToTez'
 interface DelegateModal {
   isOpen: boolean
   onClose: () => void
-  spendableBalance: number
 }
 
 enum DelegateStatus {
@@ -37,11 +36,7 @@ export async function getBakerList() {
   return response.json()
 }
 
-export const DelegationModal = ({
-  isOpen,
-  onClose,
-  spendableBalance
-}: DelegateModal) => {
+export const DelegationModal = ({ isOpen, onClose }: DelegateModal) => {
   const [bakerList, setBakerList] = useState<BakerInfo[] | null>(null)
   const [selectedBaker, setSelectedBaker] = useState<BakerInfo | null>(null)
   const [showStepper, setShowStepper] = useState(true)

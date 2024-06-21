@@ -20,7 +20,6 @@ import { mutezToTez } from '@/utils/mutezToTez'
 interface DelegateModal {
   isOpen: boolean
   onClose: () => void
-  spendableBalance: number
 }
 
 enum DelegateStatus {
