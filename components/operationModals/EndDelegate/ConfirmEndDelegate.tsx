@@ -3,13 +3,7 @@ import { Flex, Spinner } from '@chakra-ui/react'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
 import { setDelegate } from '@/components/Operations/operations'
 import { useConnection } from '@/providers/ConnectionProvider'
-import { TezosToolkit } from '@taquito/taquito'
-import {
-  AddressBox,
-  Header,
-  BalanceBox,
-  ColumnHeader
-} from '@/components/modalBody'
+import { AddressBox, Header, ColumnHeader } from '@/components/modalBody'
 import { useOperationResponse } from '@/providers/OperationResponseProvider'
 import { ErrorBlock } from '@/components/ErrorBlock'
 
@@ -20,7 +14,6 @@ interface ConfirmEndDelegate {
 }
 
 export const ConfirmEndDelegate = ({
-  spendableBalance,
   handleOneStepForward,
   bakerName
 }: ConfirmEndDelegate) => {
@@ -31,9 +24,8 @@ export const ConfirmEndDelegate = ({
 
   return (
     <Flex flexDir='column' justify='center'>
-      <Header my='24px'>Confirm</Header>
-      <ColumnHeader mb='12px'>SPENDABLE BALANCE</ColumnHeader>
-      <BalanceBox balance={spendableBalance} />
+      <Header my='24px'>End Delegation</Header>
+
       <ColumnHeader mb='12px'>BAKER</ColumnHeader>
       <AddressBox address={bakerName} />
       <PrimaryButton
@@ -59,7 +51,7 @@ export const ConfirmEndDelegate = ({
           }
         }}
       >
-        {waitingOperation ? <Spinner /> : 'Confirm'}
+        {waitingOperation ? <Spinner /> : 'End Delegation'}
       </PrimaryButton>
       {!!errorMessage && <ErrorBlock errorMessage={errorMessage} />}
     </Flex>

@@ -2,22 +2,25 @@ import React, { useState } from 'react'
 import {
   Button,
   Flex,
-  Text,
   InputGroup,
   Input,
   InputRightElement,
   InputLeftElement,
-  Link as ChakraLink,
   Image,
-  Icon
+  Icon,
+  Spinner
 } from '@chakra-ui/react'
 import { ViewBakers } from '@/components/ctas'
-import Link from 'next/link'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
 import { BakerListDropDown } from './BakerListDropDown'
 import { BakerInfo } from '@/components/Operations/tezInterfaces'
 import { CloseIcon } from '@chakra-ui/icons'
 import { Header, ColumnHeader } from '@/components/modalBody'
+import { BakerDetailsTable } from '@/components/modalBody/BakerDetailsTable'
+import { useOperationResponse } from '@/providers/OperationResponseProvider'
+import { ErrorBlock } from '@/components/ErrorBlock'
+import { useConnection } from '@/providers/ConnectionProvider'
+import { setDelegate } from '@/components/Operations/operations'
 
 interface ChooseBakerProps {
   handleOneStepForward: () => void
@@ -34,6 +37,11 @@ export const ChooseBaker = ({
   bakerList,
   setShowStepper
 }: ChooseBakerProps) => {
+  const { Tezos, beaconWallet } = useConnection()
+  const { setMessage, setSuccess, setOpHash } = useOperationResponse()
+  const [errorMessage, setErrorMessage] = useState('')
+  const [waitingOperation, setWaitingOperation] = useState(false)
+
   const [value, setValue] = useState('')
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const handleChange = (event: any) => {
@@ -72,7 +80,7 @@ export const ChooseBaker = ({
         {!!selectedBaker && (
           <InputLeftElement h='100%'>
             <Image
-              ml='5px'
+              ml='6px'
               w='30px'
               h='30px'
               objectFit='cover'
@@ -91,7 +99,13 @@ export const ChooseBaker = ({
               fontSize: '16px'
             }
           }}
-          value={selectedBaker ? selectedBaker.address : value}
+          value={
+            selectedBaker
+              ? selectedBaker.alias
+                ? selectedBaker.alias
+                : 'Private Baker'
+              : value
+          }
           h='58px'
           overflowX='auto'
         />
@@ -130,9 +144,53 @@ export const ChooseBaker = ({
           )}
         </InputRightElement>
       </InputGroup>
-      <PrimaryButton disabled={!selectedBaker} onClick={handleOneStepForward}>
-        Preview
+      {selectedBaker && (
+        <>
+          <ColumnHeader mb='12px'>BAKER&#39;S INFO</ColumnHeader>
+          <BakerDetailsTable
+            alias={selectedBaker.alias}
+            address={selectedBaker.address}
+            fee={selectedBaker.stakingFees}
+            acceptStaking={selectedBaker.acceptsStaking}
+            capacity={selectedBaker.stakingFreeSpace}
+          />
+        </>
+      )}
+
+      <PrimaryButton
+        disabled={!selectedBaker}
+        onClick={async () => {
+          if (!Tezos || !beaconWallet) {
+            setErrorMessage('Wallet is not initialized, log out to try again.')
+            return
+          }
+          if (!selectedBaker) {
+            setErrorMessage('Please select baker')
+            return
+          }
+
+          setWaitingOperation(true)
+          const response = await setDelegate(
+            Tezos,
+            selectedBaker.address,
+            beaconWallet
+          )
+          setWaitingOperation(false)
+          if (response.success) {
+            setOpHash(response.opHash)
+            setMessage(
+              'You have successfully delegated your balance to the baker. You can now (optionally) stake funds with the baker, and potentially earn higher rewards.'
+            )
+            setSuccess(true)
+            handleOneStepForward()
+          } else {
+            setErrorMessage(response.message)
+          }
+        }}
+      >
+        {waitingOperation ? <Spinner /> : 'Delegate'}
       </PrimaryButton>
+      {!!errorMessage && <ErrorBlock errorMessage={errorMessage} />}
     </Flex>
   )
 }

@@ -294,13 +294,11 @@ export const AccountBody = ({
         <DelegationModal
           isOpen={delegateModal.isOpen}
           onClose={delegateModal.onClose}
-          spendableBalance={spendableBalance}
         />
 
         <ChangeBakerModal
           isOpen={changeBakerModal.isOpen}
           onClose={changeBakerModal.onClose}
-          spendableBalance={spendableBalance}
         />
 
         <EndDelegationModal
@@ -323,7 +321,6 @@ export const AccountBody = ({
           isOpen={unstakeModal.isOpen}
           onClose={unstakeModal.onClose}
           stakedAmount={stakedBalance}
-          spendableBalance={spendableBalance}
         />
       </Flex>
 
