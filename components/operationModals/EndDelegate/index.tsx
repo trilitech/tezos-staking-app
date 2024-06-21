@@ -8,9 +8,7 @@ import {
   Flex
 } from '@chakra-ui/react'
 import useCurrentStep from '@/utils/useCurrentStep'
-import { EndDelegateStart } from './EndDelegateStart'
 import { ConfirmEndDelegate } from './ConfirmEndDelegate'
-import { Stepper } from '@/components/modalBody/Stepper'
 import { BackIcon, CloseIcon } from '@/components/icons'
 
 interface EndDelegateModal {
@@ -21,8 +19,7 @@ interface EndDelegateModal {
 }
 
 enum EndDelegateStatus {
-  EndDelegationStart = 1,
-  ConfirmEndBaker = 2
+  EndDelegation = 1
 }
 
 export const EndDelegationModal = ({
@@ -31,7 +28,7 @@ export const EndDelegationModal = ({
   bakerName,
   spendableBalance
 }: EndDelegateModal) => {
-  const totalStep = 2
+  const totalStep = 1
 
   const { currentStep, handleOneStepBack, handleOneStepForward, resetStep } =
     useCurrentStep(onClose, totalStep)
@@ -42,14 +39,7 @@ export const EndDelegationModal = ({
 
   const getCurrentStepBody = (currentStep: number) => {
     switch (currentStep) {
-      case EndDelegateStatus.EndDelegationStart:
-        return (
-          <EndDelegateStart
-            bakerName={bakerName}
-            handleOneStepForward={handleOneStepForward}
-          />
-        )
-      case EndDelegateStatus.ConfirmEndBaker:
+      case EndDelegateStatus.EndDelegation:
         return (
           <ConfirmEndDelegate
             handleOneStepForward={handleOneStepForward}
@@ -85,10 +75,7 @@ export const EndDelegationModal = ({
         </ModalHeader>
 
         <ModalBody>
-          <Flex flexDir='column'>
-            <Stepper totalStep={totalStep} currentStep={currentStep} />
-            {getCurrentStepBody(currentStep)}
-          </Flex>
+          <Flex flexDir='column'>{getCurrentStepBody(currentStep)}</Flex>
         </ModalBody>
       </ModalContent>
     </Modal>

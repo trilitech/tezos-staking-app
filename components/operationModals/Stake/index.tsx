@@ -9,7 +9,6 @@ import {
 } from '@chakra-ui/react'
 import { StakeStart } from './StakeStart'
 import { SelectAmount } from './SelectAmount'
-import { ConfirmAmount } from './ConfirmAmount'
 import useCurrentStep from '@/utils/useCurrentStep'
 import { Stepper } from '@/components/modalBody/Stepper'
 import { BackIcon, CloseIcon } from '@/components/icons'
@@ -22,8 +21,7 @@ interface StakeModal {
 
 enum StakeStatus {
   StakeStart = 1,
-  SelectAmount = 2,
-  ConfirmStake = 3
+  SelectAmount = 2
 }
 
 export const StakeModal = ({
@@ -32,7 +30,7 @@ export const StakeModal = ({
   spendableBalance
 }: StakeModal) => {
   const [stakedAmount, setStakedAmount] = useState(0)
-  const totalStep = 3
+  const totalStep = 2
 
   const { currentStep, handleOneStepBack, handleOneStepForward, resetStep } =
     useCurrentStep(onClose, totalStep)
@@ -52,15 +50,6 @@ export const StakeModal = ({
             stakedAmount={stakedAmount}
             setStakedAmount={setStakedAmount}
             spendableBalance={spendableBalance}
-            handleOneStepForward={handleOneStepForward}
-          />
-        )
-      case StakeStatus.ConfirmStake:
-        return (
-          <ConfirmAmount
-            spendableBalance={spendableBalance}
-            stakedAmount={stakedAmount as number}
-            setStakedAmount={setStakedAmount}
             handleOneStepForward={handleOneStepForward}
           />
         )

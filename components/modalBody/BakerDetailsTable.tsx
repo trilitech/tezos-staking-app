@@ -34,7 +34,7 @@ export const BakerDetailsTable = ({
   return (
     <>
       {isCopied && <CopyAlert />}
-      <TableContainer bg='#EDF2F7' borderRadius='8px' p='16px' mb='30px'>
+      <TableContainer bg='#EDF2F7' borderRadius='8px' mb='30px'>
         <Table>
           <Tbody>
             <Tr>

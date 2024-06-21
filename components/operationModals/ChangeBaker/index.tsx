@@ -10,7 +10,6 @@ import {
 import { BakerInfo } from '@/components/Operations/tezInterfaces'
 import { ChangeStart } from './ChangeStart'
 import { ChooseBaker } from '../Delegate/ChooseBaker'
-import { ConfirmDelegate } from '../Delegate/ConfirmDelegate'
 import { getBakerList } from '@/components/operationModals/Delegate'
 import { useQuery } from '@tanstack/react-query'
 import useCurrentStep from '@/utils/useCurrentStep'
@@ -26,19 +25,14 @@ interface DelegateModal {
 
 enum DelegateStatus {
   ChangeStart = 1,
-  ChooseBaker = 2,
-  ConfirmBaker = 3
+  ChooseBaker = 2
 }
 
-export const ChangeBakerModal = ({
-  isOpen,
-  onClose,
-  spendableBalance
-}: DelegateModal) => {
+export const ChangeBakerModal = ({ isOpen, onClose }: DelegateModal) => {
   const [bakerList, setBakerList] = useState<BakerInfo[] | null>(null)
   const [selectedBaker, setSelectedBaker] = useState<BakerInfo | null>(null)
   const [showStepper, setShowStepper] = useState(true)
-  const totalStep = 3
+  const totalStep = 2
 
   const { data, status } = useQuery({
     queryKey: ['baerList'],
@@ -88,14 +82,6 @@ export const ChangeBakerModal = ({
             setSelectedBaker={setSelectedBaker}
             bakerList={bakerList ?? []}
             setShowStepper={setShowStepper}
-          />
-        )
-      case DelegateStatus.ConfirmBaker:
-        return (
-          <ConfirmDelegate
-            handleOneStepForward={handleOneStepForward}
-            selectedBaker={selectedBaker as BakerInfo}
-            spendableBalance={spendableBalance}
           />
         )
       default:
