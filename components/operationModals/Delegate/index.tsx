@@ -12,7 +12,6 @@ import { DelegateStart } from './DelegateStart'
 import { ChooseBaker } from './ChooseBaker'
 import { useQuery } from '@tanstack/react-query'
 import useCurrentStep from '@/utils/useCurrentStep'
-import { ConfirmDelegate } from './ConfirmDelegate'
 import { Stepper } from '@/components/modalBody/Stepper'
 import { BackIcon, CloseIcon } from '@/components/icons'
 import { mutezToTez } from '@/utils/mutezToTez'
@@ -20,13 +19,11 @@ import { mutezToTez } from '@/utils/mutezToTez'
 interface DelegateModal {
   isOpen: boolean
   onClose: () => void
-  spendableBalance: number
 }
 
 enum DelegateStatus {
   DelegationStart = 1,
-  ChooseBaker = 2,
-  ConfirmBaker = 3
+  ChooseBaker = 2
 }
 
 const bakersListApiUrl = `${process.env.NEXT_PUBLIC_TZKT_API_URL}/v1/delegates?active=true&limit=1000`
@@ -39,15 +36,11 @@ export async function getBakerList() {
   return response.json()
 }
 
-export const DelegationModal = ({
-  isOpen,
-  onClose,
-  spendableBalance
-}: DelegateModal) => {
+export const DelegationModal = ({ isOpen, onClose }: DelegateModal) => {
   const [bakerList, setBakerList] = useState<BakerInfo[] | null>(null)
   const [selectedBaker, setSelectedBaker] = useState<BakerInfo | null>(null)
   const [showStepper, setShowStepper] = useState(true)
-  const totalStep = 3
+  const totalStep = 2
 
   const { data, status } = useQuery({
     queryKey: ['bakerList'],
@@ -97,14 +90,6 @@ export const DelegationModal = ({
             setSelectedBaker={setSelectedBaker}
             bakerList={bakerList ?? []}
             setShowStepper={setShowStepper}
-          />
-        )
-      case DelegateStatus.ConfirmBaker:
-        return (
-          <ConfirmDelegate
-            handleOneStepForward={handleOneStepForward}
-            selectedBaker={selectedBaker as BakerInfo}
-            spendableBalance={spendableBalance}
           />
         )
       default:

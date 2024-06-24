@@ -1,13 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Flex,
   InputGroup,
   InputRightElement,
   Input,
-  Button
+  Button,
+  Spinner
 } from '@chakra-ui/react'
 import { Header, ColumnHeader, BalanceBox } from '@/components/modalBody'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
+import { unstake } from '@/components/Operations/operations'
+import { useConnection } from '@/providers/ConnectionProvider'
+import { useOperationResponse } from '@/providers/OperationResponseProvider'
+import { ErrorBlock } from '@/components/ErrorBlock'
 
 export const SelectAmount = ({
   stakedAmount,
@@ -20,6 +25,11 @@ export const SelectAmount = ({
   setUnstakeAmount: (arg: number) => void
   handleOneStepForward: () => void
 }) => {
+  const { Tezos, beaconWallet } = useConnection()
+  const { setMessage, setSuccess, setOpHash, setTitle } = useOperationResponse()
+  const [errorMessage, setErrorMessage] = useState('')
+  const [waitingOperation, setWaitingOperation] = useState(false)
+
   const handleChange = (event: any) => {
     const val = Number(event.target.value)
 
@@ -68,12 +78,33 @@ export const SelectAmount = ({
       </InputGroup>
       <PrimaryButton
         disabled={!unstakeAmount}
-        onClick={() => {
-          handleOneStepForward()
+        onClick={async () => {
+          if (!Tezos || !beaconWallet) {
+            setErrorMessage('Wallet is not initialized, log out to try again.')
+            return
+          }
+
+          setWaitingOperation(true)
+          const response = await unstake(Tezos, unstakeAmount, beaconWallet)
+          setWaitingOperation(false)
+
+          if (response.success) {
+            setOpHash(response.opHash)
+            setTitle('Unstake Requested')
+            setMessage(
+              `You have unstaked ${unstakeAmount} tez. Wait for 4 cycles and then finalize your balance.`
+            )
+            setSuccess(true)
+            setUnstakeAmount(0)
+            handleOneStepForward()
+          } else {
+            setErrorMessage(response.message)
+          }
         }}
       >
-        Preview
+        {waitingOperation ? <Spinner /> : 'Unstake'}
       </PrimaryButton>
+      {!!errorMessage && <ErrorBlock errorMessage={errorMessage} />}
     </Flex>
   )
 }

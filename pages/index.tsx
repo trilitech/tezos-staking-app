@@ -76,7 +76,7 @@ export default function Home() {
         py='20px'
         minH='100vh'
         bg='#cbd5e0'
-        bgImage={!isConnected ? '/images/login-bg.png' : '/images/bg-grey.png'}
+        bgImage={!isConnected ? '/images/login-bg.webp' : '/images/bg-grey.png'}
         backgroundPosition='center'
         backgroundRepeat='no-repeat'
         backgroundSize='cover'

@@ -27,19 +27,23 @@ export const BakerDetailsTable = ({
   address,
   fee,
   acceptStaking,
-  capacity,
-  ...styles
+  capacity
 }: BakerDetailsTableProps & FlexProps) => {
   const { isCopied, copyTextToClipboard } = useClipboard()
 
   return (
     <>
       {isCopied && <CopyAlert />}
-      <TableContainer bg='#EDF2F7' borderRadius='8px' p='16px' mb='30px'>
+      <TableContainer
+        bg='#EDF2F7'
+        borderRadius='8px'
+        mb='30px'
+        whiteSpace='wrap'
+      >
         <Table>
           <Tbody>
             <Tr>
-              <Td borderBottom='1px solid #E2E8F0'>
+              <Td borderBottom='1px solid #E2E8F0' pl={[3, 6]} pr={[0, 6]}>
                 <Flex alignItems='center' gap='5px'>
                   <Image
                     w='30px'
@@ -48,7 +52,7 @@ export const BakerDetailsTable = ({
                     alt='baker avatar'
                   />
                   <Text
-                    fontSize='16px'
+                    fontSize='14px'
                     fontWeight={600}
                     lineHeight='22px'
                     color='#4A5568'
@@ -57,7 +61,7 @@ export const BakerDetailsTable = ({
                   </Text>
                 </Flex>
               </Td>
-              <Td borderBottom='1px solid #E2E8F0'>
+              <Td borderBottom='1px solid #E2E8F0' px={[3, 6]}>
                 <Flex alignItems='center' gap='4px'>
                   <Text fontSize='14px' fontWeight={400} color='#2D3748'>
                     {simplifyAddress(address)}
@@ -75,24 +79,11 @@ export const BakerDetailsTable = ({
               </Td>
             </Tr>
             <Tr>
-              <Td borderBottom='1px solid #E2E8F0'>
-                <Text
-                  color='#4A5568'
-                  fontSize='14px'
-                  textTransform='uppercase'
-                  fontWeight={600}
-                >
-                  Delegation Fee:
-                </Text>
-              </Td>
-              <Td borderBottom='1px solid #E2E8F0'>
-                <Text color='#10121B' fontWeight={600} fontSize='14px'>
-                  {fee}%
-                </Text>
-              </Td>
-            </Tr>
-            <Tr>
-              <Td borderBottom='1px solid #E2E8F0'>
+              <Td
+                borderBottom={acceptStaking ? '1px solid #E2E8F0' : ''}
+                px={[3, 6]}
+                pr={[0, 6]}
+              >
                 <Text
                   color='#4A5568'
                   fontSize='14px'
@@ -102,34 +93,55 @@ export const BakerDetailsTable = ({
                   Accepts Staking:
                 </Text>
               </Td>
-              <Td borderBottom='1px solid #E2E8F0'>
+              <Td borderBottom='1px solid #E2E8F0' px={[3, 6]}>
                 <Text color='#10121B' fontWeight={600} fontSize='14px'>
                   {acceptStaking ? 'Yes' : 'No'}
                 </Text>
               </Td>
             </Tr>
-            <Tr>
-              <Td>
-                <Text
-                  color='#4A5568'
-                  fontSize='14px'
-                  textTransform='uppercase'
-                  fontWeight={600}
-                >
-                  Remaining Capacity:
-                </Text>
-              </Td>
-              <Td>
-                <Text
-                  color='#10121B'
-                  fontWeight={600}
-                  fontSize='14px'
-                  justifySelf='start'
-                >
-                  {Math.floor(capacity)} ꜩ
-                </Text>
-              </Td>
-            </Tr>
+            {acceptStaking && (
+              <Tr>
+                <Td borderBottom='1px solid #E2E8F0' px={[3, 6]} pr={[0, 6]}>
+                  <Text
+                    color='#4A5568'
+                    fontSize='14px'
+                    textTransform='uppercase'
+                    fontWeight={600}
+                  >
+                    Staking Fee:
+                  </Text>
+                </Td>
+                <Td borderBottom='1px solid #E2E8F0' px={[3, 6]}>
+                  <Text color='#10121B' fontWeight={600} fontSize='14px'>
+                    {fee}%
+                  </Text>
+                </Td>
+              </Tr>
+            )}
+            {acceptStaking && (
+              <Tr>
+                <Td px={[3, 6]} pr={[0, 6]}>
+                  <Text
+                    color='#4A5568'
+                    fontSize='14px'
+                    textTransform='uppercase'
+                    fontWeight={600}
+                  >
+                    Remaining Capacity:
+                  </Text>
+                </Td>
+                <Td px={[3, 6]}>
+                  <Text
+                    color='#10121B'
+                    fontWeight={600}
+                    fontSize='14px'
+                    justifySelf='start'
+                  >
+                    {Math.floor(capacity)} ꜩ
+                  </Text>
+                </Td>
+              </Tr>
+            )}
           </Tbody>
         </Table>
       </TableContainer>

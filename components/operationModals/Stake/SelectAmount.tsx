@@ -1,7 +1,11 @@
-import React from 'react'
-import { Flex, InputGroup, Input, Image, Text } from '@chakra-ui/react'
+import React, { useState } from 'react'
+import { Flex, InputGroup, Input, Image, Text, Spinner } from '@chakra-ui/react'
 import { Header, ColumnHeader, BalanceBox } from '@/components/modalBody'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
+import { stake } from '@/components/Operations/operations'
+import { useConnection } from '@/providers/ConnectionProvider'
+import { useOperationResponse } from '@/providers/OperationResponseProvider'
+import { ErrorBlock } from '@/components/ErrorBlock'
 
 export const SelectAmount = ({
   spendableBalance,
@@ -14,6 +18,11 @@ export const SelectAmount = ({
   setStakedAmount: (arg: number) => void
   stakedAmount: number
 }) => {
+  const { Tezos, beaconWallet } = useConnection()
+  const { setMessage, setSuccess, setOpHash } = useOperationResponse()
+  const [errorMessage, setErrorMessage] = useState('')
+  const [waitingOperation, setWaitingOperation] = useState(false)
+
   const handleChange = (event: any) => {
     const val = Number(event.target.value)
 
@@ -52,12 +61,30 @@ export const SelectAmount = ({
       )}
       <PrimaryButton
         disabled={!stakedAmount}
-        onClick={() => {
-          handleOneStepForward()
+        onClick={async () => {
+          if (!Tezos || !beaconWallet) {
+            setErrorMessage('Wallet is not initialized, log out to try again.')
+            return
+          }
+
+          setWaitingOperation(true)
+          const response = await stake(Tezos, stakedAmount, beaconWallet)
+          setWaitingOperation(false)
+
+          if (response.success) {
+            setOpHash(response.opHash)
+            setMessage(`You have successfully staked ${stakedAmount} ꜩ`)
+            setSuccess(true)
+            setStakedAmount(0)
+            handleOneStepForward()
+          } else {
+            setErrorMessage(response.message)
+          }
         }}
       >
-        Preview
+        {waitingOperation ? <Spinner /> : 'Stake'}
       </PrimaryButton>
+      {!!errorMessage && <ErrorBlock errorMessage={errorMessage} />}
     </Flex>
   )
 }
