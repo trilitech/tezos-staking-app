@@ -12,7 +12,8 @@ import { DelegateData } from '@/pages'
 import {
   StakingOpsStatus,
   AccountInfo,
-  UnstakedOperation
+  UnstakedOperation,
+  BakerInfo
 } from './Operations/tezInterfaces'
 import { useConnection } from '../providers/ConnectionProvider'
 import { simplifyAddress } from '@/utils/simpliftAddress'
@@ -34,6 +35,9 @@ import { useOperationResponse } from '@/providers/OperationResponseProvider'
 import useClipboard from '@/utils/useClipboard'
 import { Change, End, ViewBakers } from './ctas'
 import { CopyAlert } from './CopyAlert'
+import { useQuery } from '@tanstack/react-query'
+import { getBakerList } from '@/components/operationModals/Delegate'
+import { mutezToTez } from '@/utils/mutezToTez' // import the getBakerList function
 
 const getNumOfUnstake = (
   unstOps?: UnstakedOperation[],
@@ -49,13 +53,43 @@ const getNumOfUnstake = (
 
 export const AccountBody = ({
   spendableBalance,
-  stakedBalance
+  stakedBalance,
+  delegate
 }: DelegateData) => {
   const delegateModal = useDisclosure()
   const changeBakerModal = useDisclosure()
   const endDelegateModal = useDisclosure()
   const stakeModal = useDisclosure()
   const unstakeModal = useDisclosure()
+
+  const [bakerList, setBakerList] = useState<BakerInfo[] | null>(null)
+
+  const { data, status } = useQuery({
+    queryKey: ['bakerList'],
+    queryFn: getBakerList,
+    staleTime: 180000
+  })
+
+  useEffect(() => {
+    if (status === 'success') {
+      const bakerData = data?.map((baker: BakerInfo) => {
+        return {
+          alias: baker.alias ?? 'Private Baker',
+          address: baker.address,
+          acceptsStaking: mutezToTez(baker.limitOfStakingOverBaking) > 0,
+          stakingFees: baker.edgeOfBakingOverStaking / 10000000,
+          stakingFreeSpace: mutezToTez(
+            baker.stakedBalance * mutezToTez(baker.limitOfStakingOverBaking) -
+              baker.externalStakedBalance
+          )
+        }
+      })
+
+      setBakerList(bakerData)
+    } else if (status === 'error') {
+      throw Error('Fail to get the baker list')
+    }
+  }, [status])
 
   const { isCopied, copyTextToClipboard } = useClipboard()
   const { address } = useConnection()
@@ -279,6 +313,8 @@ export const AccountBody = ({
 
           <PrimaryButton
             disabled={
+              !bakerList?.find(baker => baker.address === delegate)
+                ?.acceptsStaking ||
               !stakingOpsStatus.Delegated ||
               !stakingOpsStatus.CanStake ||
               !spendableBalance
@@ -294,6 +330,7 @@ export const AccountBody = ({
         <DelegationModal
           isOpen={delegateModal.isOpen}
           onClose={delegateModal.onClose}
+          bakerList={bakerList}
         />
 
         <ChangeBakerModal

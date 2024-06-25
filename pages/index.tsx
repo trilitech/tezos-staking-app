@@ -17,6 +17,7 @@ export interface DelegateData {
   spendableBalance: number
   stakedBalance: number
   unstakedBalance: number
+  delegate: string | null
 }
 
 async function fetchDelegateData(address: string) {
@@ -54,7 +55,8 @@ export default function Home() {
           data.balance - data.stakedBalance - data.unstakedBalance
         ),
         stakedBalance: mutezToTez(data.stakedBalance),
-        unstakedBalance: mutezToTez(data.unstakedBalance)
+        unstakedBalance: mutezToTez(data.unstakedBalance),
+        delegate: data.delegate.address
       }
 
       setDelegateData(formatData)
