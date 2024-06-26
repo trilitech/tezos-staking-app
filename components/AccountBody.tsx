@@ -1,29 +1,32 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
-  Flex,
-  Image,
-  Text,
-  Grid,
-  useDisclosure,
   Box,
-  Spinner
+  Flex,
+  Grid,
+  Image,
+  Spinner,
+  Text,
+  useDisclosure
 } from '@chakra-ui/react'
 import { DelegateData } from '@/pages'
 import {
-  StakingOpsStatus,
   AccountInfo,
-  UnstakedOperation,
-  BakerInfo
+  BakerInfo,
+  StakingOpsStatus,
+  UnstakedOperation
 } from './Operations/tezInterfaces'
-import { useConnection } from '../providers/ConnectionProvider'
+import { useConnection } from '@/providers/ConnectionProvider'
 import { simplifyAddress } from '@/utils/simpliftAddress'
 import { PrimaryButton } from './buttons/PrimaryButton'
 import {
-  useFetchAccountData,
-  updateStakingOpsStatus
+  updateStakingOpsStatus,
+  useFetchAccountData
 } from './Operations/tezConnections'
 import { SecondaryButton } from './buttons/SecondaryButton'
-import { DelegationModal } from '@/components/operationModals/Delegate'
+import {
+  DelegationModal,
+  getBakerList
+} from '@/components/operationModals/Delegate'
 import { EndDelegationModal } from '@/components/operationModals/EndDelegate'
 import { StakeModal } from './operationModals/Stake'
 import { UnstakeModal } from './operationModals/Unstake'
@@ -36,8 +39,7 @@ import useClipboard from '@/utils/useClipboard'
 import { Change, End, ViewBakers } from './ctas'
 import { CopyAlert } from './CopyAlert'
 import { useQuery } from '@tanstack/react-query'
-import { getBakerList } from '@/components/operationModals/Delegate'
-import { mutezToTez } from '@/utils/mutezToTez' // import the getBakerList function
+import { mutezToTez } from '@/utils/mutezToTez'
 
 const getNumOfUnstake = (
   unstOps?: UnstakedOperation[],
@@ -51,11 +53,7 @@ const getNumOfUnstake = (
   return result
 }
 
-export const AccountBody = ({
-  spendableBalance,
-  stakedBalance,
-  delegate
-}: DelegateData) => {
+export const AccountBody = ({ spendableBalance, stakedBalance }: DelegateData) => {
   const delegateModal = useDisclosure()
   const changeBakerModal = useDisclosure()
   const endDelegateModal = useDisclosure()
@@ -246,7 +244,7 @@ export const AccountBody = ({
               <Text fontSize='14px' color='#4A5568' fontWeight={600}>
                 BAKER
               </Text>
-              {!!stakingOpsStatus.Delegated ? (
+              {Boolean(stakingOpsStatus.Delegated) ? (
                 <Change onClick={() => changeBakerModal.onOpen()} />
               ) : (
                 <ViewBakers />
@@ -299,10 +297,11 @@ export const AccountBody = ({
               Delegate
             </PrimaryButton>
           )}
-          {!!stakingOpsStatus.Delegated && (
+          {Boolean(stakingOpsStatus.Delegated) && (
             <SecondaryButton
               disabled={
-                !!stakingOpsStatus.Delegated && !stakingOpsStatus.CanUnstake
+                Boolean(stakingOpsStatus.Delegated) &&
+                !stakingOpsStatus.CanUnstake
               }
               onClick={() => unstakeModal.onOpen()}
               w='100%'
@@ -313,11 +312,9 @@ export const AccountBody = ({
 
           <PrimaryButton
             disabled={
-              !bakerList?.find(baker => baker.address === delegate)
-                ?.acceptsStaking ||
-              !stakingOpsStatus.Delegated ||
-              !stakingOpsStatus.CanStake ||
-              !spendableBalance
+              !bakerList?.find(
+                baker => baker.address === accountInfo?.delegate?.address
+              )?.acceptsStaking || !stakingOpsStatus.CanStake
             }
             onClick={() => stakeModal.onOpen()}
             w='100%'
