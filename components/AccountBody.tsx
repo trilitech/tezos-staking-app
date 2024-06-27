@@ -1,28 +1,32 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
-  Flex,
-  Image,
-  Text,
-  Grid,
-  useDisclosure,
   Box,
-  Spinner
+  Flex,
+  Grid,
+  Image,
+  Spinner,
+  Text,
+  useDisclosure
 } from '@chakra-ui/react'
 import { DelegateData } from '@/pages'
 import {
-  StakingOpsStatus,
   AccountInfo,
+  BakerInfo,
+  StakingOpsStatus,
   UnstakedOperation
 } from './Operations/tezInterfaces'
-import { useConnection } from '../providers/ConnectionProvider'
+import { useConnection } from '@/providers/ConnectionProvider'
 import { simplifyAddress } from '@/utils/simpliftAddress'
 import { PrimaryButton } from './buttons/PrimaryButton'
 import {
-  useFetchAccountData,
-  updateStakingOpsStatus
+  updateStakingOpsStatus,
+  useFetchAccountData
 } from './Operations/tezConnections'
 import { SecondaryButton } from './buttons/SecondaryButton'
-import { DelegationModal } from '@/components/operationModals/Delegate'
+import {
+  DelegationModal,
+  getBakerList
+} from '@/components/operationModals/Delegate'
 import { EndDelegationModal } from '@/components/operationModals/EndDelegate'
 import { StakeModal } from './operationModals/Stake'
 import { UnstakeModal } from './operationModals/Unstake'
@@ -34,6 +38,8 @@ import { useOperationResponse } from '@/providers/OperationResponseProvider'
 import useClipboard from '@/utils/useClipboard'
 import { Change, End, ViewBakers } from './ctas'
 import { CopyAlert } from './CopyAlert'
+import { useQuery } from '@tanstack/react-query'
+import { mutezToTez } from '@/utils/mutezToTez'
 
 const getNumOfUnstake = (
   unstOps?: UnstakedOperation[],
@@ -56,6 +62,35 @@ export const AccountBody = ({
   const endDelegateModal = useDisclosure()
   const stakeModal = useDisclosure()
   const unstakeModal = useDisclosure()
+
+  const [bakerList, setBakerList] = useState<BakerInfo[] | null>(null)
+
+  const { data, status } = useQuery({
+    queryKey: ['bakerList'],
+    queryFn: getBakerList,
+    staleTime: 180000
+  })
+
+  useEffect(() => {
+    if (status === 'success') {
+      const bakerData = data?.map((baker: BakerInfo) => {
+        return {
+          alias: baker.alias ?? 'Private Baker',
+          address: baker.address,
+          acceptsStaking: mutezToTez(baker.limitOfStakingOverBaking) > 0,
+          stakingFees: baker.edgeOfBakingOverStaking / 10000000,
+          stakingFreeSpace: mutezToTez(
+            baker.stakedBalance * mutezToTez(baker.limitOfStakingOverBaking) -
+              baker.externalStakedBalance
+          )
+        }
+      })
+
+      setBakerList(bakerData)
+    } else if (status === 'error') {
+      throw Error('Fail to get the baker list')
+    }
+  }, [status])
 
   const { isCopied, copyTextToClipboard } = useClipboard()
   const { address } = useConnection()
@@ -212,7 +247,7 @@ export const AccountBody = ({
               <Text fontSize='14px' color='#4A5568' fontWeight={600}>
                 BAKER
               </Text>
-              {!!stakingOpsStatus.Delegated ? (
+              {stakingOpsStatus.Delegated ? (
                 <Change onClick={() => changeBakerModal.onOpen()} />
               ) : (
                 <ViewBakers />
@@ -265,10 +300,10 @@ export const AccountBody = ({
               Delegate
             </PrimaryButton>
           )}
-          {!!stakingOpsStatus.Delegated && (
+          {stakingOpsStatus.Delegated && (
             <SecondaryButton
               disabled={
-                !!stakingOpsStatus.Delegated && !stakingOpsStatus.CanUnstake
+                stakingOpsStatus.Delegated && !stakingOpsStatus.CanUnstake
               }
               onClick={() => unstakeModal.onOpen()}
               w='100%'
@@ -279,9 +314,9 @@ export const AccountBody = ({
 
           <PrimaryButton
             disabled={
-              !stakingOpsStatus.Delegated ||
-              !stakingOpsStatus.CanStake ||
-              !spendableBalance
+              !bakerList?.find(
+                baker => baker.address === accountInfo?.delegate?.address
+              )?.acceptsStaking || !stakingOpsStatus.CanStake
             }
             onClick={() => stakeModal.onOpen()}
             w='100%'
@@ -294,11 +329,13 @@ export const AccountBody = ({
         <DelegationModal
           isOpen={delegateModal.isOpen}
           onClose={delegateModal.onClose}
+          bakerList={bakerList}
         />
 
         <ChangeBakerModal
           isOpen={changeBakerModal.isOpen}
           onClose={changeBakerModal.onClose}
+          bakerList={bakerList}
         />
 
         <EndDelegationModal

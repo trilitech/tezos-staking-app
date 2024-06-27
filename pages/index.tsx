@@ -1,9 +1,9 @@
 'use client'
-import { Center, Spinner, Flex } from '@chakra-ui/react'
-import { LoginModal } from '../components/LoginModal'
-import { useState, useEffect } from 'react'
+import { Center, Flex, Spinner } from '@chakra-ui/react'
+import { LoginModal } from '@/components/LoginModal'
+import { useEffect, useState } from 'react'
 import { useConnection } from '@/providers/ConnectionProvider'
-import { TermAndPolicy } from '../components/TermAndPolicy'
+import { TermAndPolicy } from '@/components/TermAndPolicy'
 import { AccountBanner } from '@/components/AccountBanner'
 import { MobileAccountBanner } from '@/components/MobileAccountBanner'
 import { AccountBody } from '@/components/AccountBody'
@@ -11,6 +11,7 @@ import { ErrorModal } from '@/components/ErrorModal'
 import { useQuery } from '@tanstack/react-query'
 import { mutezToTez } from '@/utils/mutezToTez'
 import Head from 'next/head'
+
 export interface DelegateData {
   address: string
   balance: number
@@ -37,8 +38,7 @@ export default function Home() {
     queryKey: ['accountInfoData'],
     queryFn: async () => {
       if (isConnected && !!address) {
-        const data = await fetchDelegateData(address)
-        return data
+        return await fetchDelegateData(address)
       }
       return null
     },

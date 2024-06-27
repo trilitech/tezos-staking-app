@@ -1,12 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
-
 import {
   AccountInfo,
   BlockchainHead,
   StakingOpsStatus,
   UnstakedOperation
 } from './tezInterfaces'
-import { mutezToTez } from '@/utils/mutezToTez'
 
 const consensusRightsDelay = Number(
   process.env.NEXT_PUBLIC_CONSENSUS_RIGHTS_DELAY
@@ -89,7 +87,7 @@ export function updateStakingOpsStatus(
   opStatus.Delegated = Boolean(delegate)
   opStatus.CanStake = opStatus.Delegated && (balance ?? 0) > 0
   opStatus.CanUnstake = opStatus.Delegated && (stakedBalance ?? 0) > 0
-
+  let prevBakerAddress: string | null = null
   let totalFinalizableAmount = 0
   if (unstakingOps !== null && unstakingOps?.length > 0) {
     unstakingOps = unstakingOps.map(operation => {
@@ -106,10 +104,20 @@ export function updateStakingOpsStatus(
           totalFinalizableAmount += operation.remainingFinalizableAmount
         }
       } else {
+        if (!prevBakerAddress) {
+          // If a user has pending unstake request with a previous baker , he can not stake with new baker. Thus prevBakerAddress is recorded here.
+          prevBakerAddress = operation.baker.address
+        }
         operation.numCyclesToFinalize = cycleRemaining
       }
       return operation
     })
   }
+  // if prevBakerAddress is not null then check if the current baker address matches the prevBakerAddress then only CanStake should be true.
+  if (prevBakerAddress) {
+    opStatus.CanStake =
+      opStatus.CanStake && prevBakerAddress === delegate.address
+  }
+
   return { opStatus, unstakingOps, totalFinalizableAmount }
 }
