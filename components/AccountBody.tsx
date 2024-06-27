@@ -53,7 +53,10 @@ const getNumOfUnstake = (
   return result
 }
 
-export const AccountBody = ({ spendableBalance, stakedBalance }: DelegateData) => {
+export const AccountBody = ({
+  spendableBalance,
+  stakedBalance
+}: DelegateData) => {
   const delegateModal = useDisclosure()
   const changeBakerModal = useDisclosure()
   const endDelegateModal = useDisclosure()
@@ -244,7 +247,7 @@ export const AccountBody = ({ spendableBalance, stakedBalance }: DelegateData) =
               <Text fontSize='14px' color='#4A5568' fontWeight={600}>
                 BAKER
               </Text>
-              {Boolean(stakingOpsStatus.Delegated) ? (
+              {stakingOpsStatus.Delegated ? (
                 <Change onClick={() => changeBakerModal.onOpen()} />
               ) : (
                 <ViewBakers />
@@ -297,11 +300,10 @@ export const AccountBody = ({ spendableBalance, stakedBalance }: DelegateData) =
               Delegate
             </PrimaryButton>
           )}
-          {Boolean(stakingOpsStatus.Delegated) && (
+          {stakingOpsStatus.Delegated && (
             <SecondaryButton
               disabled={
-                Boolean(stakingOpsStatus.Delegated) &&
-                !stakingOpsStatus.CanUnstake
+                stakingOpsStatus.Delegated && !stakingOpsStatus.CanUnstake
               }
               onClick={() => unstakeModal.onOpen()}
               w='100%'
@@ -333,6 +335,7 @@ export const AccountBody = ({ spendableBalance, stakedBalance }: DelegateData) =
         <ChangeBakerModal
           isOpen={changeBakerModal.isOpen}
           onClose={changeBakerModal.onClose}
+          bakerList={bakerList}
         />
 
         <EndDelegationModal

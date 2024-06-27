@@ -14,7 +14,7 @@ import useCurrentStep from '@/utils/useCurrentStep'
 import { Stepper } from '@/components/modalBody/Stepper'
 import { BackIcon, CloseIcon } from '@/components/icons'
 
-interface DelegateModal {
+export interface DelegateModal {
   isOpen: boolean
   onClose: () => void
   bakerList: BakerInfo[] | null
