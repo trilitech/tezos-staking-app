@@ -63,7 +63,7 @@ export const ChooseBaker = ({
       <BakerListDropDown
         setSelectedBaker={setSelectedBaker}
         setIsDropdownOpen={setIsDropdownOpen}
-        bakerList={bakerList}
+        bakerList={bakerList.filter((baker: BakerInfo) => baker.acceptsStaking)}
         setShowStepper={setShowStepper}
       />
     )

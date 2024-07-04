@@ -6,6 +6,8 @@ export interface StakingOpsStatus {
   CanStake: boolean
   CanUnstake: boolean
   CanFinalizeUnstake: boolean
+  bakerAcceptsStaking: boolean
+  pendingUnstakeOpsWithAnotherBaker: boolean
 }
 
 export interface AccountInfo {
@@ -40,6 +42,11 @@ export interface AccountInfo {
   lastActivityTime: string
   lostBalance: number
   totalFinalizableAmount: number
+  evaluatedDelegate: {
+    alias: string
+    address: string
+    active: false
+  }
 }
 
 export interface BakerInfo {
