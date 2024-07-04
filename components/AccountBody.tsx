@@ -40,6 +40,10 @@ import { Change, End, ViewBakers } from './ctas'
 import { CopyAlert } from './CopyAlert'
 import { useQuery } from '@tanstack/react-query'
 import { mutezToTez } from '@/utils/mutezToTez'
+import {
+  getDisabledStakeButtonReason,
+  StakingAlertBox
+} from '@/components/DisabledStakeAlert'
 
 const getNumOfUnstake = (
   unstOps?: UnstakedOperation[],
@@ -85,7 +89,6 @@ export const AccountBody = ({
           )
         }
       })
-
       setBakerList(bakerData)
     } else if (status === 'error') {
       throw Error('Fail to get the baker list')
@@ -114,7 +117,9 @@ export const AccountBody = ({
     Delegated: false,
     CanStake: false,
     CanUnstake: false,
-    CanFinalizeUnstake: false
+    CanFinalizeUnstake: false,
+    bakerAcceptsStaking: false,
+    pendingUnstakeOpsWithAnotherBaker: false
   })
   const [accountInfo, setAccountInfo] = useState<AccountInfo | null>(null)
   const [isFirstTime, setIsFirstTime] = useState(false)
@@ -129,15 +134,32 @@ export const AccountBody = ({
           blockchainHeadData,
           accountInfoData,
           unstakedOpsData,
-          stakingOpsStatus
+          stakingOpsStatus,
+          bakerList
         )
       accountInfoData.totalFinalizableAmount = totalFinalizableAmount
+      if (accountInfoData.type === 'delegate') {
+        accountInfoData.evaluatedDelegate = {
+          address: accountInfoData.address,
+          alias: accountInfoData.alias,
+          active: true
+        }
+      } else if (accountInfoData.type === 'user') {
+        accountInfoData.evaluatedDelegate = accountInfoData.delegate
+      }
+
       setAccountInfo(accountInfoData)
       setIsFirstTime(accountInfo?.type === 'empty')
       setUnstakedOps(unstakingOps)
       setStakingOpsStatus(opStatus)
     }
-  }, [blockchainHeadData, accountInfoData, unstakedOpsData, stakingOpsStatus])
+  }, [
+    blockchainHeadData,
+    accountInfoData,
+    unstakedOpsData,
+    stakingOpsStatus,
+    bakerList
+  ])
 
   const numOfPendingUnstake = getNumOfUnstake(
     unstakedOps,
@@ -223,7 +245,7 @@ export const AccountBody = ({
               <Text fontSize='14px' color='#4A5568' fontWeight={600}>
                 DELEGATION
               </Text>
-              {stakingOpsStatus.Delegated && (
+              {accountInfo?.type === 'user' && stakingOpsStatus.Delegated && (
                 <End
                   onClick={() => {
                     endDelegateModal.onOpen()
@@ -247,11 +269,12 @@ export const AccountBody = ({
               <Text fontSize='14px' color='#4A5568' fontWeight={600}>
                 BAKER
               </Text>
-              {stakingOpsStatus.Delegated ? (
-                <Change onClick={() => changeBakerModal.onOpen()} />
-              ) : (
-                <ViewBakers />
-              )}
+              {accountInfo?.type === 'user' &&
+                (stakingOpsStatus.Delegated ? (
+                  <Change onClick={() => changeBakerModal.onOpen()} />
+                ) : (
+                  <ViewBakers />
+                ))}
             </Flex>
 
             {stakingOpsStatus.Delegated ? (
@@ -262,8 +285,10 @@ export const AccountBody = ({
                   fontWeight={600}
                   lineHeight='18px'
                 >
-                  {accountInfo?.delegate.alias ??
-                    simplifyAddress(accountInfo?.delegate.address ?? '')}
+                  {accountInfo?.evaluatedDelegate.alias ??
+                    simplifyAddress(
+                      accountInfo?.evaluatedDelegate.address ?? ''
+                    )}
                 </Text>
                 <Image
                   h='18px'
@@ -273,7 +298,9 @@ export const AccountBody = ({
                   src='/images/copy-icon.svg'
                   alt='copy icon'
                   onClick={() =>
-                    copyTextToClipboard(accountInfo?.delegate.address ?? '')
+                    copyTextToClipboard(
+                      accountInfo?.evaluatedDelegate.address ?? ''
+                    )
                   }
                 />
               </Flex>
@@ -290,39 +317,42 @@ export const AccountBody = ({
           </Flex>
         </Grid>
 
-        <Flex w='100%' gap={['16px', null, '20px', '30px']}>
-          {!stakingOpsStatus.Delegated && (
-            <PrimaryButton
-              disabled={isFirstTime}
-              onClick={() => delegateModal.onOpen()}
-              w='100%'
-            >
-              Delegate
-            </PrimaryButton>
-          )}
-          {stakingOpsStatus.Delegated && (
-            <SecondaryButton
-              disabled={
-                stakingOpsStatus.Delegated && !stakingOpsStatus.CanUnstake
-              }
-              onClick={() => unstakeModal.onOpen()}
-              w='100%'
-            >
-              Unstake
-            </SecondaryButton>
-          )}
+        <Flex direction='column' w='100%' gap='16px'>
+          <Flex direction='row' w='100%' gap={['16px', null, '20px', '30px']}>
+            {!stakingOpsStatus.Delegated && (
+              <PrimaryButton
+                disabled={isFirstTime}
+                onClick={() => delegateModal.onOpen()}
+                w='100%'
+              >
+                Delegate
+              </PrimaryButton>
+            )}
+            {stakingOpsStatus.Delegated && (
+              <SecondaryButton
+                disabled={
+                  stakingOpsStatus.Delegated && !stakingOpsStatus.CanUnstake
+                }
+                onClick={() => unstakeModal.onOpen()}
+                w='100%'
+              >
+                Unstake
+              </SecondaryButton>
+            )}
 
-          <PrimaryButton
-            disabled={
-              !bakerList?.find(
-                baker => baker.address === accountInfo?.delegate?.address
-              )?.acceptsStaking || !stakingOpsStatus.CanStake
-            }
-            onClick={() => stakeModal.onOpen()}
-            w='100%'
-          >
-            Stake
-          </PrimaryButton>
+            <PrimaryButton
+              disabled={!stakingOpsStatus.CanStake}
+              onClick={() => stakeModal.onOpen()}
+              w='100%'
+            >
+              Stake
+            </PrimaryButton>
+          </Flex>
+          {stakingOpsStatus.Delegated && !stakingOpsStatus.CanStake && (
+            <StakingAlertBox
+              reason={getDisabledStakeButtonReason(stakingOpsStatus)}
+            />
+          )}
         </Flex>
 
         {/* below are all operation modals. TODO: how to make this more nit, rather than put all modals here, maybe a function/hook? */}
@@ -343,7 +373,8 @@ export const AccountBody = ({
           onClose={endDelegateModal.onClose}
           spendableBalance={spendableBalance}
           bakerName={
-            (accountInfo?.delegate?.alias || accountInfo?.delegate?.address) ??
+            (accountInfo?.evaluatedDelegate?.alias ||
+              accountInfo?.evaluatedDelegate?.address) ??
             ''
           }
         />

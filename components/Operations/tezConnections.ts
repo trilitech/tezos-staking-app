@@ -1,10 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
 import {
   AccountInfo,
+  BakerInfo,
   BlockchainHead,
   StakingOpsStatus,
   UnstakedOperation
 } from './tezInterfaces'
+import { BakerListDropDown } from '@/components/operationModals/Delegate/BakerListDropDown'
 
 const consensusRightsDelay = Number(
   process.env.NEXT_PUBLIC_CONSENSUS_RIGHTS_DELAY
@@ -77,18 +79,32 @@ export function updateStakingOpsStatus(
   blockHead: BlockchainHead,
   accountInfo: AccountInfo,
   unstakingOps: UnstakedOperation[],
-  opStatus: StakingOpsStatus
+  opStatus: StakingOpsStatus,
+  bakerList: BakerInfo[] | null
 ): {
   opStatus: StakingOpsStatus
   unstakingOps: UnstakedOperation[]
   totalFinalizableAmount: number
 } {
-  const { delegate, balance, stakedBalance } = accountInfo ?? {}
-  opStatus.Delegated = Boolean(delegate)
+  // Which account is delegated?
+  //    A user who has selected a baker or a baker himself.
+  // Which account can stake?
+  //    A baker with nonzero balance or
+  //    a user which
+  //        has delegated to a baker and
+  //        has non-zero balance and
+  //        the baker who accepts staking and
+  //        has no pending unstake operations with another baker.
+
+  const { type, delegate, balance, stakedBalance } = accountInfo ?? {}
+  opStatus.Delegated =
+    (type === 'user' && Boolean(delegate)) || type === 'delegate'
   opStatus.CanStake = opStatus.Delegated && (balance ?? 0) > 0
   opStatus.CanUnstake = opStatus.Delegated && (stakedBalance ?? 0) > 0
   let prevBakerAddress: string | null = null
   let totalFinalizableAmount = 0
+
+  // find remaining unstake operations and total finalizable unstake amount
   if (unstakingOps !== null && unstakingOps?.length > 0) {
     unstakingOps = unstakingOps.map(operation => {
       let cycleDiff = blockHead.cycle - operation.cycle
@@ -113,11 +129,29 @@ export function updateStakingOpsStatus(
       return operation
     })
   }
-  // if prevBakerAddress is not null then check if the current baker address matches the prevBakerAddress then only CanStake should be true.
-  if (prevBakerAddress) {
-    opStatus.CanStake =
-      opStatus.CanStake && prevBakerAddress === delegate.address
+
+  if (type === 'user') {
+    opStatus.pendingUnstakeOpsWithAnotherBaker =
+      (prevBakerAddress &&
+        (!Boolean(delegate) || prevBakerAddress !== delegate?.address)) ??
+      false
+    opStatus.bakerAcceptsStaking =
+      (Boolean(delegate) &&
+        bakerList?.find(baker => baker.address === delegate.address)
+          ?.acceptsStaking) ??
+      false
   }
+
+  if (type === 'delegate') {
+    opStatus.pendingUnstakeOpsWithAnotherBaker =
+      (prevBakerAddress && prevBakerAddress !== accountInfo.address) ?? false
+    opStatus.bakerAcceptsStaking = true
+  }
+
+  opStatus.CanStake =
+    opStatus.CanStake &&
+    !opStatus.pendingUnstakeOpsWithAnotherBaker &&
+    opStatus.bakerAcceptsStaking
 
   return { opStatus, unstakingOps, totalFinalizableAmount }
 }

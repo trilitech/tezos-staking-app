@@ -85,20 +85,6 @@ export const BakerListDropDown = ({
                 </Flex>
               </Box>
             </Flex>
-
-            {baker.acceptsStaking && (
-              <Flex alignSelf='end'>
-                <Text fontSize='14px' color='#4A5568'>
-                  Staking
-                </Text>
-                <Image
-                  w='18px'
-                  h='18px'
-                  src='/images/Done.svg'
-                  alt='done icon'
-                />
-              </Flex>
-            )}
           </Flex>
         ))}
       </Flex>
