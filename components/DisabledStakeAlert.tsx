@@ -1,4 +1,4 @@
-import { Box, Flex, Image } from '@chakra-ui/react'
+import { Box, Flex, Text } from '@chakra-ui/react'
 import { StakingOpsStatus } from '@/components/Operations/tezInterfaces'
 import { WarningIcon } from '@/components/icons'
 
@@ -25,7 +25,9 @@ export const StakingAlertBox = ({ reason }: { reason: string }) => {
     >
       <Flex alignItems='center' gap='12px'>
         <WarningIcon />
-        {reason}
+        <Text fontSize='16px' lineHeight='22px' color='#2D3748'>
+          {reason}
+        </Text>
       </Flex>
     </Box>
   )
