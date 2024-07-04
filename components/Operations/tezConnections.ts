@@ -136,15 +136,16 @@ export function updateStakingOpsStatus(
         (!Boolean(delegate) || prevBakerAddress !== delegate?.address)) ??
       false
     opStatus.bakerAcceptsStaking =
-      (Boolean(delegate) &&
+      Boolean(delegate) &&
+      Boolean(
         bakerList?.find(baker => baker.address === delegate.address)
-          ?.acceptsStaking) ??
-      false
+          ?.acceptsStaking
+      )
   }
 
   if (type === 'delegate') {
     opStatus.pendingUnstakeOpsWithAnotherBaker =
-      (prevBakerAddress && prevBakerAddress !== accountInfo.address) ?? false
+      Boolean(prevBakerAddress) && prevBakerAddress !== accountInfo.address
     opStatus.bakerAcceptsStaking = true
   }
 
