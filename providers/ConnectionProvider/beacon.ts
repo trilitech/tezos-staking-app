@@ -4,14 +4,21 @@ import { RpcClient, RpcClientCache } from '@taquito/rpc'
 import {
   NetworkType,
   DAppClientOptions,
-  PermissionScope
+  PermissionScope,
+  BeaconEvent
 } from '@airgap/beacon-sdk'
+import Home from '@/pages'
+import { AccountRedirectListener } from '@/components/WalletDisconnect'
 
 const rpc = new RpcClientCache(
   new RpcClient(process.env.NEXT_PUBLIC_RPC_ENDPOINT as string)
 )
 export const Tezos = new TezosToolkit(rpc)
-
+export async function requestBeaconPermissions(wallet: BeaconWallet) {
+  return await wallet.client.requestPermissions({
+    scopes: [PermissionScope.OPERATION_REQUEST, PermissionScope.SIGN]
+  })
+}
 export const createBeaconWallet = () =>
   typeof window === 'undefined'
     ? undefined
@@ -28,18 +35,26 @@ export const connectBeacon = async () => {
 
   if (!beaconWallet) {
     throw new Error('Tried to connect on the server')
-  }
-
-  const response = await beaconWallet.client.requestPermissions({
-    network: {
-      type: process.env.NEXT_PUBLIC_NETWORK as any
-    },
-    scopes: [PermissionScope.OPERATION_REQUEST, PermissionScope.SIGN]
-  })
-
-  return {
-    address: response.address,
-    Tezos: Tezos,
-    beaconWallet: beaconWallet
+  } else {
+    const response = await requestBeaconPermissions(beaconWallet)
+    beaconWallet.client.subscribeToEvent(
+      BeaconEvent.ACTIVE_ACCOUNT_SET,
+      async account => {
+        console.log(
+          `${BeaconEvent.ACTIVE_ACCOUNT_SET} triggered: `,
+          account?.address
+        )
+        if (!account) {
+          // go to homepage
+          AccountRedirectListener()
+          return
+        }
+      }
+    )
+    return {
+      address: response.address,
+      Tezos: Tezos,
+      beaconWallet: beaconWallet
+    }
   }
 }

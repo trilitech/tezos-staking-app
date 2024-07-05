@@ -1,6 +1,7 @@
 import { PermissionScope } from '@airgap/beacon-sdk'
 import { TezosToolkit } from '@taquito/taquito'
 import { BeaconWallet } from '@taquito/beacon-wallet'
+import { requestBeaconPermissions } from '@/providers/ConnectionProvider/beacon'
 export interface OperationResult {
   success: boolean
   opHash: string
@@ -15,12 +16,7 @@ export const setDelegate = async (
   let opHash = ''
   try {
     if (!wallet.account) {
-      await wallet.requestPermissions({
-        network: {
-          type: process.env.NEXT_PUBLIC_NETWORK as any
-        },
-        scopes: [PermissionScope.OPERATION_REQUEST, PermissionScope.SIGN]
-      })
+      await requestBeaconPermissions(wallet)
     }
 
     const op = await Tezos.wallet.setDelegate({ delegate }).send()
@@ -46,12 +42,7 @@ export const stake = async (
   let opHash = ''
   try {
     if (!wallet.account) {
-      await wallet.requestPermissions({
-        network: {
-          type: process.env.NEXT_PUBLIC_NETWORK as any
-        },
-        scopes: [PermissionScope.OPERATION_REQUEST, PermissionScope.SIGN]
-      })
+      await requestBeaconPermissions(wallet)
     }
 
     const op = await Tezos.wallet.stake({ amount }).send()
@@ -77,12 +68,7 @@ export const unstake = async (
   let opHash = ''
   try {
     if (!wallet.account) {
-      await wallet.requestPermissions({
-        network: {
-          type: process.env.NEXT_PUBLIC_NETWORK as any
-        },
-        scopes: [PermissionScope.OPERATION_REQUEST, PermissionScope.SIGN]
-      })
+      await requestBeaconPermissions(wallet)
     }
 
     const op = await Tezos.wallet.unstake({ amount }).send()
@@ -107,12 +93,7 @@ export const finalizeUnstake = async (
   let opHash = ''
   try {
     if (!wallet.account) {
-      await wallet.requestPermissions({
-        network: {
-          type: process.env.NEXT_PUBLIC_NETWORK as any
-        },
-        scopes: [PermissionScope.OPERATION_REQUEST, PermissionScope.SIGN]
-      })
+      await requestBeaconPermissions(wallet)
     }
 
     const op = await Tezos.wallet.finalizeUnstake({}).send()
