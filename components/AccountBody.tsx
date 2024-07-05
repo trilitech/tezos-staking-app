@@ -44,6 +44,7 @@ import {
   getDisabledStakeButtonReason,
   StakingAlertBox
 } from '@/components/DisabledStakeAlert'
+import { shuffleBakerList } from '@/components/operationModals/Delegate/ChooseBaker'
 
 const getNumOfUnstake = (
   unstOps?: UnstakedOperation[],
@@ -77,7 +78,7 @@ export const AccountBody = ({
 
   useEffect(() => {
     if (status === 'success') {
-      const bakerData = data?.map((baker: BakerInfo) => {
+      let bakerData = data?.map((baker: BakerInfo) => {
         return {
           alias: baker.alias ?? 'Private Baker',
           address: baker.address,
@@ -89,6 +90,7 @@ export const AccountBody = ({
           )
         }
       })
+      bakerData = shuffleBakerList(bakerData)
       setBakerList(bakerData)
     } else if (status === 'error') {
       throw Error('Fail to get the baker list')
