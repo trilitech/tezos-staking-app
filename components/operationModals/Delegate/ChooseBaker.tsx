@@ -29,6 +29,13 @@ interface ChooseBakerProps {
   bakerList: BakerInfo[]
   setShowStepper: (arg: boolean) => void
 }
+export function shuffleBakerList(bakerList: BakerInfo[]) {
+  for (let i = bakerList.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[bakerList[i], bakerList[j]] = [bakerList[j], bakerList[i]]
+  }
+  return bakerList
+}
 
 export const ChooseBaker = ({
   handleOneStepForward,
@@ -63,7 +70,7 @@ export const ChooseBaker = ({
       <BakerListDropDown
         setSelectedBaker={setSelectedBaker}
         setIsDropdownOpen={setIsDropdownOpen}
-        bakerList={bakerList.filter((baker: BakerInfo) => baker.acceptsStaking)}
+        bakerList={bakerList.filter(baker => baker.acceptsStaking)}
         setShowStepper={setShowStepper}
       />
     )
