@@ -328,6 +328,7 @@ export const AccountBody = ({
           >
             {!stakingOpsStatus.Delegated && (
               <PrimaryButton
+                maxW={''}
                 disabled={isFirstTime}
                 onClick={() => delegateModal.onOpen()}
                 w='100%'
