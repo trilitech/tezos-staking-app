@@ -11,6 +11,9 @@ import { ErrorModal } from '@/components/ErrorModal'
 import { useQuery } from '@tanstack/react-query'
 import { mutezToTez } from '@/utils/mutezToTez'
 import Head from 'next/head'
+import { BakerInfo } from '@/components/Operations/tezInterfaces'
+import { getBakerList } from '@/components/operationModals/Delegate'
+import { shuffleBakerList } from '@/components/operationModals/Delegate/ChooseBaker'
 
 export interface DelegateData {
   address: string
@@ -33,6 +36,35 @@ export default function Home() {
   const { isConnected, address } = useConnection()
 
   const [delegateData, setDelegateData] = useState<DelegateData | null>(null)
+  const [bakerList, setBakerList] = useState<BakerInfo[] | null>(null)
+
+  const bakerListQueryData = useQuery({
+    queryKey: ['bakerList'],
+    queryFn: getBakerList,
+    staleTime: 180000
+  })
+
+  useEffect(() => {
+    if (bakerListQueryData.status === 'success') {
+      let bakerData = bakerListQueryData.data?.map((baker: BakerInfo) => {
+        return {
+          alias: baker.alias ?? 'Private Baker',
+          address: baker.address,
+          acceptsStaking: mutezToTez(baker.limitOfStakingOverBaking) > 0,
+          stakingFees: baker.edgeOfBakingOverStaking / 10000000,
+          stakingFreeSpace: mutezToTez(
+            baker.stakedBalance * mutezToTez(baker.limitOfStakingOverBaking) -
+              baker.externalStakedBalance
+          ),
+          totalStakedBalance: baker.totalStakedBalance
+        }
+      })
+      bakerData = shuffleBakerList(bakerData)
+      setBakerList(bakerData)
+    } else if (bakerListQueryData.status === 'error') {
+      throw Error('Fail to get the baker list')
+    }
+  }, [bakerListQueryData.status])
 
   const { data, error } = useQuery({
     queryKey: ['accountInfoData'],
@@ -102,7 +134,10 @@ export default function Home() {
                 address={delegateData?.address ?? ''}
                 display={['flex', null, 'none']}
               />
-              <AccountBody {...(delegateData as DelegateData)} />
+              <AccountBody
+                delegateData={delegateData as DelegateData}
+                bakerList={bakerList as BakerInfo[]}
+              />
               <TermAndPolicy pt='10px' />
             </Flex>
           </>

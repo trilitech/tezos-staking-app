@@ -154,5 +154,6 @@ export function updateStakingOpsStatus(
     !opStatus.pendingUnstakeOpsWithAnotherBaker &&
     opStatus.bakerAcceptsStaking
 
+  opStatus.loadingDone = Boolean(bakerList)
   return { opStatus, unstakingOps, totalFinalizableAmount }
 }
