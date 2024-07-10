@@ -320,14 +320,19 @@ export const AccountBody = ({
         </Grid>
 
         <Flex direction='column' w='100%' gap='16px'>
-          <Flex direction='row' w='100%' gap={['16px', null, '20px', '30px']}>
+          <Flex
+            direction='row'
+            w='100%'
+            justifyContent='center'
+            gap={['16px', null, '20px', '30px']}
+          >
             {!stakingOpsStatus.Delegated && (
               <PrimaryButton
                 disabled={isFirstTime}
                 onClick={() => delegateModal.onOpen()}
                 w='100%'
               >
-                Delegate
+                Select Baker
               </PrimaryButton>
             )}
             {stakingOpsStatus.Delegated && (
@@ -342,13 +347,15 @@ export const AccountBody = ({
               </SecondaryButton>
             )}
 
-            <PrimaryButton
-              disabled={!stakingOpsStatus.CanStake}
-              onClick={() => stakeModal.onOpen()}
-              w='100%'
-            >
-              Stake
-            </PrimaryButton>
+            {stakingOpsStatus.Delegated && (
+              <PrimaryButton
+                disabled={!stakingOpsStatus.CanStake}
+                onClick={() => stakeModal.onOpen()}
+                w='100%'
+              >
+                Stake
+              </PrimaryButton>
+            )}
           </Flex>
           {stakingOpsStatus.Delegated && !stakingOpsStatus.CanStake && (
             <StakingAlertBox
