@@ -47,6 +47,7 @@ import {
 import { shuffleBakerList } from '@/components/operationModals/Delegate/ChooseBaker'
 import { ExpandBakerInfoTable } from './ExpandBakerInfoTable'
 import _ from 'lodash'
+import { Baker } from '@taquito/rpc'
 
 const getNumOfUnstake = (
   unstOps?: UnstakedOperation[],
@@ -61,44 +62,21 @@ const getNumOfUnstake = (
 }
 
 export const AccountBody = ({
-  spendableBalance,
-  stakedBalance
-}: DelegateData) => {
+  delegateData,
+  bakerList
+}: {
+  bakerList: BakerInfo[]
+  delegateData: DelegateData
+}) => {
+  let { spendableBalance, stakedBalance } = delegateData ?? {
+    spendableBalance: 0,
+    stakedBalance: 0
+  }
   const delegateModal = useDisclosure()
   const changeBakerModal = useDisclosure()
   const endDelegateModal = useDisclosure()
   const stakeModal = useDisclosure()
   const unstakeModal = useDisclosure()
-
-  const [bakerList, setBakerList] = useState<BakerInfo[] | null>(null)
-
-  const { data, status } = useQuery({
-    queryKey: ['bakerList'],
-    queryFn: getBakerList,
-    staleTime: 180000
-  })
-
-  useEffect(() => {
-    if (status === 'success') {
-      let bakerData = data?.map((baker: BakerInfo) => {
-        return {
-          alias: baker.alias ?? 'Private Baker',
-          address: baker.address,
-          acceptsStaking: mutezToTez(baker.limitOfStakingOverBaking) > 0,
-          stakingFees: baker.edgeOfBakingOverStaking / 10000000,
-          stakingFreeSpace: mutezToTez(
-            baker.stakedBalance * mutezToTez(baker.limitOfStakingOverBaking) -
-              baker.externalStakedBalance
-          ),
-          totalStakedBalance: baker.totalStakedBalance
-        }
-      })
-      bakerData = shuffleBakerList(bakerData)
-      setBakerList(bakerData)
-    } else if (status === 'error') {
-      throw Error('Fail to get the baker list')
-    }
-  }, [status])
 
   const { isCopied, copyTextToClipboard } = useClipboard()
   const { address } = useConnection()
@@ -124,7 +102,8 @@ export const AccountBody = ({
     CanUnstake: false,
     CanFinalizeUnstake: false,
     bakerAcceptsStaking: false,
-    pendingUnstakeOpsWithAnotherBaker: false
+    pendingUnstakeOpsWithAnotherBaker: false,
+    loadingDone: false
   })
   const [accountInfo, setAccountInfo] = useState<AccountInfo | null>(null)
   const [isFirstTime, setIsFirstTime] = useState(false)
@@ -170,8 +149,8 @@ export const AccountBody = ({
     unstakedOps,
     accountInfo?.totalFinalizableAmount
   )
-
-  if (isLoading) return <Spinner />
+  if (isLoading || !Boolean(bakerList) || !stakingOpsStatus.loadingDone)
+    return <Spinner />
 
   return (
     <>

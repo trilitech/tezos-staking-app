@@ -7,7 +7,7 @@ const theme = extendTheme({
   components: {
     Modal: {
       defaultProps: {
-        size: 'lg'
+        size: 'xl'
       },
       baseStyle: {
         overlay: {
@@ -20,7 +20,7 @@ const theme = extendTheme({
           px: '16px'
         },
         dialog: {
-          w: { base: '100%', md: '464px' },
+          w: { base: '100%', md: '620px' },
           borderRadius: '16px',
           pb: '40px',
           pos: { base: 'fixed', md: 'block' },

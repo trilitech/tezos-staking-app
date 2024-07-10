@@ -4,6 +4,7 @@ import useClipboard from '@/utils/useClipboard'
 import { simplifyAddress } from '@/utils/simpliftAddress'
 import { BakerInfo } from '@/components/Operations/tezInterfaces'
 import { CopyAlert } from '@/components/CopyAlert'
+import { mutezToTez } from '@/utils/mutezToTez'
 
 export const BakerListDropDown = ({
   bakerList,
@@ -28,10 +29,11 @@ export const BakerListDropDown = ({
       {bakerList.length === 0 && <Spinner />}
       <Flex
         flexDir='column'
-        maxH='300px'
+        maxH='420px'
         w='full'
         mt='24px'
         overflowY='auto'
+        gap='12px'
         sx={{
           '::-webkit-scrollbar': {
             width: '4px'
@@ -45,8 +47,10 @@ export const BakerListDropDown = ({
       >
         {bakerList?.map((baker, index) => (
           <Flex
+            flexDir='column'
             p='16px'
-            borderBottom='solid 1px #EDF2F7'
+            border='solid 1.5px #EDF2F7'
+            borderRadius='12px'
             _hover={{ cursor: 'pointer', bg: '#F7FAFC' }}
             onClick={() => {
               if (!hoverCopyIcon) {
@@ -85,9 +89,52 @@ export const BakerListDropDown = ({
                 </Flex>
               </Box>
             </Flex>
+            <Flex
+              flexDir={['column', 'row']}
+              justify='space-evenly'
+              alignItems='start'
+              gap='10px'
+              mt='10px'
+              pt='10px'
+              borderTop='solid 1px #EDF2F7'
+              flexWrap='wrap'
+            >
+              <CustomFlex>
+                <Text fontSize='14px' fontWeight={600} color='#4A5568' mr='3px'>
+                  STAKING:
+                </Text>
+                <Text color='#171923' fontWeight={600} fontSize='14px'>
+                  {Math.floor(mutezToTez(baker.totalStakedBalance))} ꜩ
+                </Text>
+              </CustomFlex>
+              <CustomFlex>
+                <Text fontSize='14px' fontWeight={600} color='#4A5568' mr='3px'>
+                  FREE SPACE:
+                </Text>
+                <Text color='#171923' fontWeight={600} fontSize='14px'>
+                  {Math.floor(baker.stakingFreeSpace)} ꜩ
+                </Text>
+              </CustomFlex>
+              <CustomFlex>
+                <Text fontSize='14px' fontWeight={600} color='#4A5568' mr='3px'>
+                  FEE:
+                </Text>
+                <Text color='#171923' fontWeight={600} fontSize='14px'>
+                  {baker.stakingFees}%
+                </Text>
+              </CustomFlex>
+            </Flex>
           </Flex>
         ))}
       </Flex>
+    </Flex>
+  )
+}
+
+const CustomFlex = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <Flex alignItems='center' justify='space-between' w={['100%', 'auto']}>
+      {children}
     </Flex>
   )
 }
