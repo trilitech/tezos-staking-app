@@ -45,6 +45,8 @@ import {
   StakingAlertBox
 } from '@/components/DisabledStakeAlert'
 import { shuffleBakerList } from '@/components/operationModals/Delegate/ChooseBaker'
+import { ExpandBakerInfoTable } from './ExpandBakerInfoTable'
+import _ from 'lodash'
 
 const getNumOfUnstake = (
   unstOps?: UnstakedOperation[],
@@ -87,7 +89,8 @@ export const AccountBody = ({
           stakingFreeSpace: mutezToTez(
             baker.stakedBalance * mutezToTez(baker.limitOfStakingOverBaking) -
               baker.externalStakedBalance
-          )
+          ),
+          totalStakedBalance: baker.totalStakedBalance
         }
       })
       bakerData = shuffleBakerList(bakerData)
@@ -320,12 +323,15 @@ export const AccountBody = ({
         </Grid>
 
         <Flex direction='column' w='100%' gap='16px'>
-          <Flex
-            direction='row'
-            w='100%'
-            justifyContent='center'
-            gap={['16px', null, '20px', '30px']}
-          >
+          {stakingOpsStatus.Delegated && (
+            <ExpandBakerInfoTable
+              baker={_.find(bakerList, {
+                address: accountInfo?.delegate.address
+              })}
+            />
+          )}
+
+          <Flex direction='row' w='100%' gap={['16px', null, '20px', '30px']}>
             {!stakingOpsStatus.Delegated && (
               <PrimaryButton
                 maxW={''}
