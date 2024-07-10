@@ -40,10 +40,7 @@ import { Change, End, ViewBakers } from './ctas'
 import { CopyAlert } from './CopyAlert'
 import { useQuery } from '@tanstack/react-query'
 import { mutezToTez } from '@/utils/mutezToTez'
-import {
-  getDisabledStakeButtonReason,
-  StakingAlertBox
-} from '@/components/DisabledStakeAlert'
+import { DisabledStakeAlert } from '@/components/DisabledStakeAlert'
 import { shuffleBakerList } from '@/components/operationModals/Delegate/ChooseBaker'
 import { ExpandBakerInfoTable } from './ExpandBakerInfoTable'
 import _ from 'lodash'
@@ -204,11 +201,10 @@ export const AccountBody = ({
         w='100%'
         gap={['30px', null, '40px']}
       >
-        {stakingOpsStatus.Delegated && !stakingOpsStatus.CanStake && (
-          <StakingAlertBox
-            reason={getDisabledStakeButtonReason(stakingOpsStatus)}
-          />
-        )}
+        <DisabledStakeAlert
+          opStatus={stakingOpsStatus}
+          acctInfo={accountInfo}
+        />
         <Grid
           w='100%'
           templateColumns={['repeat(1, 1fr)', null, 'repeat(2, 1fr)']}

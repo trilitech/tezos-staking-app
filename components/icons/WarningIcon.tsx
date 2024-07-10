@@ -1,7 +1,12 @@
 import React from 'react'
 import { Icon, IconProps } from '@chakra-ui/react'
 
-export const WarningIcon = ({ ...styles }: IconProps) => {
+export const WarningIcon = ({
+  color,
+  ...styles
+}: {
+  color: string
+} & IconProps) => {
   return (
     <Icon
       width='24px'
