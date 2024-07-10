@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   Modal,
   ModalOverlay,
@@ -13,8 +13,9 @@ import { ChooseBaker } from './ChooseBaker'
 import useCurrentStep from '@/utils/useCurrentStep'
 import { Stepper } from '@/components/modalBody/Stepper'
 import { BackIcon, CloseIcon } from '@/components/icons'
+import { ConfirmBaker } from './ConfirmBaker'
 
-export interface DelegateModal {
+export interface DelegateModalProps {
   isOpen: boolean
   onClose: () => void
   bakerList: BakerInfo[] | null
@@ -22,7 +23,8 @@ export interface DelegateModal {
 
 enum DelegateStatus {
   DelegationStart = 1,
-  ChooseBaker = 2
+  ChooseBaker = 2,
+  DelegationConfirm = 3
 }
 
 const bakersListApiUrl = `${process.env.NEXT_PUBLIC_TZKT_API_URL}/v1/delegates?active=true&limit=1000`
@@ -39,10 +41,9 @@ export const DelegationModal = ({
   isOpen,
   onClose,
   bakerList
-}: DelegateModal) => {
+}: DelegateModalProps) => {
   const [selectedBaker, setSelectedBaker] = useState<BakerInfo | null>(null)
-  const [showStepper, setShowStepper] = useState(true)
-  const totalStep = 2
+  const totalStep = 3
 
   const { currentStep, handleOneStepBack, handleOneStepForward, resetStep } =
     useCurrentStep(onClose, totalStep)
@@ -50,7 +51,6 @@ export const DelegationModal = ({
   const closeReset = () => {
     resetStep()
     setSelectedBaker(null)
-    setShowStepper(true)
   }
 
   const getCurrentStepBody = (currentStep: number) => {
@@ -64,7 +64,15 @@ export const DelegationModal = ({
             selectedBaker={selectedBaker}
             setSelectedBaker={setSelectedBaker}
             bakerList={bakerList ?? []}
-            setShowStepper={setShowStepper}
+          />
+        )
+      case DelegateStatus.DelegationConfirm:
+        return (
+          <ConfirmBaker
+            handleOneStepForward={handleOneStepForward}
+            handleOneStepBack={handleOneStepBack}
+            selectedBaker={selectedBaker as BakerInfo}
+            setSelectedBaker={setSelectedBaker}
           />
         )
       default:
@@ -84,7 +92,12 @@ export const DelegationModal = ({
       <ModalContent>
         <ModalHeader>
           <Flex justify='space-between' alignItems='center'>
-            <BackIcon onClick={handleOneStepBack} />
+            <BackIcon
+              onClick={() => {
+                if (currentStep === 3) setSelectedBaker(null)
+                handleOneStepBack()
+              }}
+            />
             <CloseIcon
               onClick={() => {
                 closeReset()
@@ -96,10 +109,7 @@ export const DelegationModal = ({
 
         <ModalBody>
           <Flex flexDir='column'>
-            {showStepper && (
-              <Stepper totalStep={totalStep} currentStep={currentStep} />
-            )}
-
+            <Stepper totalStep={totalStep} currentStep={currentStep} />
             {getCurrentStepBody(currentStep)}
           </Flex>
         </ModalBody>

@@ -6,7 +6,6 @@ import {
   StakingOpsStatus,
   UnstakedOperation
 } from './tezInterfaces'
-import { BakerListDropDown } from '@/components/operationModals/Delegate/BakerListDropDown'
 
 const consensusRightsDelay = Number(
   process.env.NEXT_PUBLIC_CONSENSUS_RIGHTS_DELAY
