@@ -204,6 +204,11 @@ export const AccountBody = ({
         w='100%'
         gap={['30px', null, '40px']}
       >
+        {stakingOpsStatus.Delegated && !stakingOpsStatus.CanStake && (
+          <StakingAlertBox
+            reason={getDisabledStakeButtonReason(stakingOpsStatus)}
+          />
+        )}
         <Grid
           w='100%'
           templateColumns={['repeat(1, 1fr)', null, 'repeat(2, 1fr)']}
@@ -365,11 +370,6 @@ export const AccountBody = ({
               </PrimaryButton>
             )}
           </Flex>
-          {stakingOpsStatus.Delegated && !stakingOpsStatus.CanStake && (
-            <StakingAlertBox
-              reason={getDisabledStakeButtonReason(stakingOpsStatus)}
-            />
-          )}
         </Flex>
 
         {/* below are all operation modals. TODO: how to make this more nit, rather than put all modals here, maybe a function/hook? */}
