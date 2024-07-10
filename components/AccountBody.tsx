@@ -72,15 +72,15 @@ export const AccountBody = ({
 
   const [bakerList, setBakerList] = useState<BakerInfo[] | null>(null)
 
-  const { data, status } = useQuery({
+  const bakerListQueryData = useQuery({
     queryKey: ['bakerList'],
     queryFn: getBakerList,
     staleTime: 180000
   })
 
   useEffect(() => {
-    if (status === 'success') {
-      let bakerData = data?.map((baker: BakerInfo) => {
+    if (bakerListQueryData.status === 'success') {
+      let bakerData = bakerListQueryData.data?.map((baker: BakerInfo) => {
         return {
           alias: baker.alias ?? 'Private Baker',
           address: baker.address,
@@ -95,10 +95,10 @@ export const AccountBody = ({
       })
       bakerData = shuffleBakerList(bakerData)
       setBakerList(bakerData)
-    } else if (status === 'error') {
+    } else if (bakerListQueryData.status === 'error') {
       throw Error('Fail to get the baker list')
     }
-  }, [status])
+  }, [bakerListQueryData])
 
   const { isCopied, copyTextToClipboard } = useClipboard()
   const { address } = useConnection()
@@ -170,8 +170,8 @@ export const AccountBody = ({
     unstakedOps,
     accountInfo?.totalFinalizableAmount
   )
-
-  if (isLoading) return <Spinner />
+  console.log(stakingOpsStatus)
+  if (isLoading || bakerListQueryData.isLoading) return <Spinner />
 
   return (
     <>
