@@ -323,13 +323,14 @@ export const AccountBody = ({
         </Grid>
 
         <Flex direction='column' w='100%' gap='16px'>
-          {stakingOpsStatus.Delegated && (
-            <ExpandBakerInfoTable
-              baker={_.find(bakerList, {
-                address: accountInfo?.delegate.address
-              })}
-            />
-          )}
+          {stakingOpsStatus.Delegated &&
+            stakingOpsStatus.bakerAcceptsStaking && (
+              <ExpandBakerInfoTable
+                baker={_.find(bakerList, {
+                  address: accountInfo?.delegate.address
+                })}
+              />
+            )}
 
           <Flex direction='row' w='100%' gap={['16px', null, '20px', '30px']}>
             {!stakingOpsStatus.Delegated && (
