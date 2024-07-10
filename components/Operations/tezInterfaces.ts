@@ -8,6 +8,7 @@ export interface StakingOpsStatus {
   CanFinalizeUnstake: boolean
   bakerAcceptsStaking: boolean
   pendingUnstakeOpsWithAnotherBaker: boolean
+  loadingDone: boolean
 }
 
 export interface AccountInfo {

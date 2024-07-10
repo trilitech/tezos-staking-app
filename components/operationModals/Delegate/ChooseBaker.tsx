@@ -165,6 +165,7 @@ export const ChooseBaker = ({
       )}
 
       <PrimaryButton
+        maxW=''
         disabled={!selectedBaker}
         onClick={async () => {
           if (!Tezos || !beaconWallet) {
