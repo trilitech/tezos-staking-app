@@ -62,7 +62,7 @@ export default function Home() {
       bakerData = shuffleBakerList(bakerData)
       setBakerList(bakerData)
     } else if (bakerListQueryData.status === 'error') {
-      throw Error('Fail to get the baker list')
+      console.error('Fail to get the baker list')
     }
   }, [bakerListQueryData.status])
 
@@ -117,7 +117,7 @@ export default function Home() {
           <Spinner />
         ) : isConnected ? (
           <>
-            {error && (
+            {(error || bakerListQueryData.status === 'error') && (
               <ErrorModal
                 onClick={() => window.location.reload()}
                 btnText='Refresh'
