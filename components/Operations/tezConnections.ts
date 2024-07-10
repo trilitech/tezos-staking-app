@@ -42,21 +42,21 @@ export const useFetchAccountData = (address: string | undefined) => {
   const blockchainHeadQuery = useQuery({
     queryKey: ['blockchainHeadData'],
     queryFn: fetchBlockchainHeadData,
-    refetchInterval: 10000,
+    refetchInterval: 5000,
     refetchIntervalInBackground: true
   })
 
   const accountInfoQuery = useQuery({
     queryKey: ['accountInfoData'],
     queryFn: () => fetchAccountInfoData(address),
-    refetchInterval: 10000,
+    refetchInterval: 5000,
     refetchIntervalInBackground: true
   })
 
   const unstakedOpsQuery = useQuery({
     queryKey: ['unstakedOpsData'],
     queryFn: () => fetchUnstakedOpsData(address),
-    refetchInterval: 10000,
+    refetchInterval: 5000,
     refetchIntervalInBackground: true
   })
 
