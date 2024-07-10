@@ -28,10 +28,11 @@ export const BakerListDropDown = ({
       {bakerList.length === 0 && <Spinner />}
       <Flex
         flexDir='column'
-        maxH='300px'
+        maxH='420px'
         w='full'
         mt='24px'
         overflowY='auto'
+        gap='12px'
         sx={{
           '::-webkit-scrollbar': {
             width: '4px'
@@ -45,8 +46,10 @@ export const BakerListDropDown = ({
       >
         {bakerList?.map((baker, index) => (
           <Flex
+            flexDir='column'
             p='16px'
-            borderBottom='solid 1px #EDF2F7'
+            border='solid 1.5px #EDF2F7'
+            borderRadius='12px'
             _hover={{ cursor: 'pointer', bg: '#F7FAFC' }}
             onClick={() => {
               if (!hoverCopyIcon) {
@@ -84,6 +87,39 @@ export const BakerListDropDown = ({
                   />
                 </Flex>
               </Box>
+            </Flex>
+            <Flex
+              flexDir='column'
+              w='100%'
+              gap='5px'
+              mt='10px'
+              pt='10px'
+              borderTop='solid 1px #EDF2F7'
+            >
+              <Flex alignItems='center' justify='space-between' w='100%'>
+                <Text fontSize='14px' fontWeight={600} color='#4A5568'>
+                  STAKING:
+                </Text>
+                <Text color='#171923' fontSize='14px'>
+                  {baker.totalStakedBalance} ꜩ
+                </Text>
+              </Flex>
+              <Flex alignItems='center' justify='space-between' w='100%'>
+                <Text fontSize='14px' fontWeight={600} color='#4A5568'>
+                  FREE SPACE:
+                </Text>
+                <Text color='#171923' fontSize='14px'>
+                  {Math.floor(baker.stakingFreeSpace)} ꜩ
+                </Text>
+              </Flex>
+              <Flex alignItems='center' justify='space-between' w='100%'>
+                <Text fontSize='14px' fontWeight={600} color='#4A5568'>
+                  FEE:
+                </Text>
+                <Text color='#171923' fontSize='14px'>
+                  {baker.stakingFees}%
+                </Text>
+              </Flex>
             </Flex>
           </Flex>
         ))}
