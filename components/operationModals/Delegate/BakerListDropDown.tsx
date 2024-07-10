@@ -89,41 +89,51 @@ export const BakerListDropDown = ({
               </Box>
             </Flex>
             <Flex
-              flexDir='column'
-              w='100%'
-              gap='5px'
+              flexDir={['column', 'row']}
+              justify='space-evenly'
+              alignItems='start'
+              gap='10px'
               mt='10px'
               pt='10px'
               borderTop='solid 1px #EDF2F7'
+              flexWrap='wrap'
             >
-              <Flex alignItems='center' justify='space-between' w='100%'>
-                <Text fontSize='14px' fontWeight={600} color='#4A5568'>
+              <CustomFlex>
+                <Text fontSize='14px' fontWeight={600} color='#4A5568' mr='3px'>
                   STAKING:
                 </Text>
-                <Text color='#171923' fontSize='14px'>
+                <Text color='#171923' fontWeight={600} fontSize='14px'>
                   {baker.totalStakedBalance} ꜩ
                 </Text>
-              </Flex>
-              <Flex alignItems='center' justify='space-between' w='100%'>
-                <Text fontSize='14px' fontWeight={600} color='#4A5568'>
+              </CustomFlex>
+              <CustomFlex>
+                <Text fontSize='14px' fontWeight={600} color='#4A5568' mr='3px'>
                   FREE SPACE:
                 </Text>
-                <Text color='#171923' fontSize='14px'>
+                <Text color='#171923' fontWeight={600} fontSize='14px'>
                   {Math.floor(baker.stakingFreeSpace)} ꜩ
                 </Text>
-              </Flex>
-              <Flex alignItems='center' justify='space-between' w='100%'>
-                <Text fontSize='14px' fontWeight={600} color='#4A5568'>
+              </CustomFlex>
+              <CustomFlex>
+                <Text fontSize='14px' fontWeight={600} color='#4A5568' mr='3px'>
                   FEE:
                 </Text>
-                <Text color='#171923' fontSize='14px'>
+                <Text color='#171923' fontWeight={600} fontSize='14px'>
                   {baker.stakingFees}%
                 </Text>
-              </Flex>
+              </CustomFlex>
             </Flex>
           </Flex>
         ))}
       </Flex>
+    </Flex>
+  )
+}
+
+const CustomFlex = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <Flex alignItems='center' justify='space-between' w={['100%', 'auto']}>
+      {children}
     </Flex>
   )
 }
