@@ -7,7 +7,7 @@ const theme = extendTheme({
   components: {
     Modal: {
       defaultProps: {
-        size: 'lg'
+        size: 'xl'
       },
       baseStyle: {
         overlay: {
