@@ -4,6 +4,7 @@ import useClipboard from '@/utils/useClipboard'
 import { simplifyAddress } from '@/utils/simpliftAddress'
 import { BakerInfo } from '@/components/Operations/tezInterfaces'
 import { CopyAlert } from '@/components/CopyAlert'
+import { mutezToTez } from '@/utils/mutezToTez'
 
 export const BakerListDropDown = ({
   bakerList,
@@ -103,7 +104,7 @@ export const BakerListDropDown = ({
                   STAKING:
                 </Text>
                 <Text color='#171923' fontWeight={600} fontSize='14px'>
-                  {baker.totalStakedBalance} ꜩ
+                  {Math.floor(mutezToTez(baker.totalStakedBalance))} ꜩ
                 </Text>
               </CustomFlex>
               <CustomFlex>

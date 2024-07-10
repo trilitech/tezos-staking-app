@@ -15,6 +15,7 @@ import {
   Flex
 } from '@chakra-ui/react'
 import { BakerInfo } from './Operations/tezInterfaces'
+import { mutezToTez } from '@/utils/mutezToTez'
 
 export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
   const [isToggle, setIsToggle] = useState(true)
@@ -72,7 +73,8 @@ export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
                   <Td borderBottom='1px solid #E2E8F0' w='100%'>
                     <Flex alignItems='center' gap='4px'>
                       <Text fontSize='14px' fontWeight={600} color='#171923'>
-                        {baker?.totalStakedBalance} ꜩ
+                        {Math.floor(mutezToTez(baker?.totalStakedBalance ?? 0))}{' '}
+                        ꜩ
                       </Text>
                     </Flex>
                   </Td>
