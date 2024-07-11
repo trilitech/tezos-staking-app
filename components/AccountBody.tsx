@@ -23,10 +23,7 @@ import {
   useFetchAccountData
 } from './Operations/tezConnections'
 import { SecondaryButton } from './buttons/SecondaryButton'
-import {
-  DelegationModal,
-  getBakerList
-} from '@/components/operationModals/Delegate'
+import { DelegationModal } from '@/components/operationModals/Delegate'
 import { EndDelegationModal } from '@/components/operationModals/EndDelegate'
 import { StakeModal } from './operationModals/Stake'
 import { UnstakeModal } from './operationModals/Unstake'
@@ -38,16 +35,12 @@ import { useOperationResponse } from '@/providers/OperationResponseProvider'
 import useClipboard from '@/utils/useClipboard'
 import { Change, End, ViewBakers } from './ctas'
 import { CopyAlert } from './CopyAlert'
-import { useQuery } from '@tanstack/react-query'
-import { mutezToTez } from '@/utils/mutezToTez'
 import {
   getDisabledStakeButtonReason,
   StakingAlertBox
 } from '@/components/DisabledStakeAlert'
-import { shuffleBakerList } from '@/components/operationModals/Delegate/ChooseBaker'
 import { ExpandBakerInfoTable } from './ExpandBakerInfoTable'
 import _ from 'lodash'
-import { Baker } from '@taquito/rpc'
 
 const getNumOfUnstake = (
   unstOps?: UnstakedOperation[],
@@ -360,6 +353,7 @@ export const AccountBody = ({
         />
 
         <ChangeBakerModal
+          isStaked={!!accountInfo?.stakedBalance}
           isOpen={changeBakerModal.isOpen}
           onClose={changeBakerModal.onClose}
           bakerList={bakerList}

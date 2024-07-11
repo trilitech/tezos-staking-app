@@ -14,7 +14,6 @@ export const SecondaryButton = ({
   return (
     <Button
       w='100%'
-      maxW='400px'
       bg={disabled ? '#E2E8F0' : 'white'}
       color={disabled ? '#A0AEC0' : '#0052FF'}
       border={disabled ? '#E2E8F0' : '#0052FF 2px solid'}
