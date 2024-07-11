@@ -61,7 +61,6 @@ export const DelegationModal = ({
         return (
           <ChooseBaker
             handleOneStepForward={handleOneStepForward}
-            selectedBaker={selectedBaker}
             setSelectedBaker={setSelectedBaker}
             bakerList={bakerList ?? []}
           />

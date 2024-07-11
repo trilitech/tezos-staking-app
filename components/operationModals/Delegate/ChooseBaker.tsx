@@ -1,12 +1,5 @@
 import React, { useState } from 'react'
-import {
-  Flex,
-  InputGroup,
-  Input,
-  InputRightElement,
-  InputLeftElement,
-  Image
-} from '@chakra-ui/react'
+import { Flex, InputGroup, Input, InputRightElement } from '@chakra-ui/react'
 import { BakerInfo } from '@/components/Operations/tezInterfaces'
 import { Header } from '@/components/modalBody'
 import { SearchIcon } from '@/components/icons'
@@ -14,7 +7,6 @@ import { BakerBoxList } from './BakerBoxList'
 
 interface ChooseBakerProps {
   handleOneStepForward: () => void
-  selectedBaker: BakerInfo | null
   setSelectedBaker: (b: BakerInfo | null) => void
   bakerList: BakerInfo[]
 }
@@ -28,7 +20,6 @@ export function shuffleBakerList(bakerList: BakerInfo[]) {
 
 export const ChooseBaker = ({
   handleOneStepForward,
-  selectedBaker,
   setSelectedBaker,
   bakerList
 }: ChooseBakerProps) => {
@@ -65,21 +56,8 @@ export const ChooseBaker = ({
 
   return (
     <Flex flexDir='column' justify='center'>
-      <Header pb='24px'>{!!selectedBaker ? 'Delegate' : 'Select Baker'}</Header>
+      <Header pb='24px'>Select Baker</Header>
       <InputGroup size='md' mb='30px'>
-        {!!selectedBaker && (
-          <InputLeftElement h='100%'>
-            <Image
-              ml='6px'
-              w='30px'
-              h='30px'
-              objectFit='cover'
-              src={`${process.env.NEXT_PUBLIC_TZKT_AVATARS_URL}/${selectedBaker.address}`}
-              alt='baker avatar'
-            />
-          </InputLeftElement>
-        )}
-
         <Input
           onChange={handleChange}
           pr='4.5rem'
@@ -89,13 +67,7 @@ export const ChooseBaker = ({
               fontSize: '16px'
             }
           }}
-          value={
-            selectedBaker
-              ? selectedBaker.alias
-                ? selectedBaker.alias
-                : 'Private Baker'
-              : searchText
-          }
+          value={searchText}
           h='58px'
           overflowX='auto'
         />
@@ -105,13 +77,11 @@ export const ChooseBaker = ({
         </InputRightElement>
       </InputGroup>
 
-      {!selectedBaker && (
-        <BakerBoxList
-          bakerList={bakersShown}
-          setSelectedBaker={setSelectedBaker}
-          handleOneStepForward={handleOneStepForward}
-        />
-      )}
+      <BakerBoxList
+        bakerList={bakersShown}
+        setSelectedBaker={setSelectedBaker}
+        handleOneStepForward={handleOneStepForward}
+      />
     </Flex>
   )
 }

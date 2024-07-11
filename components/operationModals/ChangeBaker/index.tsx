@@ -57,7 +57,6 @@ export const ChangeBakerModal = ({
           return (
             <ChooseBaker
               handleOneStepForward={handleOneStepForward}
-              selectedBaker={selectedBaker}
               setSelectedBaker={setSelectedBaker}
               bakerList={bakerList ?? []}
             />
@@ -82,7 +81,6 @@ export const ChangeBakerModal = ({
         return (
           <ChooseBaker
             handleOneStepForward={handleOneStepForward}
-            selectedBaker={selectedBaker}
             setSelectedBaker={setSelectedBaker}
             bakerList={bakerList ?? []}
           />
