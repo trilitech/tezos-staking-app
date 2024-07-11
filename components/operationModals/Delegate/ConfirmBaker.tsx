@@ -56,7 +56,7 @@ export const ConfirmBaker = ({
         <Input
           isDisabled
           pr='4.5rem'
-          placeholder='Search by Name or Paste tz address'
+          placeholder='Paste tz address'
           sx={{
             '::placeholder': {
               fontSize: '16px'
