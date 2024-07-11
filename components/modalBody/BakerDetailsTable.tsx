@@ -13,21 +13,14 @@ import {
 import { simplifyAddress } from '@/utils/simpliftAddress'
 import useClipboard from '@/utils/useClipboard'
 import { CopyAlert } from '../CopyAlert'
-
+import { BakerInfo } from '../Operations/tezInterfaces'
+import { mutezToTez } from '@/utils/mutezToTez'
 interface BakerDetailsTableProps {
-  alias: string
-  address: string
-  fee: number
-  acceptStaking: boolean
-  capacity: number
+  baker: BakerInfo
 }
 
 export const BakerDetailsTable = ({
-  alias,
-  address,
-  fee,
-  acceptStaking,
-  capacity
+  baker
 }: BakerDetailsTableProps & FlexProps) => {
   const { isCopied, copyTextToClipboard } = useClipboard()
 
@@ -48,7 +41,7 @@ export const BakerDetailsTable = ({
                   <Image
                     w='30px'
                     h='30px'
-                    src={`${process.env.NEXT_PUBLIC_TZKT_AVATARS_URL}/${address}`}
+                    src={`${process.env.NEXT_PUBLIC_TZKT_AVATARS_URL}/${baker.address}`}
                     alt='baker avatar'
                   />
                   <Text
@@ -57,14 +50,14 @@ export const BakerDetailsTable = ({
                     lineHeight='22px'
                     color='#4A5568'
                   >
-                    {alias ?? 'Private Baker'}
+                    {baker.alias ?? 'Private Baker'}
                   </Text>
                 </Flex>
               </Td>
               <Td borderBottom='1px solid #E2E8F0' px={[3, 6]}>
                 <Flex alignItems='center' gap='4px'>
                   <Text fontSize='14px' fontWeight={400} color='#2D3748'>
-                    {simplifyAddress(address)}
+                    {simplifyAddress(baker.address)}
                   </Text>
                   <Image
                     w='18px'
@@ -73,75 +66,67 @@ export const BakerDetailsTable = ({
                     _hover={{ cursor: 'pointer' }}
                     src='/images/copy-icon.svg'
                     alt='copy icon'
-                    onClick={() => copyTextToClipboard(address)}
+                    onClick={() => copyTextToClipboard(baker.address)}
                   />
                 </Flex>
               </Td>
             </Tr>
             <Tr>
-              <Td
-                borderBottom={acceptStaking ? '1px solid #E2E8F0' : ''}
-                px={[3, 6]}
-                pr={[0, 6]}
-              >
+              <Td borderBottom='1px solid #E2E8F0' px={[3, 6]} pr={[0, 6]}>
                 <Text
                   color='#4A5568'
                   fontSize='14px'
                   textTransform='uppercase'
                   fontWeight={600}
                 >
-                  Accepts Staking:
+                  STAKING:
                 </Text>
               </Td>
               <Td borderBottom='1px solid #E2E8F0' px={[3, 6]}>
                 <Text color='#10121B' fontWeight={600} fontSize='14px'>
-                  {acceptStaking ? 'Yes' : 'No'}
+                  {Math.floor(mutezToTez(baker.totalStakedBalance))} ꜩ
                 </Text>
               </Td>
             </Tr>
-            {acceptStaking && (
-              <Tr>
-                <Td borderBottom='1px solid #E2E8F0' px={[3, 6]} pr={[0, 6]}>
-                  <Text
-                    color='#4A5568'
-                    fontSize='14px'
-                    textTransform='uppercase'
-                    fontWeight={600}
-                  >
-                    Staking Fee:
-                  </Text>
-                </Td>
-                <Td borderBottom='1px solid #E2E8F0' px={[3, 6]}>
-                  <Text color='#10121B' fontWeight={600} fontSize='14px'>
-                    {fee}%
-                  </Text>
-                </Td>
-              </Tr>
-            )}
-            {acceptStaking && (
-              <Tr>
-                <Td px={[3, 6]} pr={[0, 6]}>
-                  <Text
-                    color='#4A5568'
-                    fontSize='14px'
-                    textTransform='uppercase'
-                    fontWeight={600}
-                  >
-                    Remaining Capacity:
-                  </Text>
-                </Td>
-                <Td px={[3, 6]}>
-                  <Text
-                    color='#10121B'
-                    fontWeight={600}
-                    fontSize='14px'
-                    justifySelf='start'
-                  >
-                    {Math.floor(capacity)} ꜩ
-                  </Text>
-                </Td>
-              </Tr>
-            )}
+            <Tr>
+              <Td borderBottom='1px solid #E2E8F0' px={[3, 6]} pr={[0, 6]}>
+                <Text
+                  color='#4A5568'
+                  fontSize='14px'
+                  textTransform='uppercase'
+                  fontWeight={600}
+                >
+                  FREE SPACE:
+                </Text>
+              </Td>
+              <Td borderBottom='1px solid #E2E8F0' px={[3, 6]}>
+                <Text color='#10121B' fontWeight={600} fontSize='14px'>
+                  {Math.floor(baker.stakingFreeSpace)} ꜩ
+                </Text>
+              </Td>
+            </Tr>
+            <Tr>
+              <Td px={[3, 6]} pr={[0, 6]}>
+                <Text
+                  color='#4A5568'
+                  fontSize='14px'
+                  textTransform='uppercase'
+                  fontWeight={600}
+                >
+                  FEE:
+                </Text>
+              </Td>
+              <Td px={[3, 6]}>
+                <Text
+                  color='#10121B'
+                  fontWeight={600}
+                  fontSize='14px'
+                  justifySelf='start'
+                >
+                  {baker.stakingFees} %
+                </Text>
+              </Td>
+            </Tr>
           </Tbody>
         </Table>
       </TableContainer>
