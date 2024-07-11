@@ -14,7 +14,6 @@ export const TertiaryButton = ({
   return (
     <Button
       w='100%'
-      maxW='400px'
       bg={disabled ? '#E2E8F0' : 'black'}
       color={disabled ? '#A0AEC0' : 'white'}
       fontWeight={600}
