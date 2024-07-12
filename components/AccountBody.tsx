@@ -40,10 +40,10 @@ import { Change, End, ViewBakers } from './ctas'
 import { CopyAlert } from './CopyAlert'
 import { useQuery } from '@tanstack/react-query'
 import { mutezToTez } from '@/utils/mutezToTez'
-import { DisabledStakeAlert } from '@/components/DisabledStakeAlert'
 import { shuffleBakerList } from '@/components/operationModals/Delegate/ChooseBaker'
 import { ExpandBakerInfoTable } from './ExpandBakerInfoTable'
 import _ from 'lodash'
+import { DisabledStakeAlert } from '@/components/DisabledStakeAlert'
 
 const getNumOfUnstake = (
   unstOps?: UnstakedOperation[],

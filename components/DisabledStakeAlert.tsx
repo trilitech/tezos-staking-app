@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from '@chakra-ui/react'
+import { Box, BoxProps, Flex, Text } from '@chakra-ui/react'
 import {
   AccountInfo,
   StakingOpsStatus
@@ -18,47 +18,37 @@ export function getDisabledStakeButtonReason(
   return reason
 }
 
-export const StakingAlertBox = ({
-  reason,
-  backgroundColor
-}: {
-  reason: string
-  backgroundColor: string
-}) => {
-  return (
-    <Box
-      w='100%'
-      bg={backgroundColor} // Adjust the color to match the PrimaryButton disabled background
-      borderLeft='4px solid gray'
-      p={4}
-    >
-      <Flex alignItems='center' gap='12px'>
-        <WarningIcon color={backgroundColor} />
-        <Text fontSize='16px' lineHeight='22px' color='#2D3748'>
-          {reason}
-        </Text>
-      </Flex>
-    </Box>
-  )
-}
-
 export const DisabledStakeAlert = ({
   opStatus,
-  acctInfo
+  acctInfo,
+  ...styles
 }: {
   opStatus: StakingOpsStatus
   acctInfo: AccountInfo | null
-}) => {
-  let backgroundColor = 'gray.200'
+} & BoxProps) => {
+  let iconFillColor = '#718096'
+  let backgroudColor = '#EDF2F7'
+
   if (opStatus.Delegated && !opStatus.CanStake) {
     if (!opStatus.bakerAcceptsStaking && (acctInfo?.stakedBalance ?? 0) > 0) {
-      backgroundColor = 'red.200'
+      iconFillColor = '#E53E3E'
+      backgroudColor = '#FED7D7'
     }
     return (
-      <StakingAlertBox
-        backgroundColor={backgroundColor}
-        reason={getDisabledStakeButtonReason(opStatus)}
-      />
+      <Box
+        w='100%'
+        borderLeft='4px solid gray'
+        p={4}
+        {...styles}
+        backgroundColor={backgroudColor}
+      >
+        <Flex alignItems='center' gap='12px'>
+          <WarningIcon fill={iconFillColor} />
+          <Text fontSize='16px' lineHeight='22px' color='#2D3748'>
+            {getDisabledStakeButtonReason(opStatus)}
+          </Text>
+        </Flex>
+      </Box>
     )
   }
 }
