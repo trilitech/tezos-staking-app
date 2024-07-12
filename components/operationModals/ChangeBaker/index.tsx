@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   Modal,
   ModalOverlay,
@@ -13,21 +13,32 @@ import { ChooseBaker } from '../Delegate/ChooseBaker'
 import useCurrentStep from '@/utils/useCurrentStep'
 import { Stepper } from '@/components/modalBody/Stepper'
 import { BackIcon, CloseIcon } from '@/components/icons'
-import { DelegateModal } from '@/components/operationModals/Delegate'
+import { DelegateModalProps } from '@/components/operationModals/Delegate'
+import { ConfirmBaker } from '../Delegate/ConfirmBaker'
 
-enum DelegateStatus {
+interface ChangeBakerModalProps extends DelegateModalProps {
+  isStaked: boolean
+}
+
+enum UnStakedDelegateStatus {
+  ChooseBaker = 1,
+  ChangeConfirm = 2
+}
+
+enum StakedDelegateStatus {
   ChangeStart = 1,
-  ChooseBaker = 2
+  ChooseBaker = 2,
+  ChangeConfirm = 3
 }
 
 export const ChangeBakerModal = ({
   isOpen,
   onClose,
-  bakerList
-}: DelegateModal) => {
+  bakerList,
+  isStaked
+}: ChangeBakerModalProps) => {
   const [selectedBaker, setSelectedBaker] = useState<BakerInfo | null>(null)
-  const [showStepper, setShowStepper] = useState(true)
-  const totalStep = 2
+  const totalStep = isStaked ? 3 : 2
 
   const { currentStep, handleOneStepBack, handleOneStepForward, resetStep } =
     useCurrentStep(onClose, totalStep)
@@ -35,21 +46,52 @@ export const ChangeBakerModal = ({
   const closeReset = () => {
     resetStep()
     setSelectedBaker(null)
-    setShowStepper(true)
   }
 
-  const getCurrentStepBody = (currentStep: number) => {
+  const getCurrentStepBody = (currentStep: number, isStaked: boolean) => {
+    if (isStaked) {
+      switch (currentStep) {
+        case StakedDelegateStatus.ChangeStart:
+          return <ChangeStart handleOneStepForward={handleOneStepForward} />
+        case StakedDelegateStatus.ChooseBaker:
+          return (
+            <ChooseBaker
+              handleOneStepForward={handleOneStepForward}
+              setSelectedBaker={setSelectedBaker}
+              bakerList={bakerList ?? []}
+            />
+          )
+        case StakedDelegateStatus.ChangeConfirm:
+          return (
+            <ConfirmBaker
+              handleOneStepForward={handleOneStepForward}
+              handleOneStepBack={handleOneStepBack}
+              selectedBaker={selectedBaker as BakerInfo}
+              setSelectedBaker={setSelectedBaker}
+            />
+          )
+        default:
+          console.error('Delegation step is not defined')
+          return
+      }
+    }
+
     switch (currentStep) {
-      case DelegateStatus.ChangeStart:
-        return <ChangeStart handleOneStepForward={handleOneStepForward} />
-      case DelegateStatus.ChooseBaker:
+      case UnStakedDelegateStatus.ChooseBaker:
         return (
           <ChooseBaker
             handleOneStepForward={handleOneStepForward}
-            selectedBaker={selectedBaker}
             setSelectedBaker={setSelectedBaker}
             bakerList={bakerList ?? []}
-            setShowStepper={setShowStepper}
+          />
+        )
+      case UnStakedDelegateStatus.ChangeConfirm:
+        return (
+          <ConfirmBaker
+            handleOneStepForward={handleOneStepForward}
+            handleOneStepBack={handleOneStepBack}
+            selectedBaker={selectedBaker as BakerInfo}
+            setSelectedBaker={setSelectedBaker}
           />
         )
       default:
@@ -69,7 +111,13 @@ export const ChangeBakerModal = ({
       <ModalContent>
         <ModalHeader>
           <Flex justify='space-between' alignItems='center'>
-            <BackIcon onClick={handleOneStepBack} />
+            <BackIcon
+              onClick={() => {
+                if (isStaked && currentStep === 3) setSelectedBaker(null)
+                else if (!isStaked && currentStep === 2) setSelectedBaker(null)
+                handleOneStepBack()
+              }}
+            />
             <CloseIcon
               onClick={() => {
                 closeReset()
@@ -81,10 +129,8 @@ export const ChangeBakerModal = ({
 
         <ModalBody>
           <Flex flexDir='column'>
-            {showStepper && (
-              <Stepper totalStep={totalStep} currentStep={currentStep} />
-            )}
-            {getCurrentStepBody(currentStep)}
+            <Stepper totalStep={totalStep} currentStep={currentStep} />
+            {getCurrentStepBody(currentStep, isStaked)}
           </Flex>
         </ModalBody>
       </ModalContent>

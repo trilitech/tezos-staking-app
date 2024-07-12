@@ -6,7 +6,6 @@ import {
   StakingOpsStatus,
   UnstakedOperation
 } from './tezInterfaces'
-import { BakerListDropDown } from '@/components/operationModals/Delegate/BakerListDropDown'
 
 const consensusRightsDelay = Number(
   process.env.NEXT_PUBLIC_CONSENSUS_RIGHTS_DELAY
@@ -42,21 +41,21 @@ export const useFetchAccountData = (address: string | undefined) => {
   const blockchainHeadQuery = useQuery({
     queryKey: ['blockchainHeadData'],
     queryFn: fetchBlockchainHeadData,
-    refetchInterval: 10000,
+    refetchInterval: 2000,
     refetchIntervalInBackground: true
   })
 
   const accountInfoQuery = useQuery({
     queryKey: ['accountInfoData'],
     queryFn: () => fetchAccountInfoData(address),
-    refetchInterval: 10000,
+    refetchInterval: 2000,
     refetchIntervalInBackground: true
   })
 
   const unstakedOpsQuery = useQuery({
     queryKey: ['unstakedOpsData'],
     queryFn: () => fetchUnstakedOpsData(address),
-    refetchInterval: 10000,
+    refetchInterval: 2000,
     refetchIntervalInBackground: true
   })
 
@@ -154,5 +153,6 @@ export function updateStakingOpsStatus(
     !opStatus.pendingUnstakeOpsWithAnotherBaker &&
     opStatus.bakerAcceptsStaking
 
+  opStatus.loadingDone = Boolean(bakerList)
   return { opStatus, unstakingOps, totalFinalizableAmount }
 }
