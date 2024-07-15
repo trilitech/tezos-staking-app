@@ -35,12 +35,9 @@ import { useOperationResponse } from '@/providers/OperationResponseProvider'
 import useClipboard from '@/utils/useClipboard'
 import { Change, End, ViewBakers } from './ctas'
 import { CopyAlert } from './CopyAlert'
-import {
-  getDisabledStakeButtonReason,
-  StakingAlertBox
-} from '@/components/DisabledStakeAlert'
 import { ExpandBakerInfoTable } from './ExpandBakerInfoTable'
 import _ from 'lodash'
+import { DisabledStakeAlert } from '@/components/DisabledStakeAlert'
 
 const getNumOfUnstake = (
   unstOps?: UnstakedOperation[],
@@ -176,6 +173,10 @@ export const AccountBody = ({
         w='100%'
         gap={['30px', null, '40px']}
       >
+        <DisabledStakeAlert
+          opStatus={stakingOpsStatus}
+          acctInfo={accountInfo}
+        />
         <Grid
           w='100%'
           templateColumns={['repeat(1, 1fr)', null, 'repeat(2, 1fr)']}
@@ -338,11 +339,6 @@ export const AccountBody = ({
               </PrimaryButton>
             )}
           </Flex>
-          {stakingOpsStatus.Delegated && !stakingOpsStatus.CanStake && (
-            <StakingAlertBox
-              reason={getDisabledStakeButtonReason(stakingOpsStatus)}
-            />
-          )}
         </Flex>
 
         {/* below are all operation modals. TODO: how to make this more nit, rather than put all modals here, maybe a function/hook? */}
