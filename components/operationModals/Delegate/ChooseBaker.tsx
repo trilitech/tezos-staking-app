@@ -117,7 +117,8 @@ export const ChooseBaker = ({
     const filteredBaker = bakerList
       .filter(
         baker =>
-          baker.address === query || baker.alias.toLowerCase().includes(query)
+          baker.address === query ||
+          baker.alias.toLowerCase().includes(query.toLowerCase())
       )
       .filter(baker => baker.acceptsStaking)
 
