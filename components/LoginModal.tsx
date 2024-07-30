@@ -49,10 +49,7 @@ export const LoginModal = () => {
       <PrimaryButton w={['100%', '170px']} mb='24px' onClick={connect}>
         Connect Wallet
       </PrimaryButton>
-      <Link
-        href='https://research-development.nomadic-labs.com/how-to-stake.html'
-        target='_blank'
-      >
+      <Link href='https://spotlight.tezos.com/how-to-stake/' target='_blank'>
         <Text
           fontWeight={600}
           fontSize='16px'
