@@ -68,6 +68,7 @@ export const ChangeBakerModal = ({
               handleOneStepBack={handleOneStepBack}
               selectedBaker={selectedBaker as BakerInfo}
               setSelectedBaker={setSelectedBaker}
+              isChangeBaker={true}
             />
           )
         default:
@@ -92,6 +93,7 @@ export const ChangeBakerModal = ({
             handleOneStepBack={handleOneStepBack}
             selectedBaker={selectedBaker as BakerInfo}
             setSelectedBaker={setSelectedBaker}
+            isChangeBaker={true}
           />
         )
       default:

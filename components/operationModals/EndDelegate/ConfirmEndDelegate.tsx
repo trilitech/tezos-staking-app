@@ -6,6 +6,7 @@ import { useConnection } from '@/providers/ConnectionProvider'
 import { AddressBox, Header, ColumnHeader } from '@/components/modalBody'
 import { useOperationResponse } from '@/providers/OperationResponseProvider'
 import { ErrorBlock } from '@/components/ErrorBlock'
+import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 
 interface ConfirmEndDelegate {
   spendableBalance: number
@@ -39,6 +40,7 @@ export const ConfirmEndDelegate = ({
           const response = await setDelegate(Tezos, undefined, beaconWallet)
           setWaitingOperation(false)
           if (response.success) {
+            trackGAEvent(GAAction.BUTTON_CLICK, GACategory.END_DELEGATE_END)
             setOpHash(response.opHash)
             setTitle('Delegation Ended!')
             setMessage(
