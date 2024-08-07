@@ -14,6 +14,7 @@ import useCurrentStep from '@/utils/useCurrentStep'
 import { Stepper } from '@/components/modalBody/Stepper'
 import { BackIcon, CloseIcon } from '@/components/icons'
 import { ConfirmBaker } from './ConfirmBaker'
+import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 
 export interface DelegateModalProps {
   isOpen: boolean
@@ -99,6 +100,10 @@ export const DelegationModal = ({
             />
             <CloseIcon
               onClick={() => {
+                trackGAEvent(
+                  GAAction.BUTTON_CLICK,
+                  GACategory.CHOOSE_BAKER_CLOSED
+                )
                 closeReset()
                 onClose()
               }}

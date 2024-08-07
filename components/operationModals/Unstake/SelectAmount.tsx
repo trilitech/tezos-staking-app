@@ -13,6 +13,7 @@ import { unstake } from '@/components/Operations/operations'
 import { useConnection } from '@/providers/ConnectionProvider'
 import { useOperationResponse } from '@/providers/OperationResponseProvider'
 import { ErrorBlock } from '@/components/ErrorBlock'
+import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 
 export const SelectAmount = ({
   stakedAmount,
@@ -84,11 +85,14 @@ export const SelectAmount = ({
             return
           }
 
+          trackGAEvent(GAAction.BUTTON_CLICK, GACategory.END_STAKE_BEGIN)
+
           setWaitingOperation(true)
           const response = await unstake(Tezos, unstakeAmount, beaconWallet)
           setWaitingOperation(false)
 
           if (response.success) {
+            trackGAEvent(GAAction.BUTTON_CLICK, GACategory.END_STAKE_END)
             setOpHash(response.opHash)
             setTitle('Unstake Requested')
             setMessage(

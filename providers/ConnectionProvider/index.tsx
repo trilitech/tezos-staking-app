@@ -7,6 +7,8 @@ import {
   connectBeacon
 } from './beacon'
 import { BeaconWallet } from '@taquito/beacon-wallet'
+import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
+
 interface ConnectionContextType extends Partial<WalletApi> {
   connect: () => Promise<void>
   disconnect: () => Promise<void>
@@ -67,9 +69,11 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
               setTezos(Tezos)
               setBeaconWallet(beaconWallet)
               location.reload()
+              trackGAEvent(GAAction.CONNECT_SUCCESS, GACategory.WALLET_SUCCESS)
             })
             .catch(() => {
               reset()
+              trackGAEvent(GAAction.CONNECT_ERROR, GACategory.WALLET_ERROR)
               throw new Error(
                 'Error connecting to wallet, please try again later'
               )

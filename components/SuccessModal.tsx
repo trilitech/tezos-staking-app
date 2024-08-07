@@ -14,19 +14,36 @@ import {
 import { PrimaryButton } from './buttons/PrimaryButton'
 import Link from 'next/link'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
+import { OpType } from '@/providers/OperationResponseProvider'
+import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
+
+const setGAEvent = (opType?: OpType) => {
+  switch (opType) {
+    case 'delegate':
+      trackGAEvent(GAAction.BUTTON_CLICK, GACategory.CONTINUE_AFTER_DELEGATION)
+      return
+    case 'stake':
+      trackGAEvent(GAAction.BUTTON_CLICK, GACategory.CONTINUE_AFTER_STAKE)
+      return
+    default:
+      return
+  }
+}
 
 export const SuccessModal = ({
   title,
   desc,
   tzktLink,
   resetOperation,
-  open
+  open,
+  opType
 }: {
   title?: string
   desc: string
   tzktLink: string
   resetOperation: () => void
   open: boolean
+  opType?: OpType
 }) => {
   const { onClose } = useDisclosure()
 
@@ -69,6 +86,7 @@ export const SuccessModal = ({
             </Text>
             <PrimaryButton
               onClick={() => {
+                setGAEvent(opType)
                 resetOperation()
                 onClose()
               }}

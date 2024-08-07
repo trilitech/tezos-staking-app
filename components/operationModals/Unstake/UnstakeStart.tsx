@@ -3,6 +3,7 @@ import { Flex, Image } from '@chakra-ui/react'
 import { Header, Description } from '@/components/modalBody'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
 import { RoundBorderText } from '../Delegate/DelegateStart'
+import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 
 export const UnstakeStart = ({
   handleOneStepForward
@@ -22,7 +23,14 @@ export const UnstakeStart = ({
         <RoundBorderText step={1} text='UNSTAKE' />
         <RoundBorderText step={2} text='FINALIZE' />
       </Flex>
-      <PrimaryButton onClick={handleOneStepForward}>I Understand</PrimaryButton>
+      <PrimaryButton
+        onClick={() => {
+          trackGAEvent(GAAction.BUTTON_CLICK, GACategory.CHOOSE_I_UNDERSTAND)
+          handleOneStepForward()
+        }}
+      >
+        I Understand
+      </PrimaryButton>
     </Flex>
   )
 }

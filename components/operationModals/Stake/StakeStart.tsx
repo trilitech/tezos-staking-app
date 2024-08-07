@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Flex, Text, Checkbox, Image } from '@chakra-ui/react'
 import { Header, Description } from '@/components/modalBody'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
+import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 
 export const StakeStart = ({
   handleOneStepForward
@@ -34,7 +35,10 @@ export const StakeStart = ({
       >
         <Checkbox
           isChecked={isChecked}
-          onChange={() => setIsChecked(!isChecked)}
+          onChange={() => {
+            trackGAEvent(GAAction.BUTTON_CLICK, GACategory.ACCEPT_DISCLAIMER)
+            setIsChecked(!isChecked)
+          }}
         />
         <Text
           color='#2D3748'
@@ -48,7 +52,13 @@ export const StakeStart = ({
           </Text>
         </Text>
       </Flex>
-      <PrimaryButton disabled={!isChecked} onClick={handleOneStepForward}>
+      <PrimaryButton
+        disabled={!isChecked}
+        onClick={() => {
+          trackGAEvent(GAAction.BUTTON_CLICK, GACategory.CONTINUE_STAKE)
+          handleOneStepForward()
+        }}
+      >
         Continue
       </PrimaryButton>
     </Flex>

@@ -6,6 +6,7 @@ import { useConnection } from '@/providers/ConnectionProvider'
 import { Header, BalanceBox, ColumnHeader } from '@/components/modalBody'
 import { useOperationResponse } from '@/providers/OperationResponseProvider'
 import { ErrorBlock } from '@/components/ErrorBlock'
+import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 
 interface ConfirmFinalizeUnstake {
   withdrawAmount: number
@@ -42,6 +43,7 @@ export const ConfirmFinalizeUnstake = ({
           setWaitingOperation(false)
 
           if (response.success) {
+            trackGAEvent(GAAction.BUTTON_CLICK, GACategory.FINALIZE_END)
             setOpHash(response.opHash)
             setMessage(
               `You have successfully finalized ${withdrawAmount} ꜩ. These funds are now part of your spendable balance.`
