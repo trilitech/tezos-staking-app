@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { PrimaryButton } from './buttons/PrimaryButton'
 import { useConnection } from '@/providers/ConnectionProvider'
 
-const STEPS = ['DELEGATE', 'STAKE TEZ', 'EARN TEZ']
+const STEPS = ['DELEGATE', 'STAKE', 'EARN']
 
 export const LoginModal = () => {
   const { connect } = useConnection()
@@ -33,7 +33,7 @@ export const LoginModal = () => {
         mb={['30px', '40px']}
         color='#171923'
       >
-        Earn rewards with Tezos staking solutions
+        Stake on Tezos to Earn Rewards
       </Text>
       <Flex
         mb={['30px', '40px']}

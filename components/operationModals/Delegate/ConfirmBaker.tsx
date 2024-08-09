@@ -118,7 +118,7 @@ export const ConfirmBaker = ({
           if (response.success) {
             setOpHash(response.opHash)
             setMessage(
-              'You have successfully delegated your balance to the baker. You can now (optionally) stake funds with the baker, and potentially earn higher rewards.'
+              "You have successfully delegated your balance to the baker. If you'd like, you can now stake and potentially earn double rewards!"
             )
             setSuccess(true)
             handleOneStepForward()
