@@ -1,7 +1,8 @@
 import { PermissionScope } from '@airgap/beacon-sdk'
-import { TezosToolkit } from '@taquito/taquito'
+import { OpKind, TezosToolkit } from '@taquito/taquito'
 import { BeaconWallet } from '@taquito/beacon-wallet'
 import { requestBeaconPermissions } from '@/providers/ConnectionProvider/beacon'
+
 export interface OperationResult {
   success: boolean
   opHash: string
@@ -19,9 +20,27 @@ export const setDelegate = async (
       await requestBeaconPermissions(wallet)
     }
 
-    const op = await Tezos.wallet.setDelegate({ delegate }).send()
-    const response = await op.confirmation()
-    opHash = op.opHash
+    const batch = await Tezos.wallet
+      .batch([
+        {
+          kind: OpKind.DELEGATION,
+          delegate: `${delegate}`
+        },
+        {
+          kind: OpKind.TRANSACTION,
+          to: wallet.account?.address ?? '',
+          amount: 100,
+          parameter: {
+            entrypoint: 'stake',
+            value: {
+              prim: 'Unit'
+            }
+          }
+        }
+      ])
+      .send()
+    const response = await batch.confirmation()
+    opHash = batch.opHash
     let success = response?.completed ?? false
     return { success: success, opHash, message: '' }
   } catch (err: any) {
