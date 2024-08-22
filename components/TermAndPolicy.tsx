@@ -26,6 +26,18 @@ export const TermAndPolicy = ({ ...styles }: FlexProps) => {
               Terms of Use
             </Text>
           </Link>
+          <Divider mx='5px' />{' '}
+          <Link href='/privacy_policy/' target='_blank'>
+            <Text as='span' _hover={{ cursor: 'pointer' }}>
+              Privacy Policy
+            </Text>
+          </Link>
+          <Divider mx='5px' />{' '}
+          <Link href='/cookie_policy/' target='_blank'>
+            <Text as='span' _hover={{ cursor: 'pointer' }}>
+              Cookie Policy
+            </Text>
+          </Link>
         </Text>
 
         <Text color={isConnected ? '#718096' : '#E2E8F0'}>
