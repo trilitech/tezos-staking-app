@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Flex,
   Text,
@@ -6,16 +6,32 @@ import {
   ModalOverlay,
   ModalContent,
   ModalBody,
-  Box
+  Box,
+  Link as ChakraLink
 } from '@chakra-ui/react'
 import Link from 'next/link'
 import { PrimaryButton } from './buttons/PrimaryButton'
 import { SecondaryButton } from './buttons/SecondaryButton'
+import Cookies from 'js-cookie'
 
 export const CookieBanner = () => {
+  const [isOpen, setIsOpen] = useState(false)
+
+  useEffect(() => {
+    const consent = Cookies.get('cookie-consent')
+    if (!consent) {
+      setIsOpen(true)
+    }
+  }, [])
+
+  const handleAccept = () => {
+    Cookies.set('cookie-consent', 'accepted', { expires: 365 })
+    setIsOpen(false)
+  }
+
   return (
     <Modal
-      isOpen={true}
+      isOpen={isOpen}
       onClose={() => {
         console.log('click')
       }}
@@ -35,6 +51,7 @@ export const CookieBanner = () => {
           display='flex'
           flexDir={['column', null, 'row']}
           justifyContent='space-between'
+          alignItems='center'
           gap={10}
         >
           <Box textAlign={['center', null, 'start']}>
@@ -46,7 +63,7 @@ export const CookieBanner = () => {
             >
               We use cookies to make your experience better.
             </Text>
-            <Link href='/cookie_policy/' target='_blank'>
+            <ChakraLink as={Link} href='/cookie_policy/' target='_blank'>
               <Text
                 fontSize='18px'
                 fontWeight={600}
@@ -56,13 +73,13 @@ export const CookieBanner = () => {
               >
                 Cookie Policy
               </Text>
-            </Link>
+            </ChakraLink>
           </Box>
           <Flex flexDir={['column', null, 'row']} gap='18px'>
-            <PrimaryButton onClick={() => console.log('accept')}>
+            <PrimaryButton onClick={() => handleAccept()}>
               <Text>Accept Cookies</Text>
             </PrimaryButton>
-            <SecondaryButton onClick={() => console.log('accept')}>
+            <SecondaryButton onClick={() => handleAccept()}>
               <Text>Necessary Only</Text>
             </SecondaryButton>
           </Flex>
