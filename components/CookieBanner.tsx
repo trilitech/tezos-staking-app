@@ -14,6 +14,28 @@ import { PrimaryButton } from './buttons/PrimaryButton'
 import { SecondaryButton } from './buttons/SecondaryButton'
 import Cookies from 'js-cookie'
 
+function injectGoogleAnalyticsScripts() {
+  const scriptTag1 = document.createElement('script')
+  scriptTag1.setAttribute('strategy', 'afterInteractive')
+  scriptTag1.setAttribute(
+    'src',
+    'https://www.googletagmanager.com/gtag/js?id=G-39LG2721KV'
+  )
+
+  const scriptTag2 = document.createElement('script')
+  scriptTag2.setAttribute('id', 'google-analytics')
+  scriptTag2.setAttribute('strategy', 'afterInteractive')
+  scriptTag2.innerHTML = `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-39LG2721KV');
+    `
+
+  document.head.appendChild(scriptTag1)
+  document.head.appendChild(scriptTag2)
+}
+
 export const CookieBanner = () => {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -21,11 +43,14 @@ export const CookieBanner = () => {
     const consent = Cookies.get('cookie-consent')
     if (!consent) {
       setIsOpen(true)
+    } else if (consent === 'accepted') {
+      injectGoogleAnalyticsScripts()
     }
   }, [])
 
   const handleAccept = () => {
     Cookies.set('cookie-consent', 'accepted', { expires: 365 })
+    injectGoogleAnalyticsScripts()
     setIsOpen(false)
   }
 
