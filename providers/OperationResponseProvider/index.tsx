@@ -1,5 +1,13 @@
 import React, { createContext, useContext, useState } from 'react'
 
+export type OpType =
+  | 'delegate'
+  | 'end_delegate'
+  | 'change_baker'
+  | 'stake'
+  | 'unstake'
+  | 'finalize_unstake'
+
 interface OperationResponseContextType {
   success: boolean
   setSuccess: (arg: boolean) => void
@@ -10,6 +18,8 @@ interface OperationResponseContextType {
   message: string
   setMessage: (message: string) => void
   resetOperation: () => void
+  opType: OpType | undefined
+  setOpType: (arg: OpType) => void
 }
 
 const OperationResponseContext = createContext<
@@ -31,12 +41,14 @@ export const OperationResponseProvider = ({ children }: { children: any }) => {
   const [title, setTitle] = useState('')
   const [success, setSuccess] = useState(false)
   const [opHash, setOpHash] = useState<string | undefined>(undefined)
+  const [opType, setOpType] = useState<OpType | undefined>(undefined)
 
   const resetOperation = () => {
     setMessage('')
     setTitle('')
     setSuccess(false)
     setOpHash(undefined)
+    setOpType(undefined)
   }
 
   return (
@@ -50,7 +62,9 @@ export const OperationResponseProvider = ({ children }: { children: any }) => {
         setTitle,
         message,
         setMessage,
-        resetOperation
+        resetOperation,
+        opType,
+        setOpType
       }}
     >
       {children}

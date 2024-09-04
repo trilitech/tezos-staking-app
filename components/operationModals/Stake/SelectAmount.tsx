@@ -6,6 +6,7 @@ import { stake } from '@/components/Operations/operations'
 import { useConnection } from '@/providers/ConnectionProvider'
 import { useOperationResponse } from '@/providers/OperationResponseProvider'
 import { ErrorBlock } from '@/components/ErrorBlock'
+import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 
 export const SelectAmount = ({
   spendableBalance,
@@ -19,12 +20,14 @@ export const SelectAmount = ({
   stakedAmount: number
 }) => {
   const { Tezos, beaconWallet } = useConnection()
-  const { setMessage, setSuccess, setOpHash } = useOperationResponse()
+  const { setMessage, setSuccess, setOpHash, setOpType } =
+    useOperationResponse()
   const [errorMessage, setErrorMessage] = useState('')
   const [waitingOperation, setWaitingOperation] = useState(false)
 
   const handleChange = (event: any) => {
     const val = Number(event.target.value)
+    trackGAEvent(GAAction.BUTTON_CLICK, GACategory.INPUT_AMOUNT)
 
     if (val <= spendableBalance) setStakedAmount(val)
     else if (val === 0) setStakedAmount(0)
@@ -67,12 +70,16 @@ export const SelectAmount = ({
             return
           }
 
+          trackGAEvent(GAAction.BUTTON_CLICK, GACategory.START_STAKE_BEGIN)
+
           setWaitingOperation(true)
           const response = await stake(Tezos, stakedAmount, beaconWallet)
           setWaitingOperation(false)
 
           if (response.success) {
+            trackGAEvent(GAAction.BUTTON_CLICK, GACategory.START_STAKE_END)
             setOpHash(response.opHash)
+            setOpType('stake')
             setMessage(`You have successfully staked ${stakedAmount} ꜩ`)
             setSuccess(true)
             setStakedAmount(0)

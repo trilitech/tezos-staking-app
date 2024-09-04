@@ -3,6 +3,7 @@ import { Box, Flex, Image, Text, FlexProps } from '@chakra-ui/react'
 import Link from 'next/link'
 import { PrimaryButton } from './buttons/PrimaryButton'
 import { useConnection } from '@/providers/ConnectionProvider'
+import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 
 const STEPS = ['DELEGATE', 'STAKE', 'EARN']
 
@@ -46,7 +47,14 @@ export const LoginModal = () => {
         ))}
       </Flex>
       <MobileSteps display={['flex', null, 'none']} mb='40px' />
-      <PrimaryButton w={['100%', '170px']} mb='24px' onClick={connect}>
+      <PrimaryButton
+        w={['100%', '170px']}
+        mb='24px'
+        onClick={() => {
+          trackGAEvent(GAAction.BUTTON_CLICK, GACategory.WALLET_BEGIN)
+          connect()
+        }}
+      >
         Connect Wallet
       </PrimaryButton>
       <Link href='https://spotlight.tezos.com/how-to-stake/' target='_blank'>

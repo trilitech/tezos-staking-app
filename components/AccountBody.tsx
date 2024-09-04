@@ -38,6 +38,7 @@ import { CopyAlert } from './CopyAlert'
 import { ExpandBakerInfoTable } from './ExpandBakerInfoTable'
 import _ from 'lodash'
 import { DisabledStakeAlert } from '@/components/DisabledStakeAlert'
+import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 
 const getNumOfUnstake = (
   unstOps?: UnstakedOperation[],
@@ -75,7 +76,8 @@ export const AccountBody = ({
     title,
     message,
     opHash,
-    resetOperation
+    resetOperation,
+    opType
   } = useOperationResponse()
 
   const {
@@ -160,6 +162,7 @@ export const AccountBody = ({
           desc={message}
           tzktLink={`${process.env.NEXT_PUBLIC_TZKT_UI_URL}/${opHash}`}
           resetOperation={resetOperation}
+          opType={opType}
         />
       )}
       <Flex
@@ -226,6 +229,10 @@ export const AccountBody = ({
               {accountInfo?.type === 'user' && stakingOpsStatus.Delegated && (
                 <End
                   onClick={() => {
+                    trackGAEvent(
+                      GAAction.BUTTON_CLICK,
+                      GACategory.END_DELEGATE_BEGIN
+                    )
                     endDelegateModal.onOpen()
                   }}
                 />
@@ -249,7 +256,15 @@ export const AccountBody = ({
               </Text>
               {accountInfo?.type === 'user' &&
                 (stakingOpsStatus.Delegated ? (
-                  <Change onClick={() => changeBakerModal.onOpen()} />
+                  <Change
+                    onClick={() => {
+                      trackGAEvent(
+                        GAAction.BUTTON_CLICK,
+                        GACategory.CHOOSE_CHANGE_BAKER
+                      )
+                      changeBakerModal.onOpen()
+                    }}
+                  />
                 ) : (
                   <ViewBakers />
                 ))}
@@ -263,9 +278,9 @@ export const AccountBody = ({
                   fontWeight={600}
                   lineHeight='18px'
                 >
-                  {accountInfo?.evaluatedDelegate.alias ??
+                  {accountInfo?.evaluatedDelegate?.alias ??
                     simplifyAddress(
-                      accountInfo?.evaluatedDelegate.address ?? ''
+                      accountInfo?.evaluatedDelegate?.address ?? ''
                     )}
                 </Text>
                 <Image
@@ -311,7 +326,13 @@ export const AccountBody = ({
               <PrimaryButton
                 maxW={''}
                 disabled={isFirstTime}
-                onClick={() => delegateModal.onOpen()}
+                onClick={() => {
+                  trackGAEvent(
+                    GAAction.BUTTON_CLICK,
+                    GACategory.CHOOSE_BAKER_START
+                  )
+                  delegateModal.onOpen()
+                }}
                 w='100%'
               >
                 Select Baker
@@ -322,7 +343,10 @@ export const AccountBody = ({
                 disabled={
                   stakingOpsStatus.Delegated && !stakingOpsStatus.CanUnstake
                 }
-                onClick={() => unstakeModal.onOpen()}
+                onClick={() => {
+                  trackGAEvent(GAAction.BUTTON_CLICK, GACategory.CHOOSE_UNSTAKE)
+                  unstakeModal.onOpen()
+                }}
                 w='100%'
               >
                 Unstake
@@ -332,7 +356,10 @@ export const AccountBody = ({
             {stakingOpsStatus.Delegated && (
               <PrimaryButton
                 disabled={!stakingOpsStatus.CanStake}
-                onClick={() => stakeModal.onOpen()}
+                onClick={() => {
+                  trackGAEvent(GAAction.BUTTON_CLICK, GACategory.CHOOSE_STAKE)
+                  stakeModal.onOpen()
+                }}
                 w='100%'
               >
                 Stake

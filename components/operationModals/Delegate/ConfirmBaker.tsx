@@ -19,22 +19,26 @@ import { useConnection } from '@/providers/ConnectionProvider'
 import { setDelegate } from '@/components/Operations/operations'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
 import { ErrorBlock } from '@/components/ErrorBlock'
+import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 
 interface ChooseBakerProps {
   handleOneStepForward: () => void
   handleOneStepBack: () => void
   selectedBaker: BakerInfo
   setSelectedBaker: (b: null) => void
+  isChangeBaker?: boolean
 }
 
 export const ConfirmBaker = ({
   handleOneStepForward,
   handleOneStepBack,
   selectedBaker,
-  setSelectedBaker
+  setSelectedBaker,
+  isChangeBaker
 }: ChooseBakerProps) => {
   const { Tezos, beaconWallet } = useConnection()
-  const { setMessage, setSuccess, setOpHash } = useOperationResponse()
+  const { setMessage, setSuccess, setOpHash, setOpType } =
+    useOperationResponse()
   const [errorMessage, setErrorMessage] = useState('')
   const [waitingOperation, setWaitingOperation] = useState(false)
 
@@ -99,6 +103,7 @@ export const ConfirmBaker = ({
       <PrimaryButton
         disabled={!selectedBaker}
         onClick={async () => {
+          trackGAEvent(GAAction.BUTTON_CLICK, GACategory.START_DELEGATE_BEGIN)
           if (!Tezos || !beaconWallet) {
             setErrorMessage('Wallet is not initialized, log out to try again.')
             return
@@ -116,7 +121,16 @@ export const ConfirmBaker = ({
           )
           setWaitingOperation(false)
           if (response.success) {
+            if (isChangeBaker)
+              trackGAEvent(
+                GAAction.BUTTON_CLICK,
+                GACategory.CHANGE_BAKER_SUCCESS
+              )
+            else
+              trackGAEvent(GAAction.BUTTON_CLICK, GACategory.START_DELEGATE_END)
+
             setOpHash(response.opHash)
+            setOpType('delegate')
             setMessage(
               "You have successfully delegated your balance to the baker. If you'd like, you can now stake and potentially earn double rewards!"
             )

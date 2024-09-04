@@ -5,6 +5,7 @@ import { mutezToTez } from '@/utils/mutezToTez'
 import { TertiaryButton } from '@/components/buttons/TertiaryButton'
 import { FinalizeUnstakeModal } from '.'
 import Link from 'next/link'
+import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 
 export const UnstakeOperationBox = ({
   unstakeOp,
@@ -101,7 +102,12 @@ export const UnstakeOperationBox = ({
         )}
       </Box>
       {canFinalize && (
-        <TertiaryButton onClick={() => finalizeUnstakeModal.onOpen()}>
+        <TertiaryButton
+          onClick={() => {
+            trackGAEvent(GAAction.BUTTON_CLICK, GACategory.FINALIZE_BEGIN)
+            finalizeUnstakeModal.onOpen()
+          }}
+        >
           Finalize
         </TertiaryButton>
       )}
