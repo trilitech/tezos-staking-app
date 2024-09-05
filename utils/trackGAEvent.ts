@@ -1,5 +1,5 @@
 export enum GAAction {
-  BUTTON_CLICK = 'button_click',
+  BUTTON_CLICK = 'staking_button_click',
   CONNECT_SUCCESS = 'connect_success',
   CONNECT_ERROR = 'connect_error'
 }
