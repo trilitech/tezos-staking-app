@@ -27,8 +27,6 @@ function injectGoogleAnalyticsScripts() {
     gtag('config', 'G-39LG2721KV');
   `
 
-  console.log(script1, script2)
-
   document.head.appendChild(script1)
   document.head.appendChild(script2)
 }
