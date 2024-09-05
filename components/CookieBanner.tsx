@@ -15,25 +15,22 @@ import { SecondaryButton } from './buttons/SecondaryButton'
 import Cookies from 'js-cookie'
 
 function injectGoogleAnalyticsScripts() {
-  const scriptTag1 = document.createElement('script')
-  scriptTag1.setAttribute('strategy', 'afterInteractive')
-  scriptTag1.setAttribute(
-    'src',
-    'https://www.googletagmanager.com/gtag/js?id=G-39LG2721KV'
-  )
+  const script1 = document.createElement('script')
+  script1.src = 'https://www.googletagmanager.com/gtag/js?id=G-39LG2721KV'
+  script1.async = true
 
-  const scriptTag2 = document.createElement('script')
-  scriptTag2.setAttribute('id', 'google-analytics')
-  scriptTag2.setAttribute('strategy', 'afterInteractive')
-  scriptTag2.innerHTML = `
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-39LG2721KV');
-    `
+  const script2 = document.createElement('script')
+  script2.text = `
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-39LG2721KV');
+  `
 
-  document.head.appendChild(scriptTag1)
-  document.head.appendChild(scriptTag2)
+  console.log(script1, script2)
+
+  document.head.appendChild(script1)
+  document.head.appendChild(script2)
 }
 
 export const CookieBanner = () => {
