@@ -1,4 +1,3 @@
-'use client'
 import { Center, Flex, Spinner } from '@chakra-ui/react'
 import { LoginModal } from '@/components/LoginModal'
 import { useEffect, useState } from 'react'
@@ -14,6 +13,7 @@ import Head from 'next/head'
 import { BakerInfo } from '@/components/Operations/tezInterfaces'
 import { getBakerList } from '@/components/operationModals/Delegate'
 import { shuffleBakerList } from '@/components/operationModals/Delegate/ChooseBaker'
+import { CookieBanner } from '@/components/CookieBanner'
 
 export interface DelegateData {
   address: string
@@ -96,7 +96,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Staking App | Tezos</title>
+        <title>Staking Tezos | Tezos</title>
         <meta key='og.site_name' property='og:site_name' content='Tezos' />
         <meta name='description' content={metaDescription} />
         <meta property='og:description' content={metaDescription} />
@@ -154,6 +154,8 @@ export default function Home() {
           </Flex>
         )}
       </Center>
+
+      <CookieBanner />
     </>
   )
 }

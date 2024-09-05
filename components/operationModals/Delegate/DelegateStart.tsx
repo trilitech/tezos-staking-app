@@ -2,6 +2,7 @@ import React from 'react'
 import { Image, Box, Flex, Text } from '@chakra-ui/react'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
 import { Header, Description } from '@/components/modalBody'
+import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 
 export const DelegateStart = ({
   handleOneStepForward
@@ -26,7 +27,14 @@ export const DelegateStart = ({
         <RoundBorderText step={1} text='DELEGATE' />
         <RoundBorderText step={2} text='STAKE TEZ' />
       </Flex>
-      <PrimaryButton onClick={handleOneStepForward}>Continue</PrimaryButton>
+      <PrimaryButton
+        onClick={() => {
+          trackGAEvent(GAAction.BUTTON_CLICK, GACategory.CONTINUE_DELEGATION)
+          handleOneStepForward()
+        }}
+      >
+        Continue
+      </PrimaryButton>
     </Flex>
   )
 }

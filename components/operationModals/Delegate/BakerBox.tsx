@@ -6,6 +6,7 @@ import useClipboard from '@/utils/useClipboard'
 import { CopyAlert } from '@/components/CopyAlert'
 import { BakerInfo } from '@/components/Operations/tezInterfaces'
 import { mutezToTez } from '@/utils/mutezToTez'
+import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 
 interface BakerBoxProps {
   baker: BakerInfo
@@ -57,6 +58,10 @@ export const BakerBox = ({
         <Box>
           <SecondaryButton
             onClick={() => {
+              trackGAEvent(
+                GAAction.BUTTON_CLICK,
+                GACategory.CHOOSE_BAKER_SUCCESS
+              )
               setSelectedBaker(baker)
               handleOneStepForward()
             }}
