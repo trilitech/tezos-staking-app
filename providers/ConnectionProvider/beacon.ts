@@ -3,7 +3,6 @@ import { TezosToolkit } from '@taquito/taquito'
 import { RpcClient, RpcClientCache } from '@taquito/rpc'
 import {
   NetworkType,
-  DAppClientOptions,
   PermissionScope,
   BeaconEvent
 } from '@airgap/beacon-sdk'
@@ -27,7 +26,7 @@ export const createBeaconWallet = () =>
         appUrl: '', // need to fill this
         network: { type: process.env.NEXT_PUBLIC_NETWORK as NetworkType },
         featuredWallets: ['kukai', 'trust', 'temple', 'umami']
-      } as DAppClientOptions)
+      })
 
 export const connectBeacon = async () => {
   const beaconWallet = createBeaconWallet()
@@ -36,7 +35,6 @@ export const connectBeacon = async () => {
   if (!beaconWallet) {
     throw new Error('Tried to connect on the server')
   } else {
-    const response = await requestBeaconPermissions(beaconWallet)
     beaconWallet.client.subscribeToEvent(
       BeaconEvent.ACTIVE_ACCOUNT_SET,
       async account => {
@@ -51,6 +49,7 @@ export const connectBeacon = async () => {
         }
       }
     )
+    const response = await requestBeaconPermissions(beaconWallet)
     return {
       address: response.address,
       Tezos: Tezos,

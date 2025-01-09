@@ -8,6 +8,13 @@ export interface OperationResult {
   message: string
 }
 
+async function checkActiveAccount(wallet: BeaconWallet) {
+  const activeAccount = await wallet.client.getActiveAccount()
+  if (!activeAccount) {
+    await requestBeaconPermissions(wallet)
+  }
+}
+
 export const setDelegate = async (
   Tezos: TezosToolkit,
   delegate: string | undefined,
@@ -15,10 +22,7 @@ export const setDelegate = async (
 ): Promise<OperationResult> => {
   let opHash = ''
   try {
-    if (!wallet.account) {
-      await requestBeaconPermissions(wallet)
-    }
-
+    await checkActiveAccount(wallet)
     const op = await Tezos.wallet.setDelegate({ delegate }).send()
     const response = await op.confirmation()
     opHash = op.opHash
@@ -41,9 +45,8 @@ export const stake = async (
 ): Promise<OperationResult> => {
   let opHash = ''
   try {
-    if (!wallet.account) {
-      await requestBeaconPermissions(wallet)
-    }
+
+    await checkActiveAccount(wallet)
 
     const op = await Tezos.wallet.stake({ amount }).send()
     const response = await op.confirmation()
@@ -67,9 +70,7 @@ export const unstake = async (
 ): Promise<OperationResult> => {
   let opHash = ''
   try {
-    if (!wallet.account) {
-      await requestBeaconPermissions(wallet)
-    }
+    await checkActiveAccount(wallet)
 
     const op = await Tezos.wallet.unstake({ amount }).send()
     const response = await op.confirmation()
@@ -92,10 +93,7 @@ export const finalizeUnstake = async (
 ): Promise<OperationResult> => {
   let opHash = ''
   try {
-    if (!wallet.account) {
-      await requestBeaconPermissions(wallet)
-    }
-
+    await checkActiveAccount(wallet)
     const op = await Tezos.wallet.finalizeUnstake({}).send()
     const response = await op.confirmation()
     opHash = op.opHash
