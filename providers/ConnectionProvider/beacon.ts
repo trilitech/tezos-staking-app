@@ -6,6 +6,7 @@ import {
   PermissionScope,
   BeaconEvent
 } from '@airgap/beacon-sdk'
+
 import Home from '@/pages'
 import { AccountRedirectListener } from '@/components/WalletDisconnect'
 
