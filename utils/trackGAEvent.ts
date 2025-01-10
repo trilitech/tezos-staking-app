@@ -11,7 +11,7 @@ export enum GACategory {
 
   CHOOSE_BAKER_START = 'choose_baker_start',
   CONTINUE_DELEGATION = 'continue_delegation',
-  CHOOSE_BAKER_SUCCESS = 'choose_baker_succcess',
+  CHOOSE_BAKER_SUCCESS = 'choose_baker_success',
   CHOOSE_BAKER_CLOSED = 'choose_baker_closed',
   START_DELEGATE_BEGIN = 'start_delegate_begin',
   START_DELEGATE_END = 'start_delegate_end',
