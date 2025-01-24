@@ -7,6 +7,7 @@ export interface OperationResult {
   opHash: string
   message: string
 }
+import { BeaconError } from '@airgap/beacon-sdk'
 
 async function checkActiveAccount(wallet: BeaconWallet) {
   const activeAccount = await wallet.client.getActiveAccount()
@@ -29,12 +30,7 @@ export const setDelegate = async (
     let success = response?.completed ?? false
     return { success: success, opHash, message: '' }
   } catch (err: any) {
-    console.error(err)
-    return {
-      success: false,
-      opHash: '',
-      message: `Error occured in delegate operation, try again. ${err && err.message.replace(/ *\[[^)]*\] */g, '')}`
-    }
+    return { success: false, opHash: '', message: processOpErrors(err, "delegate") }
   }
 }
 
@@ -50,16 +46,10 @@ export const stake = async (
 
     const op = await Tezos.wallet.stake({ amount }).send()
     const response = await op.confirmation()
-    opHash = op.opHash
     let success = response?.completed ?? false
     return { success: success, opHash, message: '' }
   } catch (err: any) {
-    console.error(err)
-    return {
-      success: false,
-      opHash: '',
-      message: `Error occured in stake operation, try again. ${err && err.message.replace(/ *\[[^)]*\] */g, '')}`
-    }
+    return { success: false, opHash: '', message: processOpErrors(err, "stake") }
   }
 }
 
@@ -78,12 +68,7 @@ export const unstake = async (
     let success = response?.completed ?? false
     return { success: success, opHash, message: '' }
   } catch (err: any) {
-    console.error(err)
-    return {
-      success: false,
-      opHash: '',
-      message: `Error occured in unstake operation, try again. ${err && err.message.replace(/ *\[[^)]*\] */g, '')}`
-    }
+    return { success: false, opHash: '', message: processOpErrors(err, "unstake") }
   }
 }
 
@@ -100,11 +85,21 @@ export const finalizeUnstake = async (
     let success = response?.completed ?? false
     return { success: success, opHash, message: '' }
   } catch (err: any) {
-    console.error(err)
-    return {
-      success: false,
-      opHash: '',
-      message: `Error occured in finalize unstake operation, try again. ${err && err.message.replace(/ *\[[^)]*\] */g, '')}`
-    }
+    return { success: false, opHash: '', message: processOpErrors(err, "finalize unstake") }
   }
 }
+
+function processOpErrors(err: any, op: string): string {
+  let err_msg = ''
+  if (!!err){
+    err_msg = `Error occured in ${op} operation, try again.`
+    if(!!err.message) {
+    err_msg += err.message.replace(/ *\[[^)]*\] */g, '')
+  }
+  else if(!!err.errorType) {
+    err_msg += BeaconError.getError(err.errorType, err.errorData).message
+  }
+  }
+  return err_msg
+}
+
