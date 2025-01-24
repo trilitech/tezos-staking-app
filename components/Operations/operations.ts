@@ -7,6 +7,7 @@ export interface OperationResult {
   opHash: string
   message: string
 }
+import { BeaconError } from '@airgap/beacon-sdk'
 
 async function checkActiveAccount(wallet: BeaconWallet) {
   const activeAccount = await wallet.client.getActiveAccount()
@@ -26,14 +27,13 @@ export const setDelegate = async (
     const op = await Tezos.wallet.setDelegate({ delegate }).send()
     const response = await op.confirmation()
     opHash = op.opHash
-    let success = response?.completed ?? false
-    return { success: success, opHash, message: '' }
+    const success = response?.completed ?? false
+    return { success, opHash, message: '' }
   } catch (err: any) {
-    console.error(err)
     return {
       success: false,
       opHash: '',
-      message: `Error occured in delegate operation, try again. ${err && err.message.replace(/ *\[[^)]*\] */g, '')}`
+      message: processOpErrors(err, 'delegate')
     }
   }
 }
@@ -45,20 +45,17 @@ export const stake = async (
 ): Promise<OperationResult> => {
   let opHash = ''
   try {
-
     await checkActiveAccount(wallet)
 
     const op = await Tezos.wallet.stake({ amount }).send()
     const response = await op.confirmation()
-    opHash = op.opHash
-    let success = response?.completed ?? false
-    return { success: success, opHash, message: '' }
+    const success = response?.completed ?? false
+    return { success, opHash, message: '' }
   } catch (err: any) {
-    console.error(err)
     return {
       success: false,
       opHash: '',
-      message: `Error occured in stake operation, try again. ${err && err.message.replace(/ *\[[^)]*\] */g, '')}`
+      message: processOpErrors(err, 'stake')
     }
   }
 }
@@ -75,14 +72,13 @@ export const unstake = async (
     const op = await Tezos.wallet.unstake({ amount }).send()
     const response = await op.confirmation()
     opHash = op.opHash
-    let success = response?.completed ?? false
-    return { success: success, opHash, message: '' }
+    const success = response?.completed ?? false
+    return { success, opHash, message: '' }
   } catch (err: any) {
-    console.error(err)
     return {
       success: false,
       opHash: '',
-      message: `Error occured in unstake operation, try again. ${err && err.message.replace(/ *\[[^)]*\] */g, '')}`
+      message: processOpErrors(err, 'unstake')
     }
   }
 }
@@ -97,14 +93,26 @@ export const finalizeUnstake = async (
     const op = await Tezos.wallet.finalizeUnstake({}).send()
     const response = await op.confirmation()
     opHash = op.opHash
-    let success = response?.completed ?? false
-    return { success: success, opHash, message: '' }
+    const success = response?.completed ?? false
+    return { success, opHash, message: '' }
   } catch (err: any) {
-    console.error(err)
     return {
       success: false,
       opHash: '',
-      message: `Error occured in finalize unstake operation, try again. ${err && err.message.replace(/ *\[[^)]*\] */g, '')}`
+      message: processOpErrors(err, 'finalize unstake')
     }
   }
+}
+
+function processOpErrors(err: any, op: string): string {
+  let errMsg = ''
+  if (!!err) {
+    errMsg = `Error occured in ${op} operation, try again.`
+    if (!!err.message) {
+      errMsg = `${errMsg} ${err.message.replace(/ *\[[^)]*\] */g, '')}`
+    } else if (!!err.errorType) {
+      errMsg = `${errMsg} ${BeaconError.getError(err.errorType, err.errorData).message.replace(/ *\[[^)]*\] */g, '')}`
+    }
+  }
+  return errMsg
 }

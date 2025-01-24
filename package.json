@@ -9,15 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@airgap/beacon-sdk": "^4.3.1",
+    "@airgap/beacon-sdk": "^4.3.3",
     "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@tanstack/react-query": "^5.37.1",
-    "@taquito/beacon-wallet": "^21.0.0",
-    "@taquito/rpc": "^21.0.0",
-    "@taquito/taquito": "^21.0.0",
+    "@taquito/beacon-wallet": "^21.0.2",
+    "@taquito/rpc": "^21.0.2",
+    "@taquito/taquito": "^21.0.2",
     "axios": "^1.7.2",
     "bufferutil": "^4.0.8",
     "date-fns": "^3.6.0",
@@ -35,10 +35,12 @@
     "@types/lodash": "^4",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "eslint": "^8",
+    "@typescript-eslint/parser": "^5.0.1",
+    "eslint": "^8.52.0",
     "eslint-config-next": "14.2.3",
-    "prettier": "3.2.5",
-    "typescript": "^5.4.5"
+    "prettier": "^3.1.0",
+    "prettier-eslint": "^16.1.2",
+    "typescript": "^5.5.4"
   },
   "prettier": {
     "trailingComma": "none",
