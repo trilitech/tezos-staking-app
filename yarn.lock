@@ -7043,6 +7043,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-swipeable@npm:^7.0.2":
+  version: 7.0.2
+  resolution: "react-swipeable@npm:7.0.2"
+  peerDependencies:
+    react: ^16.8.3 || ^17 || ^18 || ^19.0.0 || ^19.0.0-rc
+  checksum: 10c0/cca3ec9e6321f73d187a8ac4beece2ad8cce1f4efa0215de93e2635492e7c514ccbc30311bb0e88bafb79d302916550603cdcd44ac81054a8c0f6679b18eb04d
+  languageName: node
+  linkType: hard
+
 "react@npm:^18":
   version: 18.3.1
   resolution: "react@npm:18.3.1"
@@ -7550,6 +7559,7 @@ __metadata:
     prettier: "npm:3.2.5"
     react: "npm:^18"
     react-dom: "npm:^18"
+    react-swipeable: "npm:^7.0.2"
     typescript: "npm:^5.4.5"
     utf-8-validate: "npm:^6.0.4"
   languageName: unknown
