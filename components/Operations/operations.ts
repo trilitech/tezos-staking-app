@@ -27,10 +27,14 @@ export const setDelegate = async (
     const op = await Tezos.wallet.setDelegate({ delegate }).send()
     const response = await op.confirmation()
     opHash = op.opHash
-    let success = response?.completed ?? false
-    return { success: success, opHash, message: '' }
+    const success = response?.completed ?? false
+    return { success, opHash, message: '' }
   } catch (err: any) {
-    return { success: false, opHash: '', message: processOpErrors(err, "delegate") }
+    return {
+      success: false,
+      opHash: '',
+      message: processOpErrors(err, 'delegate')
+    }
   }
 }
 
@@ -41,15 +45,18 @@ export const stake = async (
 ): Promise<OperationResult> => {
   let opHash = ''
   try {
-
     await checkActiveAccount(wallet)
 
     const op = await Tezos.wallet.stake({ amount }).send()
     const response = await op.confirmation()
-    let success = response?.completed ?? false
-    return { success: success, opHash, message: '' }
+    const success = response?.completed ?? false
+    return { success, opHash, message: '' }
   } catch (err: any) {
-    return { success: false, opHash: '', message: processOpErrors(err, "stake") }
+    return {
+      success: false,
+      opHash: '',
+      message: processOpErrors(err, 'stake')
+    }
   }
 }
 
@@ -65,10 +72,14 @@ export const unstake = async (
     const op = await Tezos.wallet.unstake({ amount }).send()
     const response = await op.confirmation()
     opHash = op.opHash
-    let success = response?.completed ?? false
-    return { success: success, opHash, message: '' }
+    const success = response?.completed ?? false
+    return { success, opHash, message: '' }
   } catch (err: any) {
-    return { success: false, opHash: '', message: processOpErrors(err, "unstake") }
+    return {
+      success: false,
+      opHash: '',
+      message: processOpErrors(err, 'unstake')
+    }
   }
 }
 
@@ -82,24 +93,26 @@ export const finalizeUnstake = async (
     const op = await Tezos.wallet.finalizeUnstake({}).send()
     const response = await op.confirmation()
     opHash = op.opHash
-    let success = response?.completed ?? false
-    return { success: success, opHash, message: '' }
+    const success = response?.completed ?? false
+    return { success, opHash, message: '' }
   } catch (err: any) {
-    return { success: false, opHash: '', message: processOpErrors(err, "finalize unstake") }
+    return {
+      success: false,
+      opHash: '',
+      message: processOpErrors(err, 'finalize unstake')
+    }
   }
 }
 
 function processOpErrors(err: any, op: string): string {
-  let err_msg = ''
-  if (!!err){
-    err_msg = `Error occured in ${op} operation, try again.`
-    if(!!err.message) {
-    err_msg += err.message.replace(/ *\[[^)]*\] */g, '')
+  let errMsg = ''
+  if (!!err) {
+    errMsg = `Error occured in ${op} operation, try again.`
+    if (!!err.message) {
+      errMsg = `${errMsg} ${err.message.replace(/ *\[[^)]*\] */g, '')}`
+    } else if (!!err.errorType) {
+      errMsg = `${errMsg} ${BeaconError.getError(err.errorType, err.errorData).message.replace(/ *\[[^)]*\] */g, '')}`
+    }
   }
-  else if(!!err.errorType) {
-    err_msg += BeaconError.getError(err.errorType, err.errorData).message
-  }
-  }
-  return err_msg
+  return errMsg
 }
-
