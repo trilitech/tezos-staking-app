@@ -13,6 +13,7 @@ import {
   AccordionIcon
 } from '@chakra-ui/react'
 import { Header } from './Header'
+import React from 'react'
 
 export default function Faqs() {
   const paragraphs = [
@@ -239,7 +240,7 @@ export default function Faqs() {
               ))}
             </Flex>
             {faqs?.map((faq, index) => (
-              <>
+              <React.Fragment key={faq.id}>
                 <Text
                   id={faq.id}
                   py={['20px', null, '30px']}
@@ -293,7 +294,7 @@ export default function Faqs() {
                     </AccordionItem>
                   ))}
                 </Accordion>
-              </>
+              </React.Fragment>
             ))}
           </Flex>
         </Flex>
