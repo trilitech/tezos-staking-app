@@ -87,7 +87,7 @@ export default function Hero() {
                 pb={['43px', null, '30px']}
               >
                 Stake your tez to earn greater rewards for participating in
-                Tezos' proof-of-stake mechanism.
+                Tezos&apos; proof-of-stake mechanism.
               </Text>
               <Flex
                 w='full'
