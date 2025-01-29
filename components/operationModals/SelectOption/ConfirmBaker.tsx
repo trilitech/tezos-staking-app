@@ -141,7 +141,7 @@ export const ConfirmBaker = ({
           }
         }}
       >
-        {waitingOperation ? <Spinner /> : 'Continue'}
+        {waitingOperation ? <Spinner /> : 'Delegate'}
       </PrimaryButton>
 
       {!!errorMessage && <ErrorBlock errorMessage={errorMessage} />}

@@ -30,7 +30,7 @@ export const AccountBanner = ({
       {isCopied && <CopyAlert />}
 
       <Image w='110px' h='38px' src='/images/logo.svg' alt='Tezos Logo' />
-      <Flex flexDir='column' gap='5px' pos='relative' right='25px'>
+      <Flex flexDir='column' gap='5px' pos='relative'>
         <Text
           fontWeight={600}
           fontSize='16px'
@@ -52,24 +52,46 @@ export const AccountBanner = ({
           />
         </Flex>
       </Flex>
-      <Button
-        border='solid 1px #EDF2F7'
-        px='12px'
-        py='24px'
-        borderRadius='8px'
-        bg='transparent'
-        _hover={{
-          bg: '#f8fafc'
-        }}
-      >
-        <Image
-          w='24px'
-          h='24px'
-          onClick={() => disconnect()}
-          src='/images/logout.svg'
-          alt='logout'
-        />
-      </Button>
+      <Flex gap='3'>
+        <Button
+          border='solid 1px #EDF2F7'
+          px='12px'
+          py='24px'
+          borderRadius='8px'
+          bg='transparent'
+          as='a'
+          href='/faqs'
+          target='_blank'
+          _hover={{
+            bg: '#f8fafc'
+          }}
+        >
+          <Image
+            w='24px'
+            h='24px'
+            src='/images/help-icon-dapp.svg'
+            alt='logout'
+          />
+        </Button>
+        <Button
+          border='solid 1px #EDF2F7'
+          px='12px'
+          py='24px'
+          borderRadius='8px'
+          bg='transparent'
+          _hover={{
+            bg: '#f8fafc'
+          }}
+        >
+          <Image
+            w='24px'
+            h='24px'
+            onClick={() => disconnect()}
+            src='/images/logout.svg'
+            alt='logout'
+          />
+        </Button>
+      </Flex>
     </Flex>
   )
 }
