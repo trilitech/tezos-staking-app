@@ -6,7 +6,7 @@ export const Stepper = ({
   totalStep
 }: {
   currentStep: number
-  totalStep: 2 | 3
+  totalStep: 2 | 3 | 4 | 5
 }) => {
   if (totalStep === 2) {
     return (
@@ -36,6 +36,29 @@ export const Stepper = ({
         <Image src='/images/stepper/full-dot.svg' alt='dot' />
       ) : (
         <Image src='/images/stepper/empty-dot.svg' alt='dot' />
+      )}
+      {totalStep === 4 ||
+        (totalStep === 5 && (
+          <>
+            <Image pr='5px' src='/images/stepper/line.svg' alt='dot' />
+
+            {currentStep === 4 ? (
+              <Image src='/images/stepper/full-dot.svg' alt='dot' />
+            ) : (
+              <Image src='/images/stepper/empty-dot.svg' alt='dot' />
+            )}
+          </>
+        ))}
+      {totalStep === 5 && (
+        <>
+          <Image pr='5px' src='/images/stepper/line.svg' alt='dot' />
+
+          {currentStep === 4 ? (
+            <Image src='/images/stepper/full-dot.svg' alt='dot' />
+          ) : (
+            <Image src='/images/stepper/empty-dot.svg' alt='dot' />
+          )}
+        </>
       )}
     </Flex>
   )

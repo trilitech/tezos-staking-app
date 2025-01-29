@@ -5,6 +5,11 @@ export const End = ({ onClick }: { onClick: () => void }) => {
   return (
     <Flex
       alignItems='center'
+      border='1px solid'
+      borderColor='gray.200'
+      borderRadius='8px'
+      px='3'
+      py='6px'
       gap='4px'
       onClick={onClick}
       transition='all .5s ease-out'
@@ -14,12 +19,12 @@ export const End = ({ onClick }: { onClick: () => void }) => {
       <Text fontSize='14px' fontWeight={600}>
         End
       </Text>
-      <EndIcon />
+      <EndIcon color='gray.400' />
     </Flex>
   )
 }
 
-const EndIcon = ({ ...styles }: IconProps) => {
+export const EndIcon = ({ ...styles }: IconProps) => {
   return (
     <Icon width='18px' height='18px' viewBox='0 0 18 18' {...styles}>
       <path

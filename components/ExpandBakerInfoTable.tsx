@@ -71,7 +71,7 @@ export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
                     </Flex>
                   </Td>
                   <Td borderBottom='1px solid #E2E8F0' w='100%'>
-                    <Flex alignItems='center' gap='4px'>
+                    <Flex justifyContent='flex-end' alignItems='end' gap='4px'>
                       <Text fontSize='14px' fontWeight={600} color='#171923'>
                         {Math.floor(mutezToTez(baker?.totalStakedBalance ?? 0))}{' '}
                         ꜩ
@@ -93,7 +93,11 @@ export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
                     </Flex>
                   </Td>
                   <Td borderBottom='1px solid #E2E8F0' w='100%'>
-                    <Flex alignItems='center' gap='4px'>
+                    <Flex
+                      justifyContent='flex-end'
+                      alignItems='center'
+                      gap='4px'
+                    >
                       <Text fontSize='14px' fontWeight={600} color='#171923'>
                         {Math.floor(baker?.stakingFreeSpace ?? 0)} ꜩ
                       </Text>
@@ -114,7 +118,12 @@ export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
                     </Flex>
                   </Td>
                   <Td>
-                    <Flex alignItems='center' gap='4px' w='100%'>
+                    <Flex
+                      justifyContent='flex-end'
+                      alignItems='center'
+                      gap='4px'
+                      w='100%'
+                    >
                       <Text fontSize='14px' fontWeight={600} color='#171923'>
                         {baker?.stakingFees}%
                       </Text>

@@ -80,7 +80,7 @@ export const SelectAmount = ({
             trackGAEvent(GAAction.BUTTON_CLICK, GACategory.START_STAKE_END)
             setOpHash(response.opHash)
             setOpType('stake')
-            setMessage(`You have successfully staked ${stakedAmount} ꜩ`)
+            setMessage(`You have successfully staked ${stakedAmount} ꜩ.`)
             setSuccess(true)
             setStakedAmount(0)
             handleOneStepForward()

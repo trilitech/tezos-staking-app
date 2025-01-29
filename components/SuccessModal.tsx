@@ -35,6 +35,7 @@ export const SuccessModal = ({
   desc,
   tzktLink,
   resetOperation,
+  onSuccessClose,
   open,
   opType
 }: {
@@ -42,6 +43,7 @@ export const SuccessModal = ({
   desc: string
   tzktLink: string
   resetOperation: () => void
+  onSuccessClose: () => void
   open: boolean
   opType?: OpType
 }) => {
@@ -55,6 +57,7 @@ export const SuccessModal = ({
           onClick={() => {
             resetOperation()
             onClose()
+            onSuccessClose()
           }}
         />
         <ModalBody mt='40px'>
@@ -89,6 +92,7 @@ export const SuccessModal = ({
                 setGAEvent(opType)
                 resetOperation()
                 onClose()
+                onSuccessClose()
               }}
             >
               Continue
