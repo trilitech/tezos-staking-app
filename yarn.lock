@@ -7748,7 +7748,7 @@ __metadata:
     react: "npm:^18"
     react-dom: "npm:^18"
     react-swipeable: "npm:^7.0.2"
-    typescript: "npm:^5.4.5"
+    typescript: "npm:^5.5.4"
     utf-8-validate: "npm:^6.0.4"
   languageName: unknown
   linkType: soft
