@@ -4,9 +4,7 @@ import {
   InputGroup,
   Input,
   InputRightElement,
-  Text,
-  Tooltip,
-  Image
+  Text
 } from '@chakra-ui/react'
 import { BakerInfo } from '@/components/Operations/tezInterfaces'
 import { Header } from '@/components/modalBody'
@@ -21,7 +19,7 @@ interface ChooseBakerProps {
   bakerList: BakerInfo[]
 }
 export function shuffleBakerList(bakerList: BakerInfo[]) {
-  for (let i = bakerList?.length - 1; i > 0; i--) {
+  for (let i = bakerList.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
     ;[bakerList[i], bakerList[j]] = [bakerList[j], bakerList[i]]
   }
@@ -135,31 +133,7 @@ export const ChooseBaker = ({
 
   return (
     <Flex flexDir='column' justify='center'>
-      <Header
-        display='flex'
-        justifyContent='center'
-        gap='2'
-        alignItems='center'
-        pb='24px'
-      >
-        Select Baker
-        <Tooltip
-          textAlign='center'
-          hasArrow
-          label='Bakers on Tezos are responsible for validating transactions and securing the network. By staking their own tez, they help produce new blocks and earn rewards, while also supporting decentralization.'
-          bg='gray.700'
-          borderRadius='4px'
-          color='white'
-          p='3'
-        >
-          <Image
-            w='16px'
-            h='16px'
-            src='/images/info-icon-dapp.svg'
-            alt='logout'
-          />
-        </Tooltip>
-      </Header>
+      <Header pb='24px'>Select Baker</Header>
       <InputGroup size='md'>
         <Input
           onChange={handleChange}
@@ -189,7 +163,6 @@ export const ChooseBaker = ({
         <SortText
           onClick={() => handleSort('staking')}
           order={sortOrder['staking']}
-          tooltipLabel='The total amount of tez delegated to or staked with a baker.'
         >
           STAKING
         </SortText>
@@ -197,22 +170,16 @@ export const ChooseBaker = ({
           |
         </Text>
         <SortText
-          tooltipLabel='The amount that the baker takes from staking or delegation rewards.'
-          onClick={() => handleSort('fee')}
-          order={sortOrder['fee']}
-        >
-          FEE
-        </SortText>
-
-        <Text color='#E2E8F0' display={['none', 'inline-block']}>
-          |
-        </Text>
-        <SortText
-          tooltipLabel='The amount of tez that a baker can accept as delegation or stake.'
           onClick={() => handleSort('freeSpace')}
           order={sortOrder['freeSpace']}
         >
           FREE SPACE
+        </SortText>
+        <Text color='#E2E8F0' display={['none', 'inline-block']}>
+          |
+        </Text>
+        <SortText onClick={() => handleSort('fee')} order={sortOrder['fee']}>
+          FEE
         </SortText>
       </Flex>
 
@@ -228,13 +195,11 @@ export const ChooseBaker = ({
 const SortText = ({
   children,
   onClick,
-  order,
-  tooltipLabel
+  order
 }: {
   children: React.ReactNode
   onClick?: () => void
   order: Order | null
-  tooltipLabel: string
 }) => {
   const [isHover, setIsHover] = useState(false)
   const getSyle = (order: Order | null) => {
@@ -249,46 +214,28 @@ const SortText = ({
   }
 
   return (
-    <Flex gap='1' alignItems='center'>
-      <Flex
-        alignItems='center'
-        px='10px'
-        py='6px'
-        onClick={onClick}
-        _hover={{ cursor: 'pointer', color: '#2D3748', bg: '#F7FAFC' }}
-        borderRadius='8px'
-        transition='all 0.3s ease-out'
-        sx={getSyle(order)}
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
-      >
-        <Text fontSize='14px' fontWeight={600} lineHeight='18px'>
-          {children}
-        </Text>
-        {order === 'desc' ? (
-          <DescIcon fill={isHover ? '#A0AEC0' : '#FFFFFF'} />
-        ) : order === 'asc' ? (
-          <AscIcon fill={isHover ? '#A0AEC0' : '#FFFFFF'} />
-        ) : (
-          <></>
-        )}
-      </Flex>
-      <Tooltip
-        textAlign='center'
-        hasArrow
-        label={tooltipLabel}
-        bg='gray.700'
-        borderRadius='4px'
-        color='white'
-        p='3'
-      >
-        <Image
-          w='16px'
-          h='16px'
-          src='/images/info-icon-dapp.svg'
-          alt='logout'
-        />
-      </Tooltip>
+    <Flex
+      alignItems='center'
+      px='10px'
+      py='6px'
+      onClick={onClick}
+      _hover={{ cursor: 'pointer', color: '#2D3748', bg: '#F7FAFC' }}
+      borderRadius='8px'
+      transition='all 0.3s ease-out'
+      sx={getSyle(order)}
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
+    >
+      <Text fontSize='14px' fontWeight={600} lineHeight='18px'>
+        {children}
+      </Text>
+      {order === 'desc' ? (
+        <DescIcon fill={isHover ? '#A0AEC0' : '#FFFFFF'} />
+      ) : order === 'asc' ? (
+        <AscIcon fill={isHover ? '#A0AEC0' : '#FFFFFF'} />
+      ) : (
+        <></>
+      )}
     </Flex>
   )
 }

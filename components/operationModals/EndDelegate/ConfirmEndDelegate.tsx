@@ -44,7 +44,7 @@ export const ConfirmEndDelegate = ({
             setOpHash(response.opHash)
             setTitle('Delegation Ended!')
             setMessage(
-              'You have successfully ended the delegation. You can now choose a new baker to delegate to.'
+              'You have successfully ended your delegation. You will no longer receive rewards on your tez.'
             )
             setSuccess(true)
             handleOneStepForward()

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Box, Flex, Text, Link } from '@chakra-ui/react'
+import { Image, Box, Flex, Text } from '@chakra-ui/react'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
 import { Header, Description } from '@/components/modalBody'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
@@ -23,16 +23,9 @@ export const DelegateStart = ({
         Select a baker to do that now. Delegated funds remain in your account.
         You can always spend them at will.
       </Description>
-      <Flex
-        justifyContent='center'
-        gap={[3, 0]}
-        flexWrap={['wrap', 'nowrap']}
-        pt='24px'
-        mb='30px'
-        fontSize={['14px', '16px']}
-      >
-        <RoundBorderText step={1} text='SELECT BAKER' />
-        <RoundBorderText step={2} text='DELEGATE TEZ' />
+      <Flex pt='24px' mb='30px' fontSize={['14px', '16px']}>
+        <RoundBorderText step={1} text='DELEGATE' />
+        <RoundBorderText step={2} text='STAKE TEZ' />
       </Flex>
       <PrimaryButton
         onClick={() => {
@@ -40,27 +33,8 @@ export const DelegateStart = ({
           handleOneStepForward()
         }}
       >
-        Select Baker
+        Continue
       </PrimaryButton>
-      <Flex pt='24px' gap={1} flexDir='column' textAlign='center' maxW='640px'>
-        <Link href='/faqs' target='_blank'>
-          <Text
-            fontSize='sm'
-            display='flex'
-            gap={1}
-            cursor='pointer'
-            color='gray.700'
-            fontWeight='semibold'
-          >
-            Tips for choosing your baker
-            <Image
-              maxW='110px'
-              src='/images/external-link.svg'
-              alt='External Link'
-            />
-          </Text>
-        </Link>
-      </Flex>
     </Flex>
   )
 }
@@ -92,13 +66,7 @@ export const RoundBorderText = ({
         </Box>
         <Text>{text}</Text>
       </Flex>
-      {step === 1 && (
-        <Image
-          display={['none', 'block']}
-          src='/images/vector.svg'
-          alt='line'
-        />
-      )}
+      {step === 1 && <Image src='/images/vector.svg' alt='line' />}
     </Flex>
   )
 }

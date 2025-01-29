@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import { Flex, Text, Checkbox, Image } from '@chakra-ui/react'
-import { Header, Description } from '@/components/modalBody'
+import React from 'react'
+import { Image, Box, Flex, Text, Link } from '@chakra-ui/react'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
+import { Header, Description } from '@/components/modalBody'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 
 export const StakeStart = ({
@@ -9,58 +9,95 @@ export const StakeStart = ({
 }: {
   handleOneStepForward: () => void
 }) => {
-  const [isChecked, setIsChecked] = useState(false)
-
   return (
-    <Flex flexDir='column' alignItems='center'>
-      <Image w='25px' mb='15px' src='/images/alert-icon.svg' alt='alert icon' />
-      <Header mb='15px'>Disclaimer</Header>
-      <Description maxW='320px'>
-        Staked balances are locked in your account until they are manually
-        unstaked and finalized. You need to wait 4 cycles to finalize after an
-        unstake.
-        <br />
-        <br />
-        Staked funds are at risk. You might lose a portion of your stake if the
-        chosen baker is slashed for not following Tezos consensus mechanism
-        rules.
+    <Flex flexDir='column' justify='center' alignItems='center'>
+      <Image
+        src='/images/stepper/info-icon.svg'
+        alt='info icon'
+        pt='5px'
+        pb='16px'
+      />
+      <Header mb='16px'>Staking</Header>
+      <Description>
+        In order to stake, you need to delegate your balance to a Tezos baker
+        first. Delegated funds remain in your account.
       </Description>
       <Flex
-        gap='24px'
-        my='24px'
-        bg='#EDF2F7'
-        borderRadius='10px'
-        py='16px'
-        px='22px'
+        justifyContent='center'
+        gap={[3, 0]}
+        flexWrap={['wrap', 'nowrap']}
+        pt='24px'
+        mb='30px'
+        fontSize={['14px', '16px']}
       >
-        <Checkbox
-          isChecked={isChecked}
-          onChange={() => {
-            trackGAEvent(GAAction.BUTTON_CLICK, GACategory.ACCEPT_DISCLAIMER)
-            setIsChecked(!isChecked)
-          }}
-        />
-        <Text
-          color='#2D3748'
-          fontSize='16px'
-          fontWeight={400}
-          lineHeight='22px'
-        >
-          I confirm that I have read and agreed with the{' '}
-          <Text as='span' textDecor='underline' _hover={{ cursor: 'pointer' }}>
-            Terms of Use.
-          </Text>
-        </Text>
+        <RoundBorderText step={1} text='SELECT BAKER' />
+        <RoundBorderText step={2} text='STAKE YOUR TEZ' />
       </Flex>
       <PrimaryButton
-        disabled={!isChecked}
         onClick={() => {
-          trackGAEvent(GAAction.BUTTON_CLICK, GACategory.CONTINUE_STAKE)
+          trackGAEvent(GAAction.BUTTON_CLICK, GACategory.CONTINUE_DELEGATION)
           handleOneStepForward()
         }}
       >
-        Continue
+        Select Baker
       </PrimaryButton>
+      <Flex pt='24px' gap={1} flexDir='column' textAlign='center' maxW='640px'>
+        <Link href='/faqs' target='_blank'>
+          <Text
+            fontSize='sm'
+            display='flex'
+            gap={1}
+            cursor='pointer'
+            color='gray.700'
+            fontWeight='semibold'
+          >
+            Tips for choosing your baker
+            <Image
+              maxW='110px'
+              src='/images/external-link.svg'
+              alt='External Link'
+            />
+          </Text>
+        </Link>
+      </Flex>
+    </Flex>
+  )
+}
+
+export const RoundBorderText = ({
+  text,
+  step
+}: {
+  text: string
+  step: number
+}) => {
+  return (
+    <Flex>
+      <Flex
+        justify='center'
+        alignItems='center'
+        gap='10px'
+        border='1px solid #E2E8F0'
+        borderRadius='100px'
+        px='14px'
+        py='10px'
+        fontSize='14px'
+        fontWeight={600}
+        lineHeight='18px'
+        color='#4A5568'
+      >
+        <Box border='solid 1px #EDF2F7' borderRadius={100} px='8px' py='4px'>
+          {step}
+        </Box>
+        <Text>{text}</Text>
+      </Flex>
+      {step === 1 && (
+        <Image
+          display={['none', 'block']}
+          src='/images/vector.svg'
+          alt='line'
+        />
+      )}
     </Flex>
   )
 }
