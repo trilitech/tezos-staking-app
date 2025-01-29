@@ -62,7 +62,7 @@ export default function Home() {
     }
   }, [bakerListQueryData.status])
 
-  const { data, error } = useQuery({
+  const { data } = useQuery({
     queryKey: ['accountInfoData'],
     queryFn: async () => {
       if (isConnected && !!address) {
