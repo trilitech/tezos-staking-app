@@ -63,13 +63,6 @@ const theme = extendTheme({
         }
       }
     },
-    // Tabs: {
-    //   variants: {
-    //     'soft-rounded': {
-    //       borderRadius: '4px'
-    //     }
-    //   }
-    // },
     Button: {
       baseStyle: {
         borderRadius: '4px',
