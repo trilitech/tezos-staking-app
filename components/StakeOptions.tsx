@@ -177,7 +177,7 @@ export default function StakeOptions() {
                 scrollPadding={80}
                 scrollMarginBottom={70}
                 as='a'
-                href='https://spotlight.tezos.com/how-to-stake/'
+                href='/faqs/#delegating'
                 // hideExternalLinkIcon={true}
                 variant='secondary'
                 w='full'
@@ -311,7 +311,7 @@ export default function StakeOptions() {
                 scrollPadding={80}
                 scrollMarginBottom={70}
                 as='a'
-                href='https://spotlight.tezos.com/how-to-stake/'
+                href='/faqs/#staking'
                 variant='secondary'
                 w='full'
               >
