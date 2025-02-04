@@ -36,7 +36,7 @@ export default function FooterCta() {
             position='relative'
             zIndex={1}
             flex={1}
-            borderRadius='16px'
+            borderRadius='24px'
             pb='64px'
             pt='56px'
             px='48px'
@@ -72,7 +72,7 @@ export default function FooterCta() {
             position='relative'
             zIndex={1}
             flex={1}
-            borderRadius='16px'
+            borderRadius='24px'
             pb='64px'
             pt='56px'
             px='48px'

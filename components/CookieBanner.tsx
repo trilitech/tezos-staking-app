@@ -83,7 +83,7 @@ export const CookieBanner = () => {
               fontSize='20px'
               lineHeight='26px'
               color='#10121B'
-              mb={[3, null, 0]}
+              mb={['12px', null, '6px']}
             >
               We use cookies to make your experience better.
             </Text>

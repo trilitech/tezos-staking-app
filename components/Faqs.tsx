@@ -252,7 +252,6 @@ export default function Faqs() {
                 <Accordion
                   pt='30px'
                   defaultIndex={index === 0 ? [0] : undefined}
-                  allowMultiple
                 >
                   {faq.faqs.map(data => (
                     <AccordionItem
