@@ -1,4 +1,4 @@
-import { Box, Center } from '@chakra-ui/react'
+import { Box, Center, Flex, Spinner } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { useConnection } from '@/providers/ConnectionProvider'
 import { useQuery } from '@tanstack/react-query'
@@ -13,6 +13,11 @@ import StakeOptions from '@/components/StakeOptions'
 import FooterCta from '@/components/FooterCta'
 import DashboardInfo from '@/components/DashboardInfo'
 import Footer from '@/components/Footer'
+import { TermAndPolicy } from '@/components/TermAndPolicy'
+import { AccountBanner } from '@/components/AccountBanner'
+import { MobileAccountBanner } from '@/components/MobileAccountBanner'
+import { AccountBody } from '@/components/AccountBody'
+import { ErrorModal } from '@/components/ErrorModal'
 
 export interface DelegateData {
   address: string
@@ -103,79 +108,117 @@ export default function Home() {
         <meta property='og:image' content='' />
         <meta property='twitter:image' content='' />
       </Head>
-      <Center
-        minH='100vh'
-        maxW='100%'
-        mx='auto'
-        flexDir='column'
-        justifyContent='start'
-        overflow='hidden'
-        pos='relative'
-        backgroundSize='contain'
-        backgroundBlendMode='multiply'
-      >
-        <Box
-          position='absolute'
-          bottom='0'
-          left='0'
-          right='0'
-          height='400px'
-          bgImage="url('/images/Gradient.png')"
-          bgSize='cover'
-          bgRepeat='no-repeat'
-          zIndex='0'
-        />
-        <Box
-          display={['none', null, 'block']}
-          position='absolute'
-          bottom='155vh'
-          w='38px'
-          height='240px'
-          left='12%'
-          bgImage="url('/images/granular-pattern1.svg')"
-          bgSize='cover'
-          bgRepeat='no-repeat'
-          zIndex='1'
-        />
-        <Box
-          position='absolute'
-          bottom={['155vh', '145vh']}
-          w={['25px', '28px', '38px']}
-          height={['160px', '210px', '242px']}
-          right='15%'
-          bgImage="url('/images/granular-pattern2.svg')"
-          bgSize='cover'
-          bgRepeat='no-repeat'
-          zIndex='1'
-        />
-        <Box
-          position='absolute'
-          bottom='300px'
-          w='700px'
-          height='700px'
-          left='-500px'
-          bg='radial-gradient(96.32% 48.16% at 50% 50%, rgba(92, 114, 250, 0.40) 0%, rgba(240, 240, 255, 0.00) 100%)'
-          filter='blur(37px)'
-          bgRepeat='no-repeat'
-          zIndex='0'
-        />
-        <Box
-          position='absolute'
-          bottom='80vh'
-          w='700px'
-          height='700px'
-          right='-500px'
-          bg='radial-gradient(96.32% 48.16% at 50% 50%, rgba(92, 114, 250, 0.40) 0%, rgba(240, 240, 255, 0.00) 100%)'
-          filter='blur(37px)'
-          bgRepeat='no-repeat'
-          zIndex='1'
-        />
-        <Hero />
-        <StakeOptions />
-        <DashboardInfo />
-        <FooterCta />
-        <Footer />
-      </Center>
+      {isConnected === undefined ? (
+        <Spinner />
+      ) : isConnected ? (
+        <Center
+          py='20px'
+          minH='100vh'
+          bg='#cbd5e0'
+          bgImage='/images/bg-grey.png'
+          backgroundPosition='center'
+          backgroundRepeat='no-repeat'
+          backgroundSize='cover'
+        >
+          {(error || bakerListQueryData.status === 'error') && (
+            <ErrorModal
+              onClick={() => window.location.reload()}
+              btnText='Refresh'
+            />
+          )}
+          <Flex flexDir='column' w='600px' gap='10px' mx='20px'>
+            <AccountBanner
+              name='Your Wallet'
+              address={delegateData?.address ?? ''}
+              display={['none', null, 'flex']}
+            />
+            <MobileAccountBanner
+              name='Your Wallet'
+              address={delegateData?.address ?? ''}
+              display={['flex', null, 'none']}
+            />
+            <AccountBody
+              delegateData={delegateData as DelegateData}
+              bakerList={bakerList as BakerInfo[]}
+            />
+            <TermAndPolicy pt='10px' />
+          </Flex>
+        </Center>
+      ) : (
+        <Center
+          minH='100vh'
+          maxW='100%'
+          mx='auto'
+          flexDir='column'
+          justifyContent='start'
+          overflow='hidden'
+          pos='relative'
+          backgroundSize='contain'
+          backgroundBlendMode='multiply'
+        >
+          <Box
+            position='absolute'
+            bottom='0'
+            left='0'
+            right='0'
+            height='400px'
+            bgImage="url('/images/Gradient.png')"
+            bgSize='cover'
+            bgRepeat='no-repeat'
+            zIndex='0'
+          />
+          <Box
+            display={['none', null, 'block']}
+            position='absolute'
+            bottom='155vh'
+            w='38px'
+            height='240px'
+            left='12%'
+            bgImage="url('/images/granular-pattern1.svg')"
+            bgSize='cover'
+            bgRepeat='no-repeat'
+            zIndex='1'
+          />
+          <Box
+            position='absolute'
+            bottom={['155vh', '145vh']}
+            w={['25px', '28px', '38px']}
+            height={['160px', '210px', '242px']}
+            right='15%'
+            bgImage="url('/images/granular-pattern2.svg')"
+            bgSize='cover'
+            bgRepeat='no-repeat'
+            zIndex='1'
+          />
+          <Box
+            position='absolute'
+            bottom='300px'
+            w='700px'
+            height='700px'
+            left='-500px'
+            bg='radial-gradient(96.32% 48.16% at 50% 50%, rgba(92, 114, 250, 0.40) 0%, rgba(240, 240, 255, 0.00) 100%)'
+            filter='blur(37px)'
+            bgRepeat='no-repeat'
+            zIndex='0'
+          />
+          <Box
+            position='absolute'
+            bottom='80vh'
+            w='700px'
+            height='700px'
+            right='-500px'
+            bg='radial-gradient(96.32% 48.16% at 50% 50%, rgba(92, 114, 250, 0.40) 0%, rgba(240, 240, 255, 0.00) 100%)'
+            filter='blur(37px)'
+            bgRepeat='no-repeat'
+            zIndex='1'
+          />
+          <Hero />
+          <StakeOptions />
+          <DashboardInfo />
+          <FooterCta />
+          <Footer />
+        </Center>
+      )}
 
       <CookieBanner />
     </>

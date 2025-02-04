@@ -1,8 +1,12 @@
 'use client'
 
 import { Heading, Text, Flex, Button } from '@chakra-ui/react'
+import { useConnection } from '@/providers/ConnectionProvider'
+import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 
 export default function FooterCta() {
+  const { connect } = useConnection()
+
   return (
     <Flex px={6} bg='gray.100' w='full'>
       <Flex
@@ -95,10 +99,12 @@ export default function FooterCta() {
               staking, and more.
             </Text>
             <Button
-              as='a'
-              href='/connect'
               variant='primary'
               w={['full', '180px']}
+              onClick={() => {
+                trackGAEvent(GAAction.BUTTON_CLICK, GACategory.WALLET_BEGIN)
+                connect()
+              }}
             >
               Start Earning
             </Button>

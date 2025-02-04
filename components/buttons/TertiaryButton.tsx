@@ -17,6 +17,7 @@ export const TertiaryButton = ({
       bg={disabled ? '#E2E8F0' : 'black'}
       color={disabled ? '#A0AEC0' : 'white'}
       fontWeight={600}
+      borderRadius='8px'
       fontSize='18px'
       h='48px'
       px='24px'

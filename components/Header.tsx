@@ -1,6 +1,10 @@
 import { Box, Button, Flex, Image, Link, Text } from '@chakra-ui/react'
+import { useConnection } from '@/providers/ConnectionProvider'
+import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 
 export const Header = () => {
+  const { connect } = useConnection()
+
   return (
     <Box
       zIndex='1000'
@@ -67,20 +71,23 @@ export const Header = () => {
               />
               <Text display={['none', null, 'inline']}>Help</Text>
             </Button>
-            <Link href='/connect'>
-              <Button
-                variant='primary'
-                minW={['48px', null, 'auto']}
-                px={['12px', null, '24px']}
-              >
-                <Image
-                  maxW='110px'
-                  src='/images/wallet-icon.svg'
-                  alt='Wallet Icon'
-                />
-                <Text display={['none', null, 'inline']}>Connect</Text>
-              </Button>
-            </Link>
+
+            <Button
+              variant='primary'
+              minW={['48px', null, 'auto']}
+              px={['12px', null, '24px']}
+              onClick={() => {
+                trackGAEvent(GAAction.BUTTON_CLICK, GACategory.WALLET_BEGIN)
+                connect()
+              }}
+            >
+              <Image
+                maxW='110px'
+                src='/images/wallet-icon.svg'
+                alt='Wallet Icon'
+              />
+              <Text display={['none', null, 'inline']}>Connect</Text>
+            </Button>
           </Flex>
         </Flex>
       </Flex>
