@@ -157,7 +157,7 @@ export default function DashboardInfo() {
                   alignItems='center'
                   gap='16px'
                   mt='24px'
-                  px='24px'
+                  px={['48px', '24px']}
                 >
                   {tabTexts.map((_, index) => (
                     <Box

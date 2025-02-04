@@ -69,7 +69,7 @@ export default function Hero() {
                 border='1px solid'
                 borderColor='#FFFFFF0A'
               >
-                • &nbsp;Staking Version 2.0—see all updates here
+                • &nbsp;Staking Version 2.0 is here
               </Text>
               <Heading
                 as='h1'

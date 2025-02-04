@@ -32,7 +32,7 @@ export const Header = () => {
         <Flex
           w='100%'
           px={['16px', null, '48px']}
-          py={['12px', null, '16px']}
+          py={['12px', null, '24px']}
           borderColor='gray.50'
           justifyContent='space-between'
           alignItems='center'
@@ -48,7 +48,7 @@ export const Header = () => {
                 p={0}
               >
                 <Image
-                  maxW='110px'
+                  maxW='125px'
                   h={['32px', null, '44px']}
                   src='/images/logo_white.svg'
                   alt='Tezos Logo'
