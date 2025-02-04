@@ -65,6 +65,7 @@ export default function StakeOptions() {
           >
             <Heading
               as='h1'
+              fontFamily='Inter, sans-serif'
               fontSize='2xl'
               color='gray.900'
               textAlign='left'
@@ -200,6 +201,7 @@ export default function StakeOptions() {
             <Heading
               as='h1'
               fontSize='2xl'
+              fontFamily='Inter, sans-serif'
               color='gray.900'
               textAlign='left'
               fontWeight={600}

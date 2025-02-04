@@ -74,6 +74,7 @@ export default function Hero() {
               <Heading
                 as='h1'
                 fontSize={['44px', null, '7xl']}
+                fontFamily='Inter, sans-serif'
                 lineHeight={['52px', null, '82.5px']}
                 color='gray.50'
                 textAlign='left'

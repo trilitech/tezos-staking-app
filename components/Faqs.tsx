@@ -18,10 +18,8 @@ import React from 'react'
 export default function Faqs() {
   const paragraphs = [
     { title: 'Get Started', id: 'getting-started' },
-    { title: 'General', id: 'general' },
-    { title: 'Delegating', id: 'delegating' },
+    { title: 'Bakers & Delegation', id: 'delegating' },
     { title: 'Staking', id: 'staking' },
-    { title: 'Bakers', id: 'delegating' },
     { title: 'Rewards', id: 'rewards' }
   ]
 
@@ -202,6 +200,7 @@ export default function Faqs() {
           <Flex flexDir='column' color='white' py='48px' w='660px'>
             <Heading
               fontSize={['30px', null, '60px']}
+              fontFamily='Inter, sans-serif'
               pb={['16px', null, '24px']}
               w='100%'
               textAlign='center'
