@@ -17,6 +17,7 @@ export const SecondaryButton = ({
       bg={disabled ? '#E2E8F0' : 'white'}
       color={disabled ? '#A0AEC0' : '#0052FF'}
       border={disabled ? '#E2E8F0' : '#0052FF 2px solid'}
+      borderRadius='8px'
       fontWeight={600}
       fontSize='18px'
       h='48px'
@@ -24,7 +25,9 @@ export const SecondaryButton = ({
       lineHeight='24px'
       _hover={{
         bg: disabled ? '#E2E8F0' : 'white',
-        cursor: disabled ? 'not-allowed' : 'pointer'
+        cursor: disabled ? 'not-allowed' : 'pointer',
+        color: '#003EE0',
+        borderColor: '#003EE0'
       }}
       onClick={disabled ? undefined : onClick}
       disabled={disabled}

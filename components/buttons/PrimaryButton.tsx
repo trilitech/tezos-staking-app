@@ -16,6 +16,7 @@ export const PrimaryButton = ({
       w='100%'
       bg={disabled ? '#E2E8F0' : '#0052FF'}
       color={disabled ? '#A0AEC0' : 'white'}
+      borderRadius='8px'
       fontWeight={600}
       fontSize='18px'
       h='48px'

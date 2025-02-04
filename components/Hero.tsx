@@ -10,8 +10,12 @@ import {
   Image
 } from '@chakra-ui/react'
 import { Header } from './Header'
+import { useConnection } from '@/providers/ConnectionProvider'
+import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 
 export default function Hero() {
+  const { connect } = useConnection()
+
   return (
     <Box
       w='100%'
@@ -100,10 +104,12 @@ export default function Hero() {
                 <Button
                   scrollPadding={80}
                   scrollMarginBottom={70}
-                  as='a'
-                  href='/connect'
                   variant='primary'
                   w={['full', null, '180px']}
+                  onClick={() => {
+                    trackGAEvent(GAAction.BUTTON_CLICK, GACategory.WALLET_BEGIN)
+                    connect()
+                  }}
                 >
                   Start Earning
                 </Button>
