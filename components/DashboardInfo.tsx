@@ -130,7 +130,7 @@ export default function DashboardInfo() {
                         key={index}
                         bg='white'
                         borderRadius='24px'
-                        justifyContent='center'
+                        justifyContent={['start', null, 'center']}
                         alignItems='start'
                         flexDir='column'
                         p={['24px', null, '48px']}
@@ -138,6 +138,7 @@ export default function DashboardInfo() {
                         boxShadow='customShadow'
                         w='100%'
                         flex='0 0 100%'
+                        h='192px'
                       >
                         <Text fontSize='lg' fontWeight='bold'>
                           {text.title}
@@ -183,9 +184,7 @@ export default function DashboardInfo() {
                     onChange={index => setActiveIndex(index)}
                   >
                     <TabList borderRadius='12px' bg='white' p='6px'>
-                      <Tab fontSize='lg' px='12px' py='6px' borderRadius='8px'>
-                        Connect
-                      </Tab>
+                      <CustomTab text='Connect' />
                       <Box
                         mx='12px'
                         my='auto'
@@ -194,9 +193,7 @@ export default function DashboardInfo() {
                         h='12px'
                         w='2px'
                       />
-                      <Tab fontSize='lg' px='12px' py='6px' borderRadius='8px'>
-                        Select
-                      </Tab>
+                      <CustomTab text='Select' />
                       <Box
                         mx='12px'
                         my='auto'
@@ -205,9 +202,7 @@ export default function DashboardInfo() {
                         h='12px'
                         w='2px'
                       />
-                      <Tab fontSize='lg' px='12px' py='6px' borderRadius='8px'>
-                        Monitor
-                      </Tab>
+                      <CustomTab text='Monitor' />
                     </TabList>
                   </Tabs>
                 </Flex>
@@ -317,5 +312,19 @@ export default function DashboardInfo() {
         </Box>
       </Flex>
     </>
+  )
+}
+
+const CustomTab = ({ text }: { text: string }) => {
+  return (
+    <Tab
+      fontSize='lg'
+      px='12px'
+      py='6px'
+      borderRadius='8px'
+      _hover={{ bg: '#edf2f6' }}
+    >
+      {text}
+    </Tab>
   )
 }
