@@ -183,120 +183,116 @@ export default function Faqs() {
   ]
 
   return (
-    <>
-      <Flex flexDir='column' w='full'>
-        <Header />
+    <Flex flexDir='column' w='full'>
+      <Header />
 
-        <Flex
-          borderRadius={[0, null, null, '4px']}
-          bg='transparent'
-          mt={[null, null, null, '24px']}
-          overflow='hidden'
-          justifyContent='center'
-          maxW='1232px'
-          w='100%'
-          mx='auto'
-        >
-          <Flex flexDir='column' color='white' py='48px' w='660px'>
-            <Heading
-              fontSize={['30px', null, '60px']}
-              fontFamily='Inter, sans-serif'
-              pb={['16px', null, '24px']}
-              w='100%'
-              textAlign='center'
-            >
-              Staking FAQ
-            </Heading>
-            <Text
-              pb={['30px', null, '40px']}
-              fontSize={['md', null, 'xl']}
-              w='100%'
-              textAlign='center'
-            >
-              Find answers to your staking questions
-            </Text>
-            <Flex
-              pb={['40px', null, '120px']}
-              justifyContent='center'
-              flexWrap='wrap'
-              gap='12px'
-            >
-              {paragraphs.map(paragraph => (
-                <Button
-                  variant='ternary'
-                  border='1px solid'
-                  borderColor='gray.200'
-                  py='6px'
-                  px='12px'
-                  fontSize='xs'
-                  height='30px'
-                  as='a'
-                  href={'#' + paragraph.id}
-                  key={paragraph.id}
-                >
-                  {paragraph.title}
-                </Button>
-              ))}
-            </Flex>
-            {faqs?.map((faq, index) => (
-              <React.Fragment key={faq.id}>
-                <Text
-                  id={faq.id}
-                  py={['20px', null, '30px']}
-                  fontSize={['24px', null, '36px']}
-                  w='100%'
-                  textAlign='center'
-                >
-                  {faq.title}
-                </Text>
-                <Accordion
-                  pt='30px'
-                  defaultIndex={index === 0 ? [0] : undefined}
-                >
-                  {faq.faqs.map(data => (
-                    <AccordionItem
-                      key={data.title}
-                      py='20px'
-                      borderTopWidth='1px'
-                      borderColor='gray.500'
-                      borderBottom={0}
-                    >
-                      <AccordionButton
-                        _hover={{ backgroundColor: 'transparent' }}
-                        pl={0}
-                        alignItems='center'
-                        py={0}
-                      >
-                        <Box flex='1' textAlign='left'>
-                          <Text
-                            fontWeight='400'
-                            color='white.800'
-                            fontSize={['lg', null, 'xl']}
-                          >
-                            {data.title}
-                          </Text>
-                        </Box>
-                        <AccordionIcon />
-                      </AccordionButton>
-                      <AccordionPanel
-                        pl={0}
-                        pb='20px'
-                        pt='15px'
-                        color='white.600'
-                        fontSize='md'
-                      >
-                        <Text fontSize={['sm', null, 'md']}>
-                          {data.description}
-                        </Text>
-                      </AccordionPanel>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
-              </React.Fragment>
+      <Flex
+        borderRadius={[0, null, null, '4px']}
+        bg='transparent'
+        mt={[null, null, null, '24px']}
+        overflow='hidden'
+        justifyContent='center'
+        maxW='1232px'
+        w='100%'
+        mx='auto'
+      >
+        <Flex flexDir='column' color='white' py='48px' w='660px'>
+          <Heading
+            fontSize={['30px', null, '60px']}
+            fontFamily='Inter, sans-serif'
+            pb={['16px', null, '24px']}
+            w='100%'
+            textAlign='center'
+          >
+            Staking FAQ
+          </Heading>
+          <Text
+            pb={['30px', null, '40px']}
+            fontSize={['md', null, 'xl']}
+            w='100%'
+            textAlign='center'
+          >
+            Find answers to your staking questions
+          </Text>
+          <Flex
+            pb={['40px', null, '120px']}
+            justifyContent='center'
+            flexWrap='wrap'
+            gap='12px'
+          >
+            {paragraphs.map(paragraph => (
+              <Button
+                variant='ternary'
+                border='1px solid'
+                borderColor='gray.200'
+                py='6px'
+                px='12px'
+                fontSize='xs'
+                height='30px'
+                as='a'
+                href={'#' + paragraph.id}
+                key={paragraph.id}
+              >
+                {paragraph.title}
+              </Button>
             ))}
           </Flex>
+          {faqs?.map((faq, index) => (
+            <React.Fragment key={faq.id}>
+              <Text
+                id={faq.id}
+                py={['20px', null, '30px']}
+                fontSize={['24px', null, '36px']}
+                w='100%'
+                textAlign='center'
+                fontWeight='semibold'
+              >
+                {faq.title}
+              </Text>
+              <Accordion pt='30px' defaultIndex={index === 0 ? [0] : undefined}>
+                {faq.faqs.map(data => (
+                  <AccordionItem
+                    key={data.title}
+                    py='20px'
+                    borderTopWidth='1px'
+                    borderColor='gray.500'
+                    borderBottom={0}
+                  >
+                    <AccordionButton
+                      _hover={{ backgroundColor: 'transparent' }}
+                      pl={0}
+                      alignItems='center'
+                      py={0}
+                    >
+                      <Box flex='1' textAlign='left'>
+                        <Text
+                          color='white.800'
+                          fontSize={['lg', null, 'xl']}
+                          fontWeight='semibold'
+                        >
+                          {data.title}
+                        </Text>
+                      </Box>
+                      <AccordionIcon />
+                    </AccordionButton>
+                    <AccordionPanel
+                      pl={0}
+                      pb='20px'
+                      pt='15px'
+                      color='white.600'
+                      fontSize='md'
+                    >
+                      <Text fontSize={['sm', null, 'md']}>
+                        {data.description}
+                      </Text>
+                    </AccordionPanel>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </React.Fragment>
+          ))}
         </Flex>
       </Flex>
-    </>
+    </Flex>
   )
 }
