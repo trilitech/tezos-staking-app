@@ -66,8 +66,10 @@ export const CookieBanner = () => {
         m={0}
         maxW='1232px'
         w={['100%', null, '90%']}
-        borderStartRadius='16px'
-        borderEndRadius='16px'
+        borderTopStartRadius='16px'
+        borderBottomStartRadius={[null, null, '16px']}
+        borderTopEndRadius='16px'
+        borderBottomEndRadius={[null, null, '16px']}
       >
         <ModalBody
           display='flex'
