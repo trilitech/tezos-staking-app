@@ -15,7 +15,6 @@ export const Header = () => {
       right='0'
       mx='auto'
       pt={['24px', null, '40px']}
-      px={['24px', null, '40px']}
     >
       <Flex
         alignItems='center'
