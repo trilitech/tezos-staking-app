@@ -1,5 +1,5 @@
 'use client'
-
+import { useRef } from 'react'
 import {
   Box,
   Text,
@@ -47,7 +47,10 @@ export default function DashboardInfo() {
     setTranslateX(0)
   }
 
+  const translateXRef = useRef(0)
+
   const handleSwipeMove = (data: { deltaX: number }) => {
+    translateXRef.current = data.deltaX
     setTranslateX(data.deltaX)
   }
 
@@ -59,16 +62,17 @@ export default function DashboardInfo() {
       data.deltaX > threshold ||
       (data.velocity > velocityThreshold && data.deltaX > 0)
     ) {
-      // Swipe right
       setActiveIndex(prevIndex => Math.max(0, prevIndex - 1))
     } else if (
       data.deltaX < -threshold ||
       (data.velocity > velocityThreshold && data.deltaX < 0)
     ) {
-      // Swipe left
       setActiveIndex(prevIndex => Math.min(tabTexts.length - 1, prevIndex + 1))
     }
-    setTranslateX(0) // Reset translateX after swipe
+
+    // Smooth transition instead of instant reset
+    setTranslateX(0)
+    translateXRef.current = 0
   }
 
   const swipeHandlers = useSwipeable({
@@ -120,8 +124,11 @@ export default function DashboardInfo() {
                 >
                   <Flex
                     flexDir='row'
-                    transition='transform 0.3s ease'
-                    transform={`translateX(calc(-${activeIndex * 100}% + ${translateX}px))`}
+                    style={{
+                      transform: `translateX(calc(-${activeIndex * 100}% + ${translateX}px))`,
+                      transition:
+                        translateX === 0 ? 'transform 0.3s ease-out' : 'none' // Smooth transition only after swipe ends
+                    }}
                     w={`${tabTexts.length * 100}%`}
                   >
                     {tabTexts.map((text, index) => (
@@ -140,7 +147,7 @@ export default function DashboardInfo() {
                         flex='0 0 100%'
                         h='192px'
                       >
-                        <Text fontSize='lg' fontWeight='bold'>
+                        <Text fontSize='24px' fontWeight='bold'>
                           {text.title}
                         </Text>
                         <Text fontSize='sm' color='gray.600'>
@@ -250,6 +257,7 @@ export default function DashboardInfo() {
                           tabTexts[(activeIndex + 1) % tabTexts.length]
                         ].map((text, index) => (
                           <Flex
+                            h='192px'
                             flex={1}
                             key={index}
                             bg='white'
