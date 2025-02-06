@@ -251,7 +251,7 @@ export default function DashboardInfo() {
                         ></Box>
                       </Flex>
 
-                      <Flex flex='1' flexDir='column' gap='16px'>
+                      <Flex flex='1' flexDir='column' gap='16px' h='409px'>
                         {[
                           tabTexts[activeIndex],
                           tabTexts[(activeIndex + 1) % tabTexts.length]
