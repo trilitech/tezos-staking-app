@@ -1,11 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Flex, InputGroup, Input, Image, Text, Spinner } from '@chakra-ui/react'
 import { Header, ColumnHeader, BalanceBox } from '@/components/modalBody'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
-import { stake } from '@/components/Operations/operations'
-import { useConnection } from '@/providers/ConnectionProvider'
-import { useOperationResponse } from '@/providers/OperationResponseProvider'
-import { ErrorBlock } from '@/components/ErrorBlock'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 
 export const SelectAmount = ({
@@ -19,12 +15,6 @@ export const SelectAmount = ({
   setStakedAmount: (arg: number) => void
   stakedAmount: number
 }) => {
-  const { Tezos, beaconWallet } = useConnection()
-  const { setMessage, setSuccess, setOpHash, setOpType } =
-    useOperationResponse()
-  const [errorMessage, setErrorMessage] = useState('')
-  const [waitingOperation, setWaitingOperation] = useState(false)
-
   const handleChange = (event: any) => {
     const val = Number(event.target.value)
     trackGAEvent(GAAction.BUTTON_CLICK, GACategory.INPUT_AMOUNT)
@@ -37,7 +27,7 @@ export const SelectAmount = ({
 
   return (
     <Flex flexDir='column'>
-      <Header mb='24px'>Select Amount</Header>
+      <Header mb='24px'>Stake Amount</Header>
       <ColumnHeader mb='12px'>SPENDABLE BALANCE</ColumnHeader>
       <BalanceBox balance={spendableBalance} />
       <ColumnHeader mb='12px'>ENTER AMOUNT</ColumnHeader>
@@ -65,33 +55,11 @@ export const SelectAmount = ({
       <PrimaryButton
         disabled={!stakedAmount}
         onClick={async () => {
-          if (!Tezos || !beaconWallet) {
-            setErrorMessage('Wallet is not initialized, log out to try again.')
-            return
-          }
-
-          trackGAEvent(GAAction.BUTTON_CLICK, GACategory.START_STAKE_BEGIN)
-
-          setWaitingOperation(true)
-          const response = await stake(Tezos, stakedAmount, beaconWallet)
-          setWaitingOperation(false)
-
-          if (response.success) {
-            trackGAEvent(GAAction.BUTTON_CLICK, GACategory.START_STAKE_END)
-            setOpHash(response.opHash)
-            setOpType('stake')
-            setMessage(`You have successfully staked ${stakedAmount} ꜩ.`)
-            setSuccess(true)
-            setStakedAmount(0)
-            handleOneStepForward()
-          } else {
-            setErrorMessage(response.message)
-          }
+          handleOneStepForward()
         }}
       >
-        {waitingOperation ? <Spinner /> : 'Stake'}
+        Continue
       </PrimaryButton>
-      {!!errorMessage && <ErrorBlock errorMessage={errorMessage} />}
     </Flex>
   )
 }

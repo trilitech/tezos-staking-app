@@ -44,7 +44,7 @@ export const ConfirmBaker = ({
 
   return (
     <Flex flexDir='column' justify='center'>
-      <Header pb='24px'>Delegate</Header>
+      <Header pb='24px'>Delegate to Baker Y</Header>
       <InputGroup size='md' mb='30px'>
         <InputLeftElement h='100%'>
           <Image

@@ -191,7 +191,7 @@ export const ChooseBaker = ({
           order={sortOrder['staking']}
           tooltipLabel='The total amount of tez delegated to or staked with a baker.'
         >
-          STAKING
+          TOTAL
         </SortText>
         <Text color='#E2E8F0' display={['none', 'inline-block']}>
           |

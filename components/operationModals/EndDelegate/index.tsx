@@ -10,8 +10,11 @@ import {
 import useCurrentStep from '@/utils/useCurrentStep'
 import { ConfirmEndDelegate } from './ConfirmEndDelegate'
 import { BackIcon, CloseIcon } from '@/components/icons'
+import { DisclaimerEndDelegate } from './DisclaimerEndDelegate'
+import { Stepper } from '@/components/modalBody/Stepper'
 
 interface EndDelegateModal {
+  isStaked: boolean
   isOpen: boolean
   onClose: () => void
   bakerName: string
@@ -19,16 +22,18 @@ interface EndDelegateModal {
 }
 
 enum EndDelegateStatus {
-  EndDelegation = 1
+  Disclamer = 1,
+  EndDelegation = 2
 }
 
 export const EndDelegationModal = ({
+  isStaked,
   isOpen,
   onClose,
   bakerName,
   spendableBalance
 }: EndDelegateModal) => {
-  const totalStep = 1
+  const totalStep = isStaked ? 2 : 1
 
   const { currentStep, handleOneStepBack, handleOneStepForward, resetStep } =
     useCurrentStep(onClose, totalStep)
@@ -38,19 +43,18 @@ export const EndDelegationModal = ({
   }
 
   const getCurrentStepBody = (currentStep: number) => {
-    switch (currentStep) {
-      case EndDelegateStatus.EndDelegation:
-        return (
-          <ConfirmEndDelegate
-            handleOneStepForward={handleOneStepForward}
-            spendableBalance={spendableBalance}
-            bakerName={bakerName}
-          />
-        )
-      default:
-        console.error('End delegation step is not defined')
-        break
+    if (isStaked && currentStep === EndDelegateStatus.Disclamer) {
+      return (
+        <DisclaimerEndDelegate handleOneStepForward={handleOneStepForward} />
+      )
     }
+    return (
+      <ConfirmEndDelegate
+        handleOneStepForward={handleOneStepForward}
+        spendableBalance={spendableBalance}
+        bakerName={bakerName}
+      />
+    )
   }
 
   return (
@@ -75,6 +79,9 @@ export const EndDelegationModal = ({
         </ModalHeader>
 
         <ModalBody>
+          {isStaked && totalStep === 2 && (
+            <Stepper totalStep={totalStep} currentStep={currentStep} />
+          )}
           <Flex flexDir='column'>{getCurrentStepBody(currentStep)}</Flex>
         </ModalBody>
       </ModalContent>

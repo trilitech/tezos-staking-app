@@ -67,8 +67,8 @@ export const SelectOptionModal = ({
         scrollBehavior='inside'
       >
         <ModalOverlay />
-        <ModalContent minW='90%'>
-          <ModalHeader p='40px'>
+        <ModalContent pb='0px' minW='90%'>
+          <ModalHeader p={['24px', null, '40px']} pb={['12px', null, '40px']}>
             <Flex h='36px' position='relative' alignItems='center' w='100%'>
               {/* Left Button */}
               <Button
@@ -96,12 +96,15 @@ export const SelectOptionModal = ({
                 <Text fontSize='sm'>Help</Text>
               </Button>
 
-              {/* Center Text */}
-              <Text position='absolute' left='50%' transform='translateX(-50%)'>
+              <Text
+                display={['none', null, 'block']}
+                position='absolute'
+                left='50%'
+                transform='translateX(-50%)'
+              >
                 Select Your Option
               </Text>
 
-              {/* Right Icon */}
               <CloseIcon
                 position='absolute'
                 right='0'
@@ -115,16 +118,23 @@ export const SelectOptionModal = ({
                 }}
               />
             </Flex>
+            <Text
+              display={['block', null, 'none']}
+              pt='24px'
+              textAlign='center'
+            >
+              Select Your Option
+            </Text>
           </ModalHeader>
 
-          <ModalBody>
+          <ModalBody px={['24px', null, '40px']}>
             <Flex
               w='100%'
               flexDir={['column', null, null, 'row']}
               flexWrap='wrap'
               borderRadius='4px'
-              py='48px'
-              gap={['43px', null, null, '80px']}
+              py={['12px', null, '48px']}
+              gap={['24px', null, null, '30px']}
             >
               <Flex
                 bg='white'
@@ -140,11 +150,11 @@ export const SelectOptionModal = ({
               >
                 <Heading
                   as='h1'
-                  fontSize='2xl'
+                  fontSize={['lg', null, 'xl']}
                   color='gray.900'
                   textAlign='left'
                   fontWeight={600}
-                  pb='16px'
+                  pb={['12px', null, '16px']}
                 >
                   Delegate
                 </Heading>
@@ -202,8 +212,9 @@ export const SelectOptionModal = ({
                 <Flex
                   flexDir={['column', null, 'row']}
                   py='18px'
-                  mb='30px'
-                  gap='30px'
+                  pt={['26px', null, '18px']}
+                  mb='8px'
+                  gap='24px'
                 >
                   <Flex
                     alignItems='center'
@@ -212,8 +223,9 @@ export const SelectOptionModal = ({
                   >
                     <Flex justifyContent='center' alignItems='center' gap='6px'>
                       <Image
+                        color='red'
                         maxW='110px'
-                        src='/images/error-icon.svg'
+                        src='/images/error-icon-gray.svg'
                         alt='Wallet Icon'
                       />
                       <Text
@@ -298,7 +310,6 @@ export const SelectOptionModal = ({
                         GACategory.CHOOSE_BAKER_START
                       )
                       setTimeout(() => {
-                        console.log('si apre')
                         delegateModal.onOpen()
                       }, 1)
                     }}
@@ -321,11 +332,11 @@ export const SelectOptionModal = ({
               >
                 <Heading
                   as='h1'
-                  fontSize='2xl'
+                  fontSize={['lg', null, 'xl']}
                   color='gray.900'
                   textAlign='left'
                   fontWeight={600}
-                  pb='16px'
+                  pb={['12px', null, '16px']}
                 >
                   Stake
                 </Heading>
@@ -383,8 +394,9 @@ export const SelectOptionModal = ({
                 <Flex
                   flexDir={['column', null, 'row']}
                   py='18px'
-                  mb='30px'
-                  gap='30px'
+                  pt={['26px', null, '18px']}
+                  mb='8px'
+                  gap='24px'
                 >
                   <Flex
                     alignItems='center'
@@ -394,7 +406,7 @@ export const SelectOptionModal = ({
                     <Flex justifyContent='center' alignItems='center' gap='6px'>
                       <Image
                         maxW='110px'
-                        src='/images/error-icon.svg'
+                        src='/images/error-icon-gray.svg'
                         alt='Wallet Icon'
                       />
                       <Text
@@ -463,7 +475,6 @@ export const SelectOptionModal = ({
                         GACategory.CHOOSE_BAKER_START
                       )
                       setTimeout(() => {
-                        console.log('si apre')
                         stakeModal.onOpen()
                       }, 1)
                     }}
@@ -483,7 +494,9 @@ export const SelectOptionModal = ({
         onClose={delegateModal.onClose}
         bakerList={bakerList}
       />
+      {/* CHECK STAKE NOT FROM SELECT OPTION BEFORE DOING ANYTHING HERE*/}
       <StakeModal
+        openedFromStartEarning={true}
         isOpen={stakeModal.isOpen}
         onClose={stakeModal.onClose}
         spendableBalance={spendableBalance}

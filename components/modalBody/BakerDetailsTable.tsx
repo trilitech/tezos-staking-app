@@ -36,7 +36,7 @@ export const BakerDetailsTable = ({
         <Table>
           <Tbody>
             <Tr>
-              <Td borderBottom='1px solid #E2E8F0' pl={[3, 6]} pr={[0, 6]}>
+              <Td borderBottom='1px solid #E2E8F0' pl={[3, 4]} pr={[0, 4]}>
                 <Flex alignItems='center' gap='5px'>
                   <Image
                     w='30px'
@@ -54,8 +54,8 @@ export const BakerDetailsTable = ({
                   </Text>
                 </Flex>
               </Td>
-              <Td borderBottom='1px solid #E2E8F0' px={[3, 6]}>
-                <Flex alignItems='center' gap='4px'>
+              <Td borderBottom='1px solid #E2E8F0' px={[3, 4]}>
+                <Flex alignItems='center' justifyContent='end' gap='4px'>
                   <Text fontSize='14px' fontWeight={400} color='#2D3748'>
                     {simplifyAddress(baker.address)}
                   </Text>
@@ -72,41 +72,29 @@ export const BakerDetailsTable = ({
               </Td>
             </Tr>
             <Tr>
-              <Td borderBottom='1px solid #E2E8F0' px={[3, 6]} pr={[0, 6]}>
+              <Td borderBottom='1px solid #E2E8F0' px={[3, 4]} pr={[0, 4]}>
                 <Text
                   color='#4A5568'
                   fontSize='14px'
                   textTransform='uppercase'
                   fontWeight={600}
                 >
-                  STAKING:
+                  TOTAL:
                 </Text>
               </Td>
-              <Td borderBottom='1px solid #E2E8F0' px={[3, 6]}>
-                <Text color='#10121B' fontWeight={600} fontSize='14px'>
+              <Td borderBottom='1px solid #E2E8F0' px={[3, 4]}>
+                <Text
+                  textAlign='end'
+                  color='#10121B'
+                  fontWeight={600}
+                  fontSize='14px'
+                >
                   {Math.floor(mutezToTez(baker.totalStakedBalance))} ꜩ
                 </Text>
               </Td>
             </Tr>
             <Tr>
-              <Td borderBottom='1px solid #E2E8F0' px={[3, 6]} pr={[0, 6]}>
-                <Text
-                  color='#4A5568'
-                  fontSize='14px'
-                  textTransform='uppercase'
-                  fontWeight={600}
-                >
-                  FREE SPACE:
-                </Text>
-              </Td>
-              <Td borderBottom='1px solid #E2E8F0' px={[3, 6]}>
-                <Text color='#10121B' fontWeight={600} fontSize='14px'>
-                  {Math.floor(baker.stakingFreeSpace)} ꜩ
-                </Text>
-              </Td>
-            </Tr>
-            <Tr>
-              <Td px={[3, 6]} pr={[0, 6]}>
+              <Td borderBottom='1px solid #E2E8F0' px={[3, 4]} pr={[0, 4]}>
                 <Text
                   color='#4A5568'
                   fontSize='14px'
@@ -116,14 +104,36 @@ export const BakerDetailsTable = ({
                   FEE:
                 </Text>
               </Td>
-              <Td px={[3, 6]}>
+              <Td borderBottom='1px solid #E2E8F0' px={[3, 4]}>
                 <Text
+                  textAlign='end'
                   color='#10121B'
                   fontWeight={600}
                   fontSize='14px'
-                  justifySelf='start'
                 >
                   {baker.stakingFees} %
+                </Text>
+              </Td>
+            </Tr>
+            <Tr>
+              <Td px={[3, 4]} pr={[0, 4]}>
+                <Text
+                  color='#4A5568'
+                  fontSize='14px'
+                  textTransform='uppercase'
+                  fontWeight={600}
+                >
+                  FREE SPACE:
+                </Text>
+              </Td>
+              <Td px={[3, 4]}>
+                <Text
+                  textAlign='end'
+                  color='#10121B'
+                  fontWeight={600}
+                  fontSize='14px'
+                >
+                  {Math.floor(baker.stakingFreeSpace)} ꜩ
                 </Text>
               </Td>
             </Tr>

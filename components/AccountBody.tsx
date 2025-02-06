@@ -79,6 +79,7 @@ export const AccountBody = ({
     success: operationSuccess,
     title,
     message,
+    amount,
     opHash,
     resetOperation,
     opType
@@ -108,6 +109,7 @@ export const AccountBody = ({
   )
 
   const [successClose, setSuccessClose] = useState(false)
+  const [successMessage, setSuccessMessage] = useState<string>('')
 
   useEffect(() => {
     if (accountInfoData && blockchainHeadData) {
@@ -148,7 +150,11 @@ export const AccountBody = ({
     accountInfo?.totalFinalizableAmount
   )
   if (isLoading || !Boolean(bakerList) || !stakingOpsStatus.loadingDone)
-    return <Spinner />
+    return (
+      <Flex py='120px' w='100%' justifyContent='center'>
+        <Spinner />
+      </Flex>
+    )
 
   return (
     <>
@@ -166,9 +172,11 @@ export const AccountBody = ({
           open={operationSuccess}
           title={title}
           desc={message}
+          amount={amount}
           tzktLink={`${process.env.NEXT_PUBLIC_TZKT_UI_URL}/${opHash}`}
           resetOperation={resetOperation}
           onSuccessClose={() => setSuccessClose(true)}
+          setSuccessMessage={setSuccessMessage}
           opType={opType}
         />
       )}
@@ -182,38 +190,53 @@ export const AccountBody = ({
         bg='#FFF'
         w='100%'
       >
-        <DisabledStakeAlert
-          mb={['30px', null, '40px']}
-          opStatus={stakingOpsStatus}
-          acctInfo={accountInfo}
-        />
-        {successClose && (
-          <Flex
-            w='100%'
-            gap='3'
-            p='4'
-            alignItems='center'
-            bg='green.100'
-            borderLeft='4px solid'
-            borderColor='green.500'
-          >
-            <Image
-              w='24px'
-              h='24px'
-              src='/images/success-icon.svg'
-              alt='success icon'
-            />
-            <Text flex={1}>You have successfully delegated your balance</Text>
-            <EndIcon
-              onClick={() => setSuccessClose(false)}
-              cursor='pointer'
-              color='green.500'
-            />
-          </Flex>
-        )}
+        <Flex
+          w='100%'
+          mb={
+            (stakingOpsStatus.Delegated && !stakingOpsStatus.CanStake) ||
+            (successClose && successMessage)
+              ? '24px'
+              : 0
+          }
+          gap='16px'
+          flexDir='column'
+        >
+          <DisabledStakeAlert
+            opStatus={stakingOpsStatus}
+            acctInfo={accountInfo}
+          />
+          {successClose && successMessage && (
+            <Flex
+              display={['none', null, 'flex']}
+              w='100%'
+              gap='3'
+              p='4'
+              alignItems='center'
+              bg='green.100'
+              borderLeft='4px solid'
+              borderColor='green.500'
+            >
+              <Image
+                w='24px'
+                h='24px'
+                src='/images/success-icon.svg'
+                alt='success icon'
+              />
+              <Text
+                flex={1}
+                dangerouslySetInnerHTML={{ __html: successMessage }}
+              />
+              <EndIcon
+                onClick={() => setSuccessClose(false)}
+                cursor='pointer'
+                color='green.500'
+              />
+            </Flex>
+          )}
+        </Flex>
 
         <Grid
-          mb={['30px', null, '40px']}
+          mb={['30px', null, '24px']}
           w='100%'
           templateColumns={['repeat(1, 1fr)', null, 'repeat(2, 1fr)']}
           gap='20px'
@@ -293,7 +316,11 @@ export const AccountBody = ({
             </Flex>
 
             {stakingOpsStatus.Delegated ? (
-              <Flex justifyContent='space-between' alignItems='center'>
+              <Flex
+                gap='16px'
+                justifyContent='space-between'
+                alignItems='center'
+              >
                 <Flex alignItems='center' gap='6px'>
                   {' '}
                   <Text
@@ -420,6 +447,7 @@ export const AccountBody = ({
           bakerList={bakerList}
         />
         <EndDelegationModal
+          isStaked={!!accountInfo?.stakedBalance}
           isOpen={endDelegateModal.isOpen}
           onClose={endDelegateModal.onClose}
           spendableBalance={spendableBalance}
@@ -428,6 +456,13 @@ export const AccountBody = ({
               accountInfo?.evaluatedDelegate?.address) ??
             ''
           }
+        />
+        <StakeModal
+          openedFromStartEarning={false}
+          bakerList={bakerList}
+          isOpen={stakeModal.isOpen}
+          onClose={stakeModal.onClose}
+          spendableBalance={spendableBalance}
         />
         <UnstakeModal
           isOpen={unstakeModal.isOpen}

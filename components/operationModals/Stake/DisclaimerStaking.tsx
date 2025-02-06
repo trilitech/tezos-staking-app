@@ -1,40 +1,44 @@
 import React, { useState } from 'react'
-import { Flex, Text, Checkbox, Image } from '@chakra-ui/react'
+import { Flex, Text, Checkbox, Image, Spinner } from '@chakra-ui/react'
 import { Header, Description } from '@/components/modalBody'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 import { useConnection } from '@/providers/ConnectionProvider'
 import { stake } from '@/components/Operations/operations'
 import { useOperationResponse } from '@/providers/OperationResponseProvider'
+import { ErrorBlock } from '@/components/ErrorBlock'
 
 export const DisclaimerStaking = ({
   stakedAmount,
-  handleOneStepForward
+  openedFromStartEarning,
+  handleOneStepForward,
+  setStakedAmount
 }: {
   stakedAmount: number
+  openedFromStartEarning: boolean
   handleOneStepForward: () => void
+  setStakedAmount: (arg: number) => void
 }) => {
   const { Tezos, beaconWallet } = useConnection()
   const [errorMessage, setErrorMessage] = useState('')
   const [waitingOperation, setWaitingOperation] = useState(false)
-  const { setMessage, setSuccess, setOpHash, setOpType } =
+  const { setMessage, setSuccess, setAmount, setOpHash, setOpType } =
     useOperationResponse()
 
   const [isChecked, setIsChecked] = useState(false)
 
   return (
     <Flex flexDir='column' alignItems='center'>
-      <Image w='25px' mb='15px' src='/images/alert-icon.svg' alt='alert icon' />
+      <Image w='25px' mb='15px' src='/images/error-icon.svg' alt='alert icon' />
       <Header mb='15px'>Disclaimer</Header>
-      <Description maxW='320px'>
+      <Description w='340px'>
         Staked balances are locked in your account until they are manually
-        unstaked and finalized. You need to wait 4 cycles to finalize after an
-        unstake.
+        unstaked which will take approximately 10 days to be finalized.
         <br />
         <br />
         Staked funds are at risk. You might lose a portion of your stake if the
-        chosen baker is slashed for not following Tezos consensus mechanism
-        rules.
+        chosen baker is <u>slashed</u> for not following{' '}
+        <u>Tezos consensus mechanism rules</u>.
       </Description>
       <Flex
         gap='24px'
@@ -65,10 +69,6 @@ export const DisclaimerStaking = ({
       </Flex>
       <PrimaryButton
         disabled={!isChecked}
-        // onClick={() => {
-        //   trackGAEvent(GAAction.BUTTON_CLICK, GACategory.CONTINUE_STAKE)
-        //   handleOneStepForward()
-        // }}
         onClick={async () => {
           if (!Tezos || !beaconWallet) {
             setErrorMessage('Wallet is not initialized, log out to try again.')
@@ -85,8 +85,11 @@ export const DisclaimerStaking = ({
             trackGAEvent(GAAction.BUTTON_CLICK, GACategory.START_STAKE_END)
             setOpHash(response.opHash)
             setOpType('stake')
-            setMessage(`You have successfully staked ${stakedAmount} ꜩ.`)
+            setMessage(
+              `You have successfully staked ${stakedAmount} ꜩ. ${openedFromStartEarning ? 'Your remaining funds will be automatically delegated to the baker.' : 'Your rewards will now accrue automatically within your staked amount.'} `
+            )
             setSuccess(true)
+            setAmount(stakedAmount)
             setStakedAmount(0)
             handleOneStepForward()
           } else {
@@ -94,8 +97,9 @@ export const DisclaimerStaking = ({
           }
         }}
       >
-        Stake
+        {waitingOperation ? <Spinner /> : 'Stake'}
       </PrimaryButton>
+      {!!errorMessage && <ErrorBlock errorMessage={errorMessage} />}
     </Flex>
   )
 }

@@ -61,12 +61,13 @@ export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
                   <Td borderBottom='1px solid #E2E8F0'>
                     <Flex alignItems='center' gap='5px'>
                       <Text
+                        w='max-content'
                         fontSize='14px'
                         fontWeight={600}
                         lineHeight='22px'
                         color='#4A5568'
                       >
-                        STAKING:
+                        TOTAL:
                       </Text>
                     </Flex>
                   </Td>
@@ -79,35 +80,12 @@ export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
                     </Flex>
                   </Td>
                 </Tr>
+
                 <Tr>
                   <Td borderBottom='1px solid #E2E8F0'>
                     <Flex alignItems='center' gap='5px'>
                       <Text
-                        fontSize='14px'
-                        fontWeight={600}
-                        lineHeight='22px'
-                        color='#4A5568'
-                      >
-                        FREE SPACE:
-                      </Text>
-                    </Flex>
-                  </Td>
-                  <Td borderBottom='1px solid #E2E8F0' w='100%'>
-                    <Flex
-                      justifyContent='flex-end'
-                      alignItems='center'
-                      gap='4px'
-                    >
-                      <Text fontSize='14px' fontWeight={600} color='#171923'>
-                        {Math.floor(baker?.stakingFreeSpace ?? 0)} ꜩ
-                      </Text>
-                    </Flex>
-                  </Td>
-                </Tr>
-                <Tr>
-                  <Td>
-                    <Flex alignItems='center' gap='5px'>
-                      <Text
+                        w='max-content'
                         fontSize='14px'
                         fontWeight={600}
                         lineHeight='22px'
@@ -117,7 +95,7 @@ export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
                       </Text>
                     </Flex>
                   </Td>
-                  <Td>
+                  <Td borderBottom='1px solid #E2E8F0'>
                     <Flex
                       justifyContent='flex-end'
                       alignItems='center'
@@ -126,6 +104,32 @@ export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
                     >
                       <Text fontSize='14px' fontWeight={600} color='#171923'>
                         {baker?.stakingFees}%
+                      </Text>
+                    </Flex>
+                  </Td>
+                </Tr>
+                <Tr>
+                  <Td>
+                    <Flex alignItems='center' gap='5px'>
+                      <Text
+                        w='max-content'
+                        fontSize='14px'
+                        fontWeight={600}
+                        lineHeight='22px'
+                        color='#4A5568'
+                      >
+                        FREE SPACE:
+                      </Text>
+                    </Flex>
+                  </Td>
+                  <Td w='100%'>
+                    <Flex
+                      justifyContent='flex-end'
+                      alignItems='center'
+                      gap='4px'
+                    >
+                      <Text fontSize='14px' fontWeight={600} color='#171923'>
+                        {Math.floor(baker?.stakingFreeSpace ?? 0)} ꜩ
                       </Text>
                     </Flex>
                   </Td>

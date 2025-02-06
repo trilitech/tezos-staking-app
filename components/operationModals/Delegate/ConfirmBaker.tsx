@@ -25,6 +25,7 @@ interface ChooseBakerProps {
   handleOneStepForward: () => void
   handleOneStepBack: () => void
   selectedBaker: BakerInfo
+  openedFromStartEarning: boolean
   setSelectedBaker: (b: null) => void
   isChangeBaker?: boolean
 }
@@ -33,6 +34,7 @@ export const ConfirmBaker = ({
   handleOneStepForward,
   handleOneStepBack,
   selectedBaker,
+  openedFromStartEarning,
   setSelectedBaker,
   isChangeBaker
 }: ChooseBakerProps) => {
@@ -44,7 +46,9 @@ export const ConfirmBaker = ({
 
   return (
     <Flex flexDir='column' justify='center'>
-      <Header pb='24px'>Delegate</Header>
+      <Header pb='24px'>
+        {isChangeBaker ? 'Confirm Baker' : 'Delegate to Baker'}
+      </Header>
       <InputGroup size='md' mb='30px'>
         <InputLeftElement h='100%'>
           <Image
@@ -121,20 +125,32 @@ export const ConfirmBaker = ({
           )
           setWaitingOperation(false)
           if (response.success) {
-            if (isChangeBaker)
-              trackGAEvent(
-                GAAction.BUTTON_CLICK,
-                GACategory.CHANGE_BAKER_SUCCESS
-              )
-            else
-              trackGAEvent(GAAction.BUTTON_CLICK, GACategory.START_DELEGATE_END)
+            if (!openedFromStartEarning) {
+              if (isChangeBaker) {
+                setOpType('change_baker')
+                setMessage(
+                  'You have successfully changed your baker. You can now choose to stake your tez with the same baker to earn higher rewards.'
+                )
+                trackGAEvent(
+                  GAAction.BUTTON_CLICK,
+                  GACategory.CHANGE_BAKER_SUCCESS
+                )
+              } else {
+                setOpType('delegate')
+                setMessage(
+                  'You have successfully delegated your balance to the baker. You can now choose to stake your tez with the same baker to earn higher rewards.'
+                )
+                trackGAEvent(
+                  GAAction.BUTTON_CLICK,
+                  GACategory.START_DELEGATE_END
+                )
+              }
 
-            setOpHash(response.opHash)
-            setOpType('delegate')
-            setMessage(
-              'You have successfully delegated your balance to the baker. You can now choose to stake your tez with the same baker to earn higher rewards.'
-            )
-            setSuccess(true)
+              setOpHash(response.opHash)
+
+              setSuccess(true)
+            }
+
             handleOneStepForward()
           } else {
             setErrorMessage(response.message)

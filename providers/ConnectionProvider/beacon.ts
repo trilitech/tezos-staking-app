@@ -1,11 +1,7 @@
 import { BeaconWallet } from '@taquito/beacon-wallet'
 import { TezosToolkit } from '@taquito/taquito'
 import { RpcClient, RpcClientCache } from '@taquito/rpc'
-import {
-  NetworkType,
-  PermissionScope,
-  BeaconEvent
-} from '@airgap/beacon-sdk'
+import { NetworkType, PermissionScope, BeaconEvent } from '@airgap/beacon-sdk'
 
 import Home from '@/pages'
 import { AccountRedirectListener } from '@/components/WalletDisconnect'
