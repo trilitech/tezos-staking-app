@@ -45,11 +45,11 @@ export const UnstakeOperationBox = ({
       justify='space-between'
       pt='24px'
       borderTop='1px solid #EDF2F7'
-      gap='10px'
+      gap='20px'
     >
       <Box w='100%'>
         <Flex flexDir='column'>
-          <Text fontSize='18px' color='#4A5568' mb='10px'>
+          <Text pb='4px' fontSize='18px' color='gray.900'>
             <Text as='span' fontWeight={600}>
               {amount}
             </Text>{' '}
@@ -71,6 +71,7 @@ export const UnstakeOperationBox = ({
             flexDir={['column', 'row']}
             alignItems={['start', 'center']}
             justify='space-between'
+            gap='15px'
           >
             <Text fontSize='14px' color='#4A5568'>
               Requested in{' '}
@@ -80,7 +81,7 @@ export const UnstakeOperationBox = ({
             </Text>
             <Flex alignItems='center' gap='6px'>
               <Text fontSize='14px' color='#4A5568' fontStyle='italic'>
-                Ready to be finalized in cycle{' '}
+                Finalizable in{' '}
                 <Link
                   href={
                     (process.env.NEXT_PUBLIC_TZKT_UI_URL ?? 'tzkt.io') +
@@ -88,7 +89,12 @@ export const UnstakeOperationBox = ({
                   }
                   target='_blank'
                 >
-                  <Text as='span' _hover={{ cursor: 'pointer' }}>
+                  <Text
+                    textDecor='underline'
+                    as='span'
+                    _hover={{ cursor: 'pointer' }}
+                  >
+                    cycle{' '}
                     {requestedCycle + (consensusRightDelay + maxSlashingPeriod)}
                   </Text>
                 </Link>
@@ -103,6 +109,7 @@ export const UnstakeOperationBox = ({
       </Box>
       {canFinalize && (
         <TertiaryButton
+          w={['100%', null, 'auto']}
           onClick={() => {
             trackGAEvent(GAAction.BUTTON_CLICK, GACategory.FINALIZE_BEGIN)
             finalizeUnstakeModal.onOpen()
