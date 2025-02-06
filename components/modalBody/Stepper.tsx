@@ -32,28 +32,35 @@ export const Stepper = ({
         <Image pr='5px' src='/images/stepper/full-dot.svg' alt='dot' />
       )}
       <Image pr='5px' src='/images/stepper/line.svg' alt='dot' />
-      {currentStep === 3 ? (
+      {currentStep >= 3 ? (
         <Image src='/images/stepper/full-dot.svg' alt='dot' />
       ) : (
         <Image src='/images/stepper/empty-dot.svg' alt='dot' />
       )}
-      {totalStep === 4 ||
-        (totalStep === 5 && (
-          <>
-            <Image pr='5px' src='/images/stepper/line.svg' alt='dot' />
 
-            {currentStep === 4 ? (
-              <Image src='/images/stepper/full-dot.svg' alt='dot' />
-            ) : (
-              <Image src='/images/stepper/empty-dot.svg' alt='dot' />
-            )}
-          </>
-        ))}
-      {totalStep === 5 && (
+      {totalStep === 4 && (
         <>
           <Image pr='5px' src='/images/stepper/line.svg' alt='dot' />
 
           {currentStep === 4 ? (
+            <Image src='/images/stepper/full-dot.svg' alt='dot' />
+          ) : (
+            <Image src='/images/stepper/empty-dot.svg' alt='dot' />
+          )}
+        </>
+      )}
+      {totalStep === 5 && (
+        <>
+          <Image pr='5px' src='/images/stepper/line.svg' alt='dot' />
+
+          {currentStep >= 4 ? (
+            <Image src='/images/stepper/full-dot.svg' alt='dot' />
+          ) : (
+            <Image src='/images/stepper/empty-dot.svg' alt='dot' />
+          )}
+          <Image pr='5px' src='/images/stepper/line.svg' alt='dot' />
+
+          {currentStep === 5 ? (
             <Image src='/images/stepper/full-dot.svg' alt='dot' />
           ) : (
             <Image src='/images/stepper/empty-dot.svg' alt='dot' />

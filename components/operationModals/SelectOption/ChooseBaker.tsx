@@ -164,7 +164,7 @@ export const ChooseBaker = ({
           onClick={() => handleSort('staking')}
           order={sortOrder['staking']}
         >
-          STAKING
+          TOTAL
         </SortText>
         <Text color='#E2E8F0' display={['none', 'inline-block']}>
           |

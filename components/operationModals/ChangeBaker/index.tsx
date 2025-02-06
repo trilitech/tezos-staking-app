@@ -64,6 +64,7 @@ export const ChangeBakerModal = ({
         case StakedDelegateStatus.ChangeConfirm:
           return (
             <ConfirmBaker
+              openedFromStartEarning={false}
               handleOneStepForward={handleOneStepForward}
               handleOneStepBack={handleOneStepBack}
               selectedBaker={selectedBaker as BakerInfo}
@@ -89,6 +90,7 @@ export const ChangeBakerModal = ({
       case UnStakedDelegateStatus.ChangeConfirm:
         return (
           <ConfirmBaker
+            openedFromStartEarning={false}
             handleOneStepForward={handleOneStepForward}
             handleOneStepBack={handleOneStepBack}
             selectedBaker={selectedBaker as BakerInfo}

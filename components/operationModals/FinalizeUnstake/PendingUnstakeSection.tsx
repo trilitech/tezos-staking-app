@@ -24,7 +24,11 @@ export const PendingUnstakeSection = ({
         alignItems='center'
         mb='24px'
       >
-        <Text>PENDING UNSTAKE REQUESTS</Text>
+        <Text>
+          {!!totalFinalizableAmount
+            ? 'FINALIZABLE UNSTAKED'
+            : 'PENDING UNSTAKE'}
+        </Text>
         <Text>({numOfPendingUnstake})</Text>
       </Flex>
       <Flex flexDir='column' gap='20px'>
@@ -32,7 +36,7 @@ export const PendingUnstakeSection = ({
         {!!totalFinalizableAmount && (
           <UnstakeOperationBox
             spendableBalance={spendableBalance}
-            totalFinalizableAmount={totalFinalizableAmount}
+            totalFinalizableAmount={100}
           />
         )}
 

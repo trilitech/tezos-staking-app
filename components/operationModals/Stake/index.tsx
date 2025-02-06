@@ -22,6 +22,7 @@ interface StakeModal {
   onClose: () => void
   spendableBalance: number
   bakerList: BakerInfo[] | null
+  openedFromStartEarning: boolean
 }
 
 enum StakeStatus {
@@ -34,6 +35,7 @@ enum StakeStatus {
 
 export const StakeModal = ({
   isOpen,
+  openedFromStartEarning,
   onClose,
   spendableBalance,
   bakerList
@@ -41,7 +43,11 @@ export const StakeModal = ({
   const [stakedAmount, setStakedAmount] = useState(0)
   const [selectedBaker, setSelectedBaker] = useState<BakerInfo | null>(null)
 
-  const totalStep = 5
+  const firstStep = openedFromStartEarning
+    ? StakeStatus.StakeStart
+    : StakeStatus.SelectAmount
+
+  const totalStep = openedFromStartEarning ? 5 : 2
 
   const { currentStep, handleOneStepBack, handleOneStepForward, resetStep } =
     useCurrentStep(onClose, totalStep)
@@ -55,24 +61,27 @@ export const StakeModal = ({
   const getCurrentStepBody = (currentStep: number) => {
     switch (currentStep) {
       case StakeStatus.StakeStart:
-        return <StakeStart handleOneStepForward={handleOneStepForward} />
+        return openedFromStartEarning ? (
+          <StakeStart handleOneStepForward={handleOneStepForward} />
+        ) : null
       case StakeStatus.ChooseBaker:
-        return (
+        return openedFromStartEarning ? (
           <ChooseBaker
             handleOneStepForward={handleOneStepForward}
             setSelectedBaker={setSelectedBaker}
             bakerList={bakerList ?? []}
           />
-        )
+        ) : null
       case StakeStatus.ConfirmBaker:
-        return (
+        return openedFromStartEarning ? (
           <ConfirmBaker
             handleOneStepForward={handleOneStepForward}
             handleOneStepBack={handleOneStepBack}
             selectedBaker={selectedBaker as BakerInfo}
+            openedFromStartEarning={openedFromStartEarning}
             setSelectedBaker={setSelectedBaker}
           />
-        )
+        ) : null
       case StakeStatus.SelectAmount:
         return (
           <SelectAmount
@@ -85,13 +94,15 @@ export const StakeModal = ({
       case StakeStatus.DisclaimerStaking:
         return (
           <DisclaimerStaking
+            setStakedAmount={setStakedAmount}
             stakedAmount={stakedAmount}
+            openedFromStartEarning={openedFromStartEarning}
             handleOneStepForward={handleOneStepForward}
           />
         )
       default:
         console.error('Delegation step is not defined')
-        return
+        return null
     }
   }
 
@@ -106,7 +117,9 @@ export const StakeModal = ({
       <ModalContent>
         <ModalHeader>
           <Flex justify='space-between' alignItems='center'>
-            <BackIcon onClick={handleOneStepBack} />
+            {currentStep > firstStep && (
+              <BackIcon onClick={handleOneStepBack} />
+            )}
             <CloseIcon
               onClick={() => {
                 closeReset()
@@ -119,7 +132,11 @@ export const StakeModal = ({
         <ModalBody>
           <Flex flexDir='column'>
             <Stepper totalStep={totalStep} currentStep={currentStep} />
-            {getCurrentStepBody(currentStep)}
+            {getCurrentStepBody(
+              firstStep === StakeStatus.SelectAmount
+                ? currentStep + 3
+                : currentStep
+            )}
           </Flex>
         </ModalBody>
       </ModalContent>

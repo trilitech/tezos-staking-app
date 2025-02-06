@@ -19,9 +19,8 @@ export const DelegateStart = ({
       />
       <Header mb='16px'>Delegation</Header>
       <Description>
-        In order to stake and earn rewards, you need to delegate your tez first.
-        Select a baker to do that now. Delegated funds remain in your account.
-        You can always spend them at will.
+        Earn risk-free rewards by delegating to a Tezos baker. Delegated funds
+        remain in your account, and you can always spend them at will.
       </Description>
       <Flex
         justifyContent='center'
