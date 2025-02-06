@@ -19,7 +19,7 @@ interface ChooseBakerProps {
   bakerList: BakerInfo[]
 }
 export function shuffleBakerList(bakerList: BakerInfo[]) {
-  for (let i = bakerList.length - 1; i > 0; i--) {
+  for (let i = bakerList?.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
     ;[bakerList[i], bakerList[j]] = [bakerList[j], bakerList[i]]
   }
