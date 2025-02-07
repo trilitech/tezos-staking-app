@@ -115,7 +115,7 @@ export default function Home() {
           py='20px'
           minH='100vh'
           bg='#cbd5e0'
-          bgImage='/images/bg-grey.png'
+          bgImage='/images/bg-blue.png'
           backgroundPosition='center'
           backgroundRepeat='no-repeat'
           backgroundSize='cover'

@@ -1,13 +1,10 @@
 'use client'
 
 import { Center } from '@chakra-ui/react'
-import { useEffect } from 'react'
-import { useConnection } from '@/providers/ConnectionProvider'
 import Head from 'next/head'
 import { CookieBanner } from '@/components/CookieBanner'
 import Footer from '@/components/Footer'
 import Faqs from '@/components/Faqs'
-import { useRouter } from 'next/router'
 
 export interface DelegateData {
   address: string
@@ -27,15 +24,6 @@ async function fetchDelegateData(address: string) {
 const metaDescription = 'Tezos Staking App - Delegate and stake with ease.'
 
 export default function Home() {
-  const { isConnected } = useConnection()
-  const router = useRouter()
-
-  useEffect(() => {
-    if (isConnected) {
-      router.push('/')
-    }
-  }, [isConnected, router])
-
   return (
     <>
       <Head>
