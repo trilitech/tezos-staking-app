@@ -115,13 +115,17 @@ export const ChangeBakerModal = ({
       <ModalContent>
         <ModalHeader>
           <Flex justify='space-between' alignItems='center'>
-            <BackIcon
-              onClick={() => {
-                if (isStaked && currentStep === 3) setSelectedBaker(null)
-                else if (!isStaked && currentStep === 2) setSelectedBaker(null)
-                handleOneStepBack()
-              }}
-            />
+            <Flex>
+              <BackIcon
+                display={currentStep > 1 ? 'block' : 'none'}
+                onClick={() => {
+                  if (isStaked && currentStep === 3) setSelectedBaker(null)
+                  else if (!isStaked && currentStep === 2)
+                    setSelectedBaker(null)
+                  handleOneStepBack()
+                }}
+              />
+            </Flex>
             <CloseIcon
               onClick={() => {
                 closeReset()

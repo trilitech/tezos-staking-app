@@ -247,7 +247,7 @@ export const AccountBody = ({
             pt={[null, null, '20px']}
           >
             <Text fontSize='14px' color='#4A5568' fontWeight={600}>
-              AVAILABLE
+              SPENDABLE
             </Text>
             <Text fontWeight={600} fontSize='18px' color='#171923'>
               {!!spendableBalance ? spendableBalance : 0}{' '}

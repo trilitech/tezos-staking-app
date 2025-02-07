@@ -126,7 +126,7 @@ export default function Home() {
               btnText='Refresh'
             />
           )}
-          <Flex flexDir='column' w='600px' gap='10px' mx='20px'>
+          <Flex flexDir='column' w='700px' gap='10px' mx='20px'>
             <AccountBanner
               name='Your Wallet'
               address={delegateData?.address ?? ''}
