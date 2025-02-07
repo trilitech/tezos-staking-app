@@ -1,25 +1,14 @@
-import React, { useState } from 'react'
-import { Flex, Text, Checkbox, Image } from '@chakra-ui/react'
+import React from 'react'
+import { Flex, Image } from '@chakra-ui/react'
 import { Header, Description } from '@/components/modalBody'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
-import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
-import { useConnection } from '@/providers/ConnectionProvider'
-import { stake } from '@/components/Operations/operations'
-import { useOperationResponse } from '@/providers/OperationResponseProvider'
+import { GAAction, GACategory, trackGAEvent } from '@/utils/trackGAEvent'
 
 export const DisclaimerEndDelegate = ({
   handleOneStepForward
 }: {
   handleOneStepForward: () => void
 }) => {
-  const { Tezos, beaconWallet } = useConnection()
-  const [errorMessage, setErrorMessage] = useState('')
-  const [waitingOperation, setWaitingOperation] = useState(false)
-  const { setMessage, setSuccess, setOpHash, setOpType } =
-    useOperationResponse()
-
-  const [isChecked, setIsChecked] = useState(false)
-
   return (
     <Flex flexDir='column' alignItems='center'>
       <Image w='25px' mb='15px' src='/images/error-icon.svg' alt='alert icon' />
@@ -31,6 +20,7 @@ export const DisclaimerEndDelegate = ({
       </Description>
       <PrimaryButton
         onClick={async () => {
+          trackGAEvent(GAAction.BUTTON_CLICK, GACategory.CHOOSE_I_UNDERSTAND)
           handleOneStepForward()
         }}
       >
