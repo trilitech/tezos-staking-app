@@ -36,7 +36,7 @@ export const PendingUnstakeSection = ({
         {!!totalFinalizableAmount && (
           <UnstakeOperationBox
             spendableBalance={spendableBalance}
-            totalFinalizableAmount={100}
+            totalFinalizableAmount={totalFinalizableAmount}
           />
         )}
 

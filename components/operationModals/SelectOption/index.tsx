@@ -14,12 +14,7 @@ import {
   useDisclosure
 } from '@chakra-ui/react'
 import { BakerInfo } from '@/components/Operations/tezInterfaces'
-import { DelegateStart } from './DelegateStart'
-import { ChooseBaker } from './ChooseBaker'
-import useCurrentStep from '@/utils/useCurrentStep'
-import { Stepper } from '@/components/modalBody/Stepper'
-import { BackIcon, CloseIcon } from '@/components/icons'
-import { ConfirmBaker } from './ConfirmBaker'
+import { CloseIcon } from '@/components/icons'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
 import { DelegationModal } from '../Delegate'
@@ -30,22 +25,6 @@ export interface DelegateModalProps {
   onClose: () => void
   bakerList: BakerInfo[] | null
   spendableBalance: number
-}
-
-enum DelegateStatus {
-  DelegationStart = 1,
-  ChooseBaker = 2,
-  DelegationConfirm = 3
-}
-
-const bakersListApiUrl = `${process.env.NEXT_PUBLIC_TZKT_API_URL}/v1/delegates?active=true&limit=1000`
-export async function getBakerList() {
-  const response = await fetch(bakersListApiUrl)
-  if (!response.ok) {
-    console.error('Failed to fetch baker list')
-    return null
-  }
-  return response.json()
 }
 
 export const SelectOptionModal = ({
@@ -70,7 +49,6 @@ export const SelectOptionModal = ({
         <ModalContent pb='0px' minW='90%'>
           <ModalHeader p={['24px', null, '40px']} pb={['12px', null, '40px']}>
             <Flex h='36px' position='relative' alignItems='center' w='100%'>
-              {/* Left Button */}
               <Button
                 position='absolute'
                 left='0'
@@ -494,7 +472,6 @@ export const SelectOptionModal = ({
         onClose={delegateModal.onClose}
         bakerList={bakerList}
       />
-      {/* CHECK STAKE NOT FROM SELECT OPTION BEFORE DOING ANYTHING HERE*/}
       <StakeModal
         openedFromStartEarning={true}
         isOpen={stakeModal.isOpen}

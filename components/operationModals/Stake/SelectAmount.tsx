@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, InputGroup, Input, Image, Text, Spinner } from '@chakra-ui/react'
+import { Flex, InputGroup, Input, Image, Text } from '@chakra-ui/react'
 import { Header, ColumnHeader, BalanceBox } from '@/components/modalBody'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
