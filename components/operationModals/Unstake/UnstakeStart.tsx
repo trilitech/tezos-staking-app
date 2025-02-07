@@ -2,7 +2,6 @@ import React from 'react'
 import { Flex, Image } from '@chakra-ui/react'
 import { Header, Description } from '@/components/modalBody'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
-import { RoundBorderText } from '../Delegate/DelegateStart'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 
 export const UnstakeStart = ({
