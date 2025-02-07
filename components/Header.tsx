@@ -1,9 +1,19 @@
 import { Box, Button, Flex, Image, Link, Text } from '@chakra-ui/react'
 import { useConnection } from '@/providers/ConnectionProvider'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 
 export const Header = () => {
-  const { connect } = useConnection()
+  const { isConnected, connect, disconnect } = useConnection()
+  const router = useRouter()
+  const [connectClicked, setConnectClicked] = useState(false)
+
+  useEffect(() => {
+    if (isConnected && connectClicked) {
+      window.location.href = '/'
+    }
+  }, [isConnected, router, connectClicked])
 
   return (
     <Box
@@ -43,6 +53,7 @@ export const Header = () => {
                 display='inline-flex'
                 alignItems='center'
                 bg='transparent'
+                _hover={{ bg: 'transparent' }}
                 border='none'
                 p={0}
               >
@@ -71,22 +82,41 @@ export const Header = () => {
               <Text display={['none', null, 'inline']}>Help</Text>
             </Button>
 
-            <Button
-              variant='primary'
-              minW={['48px', null, 'auto']}
-              px={['12px', null, '24px']}
-              onClick={() => {
-                trackGAEvent(GAAction.BUTTON_CLICK, GACategory.WALLET_BEGIN)
-                connect()
-              }}
-            >
-              <Image
-                maxW='110px'
-                src='/images/wallet-icon.svg'
-                alt='Wallet Icon'
-              />
-              <Text display={['none', null, 'inline']}>Connect</Text>
-            </Button>
+            {isConnected ? (
+              <Button
+                border='solid 2px #EDF2F7'
+                px='12px'
+                py='24px'
+                borderRadius='8px'
+                variant='ternary'
+              >
+                <Image
+                  w='24px'
+                  h='24px'
+                  onClick={() => disconnect()}
+                  src='/images/logout_white.svg'
+                  alt='logout'
+                />
+              </Button>
+            ) : (
+              <Button
+                variant='primary'
+                minW={['48px', null, 'auto']}
+                px={['12px', null, '24px']}
+                onClick={() => {
+                  trackGAEvent(GAAction.BUTTON_CLICK, GACategory.WALLET_BEGIN)
+                  setConnectClicked(true)
+                  connect()
+                }}
+              >
+                <Image
+                  maxW='110px'
+                  src='/images/wallet-icon.svg'
+                  alt='Wallet Icon'
+                />
+                <Text display={['none', null, 'inline']}>Connect</Text>
+              </Button>
+            )}
           </Flex>
         </Flex>
       </Flex>
