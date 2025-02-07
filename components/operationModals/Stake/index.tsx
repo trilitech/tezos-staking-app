@@ -117,9 +117,12 @@ export const StakeModal = ({
       <ModalContent>
         <ModalHeader>
           <Flex justify='space-between' alignItems='center'>
-            {currentStep > firstStep && (
-              <BackIcon onClick={handleOneStepBack} />
-            )}
+            <Flex>
+              <BackIcon
+                display={currentStep > 1 ? 'block' : 'none'}
+                onClick={handleOneStepBack}
+              />
+            </Flex>
             <CloseIcon
               onClick={() => {
                 closeReset()
