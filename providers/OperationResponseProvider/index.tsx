@@ -11,6 +11,8 @@ export type OpType =
 interface OperationResponseContextType {
   success: boolean
   setSuccess: (arg: boolean) => void
+  amount: number
+  setAmount: (arg: number) => void
   opHash?: string
   setOpHash: (arg?: string) => void
   title?: string
@@ -40,6 +42,7 @@ export const OperationResponseProvider = ({ children }: { children: any }) => {
   const [message, setMessage] = useState('')
   const [title, setTitle] = useState('')
   const [success, setSuccess] = useState(false)
+  const [amount, setAmount] = useState(0)
   const [opHash, setOpHash] = useState<string | undefined>(undefined)
   const [opType, setOpType] = useState<OpType | undefined>(undefined)
 
@@ -47,6 +50,7 @@ export const OperationResponseProvider = ({ children }: { children: any }) => {
     setMessage('')
     setTitle('')
     setSuccess(false)
+    setAmount(0)
     setOpHash(undefined)
     setOpType(undefined)
   }
@@ -56,6 +60,8 @@ export const OperationResponseProvider = ({ children }: { children: any }) => {
       value={{
         success,
         setSuccess,
+        amount,
+        setAmount,
         opHash,
         setOpHash,
         title,

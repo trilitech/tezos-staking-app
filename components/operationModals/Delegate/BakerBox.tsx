@@ -87,18 +87,10 @@ export const BakerBox = ({
       >
         <CustomFlex>
           <Text fontSize='14px' fontWeight={600} color='#4A5568' mr='3px'>
-            STAKING:
+            TOTAL:
           </Text>
           <Text color='#171923' fontWeight={600} fontSize='14px'>
             {Math.floor(mutezToTez(baker.totalStakedBalance))} ꜩ
-          </Text>
-        </CustomFlex>
-        <CustomFlex>
-          <Text fontSize='14px' fontWeight={600} color='#4A5568' mr='3px'>
-            FREE SPACE:
-          </Text>
-          <Text color='#171923' fontWeight={600} fontSize='14px'>
-            {Math.floor(baker.stakingFreeSpace)} ꜩ
           </Text>
         </CustomFlex>
         <CustomFlex>
@@ -107,6 +99,14 @@ export const BakerBox = ({
           </Text>
           <Text color='#171923' fontWeight={600} fontSize='14px'>
             {baker.stakingFees}%
+          </Text>
+        </CustomFlex>
+        <CustomFlex>
+          <Text fontSize='14px' fontWeight={600} color='#4A5568' mr='3px'>
+            FREE SPACE:
+          </Text>
+          <Text color='#171923' fontWeight={600} fontSize='14px'>
+            {Math.floor(baker.stakingFreeSpace)} ꜩ
           </Text>
         </CustomFlex>
       </Flex>

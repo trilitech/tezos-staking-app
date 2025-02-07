@@ -19,23 +19,23 @@ export const TermAndPolicy = ({ ...styles }: FlexProps) => {
         {...styles}
       >
         <Text color={isConnected ? '#2D3748' : '#FFFFFF'}>
-          © 2024 Trilitech Limited
+          © {new Date().getFullYear()} Tezos
           <Divider mx='5px' />{' '}
           <Link href='/termsOfUseStakingApp/' target='_blank'>
             <Text as='span' _hover={{ cursor: 'pointer' }}>
-              Terms of Use
+              Terms
             </Text>
           </Link>
           <Divider mx='5px' />{' '}
           <Link href='/privacy_policy/' target='_blank'>
             <Text as='span' _hover={{ cursor: 'pointer' }}>
-              Privacy Policy
+              Privacy
             </Text>
           </Link>
           <Divider mx='5px' />{' '}
-          <Link href='/cookie_policy/' target='_blank'>
+          <Link href='/faqs/'>
             <Text as='span' _hover={{ cursor: 'pointer' }}>
-              Cookie Policy
+              Help
             </Text>
           </Link>
         </Text>

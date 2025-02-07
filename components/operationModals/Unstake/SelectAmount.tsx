@@ -27,7 +27,8 @@ export const SelectAmount = ({
   handleOneStepForward: () => void
 }) => {
   const { Tezos, beaconWallet } = useConnection()
-  const { setMessage, setSuccess, setOpHash, setTitle } = useOperationResponse()
+  const { setMessage, setSuccess, setAmount, setOpHash, setTitle, setOpType } =
+    useOperationResponse()
   const [errorMessage, setErrorMessage] = useState('')
   const [waitingOperation, setWaitingOperation] = useState(false)
 
@@ -42,7 +43,7 @@ export const SelectAmount = ({
 
   return (
     <Flex flexDir='column'>
-      <Header mb='24px'>Select Amount</Header>
+      <Header mb='24px'>Unstake Amount</Header>
       <ColumnHeader mb='12px'>STAKED</ColumnHeader>
       <BalanceBox balance={stakedAmount} />
       <ColumnHeader mb='12px'>ENTER AMOUNT</ColumnHeader>
@@ -96,9 +97,11 @@ export const SelectAmount = ({
             setOpHash(response.opHash)
             setTitle('Unstake Requested')
             setMessage(
-              `You have unstaked ${unstakeAmount} tez. Wait for 4 cycles and then finalize your balance.`
+              `You have unstaked ${unstakeAmount} ꜩ. After 10 days, you must finalize the unstaking process, after which your staked balance will become available in your wallet again.`
             )
+            setOpType('unstake')
             setSuccess(true)
+            setAmount(unstakeAmount)
             setUnstakeAmount(0)
             handleOneStepForward()
           } else {
@@ -106,7 +109,7 @@ export const SelectAmount = ({
           }
         }}
       >
-        {waitingOperation ? <Spinner /> : 'Unstake'}
+        {waitingOperation ? <Spinner /> : 'Confirm'}
       </PrimaryButton>
       {!!errorMessage && <ErrorBlock errorMessage={errorMessage} />}
     </Flex>

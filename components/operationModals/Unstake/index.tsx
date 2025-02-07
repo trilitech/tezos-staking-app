@@ -70,7 +70,12 @@ export const UnstakeModal = ({
       <ModalContent>
         <ModalHeader>
           <Flex justify='space-between' alignItems='center'>
-            <BackIcon onClick={handleOneStepBack} />
+            <Flex>
+              <BackIcon
+                display={currentStep > 1 ? 'block' : 'none'}
+                onClick={handleOneStepBack}
+              />
+            </Flex>
             <CloseIcon
               onClick={() => {
                 closeReset()

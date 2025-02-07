@@ -115,7 +115,7 @@ export default function Home() {
           py='20px'
           minH='100vh'
           bg='#cbd5e0'
-          bgImage='/images/bg-grey.png'
+          bgImage='/images/bg-blue.png'
           backgroundPosition='center'
           backgroundRepeat='no-repeat'
           backgroundSize='cover'
@@ -126,7 +126,7 @@ export default function Home() {
               btnText='Refresh'
             />
           )}
-          <Flex flexDir='column' w='600px' gap='10px' mx='20px'>
+          <Flex flexDir='column' w='700px' gap='10px' mx='20px'>
             <AccountBanner
               name='Your Wallet'
               address={delegateData?.address ?? ''}

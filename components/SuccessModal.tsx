@@ -30,20 +30,43 @@ const setGAEvent = (opType?: OpType) => {
   }
 }
 
+const getSuccessMessage = (opType?: OpType, amount?: number) => {
+  switch (opType) {
+    case 'delegate':
+      return 'You have successfully delegated your balance'
+    case 'change_baker':
+      return 'You have successfully changed your baker'
+    case 'end_delegate':
+      return 'You have successfully ended your delegation'
+    case 'stake':
+      return `You have successfully staked <strong>${amount}</strong> ꜩ`
+    case 'unstake':
+      return `You have successfully requested to unstake <strong>${amount}</strong> ꜩ`
+    default:
+      return ''
+  }
+}
+
 export const SuccessModal = ({
   title,
   desc,
   tzktLink,
   resetOperation,
+  onSuccessClose,
+  setSuccessMessage,
   open,
-  opType
+  opType,
+  amount
 }: {
   title?: string
   desc: string
   tzktLink: string
   resetOperation: () => void
+  onSuccessClose: () => void
+  setSuccessMessage: (message: string) => void
   open: boolean
   opType?: OpType
+  amount?: number
 }) => {
   const { onClose } = useDisclosure()
 
@@ -55,6 +78,7 @@ export const SuccessModal = ({
           onClick={() => {
             resetOperation()
             onClose()
+            onSuccessClose()
           }}
         />
         <ModalBody mt='40px'>
@@ -79,7 +103,7 @@ export const SuccessModal = ({
               color='#2D3748'
               fontSize='16px'
               maxW='300px'
-              mb='16px'
+              mb='30px'
               lineHeight='22px'
             >
               {desc}
@@ -89,6 +113,8 @@ export const SuccessModal = ({
                 setGAEvent(opType)
                 resetOperation()
                 onClose()
+                onSuccessClose()
+                setSuccessMessage(getSuccessMessage(opType, amount))
               }}
             >
               Continue

@@ -39,6 +39,8 @@ import { ExpandBakerInfoTable } from './ExpandBakerInfoTable'
 import _ from 'lodash'
 import { DisabledStakeAlert } from '@/components/DisabledStakeAlert'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
+import { SelectOptionModal } from './operationModals/SelectOption'
+import { EndIcon } from './ctas/End'
 
 const getNumOfUnstake = (
   unstOps?: UnstakedOperation[],
@@ -63,6 +65,8 @@ export const AccountBody = ({
     spendableBalance: 0,
     stakedBalance: 0
   }
+  const selectOptionModal = useDisclosure()
+
   const delegateModal = useDisclosure()
   const changeBakerModal = useDisclosure()
   const endDelegateModal = useDisclosure()
@@ -75,6 +79,7 @@ export const AccountBody = ({
     success: operationSuccess,
     title,
     message,
+    amount,
     opHash,
     resetOperation,
     opType
@@ -102,6 +107,9 @@ export const AccountBody = ({
   const [unstakedOps, setUnstakedOps] = useState<UnstakedOperation[]>(
     [] as UnstakedOperation[]
   )
+
+  const [successClose, setSuccessClose] = useState(false)
+  const [successMessage, setSuccessMessage] = useState<string>('')
 
   useEffect(() => {
     if (accountInfoData && blockchainHeadData) {
@@ -142,7 +150,11 @@ export const AccountBody = ({
     accountInfo?.totalFinalizableAmount
   )
   if (isLoading || !Boolean(bakerList) || !stakingOpsStatus.loadingDone)
-    return <Spinner />
+    return (
+      <Flex py='120px' w='100%' justifyContent='center'>
+        <Spinner />
+      </Flex>
+    )
 
   return (
     <>
@@ -160,8 +172,11 @@ export const AccountBody = ({
           open={operationSuccess}
           title={title}
           desc={message}
+          amount={amount}
           tzktLink={`${process.env.NEXT_PUBLIC_TZKT_UI_URL}/${opHash}`}
           resetOperation={resetOperation}
+          onSuccessClose={() => setSuccessClose(true)}
+          setSuccessMessage={setSuccessMessage}
           opType={opType}
         />
       )}
@@ -174,13 +189,54 @@ export const AccountBody = ({
         borderBottomRadius={!!numOfPendingUnstake ? '' : '16px'}
         bg='#FFF'
         w='100%'
-        gap={['30px', null, '40px']}
       >
-        <DisabledStakeAlert
-          opStatus={stakingOpsStatus}
-          acctInfo={accountInfo}
-        />
+        <Flex
+          w='100%'
+          mb={
+            (stakingOpsStatus.Delegated && !stakingOpsStatus.CanStake) ||
+            (successClose && successMessage)
+              ? '24px'
+              : 0
+          }
+          gap='16px'
+          flexDir='column'
+        >
+          <DisabledStakeAlert
+            opStatus={stakingOpsStatus}
+            acctInfo={accountInfo}
+          />
+          {successClose && successMessage && (
+            <Flex
+              display={['none', null, 'flex']}
+              w='100%'
+              gap='3'
+              p='4'
+              alignItems='center'
+              bg='green.100'
+              borderLeft='4px solid'
+              borderColor='green.500'
+            >
+              <Image
+                w='24px'
+                h='24px'
+                src='/images/success-icon.svg'
+                alt='success icon'
+              />
+              <Text
+                flex={1}
+                dangerouslySetInnerHTML={{ __html: successMessage }}
+              />
+              <EndIcon
+                onClick={() => setSuccessClose(false)}
+                cursor='pointer'
+                color='green.500'
+              />
+            </Flex>
+          )}
+        </Flex>
+
         <Grid
+          mb={['30px', null, '24px']}
           w='100%'
           templateColumns={['repeat(1, 1fr)', null, 'repeat(2, 1fr)']}
           gap='20px'
@@ -191,7 +247,7 @@ export const AccountBody = ({
             pt={[null, null, '20px']}
           >
             <Text fontSize='14px' color='#4A5568' fontWeight={600}>
-              AVAILABLE
+              SPENDABLE
             </Text>
             <Text fontWeight={600} fontSize='18px' color='#171923'>
               {!!spendableBalance ? spendableBalance : 0}{' '}
@@ -226,6 +282,19 @@ export const AccountBody = ({
               <Text fontSize='14px' color='#4A5568' fontWeight={600}>
                 DELEGATION
               </Text>
+            </Flex>
+            <Flex justifyContent='space-between' alignItems='center'>
+              <Flex alignItems='center' gap='6px'>
+                {stakingOpsStatus.Delegated ? (
+                  <Image src='/images/active-icon.svg' alt='active icon' />
+                ) : (
+                  <Image src='/images/inactive-icon.svg' alt='inactive icon' />
+                )}
+                <Text fontWeight={600} fontSize='18px' color='#171923'>
+                  {stakingOpsStatus.Delegated ? 'Active ' : 'Inactive'}
+                </Text>
+              </Flex>
+
               {accountInfo?.type === 'user' && stakingOpsStatus.Delegated && (
                 <End
                   onClick={() => {
@@ -238,64 +307,61 @@ export const AccountBody = ({
                 />
               )}
             </Flex>
-            <Flex alignItems='center' gap='6px'>
-              {stakingOpsStatus.Delegated ? (
-                <Image src='/images/active-icon.svg' alt='active icon' />
-              ) : (
-                <Image src='/images/inactive-icon.svg' alt='inactive icon' />
-              )}
-              <Text fontWeight={600} fontSize='18px' color='#171923'>
-                {stakingOpsStatus.Delegated ? 'Active ' : 'Inactive'}
-              </Text>
-            </Flex>
           </Flex>
           <Flex flexDir='column' borderTop='1px solid #EDF2F7' pt='20px'>
             <Flex justify='space-between' alignItems='center'>
               <Text fontSize='14px' color='#4A5568' fontWeight={600}>
                 BAKER
               </Text>
-              {accountInfo?.type === 'user' &&
-                (stakingOpsStatus.Delegated ? (
-                  <Change
-                    onClick={() => {
-                      trackGAEvent(
-                        GAAction.BUTTON_CLICK,
-                        GACategory.CHOOSE_CHANGE_BAKER
-                      )
-                      changeBakerModal.onOpen()
-                    }}
-                  />
-                ) : (
-                  <ViewBakers />
-                ))}
             </Flex>
 
             {stakingOpsStatus.Delegated ? (
-              <Flex gap='6px' alignItems='center'>
-                <Text
-                  color='#171923'
-                  fontSize='18px'
-                  fontWeight={600}
-                  lineHeight='18px'
-                >
-                  {accountInfo?.evaluatedDelegate?.alias ??
-                    simplifyAddress(
-                      accountInfo?.evaluatedDelegate?.address ?? ''
-                    )}
-                </Text>
-                <Image
-                  h='18px'
-                  w='18px'
-                  color='#A0AEC0'
-                  _hover={{ cursor: 'pointer' }}
-                  src='/images/copy-icon.svg'
-                  alt='copy icon'
-                  onClick={() =>
-                    copyTextToClipboard(
-                      accountInfo?.evaluatedDelegate.address ?? ''
-                    )
-                  }
-                />
+              <Flex
+                gap='16px'
+                justifyContent='space-between'
+                alignItems='center'
+              >
+                <Flex alignItems='center' gap='6px'>
+                  {' '}
+                  <Text
+                    color='#171923'
+                    fontSize='18px'
+                    fontWeight={600}
+                    lineHeight='18px'
+                  >
+                    {accountInfo?.evaluatedDelegate?.alias ??
+                      simplifyAddress(
+                        accountInfo?.evaluatedDelegate?.address ?? ''
+                      )}
+                  </Text>
+                  <Image
+                    h='18px'
+                    w='18px'
+                    color='#A0AEC0'
+                    _hover={{ cursor: 'pointer' }}
+                    src='/images/copy-icon.svg'
+                    alt='copy icon'
+                    onClick={() =>
+                      copyTextToClipboard(
+                        accountInfo?.evaluatedDelegate.address ?? ''
+                      )
+                    }
+                  />
+                </Flex>
+                {accountInfo?.type === 'user' &&
+                  (stakingOpsStatus.Delegated ? (
+                    <Change
+                      onClick={() => {
+                        trackGAEvent(
+                          GAAction.BUTTON_CLICK,
+                          GACategory.CHOOSE_CHANGE_BAKER
+                        )
+                        changeBakerModal.onOpen()
+                      }}
+                    />
+                  ) : (
+                    <ViewBakers />
+                  ))}
               </Flex>
             ) : (
               <Text
@@ -309,8 +375,7 @@ export const AccountBody = ({
             )}
           </Flex>
         </Grid>
-
-        <Flex direction='column' w='100%' gap='16px'>
+        <Flex direction='column' w='100%' gap={['30px', null, '40px']}>
           {(accountInfo?.type ?? 'user') === 'user' &&
             stakingOpsStatus.Delegated &&
             stakingOpsStatus.bakerAcceptsStaking && (
@@ -327,15 +392,11 @@ export const AccountBody = ({
                 maxW={''}
                 disabled={isFirstTime}
                 onClick={() => {
-                  trackGAEvent(
-                    GAAction.BUTTON_CLICK,
-                    GACategory.CHOOSE_BAKER_START
-                  )
-                  delegateModal.onOpen()
+                  selectOptionModal.onOpen()
                 }}
                 w='100%'
               >
-                Select Baker
+                Start Earning
               </PrimaryButton>
             )}
             {stakingOpsStatus.Delegated && (
@@ -367,22 +428,26 @@ export const AccountBody = ({
             )}
           </Flex>
         </Flex>
-
         {/* below are all operation modals. TODO: how to make this more nit, rather than put all modals here, maybe a function/hook? */}
+        <SelectOptionModal
+          isOpen={selectOptionModal.isOpen}
+          onClose={selectOptionModal.onClose}
+          bakerList={bakerList}
+          spendableBalance={spendableBalance}
+        />
         <DelegationModal
           isOpen={delegateModal.isOpen}
           onClose={delegateModal.onClose}
           bakerList={bakerList}
         />
-
         <ChangeBakerModal
           isStaked={!!accountInfo?.stakedBalance}
           isOpen={changeBakerModal.isOpen}
           onClose={changeBakerModal.onClose}
           bakerList={bakerList}
         />
-
         <EndDelegationModal
+          isStaked={!!accountInfo?.stakedBalance}
           isOpen={endDelegateModal.isOpen}
           onClose={endDelegateModal.onClose}
           spendableBalance={spendableBalance}
@@ -392,13 +457,13 @@ export const AccountBody = ({
             ''
           }
         />
-
         <StakeModal
+          openedFromStartEarning={false}
+          bakerList={bakerList}
           isOpen={stakeModal.isOpen}
           onClose={stakeModal.onClose}
           spendableBalance={spendableBalance}
         />
-
         <UnstakeModal
           isOpen={unstakeModal.isOpen}
           onClose={unstakeModal.onClose}

@@ -64,6 +64,7 @@ export const ChangeBakerModal = ({
         case StakedDelegateStatus.ChangeConfirm:
           return (
             <ConfirmBaker
+              openedFromStartEarning={false}
               handleOneStepForward={handleOneStepForward}
               handleOneStepBack={handleOneStepBack}
               selectedBaker={selectedBaker as BakerInfo}
@@ -89,6 +90,7 @@ export const ChangeBakerModal = ({
       case UnStakedDelegateStatus.ChangeConfirm:
         return (
           <ConfirmBaker
+            openedFromStartEarning={false}
             handleOneStepForward={handleOneStepForward}
             handleOneStepBack={handleOneStepBack}
             selectedBaker={selectedBaker as BakerInfo}
@@ -113,13 +115,17 @@ export const ChangeBakerModal = ({
       <ModalContent>
         <ModalHeader>
           <Flex justify='space-between' alignItems='center'>
-            <BackIcon
-              onClick={() => {
-                if (isStaked && currentStep === 3) setSelectedBaker(null)
-                else if (!isStaked && currentStep === 2) setSelectedBaker(null)
-                handleOneStepBack()
-              }}
-            />
+            <Flex>
+              <BackIcon
+                display={currentStep > 1 ? 'block' : 'none'}
+                onClick={() => {
+                  if (isStaked && currentStep === 3) setSelectedBaker(null)
+                  else if (!isStaked && currentStep === 2)
+                    setSelectedBaker(null)
+                  handleOneStepBack()
+                }}
+              />
+            </Flex>
             <CloseIcon
               onClick={() => {
                 closeReset()

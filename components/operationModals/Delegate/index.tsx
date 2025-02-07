@@ -69,6 +69,7 @@ export const DelegationModal = ({
       case DelegateStatus.DelegationConfirm:
         return (
           <ConfirmBaker
+            openedFromStartEarning={false}
             handleOneStepForward={handleOneStepForward}
             handleOneStepBack={handleOneStepBack}
             selectedBaker={selectedBaker as BakerInfo}
@@ -92,12 +93,15 @@ export const DelegationModal = ({
       <ModalContent>
         <ModalHeader>
           <Flex justify='space-between' alignItems='center'>
-            <BackIcon
-              onClick={() => {
-                if (currentStep === 3) setSelectedBaker(null)
-                handleOneStepBack()
-              }}
-            />
+            <Flex>
+              <BackIcon
+                display={currentStep > 1 ? 'block' : 'none'}
+                onClick={() => {
+                  if (currentStep === 3) setSelectedBaker(null)
+                  handleOneStepBack()
+                }}
+              />
+            </Flex>
             <CloseIcon
               onClick={() => {
                 trackGAEvent(

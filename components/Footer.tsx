@@ -56,7 +56,29 @@ export default function Footer() {
             />
             <Button
               as='a'
-              href='https://tezos.com/privacy-notice/'
+              href='/termsOfUseStakingApp/'
+              target='_blank'
+              variant='ternary'
+              px='12px'
+              py='6px'
+              fontSize={['sm', null, '18px']}
+              fontWeight='400'
+              height='36px'
+            >
+              Terms
+            </Button>
+            <Box
+              mx='24px'
+              my='auto'
+              bg='gray.300'
+              borderRadius='100px'
+              h='12px'
+              w='2px'
+              display={['none', null, 'block']}
+            />
+            <Button
+              as='a'
+              href='/privacy_policy/'
               target='_blank'
               variant='ternary'
               px='12px'
