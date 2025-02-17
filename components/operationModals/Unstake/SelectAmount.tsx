@@ -49,6 +49,7 @@ export const SelectAmount = ({
       <ColumnHeader mb='12px'>ENTER AMOUNT</ColumnHeader>
       <InputGroup size='md' mb='30px'>
         <Input
+          h='46px'
           isRequired
           type='number'
           onChange={handleChange}
@@ -56,7 +57,6 @@ export const SelectAmount = ({
           pr='4.5rem'
           placeholder='0.00'
           fontWeight={600}
-          h='58px'
           _placeholder={{ fontWeight: 600, fontSize: '16px' }}
         />
         <InputRightElement width='4.5rem' pr='12px' h='100%'>
@@ -97,7 +97,7 @@ export const SelectAmount = ({
             setOpHash(response.opHash)
             setTitle('Unstake Requested')
             setMessage(
-              `You have unstaked ${unstakeAmount} ꜩ. After 10 days, you must finalize the unstaking process, after which your staked balance will become available in your wallet again.`
+              `You have unstaked ${unstakeAmount} tez. After 10 days, you must finalize the unstaking process, after which your staked balance will become available in your wallet again.`
             )
             setOpType('unstake')
             setSuccess(true)

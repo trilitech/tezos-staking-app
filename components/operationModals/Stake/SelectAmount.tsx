@@ -33,6 +33,7 @@ export const SelectAmount = ({
       <ColumnHeader mb='12px'>ENTER AMOUNT</ColumnHeader>
       <InputGroup size='md' mb='30px'>
         <Input
+          h='46px'
           isRequired
           type='number'
           onChange={handleChange}

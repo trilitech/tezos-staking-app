@@ -24,10 +24,9 @@ export const SecondaryButton = ({
       px='24px'
       lineHeight='24px'
       _hover={{
-        bg: disabled ? '#E2E8F0' : 'white',
+        bg: disabled ? '#E2E8F0' : '#0052FF',
         cursor: disabled ? 'not-allowed' : 'pointer',
-        color: '#003EE0',
-        borderColor: '#003EE0'
+        color: disabled ? '#A0AEC0' : 'white',
       }}
       onClick={disabled ? undefined : onClick}
       disabled={disabled}

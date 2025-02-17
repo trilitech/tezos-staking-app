@@ -58,7 +58,7 @@ export default function Home() {
           stakingFees: baker.edgeOfBakingOverStaking / 10000000,
           stakingFreeSpace: mutezToTez(
             baker.stakedBalance * mutezToTez(baker.limitOfStakingOverBaking) -
-              baker.externalStakedBalance
+            baker.externalStakedBalance
           ),
           totalStakedBalance: baker.totalStakedBalance
         }
@@ -115,7 +115,7 @@ export default function Home() {
           py='20px'
           minH='100vh'
           bg='#cbd5e0'
-          bgImage='/images/bg-blue.png'
+          bgImage={['/images/bg-blue-mobile.svg', '/images/bg-blue-desktop.svg']}
           backgroundPosition='center'
           backgroundRepeat='no-repeat'
           backgroundSize='cover'

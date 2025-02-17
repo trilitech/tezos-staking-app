@@ -471,6 +471,7 @@ export const SelectOptionModal = ({
         isOpen={delegateModal.isOpen}
         onClose={delegateModal.onClose}
         bakerList={bakerList}
+        currentBakerAddress={undefined}
       />
       <StakeModal
         openedFromStartEarning={true}
@@ -478,6 +479,7 @@ export const SelectOptionModal = ({
         onClose={stakeModal.onClose}
         spendableBalance={spendableBalance}
         bakerList={bakerList}
+        currentBakerAddress={undefined}
       />
     </>
   )

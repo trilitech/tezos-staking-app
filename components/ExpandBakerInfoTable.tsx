@@ -12,7 +12,8 @@ import {
   Tr,
   Td,
   TableContainer,
-  Flex
+  Flex,
+  Image
 } from '@chakra-ui/react'
 import { BakerInfo } from './Operations/tezInterfaces'
 import { mutezToTez } from '@/utils/mutezToTez'
@@ -73,9 +74,9 @@ export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
                   </Td>
                   <Td borderBottom='1px solid #E2E8F0' w='100%'>
                     <Flex justifyContent='flex-end' alignItems='end' gap='4px'>
-                      <Text fontSize='14px' fontWeight={600} color='#171923'>
+                      <Text display='inline-flex' gap={1} alignItems='center' fontSize='14px' fontWeight={600} color='#171923'>
                         {Math.floor(mutezToTez(baker?.totalStakedBalance ?? 0))}{' '}
-                        ꜩ
+                        <Image mt='4px' h='14px' src='/images/T3.svg' alt='Tezos Logo' />
                       </Text>
                     </Flex>
                   </Td>
@@ -128,8 +129,9 @@ export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
                       alignItems='center'
                       gap='4px'
                     >
-                      <Text fontSize='14px' fontWeight={600} color='#171923'>
-                        {Math.floor(baker?.stakingFreeSpace ?? 0)} ꜩ
+                      <Text display='inline-flex' gap={1} alignItems='center' fontSize='14px' fontWeight={600} color='#171923'>
+                        {Math.floor(baker?.stakingFreeSpace ?? 0)}
+                        <Image mt='4px' h='14px' src='/images/T3.svg' alt='Tezos Logo' />
                       </Text>
                     </Flex>
                   </Td>

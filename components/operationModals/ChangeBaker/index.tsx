@@ -35,6 +35,7 @@ export const ChangeBakerModal = ({
   isOpen,
   onClose,
   bakerList,
+  currentBakerAddress,
   isStaked
 }: ChangeBakerModalProps) => {
   const [selectedBaker, setSelectedBaker] = useState<BakerInfo | null>(null)
@@ -48,6 +49,8 @@ export const ChangeBakerModal = ({
     setSelectedBaker(null)
   }
 
+  const bigModal = (isStaked && currentStep === StakedDelegateStatus.ChooseBaker) || currentStep === UnStakedDelegateStatus.ChooseBaker
+
   const getCurrentStepBody = (currentStep: number, isStaked: boolean) => {
     if (isStaked) {
       switch (currentStep) {
@@ -59,6 +62,7 @@ export const ChangeBakerModal = ({
               handleOneStepForward={handleOneStepForward}
               setSelectedBaker={setSelectedBaker}
               bakerList={bakerList ?? []}
+              currentBakerAddress={currentBakerAddress}
             />
           )
         case StakedDelegateStatus.ChangeConfirm:
@@ -85,6 +89,7 @@ export const ChangeBakerModal = ({
             handleOneStepForward={handleOneStepForward}
             setSelectedBaker={setSelectedBaker}
             bakerList={bakerList ?? []}
+            currentBakerAddress={currentBakerAddress}
           />
         )
       case UnStakedDelegateStatus.ChangeConfirm:
@@ -96,6 +101,7 @@ export const ChangeBakerModal = ({
             selectedBaker={selectedBaker as BakerInfo}
             setSelectedBaker={setSelectedBaker}
             isChangeBaker={true}
+            isStaked={isStaked}
           />
         )
       default:
@@ -112,7 +118,7 @@ export const ChangeBakerModal = ({
       closeOnOverlayClick={false}
     >
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent w={['100%', bigModal ? '540px' : '480px']}>
         <ModalHeader>
           <Flex justify='space-between' alignItems='center'>
             <Flex>
