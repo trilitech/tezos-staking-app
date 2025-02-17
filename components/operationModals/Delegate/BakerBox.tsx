@@ -12,12 +12,14 @@ interface BakerBoxProps {
   baker: BakerInfo
   setSelectedBaker: (b: BakerInfo | null) => void
   handleOneStepForward: () => void
+  currentBakerAddress: string | undefined
 }
 
 export const BakerBox = ({
   baker,
   setSelectedBaker,
-  handleOneStepForward
+  handleOneStepForward,
+  currentBakerAddress
 }: BakerBoxProps) => {
   const { isCopied, copyTextToClipboard } = useClipboard()
 
@@ -56,30 +58,48 @@ export const BakerBox = ({
           </Box>
         </Flex>
         <Box>
-          <SecondaryButton
-            onClick={() => {
-              trackGAEvent(
-                GAAction.BUTTON_CLICK,
-                GACategory.CHOOSE_BAKER_SUCCESS
-              )
-              setSelectedBaker(baker)
-              handleOneStepForward()
-            }}
-            px='12px'
-            py='6px'
-            lineHeight='22px'
-            h='100%'
-            fontSize='16px'
-          >
-            Select
-          </SecondaryButton>
+          {currentBakerAddress === baker.address ? (
+            <SecondaryButton
+              onClick={() => { }}
+              px='12px'
+              py='6px'
+              lineHeight='22px'
+              h='100%'
+              fontSize='16px'
+              disabled={true}
+              cursor='not-allowed'
+              color='white'
+              bg='gray.400'
+              _hover={{ bg: 'gray.400', color: 'white' }}
+            >
+              My Baker
+            </SecondaryButton>
+          ) : (
+            <SecondaryButton
+              onClick={() => {
+                trackGAEvent(
+                  GAAction.BUTTON_CLICK,
+                  GACategory.CHOOSE_BAKER_SUCCESS
+                )
+                setSelectedBaker(baker)
+                handleOneStepForward()
+              }}
+              px='12px'
+              py='6px'
+              lineHeight='22px'
+              h='100%'
+              fontSize='16px'
+            >
+              Select
+            </SecondaryButton>
+          )}
         </Box>
       </Flex>
       <Flex
         flexDir={['column', 'row']}
-        justify='space-evenly'
+        justify='flex-start'
         alignItems='start'
-        gap='10px'
+        gap='18px'
         px='16px'
         py='12px'
         borderTop='solid 1px #EDF2F7'
@@ -89,8 +109,9 @@ export const BakerBox = ({
           <Text fontSize='14px' fontWeight={600} color='#4A5568' mr='3px'>
             TOTAL:
           </Text>
-          <Text color='#171923' fontWeight={600} fontSize='14px'>
-            {Math.floor(mutezToTez(baker.totalStakedBalance))} ꜩ
+          <Text display='inline-flex' gap={1} alignItems='center' color='#171923' fontWeight={600} fontSize='14px'>
+            {Math.floor(mutezToTez(baker.totalStakedBalance))}
+            <Image mt='4px' h='14px' src='/images/T3.svg' alt='Tezos Logo' />
           </Text>
         </CustomFlex>
         <CustomFlex>
@@ -105,8 +126,9 @@ export const BakerBox = ({
           <Text fontSize='14px' fontWeight={600} color='#4A5568' mr='3px'>
             FREE SPACE:
           </Text>
-          <Text color='#171923' fontWeight={600} fontSize='14px'>
-            {Math.floor(baker.stakingFreeSpace)} ꜩ
+          <Text display='inline-flex' gap={1} alignItems='center' color='#171923' fontWeight={600} fontSize='14px'>
+            {Math.floor(baker.stakingFreeSpace)}
+            <Image mt='4px' h='14px' src='/images/T3.svg' alt='Tezos Logo' />
           </Text>
         </CustomFlex>
       </Flex>

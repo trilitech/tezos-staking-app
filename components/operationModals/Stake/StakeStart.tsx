@@ -42,7 +42,7 @@ export const StakeStart = ({
         Select Baker
       </PrimaryButton>
       <Flex pt='24px' gap={1} flexDir='column' textAlign='center' maxW='640px'>
-        <Link href='/faqs' target='_blank'>
+        <Link href='/faqs#delegating' target='_blank'>
           <Text
             fontSize='sm'
             display='flex'

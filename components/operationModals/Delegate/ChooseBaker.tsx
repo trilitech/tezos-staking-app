@@ -6,7 +6,8 @@ import {
   InputRightElement,
   Text,
   Tooltip,
-  Image
+  Image,
+  useDisclosure
 } from '@chakra-ui/react'
 import { BakerInfo } from '@/components/Operations/tezInterfaces'
 import { Header } from '@/components/modalBody'
@@ -19,11 +20,12 @@ interface ChooseBakerProps {
   handleOneStepForward: () => void
   setSelectedBaker: (b: BakerInfo | null) => void
   bakerList: BakerInfo[]
+  currentBakerAddress: string | undefined
 }
 export function shuffleBakerList(bakerList: BakerInfo[]) {
   for (let i = bakerList?.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
-    ;[bakerList[i], bakerList[j]] = [bakerList[j], bakerList[i]]
+      ;[bakerList[i], bakerList[j]] = [bakerList[j], bakerList[i]]
   }
   return bakerList
 }
@@ -39,12 +41,19 @@ type SortOrder = {
 export const ChooseBaker = ({
   handleOneStepForward,
   setSelectedBaker,
-  bakerList
+  bakerList,
+  currentBakerAddress
 }: ChooseBakerProps) => {
   const [searchText, setSearchText] = useState('')
-  const [bakersShown, setBakersShown] = useState<BakerInfo[]>(
-    bakerList.filter(baker => baker.acceptsStaking)
-  )
+  const [bakersShown, setBakersShown] = useState<BakerInfo[]>(() => {
+    const acceptingBakers = bakerList.filter(baker => baker.acceptsStaking)
+    if (!currentBakerAddress) return acceptingBakers
+
+    const currentBaker = acceptingBakers.find(b => b.address === currentBakerAddress)
+    const otherBakers = acceptingBakers.filter(b => b.address !== currentBakerAddress)
+
+    return currentBaker ? [currentBaker, ...otherBakers] : acceptingBakers
+  })
   const [sortOrder, setSortOrder] = useState<SortOrder>({
     staking: null,
     fee: null,
@@ -54,27 +63,33 @@ export const ChooseBaker = ({
   const sortBy = (order: Order, sortedBy: SortedBy) => {
     switch (sortedBy) {
       case 'staking':
-        const sortedByStaking = [...bakersShown].sort((a, b) =>
-          order === 'asc'
+        const sortedByStaking = [...bakersShown].sort((a, b) => {
+          if (a.address === currentBakerAddress) return -1
+          if (b.address === currentBakerAddress) return 1
+          return order === 'asc'
             ? a.totalStakedBalance - b.totalStakedBalance
             : b.totalStakedBalance - a.totalStakedBalance
-        )
+        })
         setBakersShown(sortedByStaking)
         return
       case 'fee':
-        const sortedByFee = [...bakersShown].sort((a, b) =>
-          order === 'asc'
+        const sortedByFee = [...bakersShown].sort((a, b) => {
+          if (a.address === currentBakerAddress) return -1
+          if (b.address === currentBakerAddress) return 1
+          return order === 'asc'
             ? a.stakingFees - b.stakingFees
             : b.stakingFees - a.stakingFees
-        )
+        })
         setBakersShown(sortedByFee)
         return
       case 'freeSpace':
-        const sortedByFreeSpace = [...bakersShown].sort((a, b) =>
-          order === 'asc'
+        const sortedByFreeSpace = [...bakersShown].sort((a, b) => {
+          if (a.address === currentBakerAddress) return -1
+          if (b.address === currentBakerAddress) return 1
+          return order === 'asc'
             ? a.stakingFreeSpace - b.stakingFreeSpace
             : b.stakingFreeSpace - a.stakingFreeSpace
-        )
+        })
         setBakersShown(sortedByFreeSpace)
         return
       default:
@@ -124,11 +139,19 @@ export const ChooseBaker = ({
       )
       .filter(baker => baker.acceptsStaking)
 
-    if (filteredBaker.length === 1) {
+    if (currentBakerAddress) {
+      const currentBaker = bakerList.find(b => b.address === currentBakerAddress)
+      if (currentBaker && filteredBaker.some(b => b.address === currentBakerAddress)) {
+        const otherBakers = filteredBaker.filter(b => b.address !== currentBakerAddress)
+        setBakersShown([currentBaker, ...otherBakers])
+      } else {
+        setBakersShown(filteredBaker)
+      }
+    } else {
       setBakersShown(filteredBaker)
-    } else if (filteredBaker.length > 1) setBakersShown(filteredBaker)
-    else {
-      setBakersShown(filteredBaker)
+    }
+
+    if (filteredBaker.length === 0) {
       setSelectedBaker(null)
     }
   }
@@ -143,22 +166,9 @@ export const ChooseBaker = ({
         pb='24px'
       >
         Select Baker
-        <Tooltip
-          textAlign='center'
-          hasArrow
-          label='Bakers on Tezos are responsible for validating transactions and securing the network. By staking their own tez, they help produce new blocks and earn rewards, while also supporting decentralization.'
-          bg='gray.700'
-          borderRadius='4px'
-          color='white'
-          p='3'
-        >
-          <Image
-            w='16px'
-            h='16px'
-            src='/images/info-icon-dapp.svg'
-            alt='logout'
-          />
-        </Tooltip>
+        <ControlledTooltip label='Bakers on Tezos validate transactions and secure the network.'>
+          <Image w='16px' h='16px' src='/images/info-icon-dapp.svg' alt='info' />
+        </ControlledTooltip>
       </Header>
       <InputGroup size='md'>
         <Input
@@ -171,7 +181,7 @@ export const ChooseBaker = ({
             }
           }}
           value={searchText}
-          h='58px'
+          h='48px'
           overflowX='auto'
         />
 
@@ -220,6 +230,7 @@ export const ChooseBaker = ({
         bakerList={bakersShown}
         setSelectedBaker={setSelectedBaker}
         handleOneStepForward={handleOneStepForward}
+        currentBakerAddress={currentBakerAddress}
       />
     </Flex>
   )
@@ -255,40 +266,44 @@ const SortText = ({
         px='10px'
         py='6px'
         onClick={onClick}
-        _hover={{ cursor: 'pointer', color: '#2D3748', bg: '#F7FAFC' }}
+        _hover={{ '@media(hover: hover)': { cursor: 'pointer', color: '#2D3748', bg: '#F7FAFC' } }}
         borderRadius='8px'
         transition='all 0.3s ease-out'
         sx={getSyle(order)}
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
+        onTouchStart={() => setIsHover(true)}
+        onTouchEnd={() => setIsHover(false)}
       >
         <Text fontSize='14px' fontWeight={600} lineHeight='18px'>
           {children}
         </Text>
-        {order === 'desc' ? (
-          <DescIcon fill={isHover ? '#A0AEC0' : '#FFFFFF'} />
-        ) : order === 'asc' ? (
-          <AscIcon fill={isHover ? '#A0AEC0' : '#FFFFFF'} />
-        ) : (
-          <></>
-        )}
+        {!order ? <Flex ml='6px'>
+          <ControlledTooltip label={tooltipLabel}>
+            <Image w='18px' h='18px' src='/images/info-icon-dapp.svg' alt='info' />
+          </ControlledTooltip></Flex>
+          :
+          order === 'desc' ? (
+            <DescIcon fill={isHover ? '#A0AEC0' : '#FFFFFF'} />
+          ) : order === 'asc' ? (
+            <AscIcon fill={isHover ? '#A0AEC0' : '#FFFFFF'} />
+          ) : (
+            <></>
+          )}
       </Flex>
-      <Tooltip
-        textAlign='center'
-        hasArrow
-        label={tooltipLabel}
-        bg='gray.700'
-        borderRadius='4px'
-        color='white'
-        p='3'
-      >
-        <Image
-          w='16px'
-          h='16px'
-          src='/images/info-icon-dapp.svg'
-          alt='logout'
-        />
-      </Tooltip>
+
     </Flex>
   )
 }
+
+const ControlledTooltip = ({ label, children }: { label: string, children: React.ReactNode }) => {
+  const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
+
+  return (
+    <Tooltip label={label} isOpen={isOpen} hasArrow bg='gray.700' borderRadius='4px' color='white' p='3' mx='10px'>
+      <span onMouseEnter={onOpen} onMouseLeave={onClose} onClick={onToggle}>
+        {children}
+      </span>
+    </Tooltip>
+  );
+};

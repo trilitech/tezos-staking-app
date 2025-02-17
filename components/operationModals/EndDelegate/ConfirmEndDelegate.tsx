@@ -66,7 +66,7 @@ export const ConfirmEndDelegate = ({
           }
         }}
       >
-        {waitingOperation ? <Spinner /> : 'End Delegation'}
+        {waitingOperation ? <Spinner /> : 'Confirm'}
       </PrimaryButton>
       {!!errorMessage && <ErrorBlock errorMessage={errorMessage} />}
     </Flex>

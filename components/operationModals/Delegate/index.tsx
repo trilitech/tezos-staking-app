@@ -20,6 +20,7 @@ export interface DelegateModalProps {
   isOpen: boolean
   onClose: () => void
   bakerList: BakerInfo[] | null
+  currentBakerAddress: string | undefined
 }
 
 enum DelegateStatus {
@@ -41,7 +42,8 @@ export async function getBakerList() {
 export const DelegationModal = ({
   isOpen,
   onClose,
-  bakerList
+  bakerList,
+  currentBakerAddress
 }: DelegateModalProps) => {
   const [selectedBaker, setSelectedBaker] = useState<BakerInfo | null>(null)
   const totalStep = 3
@@ -53,6 +55,7 @@ export const DelegationModal = ({
     resetStep()
     setSelectedBaker(null)
   }
+  const bigModal = currentStep === DelegateStatus.ChooseBaker
 
   const getCurrentStepBody = (currentStep: number) => {
     switch (currentStep) {
@@ -64,6 +67,7 @@ export const DelegationModal = ({
             handleOneStepForward={handleOneStepForward}
             setSelectedBaker={setSelectedBaker}
             bakerList={bakerList ?? []}
+            currentBakerAddress={currentBakerAddress}
           />
         )
       case DelegateStatus.DelegationConfirm:
@@ -90,7 +94,7 @@ export const DelegationModal = ({
       closeOnOverlayClick={false}
     >
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent w={['100%', bigModal ? '540px' : '480px']}>
         <ModalHeader>
           <Flex justify='space-between' alignItems='center'>
             <Flex>

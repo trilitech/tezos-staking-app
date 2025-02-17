@@ -103,7 +103,7 @@ export const AccountBody = ({
     loadingDone: false
   })
   const [accountInfo, setAccountInfo] = useState<AccountInfo | null>(null)
-  const [isFirstTime, setIsFirstTime] = useState(false)
+  const [isFirstTime, setIsFirstTime] = useState<boolean | undefined>(undefined)
   const [unstakedOps, setUnstakedOps] = useState<UnstakedOperation[]>(
     [] as UnstakedOperation[]
   )
@@ -131,15 +131,17 @@ export const AccountBody = ({
       } else if (accountInfoData.type === 'user') {
         accountInfoData.evaluatedDelegate = accountInfoData.delegate
       }
-
       setAccountInfo(accountInfoData)
-      setIsFirstTime(accountInfo?.type === 'empty')
+      if (accountInfo) {
+        setIsFirstTime(accountInfo?.type === 'empty')
+      }
       setUnstakedOps(unstakingOps)
       setStakingOpsStatus(opStatus)
     }
   }, [
     blockchainHeadData,
     accountInfoData,
+    accountInfo,
     unstakedOpsData,
     stakingOpsStatus,
     bakerList
@@ -149,7 +151,7 @@ export const AccountBody = ({
     unstakedOps,
     accountInfo?.totalFinalizableAmount
   )
-  if (isLoading || !Boolean(bakerList) || !stakingOpsStatus.loadingDone)
+  if (isLoading || !Boolean(bakerList) || !stakingOpsStatus.loadingDone || isFirstTime === undefined)
     return (
       <Flex py='120px' w='100%' justifyContent='center'>
         <Spinner />
@@ -194,7 +196,7 @@ export const AccountBody = ({
           w='100%'
           mb={
             (stakingOpsStatus.Delegated && !stakingOpsStatus.CanStake) ||
-            (successClose && successMessage)
+              (successClose && successMessage)
               ? '24px'
               : 0
           }
@@ -207,7 +209,6 @@ export const AccountBody = ({
           />
           {successClose && successMessage && (
             <Flex
-              display={['none', null, 'flex']}
               w='100%'
               gap='3'
               p='4'
@@ -240,20 +241,19 @@ export const AccountBody = ({
           w='100%'
           templateColumns={['repeat(1, 1fr)', null, 'repeat(2, 1fr)']}
           gap='20px'
+          columnGap='30px'
         >
           <Flex
             flexDir='column'
             borderTop={[null, null, '1px solid #EDF2F7']}
-            pt={[null, null, '20px']}
+            pt={[0, null, '20px']}
           >
             <Text fontSize='14px' color='#4A5568' fontWeight={600}>
               SPENDABLE
             </Text>
-            <Text fontWeight={600} fontSize='18px' color='#171923'>
+            <Text display='inline-flex' gap={1} alignItems='center' fontWeight={600} fontSize='18px' color='#171923'>
               {!!spendableBalance ? spendableBalance : 0}{' '}
-              <Text as='span' fontWeight={400}>
-                ꜩ
-              </Text>
+              <Image mt='4px' h='18px' src='/images/T3.svg' alt='Tezos Logo' />
             </Text>
           </Flex>
           <Flex flexDir='column' borderTop='1px solid #EDF2F7' pt='20px'>
@@ -269,15 +269,13 @@ export const AccountBody = ({
                   alt='lock icon'
                 />
               )}
-              <Text fontWeight={600} fontSize='18px' color='#171923'>
+              <Text display='inline-flex' gap={1} alignItems='center' fontWeight={600} fontSize='18px' color='#171923'>
                 {!!stakedBalance ? stakedBalance : 0}{' '}
-                <Text as='span' fontWeight={400}>
-                  ꜩ
-                </Text>
+                <Image mt='4px' h='18px' src='/images/T3.svg' alt='Tezos Logo' />
               </Text>
             </Flex>
           </Flex>
-          <Flex flexDir='column' borderTop='1px solid #EDF2F7' pt='20px'>
+          <Flex gap='4px' flexDir='column' borderTop='1px solid #EDF2F7' pt='20px'>
             <Flex justify='space-between' alignItems='center'>
               <Text fontSize='14px' color='#4A5568' fontWeight={600}>
                 DELEGATION
@@ -308,7 +306,7 @@ export const AccountBody = ({
               )}
             </Flex>
           </Flex>
-          <Flex flexDir='column' borderTop='1px solid #EDF2F7' pt='20px'>
+          <Flex flexDir='column' gap='4px' borderTop='1px solid #EDF2F7' pt='20px'>
             <Flex justify='space-between' alignItems='center'>
               <Text fontSize='14px' color='#4A5568' fontWeight={600}>
                 BAKER
@@ -439,12 +437,14 @@ export const AccountBody = ({
           isOpen={delegateModal.isOpen}
           onClose={delegateModal.onClose}
           bakerList={bakerList}
+          currentBakerAddress={accountInfo?.evaluatedDelegate?.address}
         />
         <ChangeBakerModal
           isStaked={!!accountInfo?.stakedBalance}
           isOpen={changeBakerModal.isOpen}
           onClose={changeBakerModal.onClose}
           bakerList={bakerList}
+          currentBakerAddress={accountInfo?.evaluatedDelegate?.address}
         />
         <EndDelegationModal
           isStaked={!!accountInfo?.stakedBalance}
@@ -463,6 +463,7 @@ export const AccountBody = ({
           isOpen={stakeModal.isOpen}
           onClose={stakeModal.onClose}
           spendableBalance={spendableBalance}
+          currentBakerAddress={accountInfo?.evaluatedDelegate?.address}
         />
         <UnstakeModal
           isOpen={unstakeModal.isOpen}

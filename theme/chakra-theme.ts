@@ -34,15 +34,16 @@ const theme = extendTheme({
           px: '16px'
         },
         dialog: {
-          w: { base: '100%', md: '620px' },
+          w: { base: '100%', md: '480px' },
           borderRadius: '16px',
+          borderBottomRadius: { base: 0, md: '16px' },
           pb: '40px',
           pos: { base: 'fixed', md: 'block' },
           bottom: { base: 0, md: 'auto' }
         },
         body: {
           pt: '0px',
-          px: '32px'
+          px: '40px'
         }
       }
     },

@@ -4,6 +4,7 @@ import { useConnection } from '@/providers/ConnectionProvider'
 import useClipboard from '@/utils/useClipboard'
 import { simplifyAddress } from '@/utils/simpliftAddress'
 import { CopyAlert } from './CopyAlert'
+import { CopyIcon } from './icons/CopyIcon'
 
 export const AccountBanner = ({
   address,
@@ -39,17 +40,22 @@ export const AccountBanner = ({
         >
           {name}
         </Text>
-        <Flex gap='4px'>
+        <Flex
+          gap='4px'
+          _hover={{
+            cursor: 'pointer',
+            '& > p': {
+              color: '#0052FF',
+              textDecoration: 'underline'
+            }
+          }}
+          role='group'
+          onClick={() => copyTextToClipboard(address)}
+        >
           <Text fontWeight={400} lineHeight='18px' fontSize='14px'>
             {simplifyAddress(address)}
           </Text>
-          <Image
-            color='#A0AEC0'
-            _hover={{ cursor: 'pointer' }}
-            src='/images/copy-icon.svg'
-            alt='copy icon'
-            onClick={() => copyTextToClipboard(address)}
-          />
+          <CopyIcon fill='#A0AEC0' _groupHover={{ fill: '#0052FF' }} />
         </Flex>
       </Flex>
       <Flex gap='3'>

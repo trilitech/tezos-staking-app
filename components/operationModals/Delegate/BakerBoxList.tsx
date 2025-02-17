@@ -7,12 +7,14 @@ interface BakerBoxListProps {
   bakerList: BakerInfo[]
   setSelectedBaker: (b: BakerInfo | null) => void
   handleOneStepForward: () => void
+  currentBakerAddress: string | undefined
 }
 
 export const BakerBoxList = ({
   bakerList,
   setSelectedBaker,
-  handleOneStepForward
+  handleOneStepForward,
+  currentBakerAddress
 }: BakerBoxListProps) => {
   return (
     <Flex
@@ -36,6 +38,7 @@ export const BakerBoxList = ({
           baker={baker}
           setSelectedBaker={setSelectedBaker}
           handleOneStepForward={handleOneStepForward}
+          currentBakerAddress={currentBakerAddress}
           key={index}
         />
       ))}
