@@ -85,11 +85,13 @@ export const BakerDetailsTable = ({
               <Td borderBottom='1px solid #E2E8F0' px={[3, 4]}>
                 <Text
                   textAlign='end'
+                  display='inline-flex' gap={1} alignItems='center'
                   color='#10121B'
                   fontWeight={600}
                   fontSize='14px'
                 >
-                  {Math.floor(mutezToTez(baker.totalStakedBalance))} ꜩ
+                  {Math.floor(mutezToTez(baker.totalStakedBalance))}
+                  <Image mt='4px' h='14px' src='/images/T3.svg' alt='Tezos Logo' />
                 </Text>
               </Td>
             </Tr>
@@ -128,12 +130,14 @@ export const BakerDetailsTable = ({
               </Td>
               <Td px={[3, 4]}>
                 <Text
+                  display='inline-flex' gap={1} alignItems='center'
                   textAlign='end'
                   color='#10121B'
                   fontWeight={600}
                   fontSize='14px'
                 >
-                  {Math.floor(baker.stakingFreeSpace)} ꜩ
+                  {Math.floor(baker.stakingFreeSpace)}
+                  <Image mt='4px' h='14px' src='/images/T3.svg' alt='Tezos Logo' />
                 </Text>
               </Td>
             </Tr>

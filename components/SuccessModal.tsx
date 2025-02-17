@@ -39,9 +39,9 @@ const getSuccessMessage = (opType?: OpType, amount?: number) => {
     case 'end_delegate':
       return 'You have successfully ended your delegation'
     case 'stake':
-      return `You have successfully staked <strong>${amount}</strong> ꜩ`
+      return `You have successfully staked <strong>${amount}</strong> tez`
     case 'unstake':
-      return `You have successfully requested to unstake <strong>${amount}</strong> ꜩ`
+      return `You have successfully requested to unstake <strong>${amount}</strong> tez`
     default:
       return ''
   }
@@ -75,13 +75,19 @@ export const SuccessModal = ({
       <ModalOverlay />
       <ModalContent>
         <ModalCloseButton
+          sx={{
+            '& svg': {
+              w: '14px',
+              h: '14px'
+            }
+          }}
           onClick={() => {
             resetOperation()
             onClose()
             onSuccessClose()
           }}
         />
-        <ModalBody mt='40px'>
+        <ModalBody px='40px' mt='40px'>
           <Flex
             textAlign='center'
             flexDir='column'

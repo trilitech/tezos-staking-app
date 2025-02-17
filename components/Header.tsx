@@ -82,39 +82,27 @@ export const Header = () => {
               <Text display={['none', null, 'inline']}>Help</Text>
             </Button>
 
-            {isConnected ? (
+            {isConnected !== undefined && (
               <Button
-                border='solid 2px #EDF2F7'
-                px='12px'
-                py='24px'
-                borderRadius='8px'
-                variant='ternary'
-              >
-                <Image
-                  w='24px'
-                  h='24px'
-                  onClick={() => disconnect()}
-                  src='/images/logout_white.svg'
-                  alt='logout'
-                />
-              </Button>
-            ) : (
-              <Button
-                variant='primary'
-                minW={['48px', null, 'auto']}
-                px={['12px', null, '24px']}
-                onClick={() => {
-                  trackGAEvent(GAAction.BUTTON_CLICK, GACategory.WALLET_BEGIN)
-                  setConnectClicked(true)
-                  connect()
+                onClick={isConnected ? disconnect : () => {
+                  trackGAEvent(GAAction.BUTTON_CLICK, GACategory.WALLET_BEGIN);
+                  setConnectClicked(true);
+                  connect();
                 }}
+                variant={isConnected ? 'ternary' : 'primary'}
+                border={isConnected ? 'solid 2px #EDF2F7' : undefined}
+                px={isConnected ? '12px' : ['12px', null, '24px']}
+                py={isConnected ? '24px' : undefined}
+                borderRadius={isConnected ? '8px' : undefined}
+                minW={isConnected ? undefined : ['48px', null, 'auto']}
               >
                 <Image
-                  maxW='110px'
-                  src='/images/wallet-icon.svg'
-                  alt='Wallet Icon'
+                  w="24px"
+                  h="24px"
+                  src={isConnected ? '/images/logout_white.svg' : '/images/wallet-icon.svg'}
+                  alt={isConnected ? 'Logout' : 'Wallet Icon'}
                 />
-                <Text display={['none', null, 'inline']}>Connect</Text>
+                {!isConnected && <Text display={['none', null, 'inline']}>Connect</Text>}
               </Button>
             )}
           </Flex>

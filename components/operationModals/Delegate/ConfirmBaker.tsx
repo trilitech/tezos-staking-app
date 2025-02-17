@@ -28,6 +28,7 @@ interface ChooseBakerProps {
   openedFromStartEarning: boolean
   setSelectedBaker: (b: null) => void
   isChangeBaker?: boolean
+  isStaked?: boolean
 }
 
 export const ConfirmBaker = ({
@@ -36,7 +37,8 @@ export const ConfirmBaker = ({
   selectedBaker,
   openedFromStartEarning,
   setSelectedBaker,
-  isChangeBaker
+  isChangeBaker,
+  isStaked
 }: ChooseBakerProps) => {
   const { Tezos, beaconWallet } = useConnection()
   const { setMessage, setSuccess, setOpHash, setOpType } =
@@ -70,7 +72,7 @@ export const ConfirmBaker = ({
             }
           }}
           value={selectedBaker.alias ?? 'Private Baker'}
-          h='58px'
+          h='48px'
           overflowX='auto'
           _disabled={{ opacity: 1, fontWeight: 600, color: '#171923' }}
         />
@@ -129,7 +131,9 @@ export const ConfirmBaker = ({
               if (isChangeBaker) {
                 setOpType('change_baker')
                 setMessage(
-                  'You have successfully changed your baker. You can now choose to stake your tez with the same baker to earn higher rewards.'
+                  isStaked ?
+                    'You have successfully changed your baker and unstaked with your previous baker. Unstaking takes approximately 10 days, after which you must finalize the process. Once you do, your tez will be made available in your spendable balance.' :
+                    'You have successfully delegated your balance to the baker. You can now choose to stake your tez with the same baker to earn higher rewards.'
                 )
                 trackGAEvent(
                   GAAction.BUTTON_CLICK,

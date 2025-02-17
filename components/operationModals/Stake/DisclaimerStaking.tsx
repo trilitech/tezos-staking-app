@@ -37,8 +37,8 @@ export const DisclaimerStaking = ({
         <br />
         <br />
         Staked funds are at risk. You might lose a portion of your stake if the
-        chosen baker is <u>slashed</u> for not following{' '}
-        <u>Tezos consensus mechanism rules</u>.
+        chosen baker is <a target='_blank' href='https://tezos.gitlab.io/active/consensus.html#slashing'>slashed</a> for not following{' '}
+        <a target='_blank' href='https://tezos.gitlab.io/active/consensus.html'>Tezos consensus mechanism rules</a>.
       </Description>
       <Flex
         gap='24px'
@@ -62,7 +62,7 @@ export const DisclaimerStaking = ({
           lineHeight='22px'
         >
           I confirm that I have read and agreed with the{' '}
-          <Text as='span' textDecor='underline' _hover={{ cursor: 'pointer' }}>
+          <Text as='a' href='/termsOfUseStakingApp/' target='_blank' textDecor='underline' _hover={{ cursor: 'pointer' }}>
             Terms of Use.
           </Text>
         </Text>
@@ -86,7 +86,7 @@ export const DisclaimerStaking = ({
             setOpHash(response.opHash)
             setOpType('stake')
             setMessage(
-              `You have successfully staked ${stakedAmount} ꜩ. ${openedFromStartEarning ? 'Your remaining funds will be automatically delegated to the baker.' : 'Your rewards will now accrue automatically within your staked amount.'} `
+              `You have successfully staked ${stakedAmount} tez. ${openedFromStartEarning ? 'Your remaining funds will be automatically delegated to the baker.' : 'Your rewards will now accrue automatically within your staked amount.'} `
             )
             setSuccess(true)
             setAmount(stakedAmount)

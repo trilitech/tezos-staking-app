@@ -23,6 +23,7 @@ interface StakeModal {
   spendableBalance: number
   bakerList: BakerInfo[] | null
   openedFromStartEarning: boolean
+  currentBakerAddress: string | undefined
 }
 
 enum StakeStatus {
@@ -38,7 +39,8 @@ export const StakeModal = ({
   openedFromStartEarning,
   onClose,
   spendableBalance,
-  bakerList
+  bakerList,
+  currentBakerAddress
 }: StakeModal) => {
   const [stakedAmount, setStakedAmount] = useState(0)
   const [selectedBaker, setSelectedBaker] = useState<BakerInfo | null>(null)
@@ -58,6 +60,8 @@ export const StakeModal = ({
     setSelectedBaker(null)
   }
 
+  const bigModal = currentStep === StakeStatus.ChooseBaker
+
   const getCurrentStepBody = (currentStep: number) => {
     switch (currentStep) {
       case StakeStatus.StakeStart:
@@ -70,6 +74,7 @@ export const StakeModal = ({
             handleOneStepForward={handleOneStepForward}
             setSelectedBaker={setSelectedBaker}
             bakerList={bakerList ?? []}
+            currentBakerAddress={currentBakerAddress}
           />
         ) : null
       case StakeStatus.ConfirmBaker:
@@ -114,7 +119,7 @@ export const StakeModal = ({
       closeOnOverlayClick={false}
     >
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent w={['100%', bigModal ? '540px' : '480px']} >
         <ModalHeader>
           <Flex justify='space-between' alignItems='center'>
             <Flex>

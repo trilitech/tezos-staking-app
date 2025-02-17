@@ -49,11 +49,11 @@ export const UnstakeOperationBox = ({
     >
       <Box w='100%'>
         <Flex flexDir='column'>
-          <Text pb='4px' fontSize='18px' color='gray.900'>
+          <Text display='inline-flex' gap={1} alignItems='center' pb='4px' fontSize='18px' color='gray.900'>
             <Text as='span' fontWeight={600}>
               {amount}
             </Text>{' '}
-            ꜩ
+            <Image mt='4px' h='18px' src='/images/T3.svg' alt='Tezos Logo' />
           </Text>
           {!!totalFinalizableAmount && (
             <Text
