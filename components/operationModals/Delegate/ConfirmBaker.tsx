@@ -54,7 +54,7 @@ export const ConfirmBaker = ({
       <InputGroup size='md' mb='30px'>
         <InputLeftElement h='100%'>
           <Image
-            ml='6px'
+            ml='12px'
             w='30px'
             h='30px'
             objectFit='cover'
@@ -66,6 +66,7 @@ export const ConfirmBaker = ({
         <Input
           isDisabled
           pr='4.5rem'
+          pl='48px'
           sx={{
             '::placeholder': {
               fontSize: '16px'

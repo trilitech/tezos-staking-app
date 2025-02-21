@@ -326,11 +326,9 @@ export const AccountBody = ({
                     fontSize='18px'
                     fontWeight={600}
                     lineHeight='18px'
+                    noOfLines={1}
                   >
-                    {accountInfo?.evaluatedDelegate?.alias ??
-                      simplifyAddress(
-                        accountInfo?.evaluatedDelegate?.address ?? ''
-                      )}
+                    {accountInfo?.evaluatedDelegate?.alias ?? simplifyAddress(accountInfo?.evaluatedDelegate?.address ?? '')}
                   </Text>
                   <Image
                     h='18px'

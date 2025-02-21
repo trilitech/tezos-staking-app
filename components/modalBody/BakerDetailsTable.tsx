@@ -37,7 +37,7 @@ export const BakerDetailsTable = ({
           <Tbody>
             <Tr>
               <Td borderBottom='1px solid #E2E8F0' pl={[3, 4]} pr={[0, 4]}>
-                <Flex alignItems='center' gap='5px'>
+                <Flex alignItems='center' gap='6px'>
                   <Image
                     w='30px'
                     h='30px'
@@ -82,7 +82,7 @@ export const BakerDetailsTable = ({
                   TOTAL:
                 </Text>
               </Td>
-              <Td borderBottom='1px solid #E2E8F0' px={[3, 4]}>
+              <Td textAlign='end' borderBottom='1px solid #E2E8F0' px={[3, 4]}>
                 <Text
                   textAlign='end'
                   display='inline-flex' gap={1} alignItems='center'
@@ -106,7 +106,7 @@ export const BakerDetailsTable = ({
                   FEE:
                 </Text>
               </Td>
-              <Td borderBottom='1px solid #E2E8F0' px={[3, 4]}>
+              <Td textAlign='end' borderBottom='1px solid #E2E8F0' px={[3, 4]}>
                 <Text
                   textAlign='end'
                   color='#10121B'
@@ -128,7 +128,7 @@ export const BakerDetailsTable = ({
                   FREE SPACE:
                 </Text>
               </Td>
-              <Td px={[3, 4]}>
+              <Td textAlign='end' px={[3, 4]}>
                 <Text
                   display='inline-flex' gap={1} alignItems='center'
                   textAlign='end'

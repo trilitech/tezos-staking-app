@@ -18,12 +18,10 @@ export const SelectAmount = ({
   const handleChange = (event: any) => {
     const val = Number(event.target.value)
     trackGAEvent(GAAction.BUTTON_CLICK, GACategory.INPUT_AMOUNT)
-
-    if (val <= spendableBalance) setStakedAmount(val)
-    else if (val === 0) setStakedAmount(0)
+    setStakedAmount(val || 0)
   }
 
-  const isInsufficient = spendableBalance - stakedAmount < 0.01
+  const isInsufficient = stakedAmount > spendableBalance - 0.01
 
   return (
     <Flex flexDir='column'>
@@ -54,7 +52,7 @@ export const SelectAmount = ({
         </Flex>
       )}
       <PrimaryButton
-        disabled={!stakedAmount}
+        disabled={!stakedAmount || isInsufficient}
         onClick={async () => {
           handleOneStepForward()
         }}
