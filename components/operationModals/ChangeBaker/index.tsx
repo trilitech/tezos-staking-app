@@ -118,7 +118,7 @@ export const ChangeBakerModal = ({
       closeOnOverlayClick={false}
     >
       <ModalOverlay />
-      <ModalContent w={['100%', bigModal ? '540px' : '480px']}>
+      <ModalContent pb={0} w={['100%', bigModal ? '600px' : '480px']}>
         <ModalHeader>
           <Flex justify='space-between' alignItems='center'>
             <Flex>

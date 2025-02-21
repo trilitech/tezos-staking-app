@@ -46,8 +46,8 @@ export const SelectOptionModal = ({
         scrollBehavior='inside'
       >
         <ModalOverlay />
-        <ModalContent pb='0px' minW='90%'>
-          <ModalHeader p={['24px', null, '40px']} pb={['12px', null, '40px']}>
+        <ModalContent pb='0px' maxW='100%' w={['100%', null, '974px']}>
+          <ModalHeader p={['24px', null, '40px']} pb={['12px !important', null, '20px']}>
             <Flex h='36px' position='relative' alignItems='center' w='100%'>
               <Button
                 position='absolute'
@@ -105,14 +105,15 @@ export const SelectOptionModal = ({
             </Text>
           </ModalHeader>
 
-          <ModalBody px={['24px', null, '40px']}>
+          <ModalBody px={['24px', null, '40px']} pb='0px'>
             <Flex
               w='100%'
-              flexDir={['column', null, null, 'row']}
+              flexDir={['column', null, 'row']}
               flexWrap='wrap'
               borderRadius='4px'
-              py={['12px', null, '48px']}
-              gap={['24px', null, null, '30px']}
+              pb={['12px', null, '40px']}
+              pt={['12px', null, '20px']}
+              gap='24px'
             >
               <Flex
                 bg='white'
@@ -123,8 +124,7 @@ export const SelectOptionModal = ({
                 zIndex={1}
                 flex={1}
                 borderRadius='16px'
-                py={['24px', null, '40px']}
-                px={['24px', null, null, null, '48px']}
+                p={['24px', null, '40px']}
               >
                 <Heading
                   as='h1'
@@ -132,7 +132,7 @@ export const SelectOptionModal = ({
                   color='gray.900'
                   textAlign='left'
                   fontWeight={600}
-                  pb={['12px', null, '16px']}
+                  pb={['4px', null, '16px']}
                 >
                   Delegate
                 </Heading>
@@ -152,11 +152,11 @@ export const SelectOptionModal = ({
                   gap={2}
                 >
                   <Image
-                    maxW='110px'
+                    maxW='24px'
                     src='/images/copy-alt-icon.svg'
                     alt='Wallet Icon'
                   />
-                  <Text fontSize='lg'>Your full balance will be delegated</Text>
+                  <Text fontSize='sm'>Your full balance will be delegated</Text>
                 </Flex>
                 <Flex
                   display={['none', null, 'flex']}
@@ -165,11 +165,11 @@ export const SelectOptionModal = ({
                   gap={2}
                 >
                   <Image
-                    maxW='110px'
+                    maxW='24px'
                     src='/images/like-icon.svg'
                     alt='Wallet Icon'
                   />
-                  <Text fontSize='lg'>
+                  <Text fontSize='sm'>
                     Delegated funds remain in your account
                   </Text>
                 </Flex>
@@ -181,18 +181,18 @@ export const SelectOptionModal = ({
                   gap={2}
                 >
                   <Image
-                    maxW='110px'
+                    maxW='24px'
                     src='/images/cool-icon.svg'
                     alt='Wallet Icon'
                   />
-                  <Text fontSize='lg'>Spend your tez at any time</Text>
+                  <Text fontSize='sm'>Spend your tez at any time</Text>
                 </Flex>
                 <Flex
                   flexDir={['column', null, 'row']}
                   py='18px'
                   pt={['26px', null, '18px']}
                   mb='8px'
-                  gap='24px'
+                  gap={['12px', null, '24px']}
                 >
                   <Flex
                     alignItems='center'
@@ -207,9 +207,9 @@ export const SelectOptionModal = ({
                         alt='Wallet Icon'
                       />
                       <Text
-                        pr='8px'
+                        pr='4px'
                         color='gray.600'
-                        fontSize={['sm', null, 'md']}
+                        fontSize='sm'
                       >
                         Risk
                       </Text>
@@ -243,14 +243,14 @@ export const SelectOptionModal = ({
                   >
                     <Flex justifyContent='center' alignItems='center' gap='6px'>
                       <Image
-                        maxW='110px'
+                        maxW='24px'
                         src='/images/trophy-icon.svg'
                         alt='Wallet Icon'
                       />
                       <Text
-                        pr='8px'
+                        pr='4px'
                         color='gray.600'
-                        fontSize={['sm', null, 'md']}
+                        fontSize='sm'
                       >
                         Reward
                       </Text>
@@ -305,8 +305,7 @@ export const SelectOptionModal = ({
                 flexDir='column'
                 flex={1}
                 borderRadius='16px'
-                py={['24px', null, '40px']}
-                px={['24px', null, null, null, '48px']}
+                p={['24px', null, '40px']}
               >
                 <Heading
                   as='h1'
@@ -314,7 +313,7 @@ export const SelectOptionModal = ({
                   color='gray.900'
                   textAlign='left'
                   fontWeight={600}
-                  pb={['12px', null, '16px']}
+                  pb={['4px', null, '16px']}
                 >
                   Stake
                 </Heading>
@@ -334,11 +333,11 @@ export const SelectOptionModal = ({
                   gap={2}
                 >
                   <Image
-                    maxW='110px'
+                    maxW='24px'
                     src='/images/pie-chart-icon.svg'
                     alt='Wallet Icon'
                   />
-                  <Text fontSize='lg'>Your full balance will be delegated</Text>
+                  <Text fontSize='sm'>Your full balance will be delegated</Text>
                 </Flex>
                 <Flex
                   display={['none', null, 'flex']}
@@ -347,11 +346,11 @@ export const SelectOptionModal = ({
                   gap={2}
                 >
                   <Image
-                    maxW='110px'
+                    maxW='24px'
                     src='/images/lock-icon.svg'
                     alt='Wallet Icon'
                   />
-                  <Text fontSize='lg'>
+                  <Text fontSize='sm'>
                     Delegated funds remain in your account
                   </Text>
                 </Flex>
@@ -363,18 +362,18 @@ export const SelectOptionModal = ({
                   gap={2}
                 >
                   <Image
-                    maxW='110px'
+                    maxW='24px'
                     src='/images/analyse-icon.svg'
                     alt='Wallet Icon'
                   />
-                  <Text fontSize='lg'>Spend your tez at any time</Text>
+                  <Text fontSize='sm'>Spend your tez at any time</Text>
                 </Flex>
                 <Flex
                   flexDir={['column', null, 'row']}
                   py='18px'
                   pt={['26px', null, '18px']}
                   mb='8px'
-                  gap='24px'
+                  gap={['12px', null, '24px']}
                 >
                   <Flex
                     alignItems='center'
@@ -388,9 +387,9 @@ export const SelectOptionModal = ({
                         alt='Wallet Icon'
                       />
                       <Text
-                        pr='8px'
+                        pr='4px'
                         color='gray.600'
-                        fontSize={['sm', null, 'md']}
+                        fontSize='sm'
                       >
                         Risk
                       </Text>
@@ -418,14 +417,14 @@ export const SelectOptionModal = ({
                   >
                     <Flex justifyContent='center' alignItems='center' gap='6px'>
                       <Image
-                        maxW='110px'
+                        maxW='24px'
                         src='/images/trophy-icon.svg'
                         alt='Wallet Icon'
                       />
                       <Text
-                        pr='8px'
+                        pr='4px'
                         color='gray.600'
-                        fontSize={['sm', null, 'md']}
+                        fontSize='sm'
                       >
                         Reward
                       </Text>

@@ -10,7 +10,7 @@ export const Header = ({
   return (
     <Text
       color='#171923'
-      fontSize='24px'
+      fontSize='20px'
       fontWeight={600}
       textAlign='center'
       lineHeight='26px'

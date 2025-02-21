@@ -10,7 +10,7 @@ export const Stepper = ({
 }) => {
   if (totalStep === 2) {
     return (
-      <Flex justify='center' alignItems='center' mb='24px'>
+      <Flex pb='12px' justify='center' alignItems='center' mb='24px'>
         <Image pr='5px' src='/images/stepper/full-dot.svg' alt='dot' />
         <Image pr='5px' src='/images/stepper/line.svg' alt='dot' />
         {currentStep === 1 ? (
@@ -23,7 +23,7 @@ export const Stepper = ({
   }
 
   return (
-    <Flex justify='center' alignItems='center' mb='24px'>
+    <Flex pb='12px' justify='center' alignItems='center' mb='24px'>
       <Image pr='5px' src='/images/stepper/full-dot.svg' alt='dot' />
       <Image pr='5px' src='/images/stepper/line.svg' alt='dot' />
       {currentStep === 1 ? (
