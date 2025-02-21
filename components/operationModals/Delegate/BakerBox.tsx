@@ -43,7 +43,7 @@ export const BakerBox = ({
             <Text fontSize='16px' color='#171923' fontWeight={600}>
               {baker.alias}
             </Text>
-            <Flex alignItems='center' justify='center' gap='5px'>
+            <Flex alignItems='center' justify='start' gap='5px'>
               <Text color='#2D3748' fontWeight={400} fontSize='14px'>
                 {simplifyAddress(baker.address)}
               </Text>

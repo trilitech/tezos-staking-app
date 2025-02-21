@@ -12,6 +12,10 @@ const theme = extendTheme({
     global: {
       body: {
         bg: '#F0F0FF'
+      },
+      a: {
+        textDecoration: 'underline',
+        textUnderlineOffset: '15%'
       }
     }
   },
@@ -38,12 +42,13 @@ const theme = extendTheme({
           borderRadius: '16px',
           borderBottomRadius: { base: 0, md: '16px' },
           pb: '40px',
-          pos: { base: 'fixed', md: 'block' },
-          bottom: { base: 0, md: 'auto' }
+          pos: { base: 'fixed', md: 'relative' },
+          bottom: { base: 0, md: 'auto' },
+          maxHeight: 'calc(100% - 1.5rem)'
         },
         body: {
           pt: '0px',
-          px: '40px'
+          px: { base: '24px', md: '40px' }
         }
       }
     },
