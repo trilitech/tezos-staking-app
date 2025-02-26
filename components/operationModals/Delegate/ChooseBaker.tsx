@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Flex,
   InputGroup,
@@ -156,6 +156,14 @@ export const ChooseBaker = ({
     }
   }
 
+  useEffect(() => {
+    if (!bakersShown.length) {
+      setTimeout(() => {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      }, 1);
+    }
+  }, [bakersShown]);
+
   return (
     <Flex flexDir='column' justify='center'>
       <Header
@@ -194,7 +202,7 @@ export const ChooseBaker = ({
         alignItems='center'
         justify='space-evenly'
         py='24px'
-        display={!bakersShown.length ? 'none' : 'flex'}
+        display={'flex'}
       >
         <SortText
           onClick={() => handleSort('staking')}

@@ -13,9 +13,10 @@ export const ChangeStart = ({
       <Image w='25px' mb='15px' src='/images/error-icon.svg' alt='alert icon' />
       <Header mb='15px'>Important Notice</Header>
       <Description mb='24px' maxW='340px'>
-        Changing your baker will automatically unstake your entire staked
-        balance. This balance will be made available once you finalize the
-        process after approximately 10 days.
+        Changing your baker while staking with them will automatically unstake your entire staked balance.
+        <br />
+        <br />
+        If you would like to stake with your new baker, you will need to come back in approximately 10 days to first finalize the unstaking process via the main dashboard.
       </Description>
       <PrimaryButton onClick={handleOneStepForward}>I Understand</PrimaryButton>
     </Flex>

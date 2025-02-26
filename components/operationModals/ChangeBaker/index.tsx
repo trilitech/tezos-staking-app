@@ -118,7 +118,7 @@ export const ChangeBakerModal = ({
       closeOnOverlayClick={false}
     >
       <ModalOverlay />
-      <ModalContent pb={0} w={['100%', bigModal ? '600px' : '480px']}>
+      <ModalContent pb={bigModal ? '0px' : '40px'} w={['100%', bigModal ? '600px' : '480px']}>
         <ModalHeader>
           <Flex justify='space-between' alignItems='center'>
             <Flex>
@@ -141,7 +141,7 @@ export const ChangeBakerModal = ({
           </Flex>
         </ModalHeader>
 
-        <ModalBody>
+        <ModalBody pb={bigModal ? '0px' : '40px'}>
           <Flex flexDir='column'>
             <Stepper totalStep={totalStep} currentStep={currentStep} />
             {getCurrentStepBody(currentStep, isStaked)}

@@ -12,10 +12,6 @@ const theme = extendTheme({
     global: {
       body: {
         bg: '#F0F0FF'
-      },
-      a: {
-        textDecoration: 'underline',
-        textUnderlineOffset: '15%'
       }
     }
   },
@@ -48,6 +44,7 @@ const theme = extendTheme({
         },
         body: {
           pt: '0px',
+          pb: '0px',
           px: { base: '24px', md: '40px' }
         }
       }

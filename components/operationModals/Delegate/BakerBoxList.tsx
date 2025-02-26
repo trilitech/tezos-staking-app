@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex } from '@chakra-ui/react'
+import { Flex, Text } from '@chakra-ui/react'
 import { BakerBox } from './BakerBox'
 import { BakerInfo } from '@/components/Operations/tezInterfaces'
 
@@ -21,6 +21,7 @@ export const BakerBoxList = ({
       flexDir='column'
       overflowY='scroll'
       maxH={['340px', '420px']}
+      pb='40px'
       gap='12px'
       sx={{
         '::-webkit-scrollbar': {
@@ -33,15 +34,21 @@ export const BakerBoxList = ({
         }
       }}
     >
-      {bakerList.map((baker, index) => (
-        <BakerBox
-          baker={baker}
-          setSelectedBaker={setSelectedBaker}
-          handleOneStepForward={handleOneStepForward}
-          currentBakerAddress={currentBakerAddress}
-          key={index}
-        />
-      ))}
+      {!bakerList.length ? (
+        <Text textAlign="center" color="#4A5568" fontSize="16px">
+          No bakers match your search
+        </Text>
+      ) : (
+        bakerList.map((baker, index) => (
+          <BakerBox
+            baker={baker}
+            setSelectedBaker={setSelectedBaker}
+            handleOneStepForward={handleOneStepForward}
+            currentBakerAddress={currentBakerAddress}
+            key={index}
+          />
+        ))
+      )}
     </Flex>
   )
 }

@@ -31,7 +31,7 @@ export const DisclaimerStaking = ({
     <Flex flexDir='column' alignItems='center'>
       <Image w='25px' mb='15px' src='/images/error-icon.svg' alt='alert icon' />
       <Header mb='15px'>Disclaimer</Header>
-      <Description w='340px'>
+      <Description w='340px' sx={{ 'a': { textDecoration: 'underline', textUnderlineOffset: '15%' } }}>
         Staked balances are locked in your account until they are manually
         unstaked which will take approximately 10 days to be finalized.
         <br />
@@ -62,7 +62,7 @@ export const DisclaimerStaking = ({
           lineHeight='22px'
         >
           I confirm that I have read and agreed with the{' '}
-          <Text as='a' href='/termsOfUseStakingApp/' target='_blank' textDecor='underline' _hover={{ cursor: 'pointer' }}>
+          <Text as='a' href='/termsOfUseStakingApp/' target='_blank' textDecor='underline' textUnderlineOffset='15%' _hover={{ cursor: 'pointer' }}>
             Terms of Use.
           </Text>
         </Text>
