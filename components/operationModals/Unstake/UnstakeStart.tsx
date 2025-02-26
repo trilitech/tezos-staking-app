@@ -14,9 +14,7 @@ export const UnstakeStart = ({
       <Image w='25px' mb='15px' src='/images/error-icon.svg' alt='alert icon' />
       <Header mb='15px'>Important Notice</Header>
       <Description mb='24px'>
-        Unstaking takes approximately 10 days, after which you must finalize the
-        process. Once you do, your tez will be made available in your spendable
-        balance.
+        Unstaking takes approximately 10 days, and you must finalize the process via the main dashboard. Once you do, your tez will be made available in your spendable balance.
       </Description>
       <PrimaryButton
         onClick={() => {

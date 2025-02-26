@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Flex, InputGroup, Input, Image, Text } from '@chakra-ui/react'
 import { Header, ColumnHeader, BalanceBox } from '@/components/modalBody'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
@@ -8,13 +8,23 @@ export const SelectAmount = ({
   spendableBalance,
   handleOneStepForward,
   setStakedAmount,
-  stakedAmount
+  stakedAmount,
+  inputRef
 }: {
   spendableBalance: number
   handleOneStepForward: () => void
   setStakedAmount: (arg: number) => void
-  stakedAmount: number
+  stakedAmount: number,
+  inputRef: React.RefObject<HTMLInputElement>
 }) => {
+  useEffect(() => {
+    if (inputRef?.current) {
+      setTimeout(() => {
+        window.scrollTo({ top: document.body.scrollHeight * 0.6, behavior: 'smooth' });
+      }, 1);
+    }
+  }, [inputRef]);
+
   const handleChange = (event: any) => {
     const val = Number(event.target.value)
     trackGAEvent(GAAction.BUTTON_CLICK, GACategory.INPUT_AMOUNT)
@@ -31,6 +41,7 @@ export const SelectAmount = ({
       <ColumnHeader mb='12px'>ENTER AMOUNT</ColumnHeader>
       <InputGroup size='md' mb='30px'>
         <Input
+          ref={inputRef}
           h='46px'
           isRequired
           type='number'
