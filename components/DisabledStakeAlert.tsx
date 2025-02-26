@@ -14,7 +14,7 @@ export function getDisabledStakeButtonReason(
       'Your current baker does not accept staking. Please select a different baker to enable staking.'
   else if (opStatus.pendingUnstakeOpsWithAnotherBaker)
     reason =
-      'You have unstake operations with another baker which are pending finalization. Wait for few cycles.'
+      'Before staking with a new baker, you must wait for your current unstake operations to be finalized. The unstaking process takes approximately 10 days, and can be monitored via the main dashboard.'
   return reason
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import {
   Modal,
   ModalOverlay,
@@ -44,6 +44,7 @@ export const StakeModal = ({
 }: StakeModal) => {
   const [stakedAmount, setStakedAmount] = useState(0)
   const [selectedBaker, setSelectedBaker] = useState<BakerInfo | null>(null)
+  const inputRef = useRef(null);
 
   const firstStep = openedFromStartEarning
     ? StakeStatus.StakeStart
@@ -94,6 +95,7 @@ export const StakeModal = ({
             setStakedAmount={setStakedAmount}
             spendableBalance={spendableBalance}
             handleOneStepForward={handleOneStepForward}
+            inputRef={inputRef}
           />
         )
       case StakeStatus.DisclaimerStaking:
@@ -117,6 +119,7 @@ export const StakeModal = ({
       isOpen={isOpen}
       onClose={onClose}
       closeOnOverlayClick={false}
+      initialFocusRef={inputRef}
     >
       <ModalOverlay />
       <ModalContent w={['100%', bigModal ? '540px' : '480px']} >
