@@ -92,6 +92,7 @@ export const DelegationModal = ({
       isOpen={isOpen}
       onClose={onClose}
       closeOnOverlayClick={false}
+      autoFocus={false}
     >
       <ModalOverlay />
       <ModalContent w={['100%', bigModal ? '540px' : '480px']}>
