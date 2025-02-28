@@ -19,13 +19,12 @@ import { BakerInfo } from './Operations/tezInterfaces'
 import { mutezToTez } from '@/utils/mutezToTez'
 
 export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
-  const [isToggle, setIsToggle] = useState(true)
+  const [isToggle, setIsToggle] = useState(false)
 
   return (
     <Accordion
       borderBottom='0px solid transparent'
       w='100%'
-      defaultIndex={0}
       allowToggle
       onChange={() => setIsToggle(!isToggle)}
     >

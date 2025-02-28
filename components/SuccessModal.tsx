@@ -35,6 +35,7 @@ const getSuccessMessage = (opType?: OpType, amount?: number) => {
     case 'delegate':
       return 'You have successfully delegated your balance'
     case 'change_baker':
+    case 'pending_unstake':
       return 'You have successfully changed your baker'
     case 'end_delegate':
       return 'You have successfully ended your delegation'
@@ -97,8 +98,8 @@ export const SuccessModal = ({
             <Image
               w='24px'
               h='24px'
-              src='/images/check.svg'
-              alt='check icon'
+              src={opType === 'pending_unstake' ? '/images/error-icon.svg' : '/images/check.svg'}
+              alt={opType === 'pending_unstake' ? 'error icon' : 'check icon'}
               mb='16px'
             />
             <Text fontWeight={600} color='#171923' fontSize='24px' mb='16px'>
@@ -111,9 +112,8 @@ export const SuccessModal = ({
               maxW='300px'
               mb='30px'
               lineHeight='22px'
-            >
-              {desc}
-            </Text>
+              dangerouslySetInnerHTML={{ __html: desc }}
+            />
             <PrimaryButton
               onClick={() => {
                 setGAEvent(opType)

@@ -112,6 +112,16 @@ export const AccountBody = ({
   const [successMessage, setSuccessMessage] = useState<string>('')
 
   useEffect(() => {
+    let timeout: NodeJS.Timeout
+    if (successClose) {
+      timeout = setTimeout(() => {
+        setSuccessClose(false)
+      }, 10000)
+    }
+    return () => clearTimeout(timeout)
+  }, [successClose])
+
+  useEffect(() => {
     if (accountInfoData && blockchainHeadData) {
       const { opStatus, unstakingOps, totalFinalizableAmount } =
         updateStakingOpsStatus(
@@ -377,7 +387,7 @@ export const AccountBody = ({
             stakingOpsStatus.bakerAcceptsStaking && (
               <ExpandBakerInfoTable
                 baker={_.find(bakerList, {
-                  address: accountInfo?.delegate.address
+                  address: accountInfo?.delegate?.address
                 })}
               />
             )}
@@ -430,6 +440,7 @@ export const AccountBody = ({
           onClose={selectOptionModal.onClose}
           bakerList={bakerList}
           spendableBalance={spendableBalance}
+          stakingOpsStatus={stakingOpsStatus}
         />
         <DelegationModal
           isOpen={delegateModal.isOpen}
