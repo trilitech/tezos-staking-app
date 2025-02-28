@@ -7,6 +7,7 @@ export type OpType =
   | 'stake'
   | 'unstake'
   | 'finalize_unstake'
+  | 'pending_unstake'
 
 interface OperationResponseContextType {
   success: boolean

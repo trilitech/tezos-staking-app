@@ -13,7 +13,7 @@ import useCurrentStep from '@/utils/useCurrentStep'
 import { Stepper } from '@/components/modalBody/Stepper'
 import { BackIcon, CloseIcon } from '@/components/icons'
 import { ChooseBaker } from '../Delegate/ChooseBaker'
-import { BakerInfo } from '@/components/Operations/tezInterfaces'
+import { BakerInfo, StakingOpsStatus } from '@/components/Operations/tezInterfaces'
 import { ConfirmBaker } from '../Delegate/ConfirmBaker'
 import { DisclaimerStaking } from './DisclaimerStaking'
 
@@ -24,6 +24,7 @@ interface StakeModal {
   bakerList: BakerInfo[] | null
   openedFromStartEarning: boolean
   currentBakerAddress: string | undefined
+  stakingOpsStatus?: StakingOpsStatus
 }
 
 enum StakeStatus {
@@ -40,7 +41,8 @@ export const StakeModal = ({
   onClose,
   spendableBalance,
   bakerList,
-  currentBakerAddress
+  currentBakerAddress,
+  stakingOpsStatus
 }: StakeModal) => {
   const [stakedAmount, setStakedAmount] = useState(0)
   const [selectedBaker, setSelectedBaker] = useState<BakerInfo | null>(null)
@@ -52,7 +54,7 @@ export const StakeModal = ({
 
   const totalStep = openedFromStartEarning ? 5 : 2
 
-  const { currentStep, handleOneStepBack, handleOneStepForward, resetStep } =
+  const { currentStep, handleOneStepBack, handleOneStepForward, resetStep, handleNStepForward } =
     useCurrentStep(onClose, totalStep)
 
   const closeReset = () => {
@@ -83,9 +85,11 @@ export const StakeModal = ({
           <ConfirmBaker
             handleOneStepForward={handleOneStepForward}
             handleOneStepBack={handleOneStepBack}
+            handleNStepForward={handleNStepForward}
             selectedBaker={selectedBaker as BakerInfo}
             openedFromStartEarning={openedFromStartEarning}
             setSelectedBaker={setSelectedBaker}
+            canStake={!stakingOpsStatus?.pendingUnstakeOpsWithAnotherBaker}
           />
         ) : null
       case StakeStatus.SelectAmount:
@@ -120,6 +124,7 @@ export const StakeModal = ({
       onClose={onClose}
       closeOnOverlayClick={false}
       initialFocusRef={inputRef}
+      autoFocus={!bigModal}
     >
       <ModalOverlay />
       <ModalContent w={['100%', bigModal ? '540px' : '480px']} >

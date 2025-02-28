@@ -13,7 +13,7 @@ import {
   Heading,
   useDisclosure
 } from '@chakra-ui/react'
-import { BakerInfo } from '@/components/Operations/tezInterfaces'
+import { BakerInfo, StakingOpsStatus } from '@/components/Operations/tezInterfaces'
 import { CloseIcon } from '@/components/icons'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
@@ -25,13 +25,15 @@ export interface DelegateModalProps {
   onClose: () => void
   bakerList: BakerInfo[] | null
   spendableBalance: number
+  stakingOpsStatus: StakingOpsStatus
 }
 
 export const SelectOptionModal = ({
   isOpen,
   onClose,
   bakerList,
-  spendableBalance
+  spendableBalance,
+  stakingOpsStatus
 }: DelegateModalProps) => {
   const delegateModal = useDisclosure()
   const stakeModal = useDisclosure()
@@ -479,6 +481,7 @@ export const SelectOptionModal = ({
         spendableBalance={spendableBalance}
         bakerList={bakerList}
         currentBakerAddress={undefined}
+        stakingOpsStatus={stakingOpsStatus}
       />
     </>
   )

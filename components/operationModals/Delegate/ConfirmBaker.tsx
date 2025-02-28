@@ -24,24 +24,28 @@ import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 interface ChooseBakerProps {
   handleOneStepForward: () => void
   handleOneStepBack: () => void
+  handleNStepForward?: (n: number) => void
   selectedBaker: BakerInfo
   openedFromStartEarning: boolean
   setSelectedBaker: (b: null) => void
   isChangeBaker?: boolean
   isStaked?: boolean
+  canStake?: boolean
 }
 
 export const ConfirmBaker = ({
   handleOneStepForward,
   handleOneStepBack,
+  handleNStepForward,
   selectedBaker,
   openedFromStartEarning,
   setSelectedBaker,
   isChangeBaker,
-  isStaked
+  isStaked,
+  canStake
 }: ChooseBakerProps) => {
   const { Tezos, beaconWallet } = useConnection()
-  const { setMessage, setSuccess, setOpHash, setOpType } =
+  const { setMessage, setSuccess, setTitle, setOpHash, setOpType } =
     useOperationResponse()
   const [errorMessage, setErrorMessage] = useState('')
   const [waitingOperation, setWaitingOperation] = useState(false)
@@ -128,35 +132,41 @@ export const ConfirmBaker = ({
           )
           setWaitingOperation(false)
           if (response.success) {
-            if (!openedFromStartEarning) {
-              if (isChangeBaker) {
-                setOpType('change_baker')
-                setMessage(
-                  isStaked ?
-                    'You have successfully changed your baker and unstaked with your previous baker. Unstaking takes approximately 10 days, after which you must finalize the process. Once you do, your tez will be made available in your spendable balance.' :
-                    'You have successfully delegated your balance to the baker. You can now choose to stake your tez with the same baker to earn higher rewards.'
-                )
-                trackGAEvent(
-                  GAAction.BUTTON_CLICK,
-                  GACategory.CHANGE_BAKER_SUCCESS
-                )
-              } else {
-                setOpType('delegate')
-                setMessage(
-                  'You have successfully delegated your balance to the baker. You can now choose to stake your tez with the same baker to earn higher rewards.'
-                )
-                trackGAEvent(
-                  GAAction.BUTTON_CLICK,
-                  GACategory.START_DELEGATE_END
-                )
-              }
-
+            if (!canStake && handleNStepForward) {
+              setOpType('pending_unstake')
+              setTitle('Pending Unstake Operation!')
+              setMessage('You have successfully delegated your balance to the new baker.<br /><br />Before staking with a new baker, you must wait for your current unstake operations to be finalized. The unstaking process takes approximately 10 days.')
               setOpHash(response.opHash)
-
               setSuccess(true)
+              handleNStepForward(3)
+            } else {
+              if (!openedFromStartEarning) {
+                if (isChangeBaker) {
+                  setOpType('change_baker')
+                  setMessage(
+                    isStaked ?
+                      'You have successfully changed your baker and unstaked with your previous baker. Unstaking takes approximately 10 days, after which you must finalize the process. Once you do, your tez will be made available in your spendable balance.' :
+                      'You have successfully delegated your balance to the baker. You can now choose to stake your tez with the same baker to earn higher rewards.'
+                  )
+                  trackGAEvent(
+                    GAAction.BUTTON_CLICK,
+                    GACategory.CHANGE_BAKER_SUCCESS
+                  )
+                } else {
+                  setOpType('delegate')
+                  setMessage(
+                    'You have successfully delegated your balance to the baker. You can now choose to stake your tez with the same baker to earn higher rewards.'
+                  )
+                  trackGAEvent(
+                    GAAction.BUTTON_CLICK,
+                    GACategory.START_DELEGATE_END
+                  )
+                }
+              }
+              setOpHash(response.opHash)
+              setSuccess(true)
+              handleOneStepForward()
             }
-
-            handleOneStepForward()
           } else {
             setErrorMessage(response.message)
           }

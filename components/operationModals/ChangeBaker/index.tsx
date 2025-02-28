@@ -116,6 +116,7 @@ export const ChangeBakerModal = ({
       isOpen={isOpen}
       onClose={onClose}
       closeOnOverlayClick={false}
+      autoFocus={false}
     >
       <ModalOverlay />
       <ModalContent pb={bigModal ? '0px' : '40px'} w={['100%', bigModal ? '600px' : '480px']}>
