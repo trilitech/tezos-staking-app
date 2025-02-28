@@ -49,7 +49,7 @@ export const ChangeBakerModal = ({
     setSelectedBaker(null)
   }
 
-  const bigModal = (isStaked && currentStep === StakedDelegateStatus.ChooseBaker) || currentStep === UnStakedDelegateStatus.ChooseBaker
+  const bigModal = (isStaked && currentStep === StakedDelegateStatus.ChooseBaker) || (!isStaked && currentStep === UnStakedDelegateStatus.ChooseBaker)
 
   const getCurrentStepBody = (currentStep: number, isStaked: boolean) => {
     if (isStaked) {
@@ -142,7 +142,7 @@ export const ChangeBakerModal = ({
           </Flex>
         </ModalHeader>
 
-        <ModalBody pb={bigModal ? '0px' : '40px'}>
+        <ModalBody>
           <Flex flexDir='column'>
             <Stepper totalStep={totalStep} currentStep={currentStep} />
             {getCurrentStepBody(currentStep, isStaked)}
