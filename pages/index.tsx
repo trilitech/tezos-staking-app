@@ -170,7 +170,7 @@ export default function Home() {
           <Box
             display={['none', null, 'block']}
             position='absolute'
-            bottom='155vh'
+            bottom={['70vh', '95vh']}
             w='38px'
             height='240px'
             left='12%'
@@ -181,7 +181,7 @@ export default function Home() {
           />
           <Box
             position='absolute'
-            bottom={['155vh', '145vh']}
+            bottom={['90vh', '80vh']}
             w={['25px', '28px', '38px']}
             height={['160px', '210px', '242px']}
             right='15%'

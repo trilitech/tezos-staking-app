@@ -95,8 +95,7 @@ export default function FooterCta() {
               color={'black'}
               pb={['24px', null, '24px']}
             >
-              Visit the FAQ page to find answers to questions about delegation,
-              staking, and more.
+              Unlock the potential of your tez. Delegate or stake now and see your rewards grow.
             </Text>
             <Button
               variant='primary'

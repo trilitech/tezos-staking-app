@@ -22,7 +22,7 @@ export default function Hero() {
       backgroundSize='cover'
       backgroundBlendMode='multiply'
       bg="linear-gradient(90deg, #6C235E 0%, #5C72FA 100%), url('/images/hero-pattern.png')"
-      // px={['24px', null, '40px']}
+    // px={['24px', null, '40px']}
     >
       <Box px={['24px', null, '40px']}>
         <Header />
@@ -36,6 +36,7 @@ export default function Hero() {
       >
         <Flex
           borderRadius={[0, null, null, '4px']}
+          zIndex={1}
           bg='transparent'
           mt={[null, null, null, '24px']}
           maxW='1232px'
