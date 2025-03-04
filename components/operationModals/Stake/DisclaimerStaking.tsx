@@ -33,10 +33,10 @@ export const DisclaimerStaking = ({
       <Header mb='15px'>Disclaimer</Header>
       <Description w='340px' sx={{ 'a': { textDecoration: 'underline', textUnderlineOffset: '15%' } }}>
         Staked balances are locked in your account until they are manually
-        unstaked which will take approximately 10 days to be finalized.
+        unstaked, which will take approximately 10 days to be finalized.
         <br />
         <br />
-        Staked funds are at risk. You might lose a portion of your stake if the
+        Staked funds are exposed to slashing risks. You might lose a portion of your stake if the
         chosen baker is <a target='_blank' href='https://tezos.gitlab.io/active/consensus.html#slashing'>slashed</a> for not following{' '}
         <a target='_blank' href='https://tezos.gitlab.io/active/consensus.html'>Tezos consensus mechanism rules</a>.
       </Description>

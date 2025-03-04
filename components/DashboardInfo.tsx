@@ -209,7 +209,7 @@ export default function DashboardInfo() {
                         h='12px'
                         w='2px'
                       />
-                      <CustomTab text='Monitor' />
+                      <CustomTab text='Manage' />
                     </TabList>
                   </Tabs>
                 </Flex>
