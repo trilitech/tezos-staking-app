@@ -203,7 +203,6 @@ export const SelectOptionModal = ({
                   >
                     <Flex justifyContent='center' alignItems='center' gap='6px'>
                       <Image
-                        color='red'
                         maxW='110px'
                         src='/images/error-icon-gray.svg'
                         alt='Wallet Icon'
