@@ -74,6 +74,7 @@ export const ChangeBakerModal = ({
               selectedBaker={selectedBaker as BakerInfo}
               setSelectedBaker={setSelectedBaker}
               isChangeBaker={true}
+              isStaked={isStaked}
             />
           )
         default:

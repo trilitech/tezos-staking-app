@@ -229,7 +229,7 @@ export default function StakeOptions() {
                 src='/images/pie-chart-icon.svg'
                 alt='Wallet Icon'
               />
-              <Text fontSize='lg'>Your full balance will be delegated</Text>
+              <Text fontSize='lg'>Stake however much tez you'd like</Text>
             </Flex>
             <Flex
               display={['none', null, 'flex']}
@@ -242,7 +242,7 @@ export default function StakeOptions() {
                 src='/images/lock-icon.svg'
                 alt='Wallet Icon'
               />
-              <Text fontSize='lg'>Delegated funds remain in your account</Text>
+              <Text fontSize='lg'>Staked funds are locked in your account</Text>
             </Flex>
             <Flex
               display={['none', null, 'flex']}
@@ -256,7 +256,7 @@ export default function StakeOptions() {
                 src='/images/analyse-icon.svg'
                 alt='Wallet Icon'
               />
-              <Text fontSize='lg'>Spend your tez at any time</Text>
+              <Text fontSize='lg'>Approximately 10 days for unstaking</Text>
             </Flex>
             <Flex
               flexDir={['column', null, 'row']}

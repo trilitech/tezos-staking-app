@@ -37,8 +37,8 @@ export const DisclaimerStaking = ({
         <br />
         <br />
         Staked funds are exposed to slashing risks. You might lose a portion of your stake if the
-        chosen baker is <a target='_blank' href='https://tezos.gitlab.io/active/consensus.html#slashing'>slashed</a> for not following{' '}
-        <a target='_blank' href='https://tezos.gitlab.io/active/consensus.html'>Tezos consensus mechanism rules</a>.
+        chosen baker is <a target='_blank' href='https://octez.tezos.com/docs/active/consensus.html#slashing'>slashed</a> for not following{' '}
+        <a target='_blank' href='https://octez.tezos.com/docs/active/consensus.html'>Tezos consensus mechanism rules</a>.
       </Description>
       <Flex
         gap='24px'
