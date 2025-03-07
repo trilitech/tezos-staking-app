@@ -14,8 +14,8 @@ export const TertiaryButton = ({
   return (
     <Button
       w='100%'
-      bg={disabled ? '#E2E8F0' : 'black'}
-      color={disabled ? '#A0AEC0' : 'white'}
+      bg={disabled ? 'gray.200' : 'black'}
+      color={disabled ? 'gray.400' : 'white'}
       fontWeight={600}
       borderRadius='8px'
       fontSize='18px'
@@ -23,7 +23,7 @@ export const TertiaryButton = ({
       px='24px'
       lineHeight='24px'
       _hover={{
-        bg: disabled ? '#E2E8F0' : 'black',
+        bg: disabled ? 'gray.200' : 'black',
         cursor: disabled ? 'not-allowed' : 'pointer'
       }}
       onClick={disabled ? undefined : onClick}

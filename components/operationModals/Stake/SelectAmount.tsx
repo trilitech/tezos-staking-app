@@ -56,7 +56,7 @@ export const SelectAmount = ({
       {isInsufficient && (
         <Flex alignItems='center' gap='8px' mb='30px'>
           <Image src='/images/AlertIcon.svg' alt='alert icon' />
-          <Text opacity={0.8} fontSize='14px' fontWeight={400} color='#C53030'>
+          <Text opacity={0.8} fontSize='14px' fontWeight={400} color='darkRed'>
             Insufficient balance! Keep minimum 0.01 tez spendable to cover fees
             for this and future operations.
           </Text>

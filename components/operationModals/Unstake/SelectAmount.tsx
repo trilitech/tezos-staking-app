@@ -62,7 +62,7 @@ export const SelectAmount = ({
         <InputRightElement width='4.5rem' pr='12px' h='100%'>
           <Button
             borderRadius='8px'
-            bg={unstakeAmount === stakedAmount ? '#A0AEC0' : '#0052FF'}
+            bg={unstakeAmount === stakedAmount ? 'gray.400' : 'blue'}
             color='white'
             fontWeight={600}
             fontSize='16px'
@@ -70,7 +70,7 @@ export const SelectAmount = ({
             px='12px'
             py='6px'
             _hover={{
-              bg: unstakeAmount === stakedAmount ? '#A0AEC0' : '#0052FF'
+              bg: unstakeAmount === stakedAmount ? 'gray.400' : 'blue'
             }}
             onClick={setMax}
           >

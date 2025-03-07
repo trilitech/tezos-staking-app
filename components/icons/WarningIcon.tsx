@@ -7,7 +7,7 @@ export const WarningIcon = ({ ...styles }: IconProps) => {
       width='24px'
       height='24px'
       viewBox='0 0 24 24'
-      fill='#718096'
+      fill='gray.500'
       xmlns='http://www.w3.org/2000/svg'
       {...styles}
     >
