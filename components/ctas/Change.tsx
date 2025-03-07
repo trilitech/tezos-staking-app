@@ -8,13 +8,13 @@ export const Change = ({ onClick }: { onClick: () => void }) => {
       gap='4px'
       onClick={onClick}
       transition='all .5s ease-out'
-      color='#2D3748'
+      color='gray.700'
       border='1px solid'
       borderColor='gray.200'
       borderRadius='8px'
       px='3'
       py='6px'
-      _hover={{ cursor: 'pointer', color: '#718096' }}
+      _hover={{ cursor: 'pointer', color: 'gray.500' }}
     >
       <Text fontSize='14px' fontWeight={600}>
         Change

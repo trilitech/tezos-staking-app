@@ -171,7 +171,7 @@ export default function DashboardInfo() {
                       key={index}
                       flex={1}
                       h='6px'
-                      bg={activeIndex === index ? '#0052FF' : 'white'}
+                      bg={activeIndex === index ? 'blue' : 'white'}
                       borderRadius='100px'
                       cursor='pointer'
                       onClick={() => setActiveIndex(index)}
@@ -237,17 +237,17 @@ export default function DashboardInfo() {
                         <Box
                           borderRadius='100px'
                           flex='1'
-                          bg={activeIndex === 0 ? '#0052FF' : 'white'}
+                          bg={activeIndex === 0 ? 'blue' : 'white'}
                         ></Box>
                         <Box
                           borderRadius='100px'
                           flex='1'
-                          bg={activeIndex === 1 ? '#0052FF' : 'white'}
+                          bg={activeIndex === 1 ? 'blue' : 'white'}
                         ></Box>
                         <Box
                           borderRadius='100px'
                           flex='1'
-                          bg={activeIndex === 2 ? '#0052FF' : 'white'}
+                          bg={activeIndex === 2 ? 'blue' : 'white'}
                         ></Box>
                       </Flex>
 

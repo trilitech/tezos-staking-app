@@ -11,9 +11,9 @@ export const ViewBakers = () => {
       display='flex'
       alignItems='center'
       gap='4px'
-      color='#2D3748'
+      color='gray.700'
       transition='all .5s ease-out'
-      _hover={{ cursor: 'pointer', color: '#718096' }}
+      _hover={{ cursor: 'pointer', color: 'gray.500' }}
     >
       <Text fontSize='14px' fontWeight={600}>
         View bakers

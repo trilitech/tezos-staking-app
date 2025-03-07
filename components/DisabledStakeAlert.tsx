@@ -26,12 +26,12 @@ export const DisabledStakeAlert = ({
   opStatus: StakingOpsStatus
   acctInfo: AccountInfo | null
 } & BoxProps) => {
-  let iconFillColor = '#718096'
-  let backgroudColor = '#EDF2F7'
+  let iconFillColor = 'gray.500'
+  let backgroudColor = 'gray.100'
 
   if (opStatus.Delegated && !opStatus.CanStake) {
     if (!opStatus.bakerAcceptsStaking && (acctInfo?.stakedBalance ?? 0) > 0) {
-      iconFillColor = '#E53E3E'
+      iconFillColor = 'red'
       backgroudColor = '#FED7D7'
     }
     return (
@@ -44,7 +44,7 @@ export const DisabledStakeAlert = ({
       >
         <Flex alignItems='center' gap='12px'>
           <WarningIcon fill={iconFillColor} />
-          <Text fontSize='16px' lineHeight='22px' color='#2D3748'>
+          <Text fontSize='16px' lineHeight='22px' color='gray.700'>
             {getDisabledStakeButtonReason(opStatus)}
           </Text>
         </Flex>

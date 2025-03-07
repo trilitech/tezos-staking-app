@@ -13,8 +13,8 @@ export const End = ({ onClick }: { onClick: () => void }) => {
       gap='4px'
       onClick={onClick}
       transition='all .5s ease-out'
-      color='#2D3748'
-      _hover={{ cursor: 'pointer', color: '#718096' }}
+      color='gray.700'
+      _hover={{ cursor: 'pointer', color: 'gray.500' }}
     >
       <Text fontSize='14px' fontWeight={600}>
         End

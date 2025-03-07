@@ -18,7 +18,7 @@ export const PendingUnstakeSection = ({
     <Box w='100%'>
       <Flex
         fontSize='14px'
-        color='#4A5568'
+        color='gray.600'
         fontWeight={600}
         justify='space-between'
         alignItems='center'

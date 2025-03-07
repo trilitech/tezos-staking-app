@@ -35,7 +35,7 @@ export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
               fontSize='14px'
               fontWeight={600}
               lineHeight='18px'
-              color='#4A5568'
+              color='gray.600'
             >
               BAKER&#39;S INFO
             </Text>
@@ -45,16 +45,16 @@ export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
               fontSize='14px'
               fontWeight={600}
               lineHeight='18px'
-              color='#4A5568'
+              color='gray.600'
             >
               {isToggle ? 'See Less' : 'See More'}
             </Text>
-            <AccordionIcon color='#A0AEC0' w='18px' h='18px' />
+            <AccordionIcon color='gray.400' w='18px' h='18px' />
           </Flex>
         </AccordionButton>
 
         <AccordionPanel py={0} px={0}>
-          <TableContainer bg='#EDF2F7' borderRadius='8px' whiteSpace='wrap'>
+          <TableContainer bg='gray.100' borderRadius='8px' whiteSpace='wrap'>
             <Table>
               <Tbody>
                 <Tr>
@@ -65,7 +65,7 @@ export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
                         fontSize='14px'
                         fontWeight={600}
                         lineHeight='22px'
-                        color='#4A5568'
+                        color='gray.600'
                       >
                         TOTAL:
                       </Text>
@@ -73,7 +73,7 @@ export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
                   </Td>
                   <Td borderBottom='1px solid #E2E8F0' w='100%'>
                     <Flex justifyContent='flex-end' alignItems='end' gap='4px'>
-                      <Text display='inline-flex' gap={1} alignItems='center' fontSize='14px' fontWeight={600} color='#171923'>
+                      <Text display='inline-flex' gap={1} alignItems='center' fontSize='14px' fontWeight={600} color='gray.900'>
                         {Math.floor(mutezToTez(baker?.totalStakedBalance ?? 0))}{' '}
                         <Image mt='4px' h='14px' src='/images/T3.svg' alt='Tezos Logo' />
                       </Text>
@@ -89,7 +89,7 @@ export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
                         fontSize='14px'
                         fontWeight={600}
                         lineHeight='22px'
-                        color='#4A5568'
+                        color='gray.600'
                       >
                         FEE:
                       </Text>
@@ -102,7 +102,7 @@ export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
                       gap='4px'
                       w='100%'
                     >
-                      <Text fontSize='14px' fontWeight={600} color='#171923'>
+                      <Text fontSize='14px' fontWeight={600} color='gray.900'>
                         {baker?.stakingFees}%
                       </Text>
                     </Flex>
@@ -116,7 +116,7 @@ export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
                         fontSize='14px'
                         fontWeight={600}
                         lineHeight='22px'
-                        color='#4A5568'
+                        color='gray.600'
                       >
                         FREE SPACE:
                       </Text>
@@ -128,7 +128,7 @@ export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
                       alignItems='center'
                       gap='4px'
                     >
-                      <Text display='inline-flex' gap={1} alignItems='center' fontSize='14px' fontWeight={600} color='#171923'>
+                      <Text display='inline-flex' gap={1} alignItems='center' fontSize='14px' fontWeight={600} color='gray.900'>
                         {Math.floor(baker?.stakingFreeSpace ?? 0)}
                         <Image mt='4px' h='14px' src='/images/T3.svg' alt='Tezos Logo' />
                       </Text>

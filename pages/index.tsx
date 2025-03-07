@@ -114,7 +114,7 @@ export default function Home() {
         <Center
           py='20px'
           minH='100vh'
-          bg='#cbd5e0'
+          bg='gray.300'
           bgImage={['/images/bg-blue-mobile.svg', '/images/bg-blue-desktop.svg']}
           backgroundPosition='center'
           backgroundRepeat='no-repeat'

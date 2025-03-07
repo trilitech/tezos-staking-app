@@ -45,7 +45,7 @@ export const AccountBanner = ({
           _hover={{
             cursor: 'pointer',
             '& > p': {
-              color: '#0052FF',
+              color: 'blue',
               textDecoration: 'underline'
             }
           }}
@@ -55,7 +55,7 @@ export const AccountBanner = ({
           <Text fontWeight={400} lineHeight='18px' fontSize='14px'>
             {simplifyAddress(address)}
           </Text>
-          <CopyIcon fill='#A0AEC0' _groupHover={{ fill: '#0052FF' }} />
+          <CopyIcon fill='gray.400' _groupHover={{ fill: 'blue' }} />
         </Flex>
       </Flex>
       <Flex gap='3'>

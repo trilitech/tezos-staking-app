@@ -43,7 +43,7 @@ export const DisclaimerStaking = ({
       <Flex
         gap='24px'
         my='24px'
-        bg='#EDF2F7'
+        bg='gray.100'
         borderRadius='10px'
         py='16px'
         px='22px'
@@ -56,7 +56,7 @@ export const DisclaimerStaking = ({
           }}
         />
         <Text
-          color='#2D3748'
+          color='gray.700'
           fontSize='16px'
           fontWeight={400}
           lineHeight='22px'

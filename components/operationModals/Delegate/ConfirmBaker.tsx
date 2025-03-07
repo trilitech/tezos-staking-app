@@ -79,7 +79,7 @@ export const ConfirmBaker = ({
           value={selectedBaker.alias ?? 'Private Baker'}
           h='48px'
           overflowX='auto'
-          _disabled={{ opacity: 1, fontWeight: 600, color: '#171923' }}
+          _disabled={{ opacity: 1, fontWeight: 600, color: 'gray.900' }}
         />
 
         <InputRightElement mr='12px' h='100%' w='75px'>
@@ -105,7 +105,7 @@ export const ConfirmBaker = ({
       ) : (
         <Flex alignItems='center' gap='8px' mb='30px'>
           <Image src='/images/AlertIcon.svg' alt='alert icon' />
-          <Text opacity={0.8} fontSize='14px' fontWeight={400} color='#C53030'>
+          <Text opacity={0.8} fontSize='14px' fontWeight={400} color='darkRed'>
             {selectedBaker.alias ?? 'Private Baker'} does not accept staking
           </Text>
         </Flex>

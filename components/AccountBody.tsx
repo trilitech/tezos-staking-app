@@ -258,16 +258,16 @@ export const AccountBody = ({
             borderTop={[null, null, '1px solid #EDF2F7']}
             pt={[0, null, '20px']}
           >
-            <Text fontSize='14px' color='#4A5568' fontWeight={600}>
+            <Text fontSize='14px' color='gray.600' fontWeight={600}>
               SPENDABLE
             </Text>
-            <Text display='inline-flex' gap={1} alignItems='center' fontWeight={600} fontSize='18px' color='#171923'>
+            <Text display='inline-flex' gap={1} alignItems='center' fontWeight={600} fontSize='18px' color='gray.900'>
               {!!spendableBalance ? spendableBalance : 0}{' '}
               <Image mt='4px' h='18px' src='/images/T3.svg' alt='Tezos Logo' />
             </Text>
           </Flex>
           <Flex flexDir='column' borderTop='1px solid #EDF2F7' pt='20px'>
-            <Text fontSize='14px' color='#4A5568' fontWeight={600}>
+            <Text fontSize='14px' color='gray.600' fontWeight={600}>
               STAKED
             </Text>
             <Flex gap='6px' alignItems='center'>
@@ -279,7 +279,7 @@ export const AccountBody = ({
                   alt='lock icon'
                 />
               )}
-              <Text display='inline-flex' gap={1} alignItems='center' fontWeight={600} fontSize='18px' color='#171923'>
+              <Text display='inline-flex' gap={1} alignItems='center' fontWeight={600} fontSize='18px' color='gray.900'>
                 {!!stakedBalance ? stakedBalance : 0}{' '}
                 <Image mt='4px' h='18px' src='/images/T3.svg' alt='Tezos Logo' />
               </Text>
@@ -287,7 +287,7 @@ export const AccountBody = ({
           </Flex>
           <Flex gap='4px' flexDir='column' borderTop='1px solid #EDF2F7' pt='20px'>
             <Flex justify='space-between' alignItems='center'>
-              <Text fontSize='14px' color='#4A5568' fontWeight={600}>
+              <Text fontSize='14px' color='gray.600' fontWeight={600}>
                 DELEGATION
               </Text>
             </Flex>
@@ -298,7 +298,7 @@ export const AccountBody = ({
                 ) : (
                   <Image src='/images/inactive-icon.svg' alt='inactive icon' />
                 )}
-                <Text fontWeight={600} fontSize='18px' color='#171923'>
+                <Text fontWeight={600} fontSize='18px' color='gray.900'>
                   {stakingOpsStatus.Delegated ? 'Active ' : 'Inactive'}
                 </Text>
               </Flex>
@@ -318,7 +318,7 @@ export const AccountBody = ({
           </Flex>
           <Flex flexDir='column' gap='4px' borderTop='1px solid #EDF2F7' pt='20px'>
             <Flex justify='space-between' alignItems='center'>
-              <Text fontSize='14px' color='#4A5568' fontWeight={600}>
+              <Text fontSize='14px' color='gray.600' fontWeight={600}>
                 BAKER
               </Text>
             </Flex>
@@ -332,7 +332,7 @@ export const AccountBody = ({
                 <Flex alignItems='center' gap='6px'>
                   {' '}
                   <Text
-                    color='#171923'
+                    color='gray.900'
                     fontSize='18px'
                     fontWeight={600}
                     lineHeight='18px'
@@ -343,7 +343,7 @@ export const AccountBody = ({
                   <Image
                     h='18px'
                     w='18px'
-                    color='#A0AEC0'
+                    color='gray.400'
                     _hover={{ cursor: 'pointer' }}
                     src='/images/copy-icon.svg'
                     alt='copy icon'
@@ -371,7 +371,7 @@ export const AccountBody = ({
               </Flex>
             ) : (
               <Text
-                color='#A0AEC0'
+                color='gray.400'
                 fontSize='18px'
                 fontWeight={600}
                 lineHeight='18px'

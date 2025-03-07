@@ -7,9 +7,9 @@ export const BackIcon = ({ ...styles }: IconProps) => {
       width='24px'
       height='24px'
       viewBox='0 0 24 24'
-      color='#2D3748'
+      color='gray.700'
       transition='all .5s ease-out'
-      _hover={{ color: '#718096', cursor: 'pointer' }}
+      _hover={{ color: 'gray.500', cursor: 'pointer' }}
       {...styles}
     >
       <path

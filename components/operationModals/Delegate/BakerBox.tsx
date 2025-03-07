@@ -28,7 +28,7 @@ export const BakerBox = ({
       flexDir='column'
       border='solid 1.5px #EDF2F7'
       borderRadius='12px'
-      _hover={{ bg: '#F7FAFC' }}
+      _hover={{ bg: 'gray.50' }}
     >
       {isCopied && <CopyAlert />}
       <Flex justify='space-between' alignItems='center' px='16px' py='12px'>
@@ -40,11 +40,11 @@ export const BakerBox = ({
             alt='baker avatar'
           />
           <Box>
-            <Text fontSize='16px' color='#171923' fontWeight={600}>
+            <Text fontSize='16px' color='gray.900' fontWeight={600}>
               {baker.alias}
             </Text>
             <Flex alignItems='center' justify='start' gap='5px'>
-              <Text color='#2D3748' fontWeight={400} fontSize='14px'>
+              <Text color='gray.700' fontWeight={400} fontSize='14px'>
                 {simplifyAddress(baker.address)}
               </Text>
               <Image
@@ -106,27 +106,27 @@ export const BakerBox = ({
         flexWrap='wrap'
       >
         <CustomFlex>
-          <Text fontSize='14px' fontWeight={600} color='#4A5568' mr='3px'>
+          <Text fontSize='14px' fontWeight={600} color='gray.600' mr='3px'>
             TOTAL:
           </Text>
-          <Text display='inline-flex' gap={1} alignItems='center' color='#171923' fontWeight={600} fontSize='14px'>
+          <Text display='inline-flex' gap={1} alignItems='center' color='gray.900' fontWeight={600} fontSize='14px'>
             {Math.floor(mutezToTez(baker.totalStakedBalance))}
             <Image mt='4px' h='14px' src='/images/T3.svg' alt='Tezos Logo' />
           </Text>
         </CustomFlex>
         <CustomFlex>
-          <Text fontSize='14px' fontWeight={600} color='#4A5568' mr='3px'>
+          <Text fontSize='14px' fontWeight={600} color='gray.600' mr='3px'>
             FEE:
           </Text>
-          <Text color='#171923' fontWeight={600} fontSize='14px'>
+          <Text color='gray.900' fontWeight={600} fontSize='14px'>
             {baker.stakingFees}%
           </Text>
         </CustomFlex>
         <CustomFlex>
-          <Text fontSize='14px' fontWeight={600} color='#4A5568' mr='3px'>
+          <Text fontSize='14px' fontWeight={600} color='gray.600' mr='3px'>
             FREE SPACE:
           </Text>
-          <Text display='inline-flex' gap={1} alignItems='center' color='#171923' fontWeight={600} fontSize='14px'>
+          <Text display='inline-flex' gap={1} alignItems='center' color='gray.900' fontWeight={600} fontSize='14px'>
             {Math.floor(baker.stakingFreeSpace)}
             <Image mt='4px' h='14px' src='/images/T3.svg' alt='Tezos Logo' />
           </Text>

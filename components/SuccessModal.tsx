@@ -102,12 +102,12 @@ export const SuccessModal = ({
               alt={opType === 'pending_unstake' ? 'error icon' : 'check icon'}
               mb='16px'
             />
-            <Text fontWeight={600} color='#171923' fontSize='24px' mb='16px'>
+            <Text fontWeight={600} color='gray.900' fontSize='24px' mb='16px'>
               {!!title ? title : 'Nicely Done!'}
             </Text>
             <Text
               fontWeight={400}
-              color='#2D3748'
+              color='gray.700'
               fontSize='16px'
               maxW='300px'
               mb='30px'
@@ -137,10 +137,10 @@ export const SuccessModal = ({
                 cursor: 'pointer'
               }}
             >
-              <Text color='#2D3748' fontSize='14px' fontWeight={600}>
+              <Text color='gray.700' fontSize='14px' fontWeight={600}>
                 View in TzKT
               </Text>
-              <ExternalLinkIcon color='#A0AEC0' />
+              <ExternalLinkIcon color='gray.400' />
             </ChakraLink>
           </Flex>
         </ModalBody>
