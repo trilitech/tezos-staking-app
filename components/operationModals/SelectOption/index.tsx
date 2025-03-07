@@ -339,7 +339,7 @@ export const SelectOptionModal = ({
                     src='/images/pie-chart-icon.svg'
                     alt='Wallet Icon'
                   />
-                  <Text fontSize='sm'>Your full balance will be delegated</Text>
+                  <Text fontSize='sm'>Stake however much tez you'd like</Text>
                 </Flex>
                 <Flex
                   display={['none', null, 'flex']}
@@ -353,7 +353,7 @@ export const SelectOptionModal = ({
                     alt='Wallet Icon'
                   />
                   <Text fontSize='sm'>
-                    Delegated funds remain in your account
+                    Staked funds are locked in your account
                   </Text>
                 </Flex>
                 <Flex
@@ -368,7 +368,7 @@ export const SelectOptionModal = ({
                     src='/images/analyse-icon.svg'
                     alt='Wallet Icon'
                   />
-                  <Text fontSize='sm'>Spend your tez at any time</Text>
+                  <Text fontSize='sm'>Approximately 10 days for unstaking</Text>
                 </Flex>
                 <Flex
                   flexDir={['column', null, 'row']}
