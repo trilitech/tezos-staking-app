@@ -211,7 +211,7 @@ export const ChooseBaker = ({
         >
           TOTAL
         </SortText>
-        <Text color='#E2E8F0' display={['none', 'inline-block']}>
+        <Text color='gray.200' display={['none', 'inline-block']}>
           |
         </Text>
         <SortText
@@ -222,7 +222,7 @@ export const ChooseBaker = ({
           FEE
         </SortText>
 
-        <Text color='#E2E8F0' display={['none', 'inline-block']}>
+        <Text color='gray.200' display={['none', 'inline-block']}>
           |
         </Text>
         <SortText
@@ -260,7 +260,7 @@ const SortText = ({
     if (!!order) {
       return {
         color: '#FFFFFF',
-        bg: '#4A5568',
+        bg: 'gray.600',
         gap: '8px'
       }
     }
@@ -274,7 +274,7 @@ const SortText = ({
         px='10px'
         py='6px'
         onClick={onClick}
-        _hover={{ '@media(hover: hover)': { cursor: 'pointer', color: '#2D3748', bg: '#F7FAFC' } }}
+        _hover={{ '@media(hover: hover)': { cursor: 'pointer', color: 'gray.700', bg: 'gray.50' } }}
         borderRadius='8px'
         transition='all 0.3s ease-out'
         sx={getSyle(order)}
@@ -292,9 +292,9 @@ const SortText = ({
           </ControlledTooltip></Flex>
           :
           order === 'desc' ? (
-            <DescIcon fill={isHover ? '#A0AEC0' : '#FFFFFF'} />
+            <DescIcon fill={isHover ? 'gray.400' : '#FFFFFF'} />
           ) : order === 'asc' ? (
-            <AscIcon fill={isHover ? '#A0AEC0' : '#FFFFFF'} />
+            <AscIcon fill={isHover ? 'gray.400' : '#FFFFFF'} />
           ) : (
             <></>
           )}

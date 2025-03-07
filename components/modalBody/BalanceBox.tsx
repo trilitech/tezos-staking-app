@@ -19,9 +19,9 @@ export const BalanceBox = ({
         w='100%'
         py='12px'
         px='16px'
-        bg='#EDF2F7'
+        bg='gray.100'
       >
-        <Text fontWeight={600} color='#4A5568' fontSize='16px'>
+        <Text fontWeight={600} color='gray.600' fontSize='16px'>
           {balance}
         </Text>
         <Image src='/images/xtz-icon.svg' alt='xtz icon' />

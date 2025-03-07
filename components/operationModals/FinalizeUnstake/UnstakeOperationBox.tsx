@@ -57,7 +57,7 @@ export const UnstakeOperationBox = ({
           </Text>
           {!!totalFinalizableAmount && (
             <Text
-              color='#4A5568'
+              color='gray.600'
               fontWeight={400}
               fontSize='14px'
               lineHeight='18px'
@@ -73,14 +73,14 @@ export const UnstakeOperationBox = ({
             justify='space-between'
             gap='15px'
           >
-            <Text fontSize='14px' color='#4A5568'>
+            <Text fontSize='14px' color='gray.600'>
               Requested in{' '}
               <Text as='span' fontWeight={600}>
                 cycle {requestedCycle}
               </Text>
             </Text>
             <Flex alignItems='center' gap='6px'>
-              <Text fontSize='14px' color='#4A5568' fontStyle='italic'>
+              <Text fontSize='14px' color='gray.600' fontStyle='italic'>
                 Finalizable in{' '}
                 <Link
                   href={

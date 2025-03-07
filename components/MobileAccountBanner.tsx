@@ -73,7 +73,7 @@ export const MobileAccountBanner = ({
         }}
         onClick={onOpen}
       >
-        <Icon as={HamburgerIcon} w='18px' h='18px' color='#171923' />
+        <Icon as={HamburgerIcon} w='18px' h='18px' color='gray.900' />
       </Button>
       <Drawer placement='bottom' onClose={onClose} isOpen={isOpen} size='xl'>
         <DrawerOverlay />

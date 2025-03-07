@@ -258,7 +258,7 @@ export const SelectOptionModal = ({
                       </Text>
                     </Flex>
                     <Flex gap='4px'>
-                      <Box w='24px' h='6px' bg='#38A169' borderRadius='100px' />
+                      <Box w='24px' h='6px' bg='green' borderRadius='100px' />
                       <Box
                         w='24px'
                         h='6px'
@@ -397,7 +397,7 @@ export const SelectOptionModal = ({
                       </Text>
                     </Flex>
                     <Flex gap='4px'>
-                      <Box w='24px' h='6px' bg='#E53E3E' borderRadius='100px' />
+                      <Box w='24px' h='6px' bg='red' borderRadius='100px' />
                       <Box
                         w='24px'
                         h='6px'
@@ -432,9 +432,9 @@ export const SelectOptionModal = ({
                       </Text>
                     </Flex>
                     <Flex gap='4px'>
-                      <Box w='24px' h='6px' bg='#38A169' borderRadius='100px' />
-                      <Box w='24px' h='6px' bg='#38A169' borderRadius='100px' />
-                      <Box w='24px' h='6px' bg='#38A169' borderRadius='100px' />
+                      <Box w='24px' h='6px' bg='green' borderRadius='100px' />
+                      <Box w='24px' h='6px' bg='green' borderRadius='100px' />
+                      <Box w='24px' h='6px' bg='green' borderRadius='100px' />
                     </Flex>
                   </Flex>
                 </Flex>

@@ -28,14 +28,14 @@ export const BakerBoxList = ({
           width: '4px'
         },
         '::-webkit-scrollbar-thumb': {
-          background: '#E2E8F0',
+          background: 'gray.200',
           borderRadius: '8px',
           height: '100px'
         }
       }}
     >
       {!bakerList.length ? (
-        <Text textAlign="center" color="#4A5568" fontSize="16px">
+        <Text textAlign="center" color="gray.600" fontSize="16px">
           No bakers match your search
         </Text>
       ) : (

@@ -28,7 +28,7 @@ export const BakerDetailsTable = ({
     <>
       {isCopied && <CopyAlert />}
       <TableContainer
-        bg='#EDF2F7'
+        bg='gray.100'
         borderRadius='8px'
         mb='30px'
         whiteSpace='wrap'
@@ -48,7 +48,7 @@ export const BakerDetailsTable = ({
                     fontSize='14px'
                     fontWeight={600}
                     lineHeight='22px'
-                    color='#4A5568'
+                    color='gray.600'
                   >
                     {baker.alias ?? 'Private Baker'}
                   </Text>
@@ -56,13 +56,13 @@ export const BakerDetailsTable = ({
               </Td>
               <Td borderBottom='1px solid #E2E8F0' px={[3, 4]}>
                 <Flex alignItems='center' justifyContent='end' gap='4px'>
-                  <Text fontSize='14px' fontWeight={400} color='#2D3748'>
+                  <Text fontSize='14px' fontWeight={400} color='gray.700'>
                     {simplifyAddress(baker.address)}
                   </Text>
                   <Image
                     w='18px'
                     h='18px'
-                    color='#A0AEC0'
+                    color='gray.400'
                     _hover={{ cursor: 'pointer' }}
                     src='/images/copy-icon.svg'
                     alt='copy icon'
@@ -74,7 +74,7 @@ export const BakerDetailsTable = ({
             <Tr>
               <Td borderBottom='1px solid #E2E8F0' px={[3, 4]} pr={[0, 4]}>
                 <Text
-                  color='#4A5568'
+                  color='gray.600'
                   fontSize='14px'
                   textTransform='uppercase'
                   fontWeight={600}
@@ -98,7 +98,7 @@ export const BakerDetailsTable = ({
             <Tr>
               <Td borderBottom='1px solid #E2E8F0' px={[3, 4]} pr={[0, 4]}>
                 <Text
-                  color='#4A5568'
+                  color='gray.600'
                   fontSize='14px'
                   textTransform='uppercase'
                   fontWeight={600}
@@ -120,7 +120,7 @@ export const BakerDetailsTable = ({
             <Tr>
               <Td px={[3, 4]} pr={[0, 4]}>
                 <Text
-                  color='#4A5568'
+                  color='gray.600'
                   fontSize='14px'
                   textTransform='uppercase'
                   fontWeight={600}

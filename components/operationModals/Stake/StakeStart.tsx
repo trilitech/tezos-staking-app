@@ -84,7 +84,7 @@ export const RoundBorderText = ({
         fontSize='14px'
         fontWeight={600}
         lineHeight='18px'
-        color='#4A5568'
+        color='gray.600'
       >
         <Box border='solid 1px #EDF2F7' borderRadius={100} px='8px' py='4px'>
           {step}
