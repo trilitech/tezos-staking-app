@@ -339,7 +339,7 @@ export const SelectOptionModal = ({
                     src='/images/pie-chart-icon.svg'
                     alt='Wallet Icon'
                   />
-                  <Text fontSize='sm'>Stake however much tez you'd like</Text>
+                  <Text fontSize='sm'>Stake however much tez you&#39;d like</Text>
                 </Flex>
                 <Flex
                   display={['none', null, 'flex']}
