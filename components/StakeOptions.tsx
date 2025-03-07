@@ -229,7 +229,7 @@ export default function StakeOptions() {
                 src='/images/pie-chart-icon.svg'
                 alt='Wallet Icon'
               />
-              <Text fontSize='lg'>Stake however much tez you'd like</Text>
+              <Text fontSize='lg'>Stake however much tez you&#39;d like</Text>
             </Flex>
             <Flex
               display={['none', null, 'flex']}
