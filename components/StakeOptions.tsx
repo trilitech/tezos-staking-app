@@ -133,7 +133,7 @@ export default function StakeOptions() {
                 <Flex justifyContent='center' alignItems='center' gap='6px'>
                   <Image
                     maxW='110px'
-                    src='/images/error-icon.svg'
+                    src='/images/error-icon-gray.svg'
                     alt='Wallet Icon'
                   />
                   <Text pr='8px' color='gray.600' fontSize={['sm', null, 'md']}>
@@ -268,7 +268,7 @@ export default function StakeOptions() {
                 <Flex justifyContent='center' alignItems='center' gap='6px'>
                   <Image
                     maxW='110px'
-                    src='/images/error-icon.svg'
+                    src='/images/error-icon-gray.svg'
                     alt='Wallet Icon'
                   />
                   <Text pr='8px' color='gray.600' fontSize={['sm', null, 'md']}>
