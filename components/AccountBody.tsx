@@ -335,7 +335,7 @@ export const AccountBody = ({
                     color='gray.900'
                     fontSize='18px'
                     fontWeight={600}
-                    lineHeight='18px'
+                    lineHeight='22px'
                     noOfLines={1}
                   >
                     {accountInfo?.evaluatedDelegate?.alias ?? simplifyAddress(accountInfo?.evaluatedDelegate?.address ?? '')}
@@ -374,7 +374,7 @@ export const AccountBody = ({
                 color='gray.400'
                 fontSize='18px'
                 fontWeight={600}
-                lineHeight='18px'
+                lineHeight='22px'
               >
                 --
               </Text>
