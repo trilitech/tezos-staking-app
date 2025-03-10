@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Box, Flex, Text } from '@chakra-ui/react'
+import { Image, Box, Flex, Text, Link } from '@chakra-ui/react'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
 import { Header, Description } from '@/components/modalBody'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
@@ -19,13 +19,19 @@ export const DelegateStart = ({
       />
       <Header mb='16px'>Delegation</Header>
       <Description>
-        In order to stake and earn rewards, you need to delegate your tez first.
-        Select a baker to do that now. Delegated funds remain in your account.
-        You can always spend them at will.
+        Earn risk-free rewards by delegating to a Tezos baker. Delegated funds
+        remain in your account, and you can always spend them at will.
       </Description>
-      <Flex pt='24px' mb='30px' fontSize={['14px', '16px']}>
-        <RoundBorderText step={1} text='DELEGATE' />
-        <RoundBorderText step={2} text='STAKE TEZ' />
+      <Flex
+        justifyContent='center'
+        gap={[3, 0]}
+        flexWrap={['wrap', 'nowrap']}
+        pt='24px'
+        mb='30px'
+        fontSize={['14px', '16px']}
+      >
+        <RoundBorderText step={1} text='SELECT BAKER' />
+        <RoundBorderText step={2} text='DELEGATE TEZ' />
       </Flex>
       <PrimaryButton
         onClick={() => {
@@ -33,8 +39,27 @@ export const DelegateStart = ({
           handleOneStepForward()
         }}
       >
-        Continue
+        Select Baker
       </PrimaryButton>
+      <Flex pt='24px' gap={1} flexDir='column' textAlign='center' maxW='640px'>
+        <Link href='/faqs#delegating' target='_blank'>
+          <Text
+            fontSize='sm'
+            display='flex'
+            gap={1}
+            cursor='pointer'
+            color='gray.700'
+            fontWeight='semibold'
+          >
+            Tips for choosing your baker
+            <Image
+              maxW='110px'
+              src='/images/external-link.svg'
+              alt='External Link'
+            />
+          </Text>
+        </Link>
+      </Flex>
     </Flex>
   )
 }
@@ -59,14 +84,20 @@ export const RoundBorderText = ({
         fontSize='14px'
         fontWeight={600}
         lineHeight='18px'
-        color='#4A5568'
+        color='gray.600'
       >
         <Box border='solid 1px #EDF2F7' borderRadius={100} px='8px' py='4px'>
           {step}
         </Box>
         <Text>{text}</Text>
       </Flex>
-      {step === 1 && <Image src='/images/vector.svg' alt='line' />}
+      {step === 1 && (
+        <Image
+          display={['none', 'block']}
+          src='/images/vector.svg'
+          alt='line'
+        />
+      )}
     </Flex>
   )
 }

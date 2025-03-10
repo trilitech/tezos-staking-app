@@ -3,7 +3,12 @@ import { Flex, Spinner } from '@chakra-ui/react'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
 import { setDelegate } from '@/components/Operations/operations'
 import { useConnection } from '@/providers/ConnectionProvider'
-import { AddressBox, Header, ColumnHeader } from '@/components/modalBody'
+import {
+  AddressBox,
+  Header,
+  ColumnHeader,
+  Description
+} from '@/components/modalBody'
 import { useOperationResponse } from '@/providers/OperationResponseProvider'
 import { ErrorBlock } from '@/components/ErrorBlock'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
@@ -19,13 +24,20 @@ export const ConfirmEndDelegate = ({
   bakerName
 }: ConfirmEndDelegate) => {
   const { Tezos, beaconWallet } = useConnection()
-  const { setMessage, setSuccess, setOpHash, setTitle } = useOperationResponse()
+  const { setMessage, setSuccess, setOpHash, setTitle, setOpType } =
+    useOperationResponse()
   const [errorMessage, setErrorMessage] = useState('')
   const [waitingOperation, setWaitingOperation] = useState(false)
 
   return (
     <Flex flexDir='column' justify='center'>
-      <Header my='24px'>End Delegation</Header>
+      <Header mt='24px' mb='15px'>
+        End Delegation
+      </Header>
+      <Description mx='auto' mb='24px' w='100%' maxW='340px'>
+        Ending your delegation means that you will no longer receive rewards
+        from your baker.
+      </Description>
 
       <ColumnHeader mb='12px'>BAKER</ColumnHeader>
       <AddressBox address={bakerName} />
@@ -44,16 +56,17 @@ export const ConfirmEndDelegate = ({
             setOpHash(response.opHash)
             setTitle('Delegation Ended!')
             setMessage(
-              'You have successfully ended the delegation. You can now choose a new baker to delegate to.'
+              'You have successfully ended your delegation. You will no longer receive rewards on your tez.'
             )
             setSuccess(true)
+            setOpType('end_delegate')
             handleOneStepForward()
           } else {
             setErrorMessage(response.message)
           }
         }}
       >
-        {waitingOperation ? <Spinner /> : 'End Delegation'}
+        {waitingOperation ? <Spinner /> : 'Confirm'}
       </PrimaryButton>
       {!!errorMessage && <ErrorBlock errorMessage={errorMessage} />}
     </Flex>

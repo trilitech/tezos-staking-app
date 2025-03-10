@@ -18,13 +18,17 @@ export const PendingUnstakeSection = ({
     <Box w='100%'>
       <Flex
         fontSize='14px'
-        color='#4A5568'
+        color='gray.600'
         fontWeight={600}
         justify='space-between'
         alignItems='center'
         mb='24px'
       >
-        <Text>PENDING UNSTAKE REQUESTS</Text>
+        <Text>
+          {!!totalFinalizableAmount
+            ? 'FINALIZABLE UNSTAKED'
+            : 'PENDING UNSTAKE'}
+        </Text>
         <Text>({numOfPendingUnstake})</Text>
       </Flex>
       <Flex flexDir='column' gap='20px'>

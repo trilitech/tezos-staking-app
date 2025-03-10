@@ -28,7 +28,7 @@ export const BakerDetailsTable = ({
     <>
       {isCopied && <CopyAlert />}
       <TableContainer
-        bg='#EDF2F7'
+        bg='gray.100'
         borderRadius='8px'
         mb='30px'
         whiteSpace='wrap'
@@ -36,8 +36,8 @@ export const BakerDetailsTable = ({
         <Table>
           <Tbody>
             <Tr>
-              <Td borderBottom='1px solid #E2E8F0' pl={[3, 6]} pr={[0, 6]}>
-                <Flex alignItems='center' gap='5px'>
+              <Td borderBottom='1px solid #E2E8F0' pl={[3, 4]} pr={[0, 4]}>
+                <Flex alignItems='center' gap='6px'>
                   <Image
                     w='30px'
                     h='30px'
@@ -48,21 +48,21 @@ export const BakerDetailsTable = ({
                     fontSize='14px'
                     fontWeight={600}
                     lineHeight='22px'
-                    color='#4A5568'
+                    color='gray.600'
                   >
                     {baker.alias ?? 'Private Baker'}
                   </Text>
                 </Flex>
               </Td>
-              <Td borderBottom='1px solid #E2E8F0' px={[3, 6]}>
-                <Flex alignItems='center' gap='4px'>
-                  <Text fontSize='14px' fontWeight={400} color='#2D3748'>
+              <Td borderBottom='1px solid #E2E8F0' px={[3, 4]}>
+                <Flex alignItems='center' justifyContent='end' gap='4px'>
+                  <Text fontSize='14px' fontWeight={400} color='gray.700'>
                     {simplifyAddress(baker.address)}
                   </Text>
                   <Image
                     w='18px'
                     h='18px'
-                    color='#A0AEC0'
+                    color='gray.400'
                     _hover={{ cursor: 'pointer' }}
                     src='/images/copy-icon.svg'
                     alt='copy icon'
@@ -72,43 +72,33 @@ export const BakerDetailsTable = ({
               </Td>
             </Tr>
             <Tr>
-              <Td borderBottom='1px solid #E2E8F0' px={[3, 6]} pr={[0, 6]}>
+              <Td borderBottom='1px solid #E2E8F0' px={[3, 4]} pr={[0, 4]}>
                 <Text
-                  color='#4A5568'
+                  color='gray.600'
                   fontSize='14px'
                   textTransform='uppercase'
                   fontWeight={600}
                 >
-                  STAKING:
+                  TOTAL:
                 </Text>
               </Td>
-              <Td borderBottom='1px solid #E2E8F0' px={[3, 6]}>
-                <Text color='#10121B' fontWeight={600} fontSize='14px'>
-                  {Math.floor(mutezToTez(baker.totalStakedBalance))} ꜩ
-                </Text>
-              </Td>
-            </Tr>
-            <Tr>
-              <Td borderBottom='1px solid #E2E8F0' px={[3, 6]} pr={[0, 6]}>
+              <Td textAlign='end' borderBottom='1px solid #E2E8F0' px={[3, 4]}>
                 <Text
-                  color='#4A5568'
-                  fontSize='14px'
-                  textTransform='uppercase'
+                  textAlign='end'
+                  display='inline-flex' gap={1} alignItems='center'
+                  color='#10121B'
                   fontWeight={600}
+                  fontSize='14px'
                 >
-                  FREE SPACE:
-                </Text>
-              </Td>
-              <Td borderBottom='1px solid #E2E8F0' px={[3, 6]}>
-                <Text color='#10121B' fontWeight={600} fontSize='14px'>
-                  {Math.floor(baker.stakingFreeSpace)} ꜩ
+                  {Math.floor(mutezToTez(baker.totalStakedBalance))}
+                  <Image mt='4px' h='14px' src='/images/T3.svg' alt='Tezos Logo' />
                 </Text>
               </Td>
             </Tr>
             <Tr>
-              <Td px={[3, 6]} pr={[0, 6]}>
+              <Td borderBottom='1px solid #E2E8F0' px={[3, 4]} pr={[0, 4]}>
                 <Text
-                  color='#4A5568'
+                  color='gray.600'
                   fontSize='14px'
                   textTransform='uppercase'
                   fontWeight={600}
@@ -116,14 +106,38 @@ export const BakerDetailsTable = ({
                   FEE:
                 </Text>
               </Td>
-              <Td px={[3, 6]}>
+              <Td textAlign='end' borderBottom='1px solid #E2E8F0' px={[3, 4]}>
                 <Text
+                  textAlign='end'
                   color='#10121B'
                   fontWeight={600}
                   fontSize='14px'
-                  justifySelf='start'
                 >
                   {baker.stakingFees} %
+                </Text>
+              </Td>
+            </Tr>
+            <Tr>
+              <Td px={[3, 4]} pr={[0, 4]}>
+                <Text
+                  color='gray.600'
+                  fontSize='14px'
+                  textTransform='uppercase'
+                  fontWeight={600}
+                >
+                  FREE SPACE:
+                </Text>
+              </Td>
+              <Td textAlign='end' px={[3, 4]}>
+                <Text
+                  display='inline-flex' gap={1} alignItems='center'
+                  textAlign='end'
+                  color='#10121B'
+                  fontWeight={600}
+                  fontSize='14px'
+                >
+                  {Math.floor(baker.stakingFreeSpace)}
+                  <Image mt='4px' h='14px' src='/images/T3.svg' alt='Tezos Logo' />
                 </Text>
               </Td>
             </Tr>

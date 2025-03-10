@@ -8,7 +8,7 @@ export const ColumnHeader = ({
   children: React.ReactNode
 } & TextProps) => {
   return (
-    <Text fontSize='14px' fontWeight={600} color='#4A5568' {...styles}>
+    <Text fontSize='14px' fontWeight={600} color='gray.600' {...styles}>
       {children}
     </Text>
   )

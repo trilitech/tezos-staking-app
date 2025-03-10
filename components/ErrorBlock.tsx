@@ -12,7 +12,7 @@ export const ErrorBlock = ({ errorMessage }: { errorMessage: string }) => {
       borderLeft='4px solid #E53E3E'
     >
       <Image src='/images/AlertIcon.svg' alt='alert icon' />
-      <Text fontSize='14px' fontWeight={400} color='#2D3748'>
+      <Text fontSize='14px' fontWeight={400} color='gray.700'>
         {errorMessage}
       </Text>
     </Flex>

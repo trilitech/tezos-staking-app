@@ -14,17 +14,19 @@ export const SecondaryButton = ({
   return (
     <Button
       w='100%'
-      bg={disabled ? '#E2E8F0' : 'white'}
-      color={disabled ? '#A0AEC0' : '#0052FF'}
-      border={disabled ? '#E2E8F0' : '#0052FF 2px solid'}
+      bg={disabled ? 'gray.200' : 'white'}
+      color={disabled ? 'gray.400' : 'blue'}
+      border={disabled ? 'gray.200' : '#0052FF 2px solid'}
+      borderRadius='8px'
       fontWeight={600}
       fontSize='18px'
       h='48px'
       px='24px'
       lineHeight='24px'
       _hover={{
-        bg: disabled ? '#E2E8F0' : 'white',
-        cursor: disabled ? 'not-allowed' : 'pointer'
+        bg: disabled ? 'gray.200' : 'blue',
+        cursor: disabled ? 'not-allowed' : 'pointer',
+        color: disabled ? 'gray.400' : 'white',
       }}
       onClick={disabled ? undefined : onClick}
       disabled={disabled}

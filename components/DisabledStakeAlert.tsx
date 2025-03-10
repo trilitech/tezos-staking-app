@@ -14,7 +14,7 @@ export function getDisabledStakeButtonReason(
       'Your current baker does not accept staking. Please select a different baker to enable staking.'
   else if (opStatus.pendingUnstakeOpsWithAnotherBaker)
     reason =
-      'You have unstake operations with another baker which are pending finalization. Wait for few cycles.'
+      'Before staking with a new baker, you must wait for your current unstake operations to be finalized. The unstaking process takes approximately 10 days, and can be monitored via the main dashboard.'
   return reason
 }
 
@@ -26,12 +26,12 @@ export const DisabledStakeAlert = ({
   opStatus: StakingOpsStatus
   acctInfo: AccountInfo | null
 } & BoxProps) => {
-  let iconFillColor = '#718096'
-  let backgroudColor = '#EDF2F7'
+  let iconFillColor = 'gray.500'
+  let backgroudColor = 'gray.100'
 
   if (opStatus.Delegated && !opStatus.CanStake) {
     if (!opStatus.bakerAcceptsStaking && (acctInfo?.stakedBalance ?? 0) > 0) {
-      iconFillColor = '#E53E3E'
+      iconFillColor = 'red'
       backgroudColor = '#FED7D7'
     }
     return (
@@ -44,7 +44,7 @@ export const DisabledStakeAlert = ({
       >
         <Flex alignItems='center' gap='12px'>
           <WarningIcon fill={iconFillColor} />
-          <Text fontSize='16px' lineHeight='22px' color='#2D3748'>
+          <Text fontSize='16px' lineHeight='22px' color='gray.700'>
             {getDisabledStakeButtonReason(opStatus)}
           </Text>
         </Flex>

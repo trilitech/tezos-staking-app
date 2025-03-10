@@ -35,6 +35,7 @@ export const ChangeBakerModal = ({
   isOpen,
   onClose,
   bakerList,
+  currentBakerAddress,
   isStaked
 }: ChangeBakerModalProps) => {
   const [selectedBaker, setSelectedBaker] = useState<BakerInfo | null>(null)
@@ -48,6 +49,8 @@ export const ChangeBakerModal = ({
     setSelectedBaker(null)
   }
 
+  const bigModal = (isStaked && currentStep === StakedDelegateStatus.ChooseBaker) || (!isStaked && currentStep === UnStakedDelegateStatus.ChooseBaker)
+
   const getCurrentStepBody = (currentStep: number, isStaked: boolean) => {
     if (isStaked) {
       switch (currentStep) {
@@ -59,16 +62,19 @@ export const ChangeBakerModal = ({
               handleOneStepForward={handleOneStepForward}
               setSelectedBaker={setSelectedBaker}
               bakerList={bakerList ?? []}
+              currentBakerAddress={currentBakerAddress}
             />
           )
         case StakedDelegateStatus.ChangeConfirm:
           return (
             <ConfirmBaker
+              openedFromStartEarning={false}
               handleOneStepForward={handleOneStepForward}
               handleOneStepBack={handleOneStepBack}
               selectedBaker={selectedBaker as BakerInfo}
               setSelectedBaker={setSelectedBaker}
               isChangeBaker={true}
+              isStaked={isStaked}
             />
           )
         default:
@@ -84,16 +90,19 @@ export const ChangeBakerModal = ({
             handleOneStepForward={handleOneStepForward}
             setSelectedBaker={setSelectedBaker}
             bakerList={bakerList ?? []}
+            currentBakerAddress={currentBakerAddress}
           />
         )
       case UnStakedDelegateStatus.ChangeConfirm:
         return (
           <ConfirmBaker
+            openedFromStartEarning={false}
             handleOneStepForward={handleOneStepForward}
             handleOneStepBack={handleOneStepBack}
             selectedBaker={selectedBaker as BakerInfo}
             setSelectedBaker={setSelectedBaker}
             isChangeBaker={true}
+            isStaked={isStaked}
           />
         )
       default:
@@ -108,18 +117,23 @@ export const ChangeBakerModal = ({
       isOpen={isOpen}
       onClose={onClose}
       closeOnOverlayClick={false}
+      autoFocus={false}
     >
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent pb={bigModal ? '0px' : '40px'} w={['100%', bigModal ? '600px' : '480px']}>
         <ModalHeader>
           <Flex justify='space-between' alignItems='center'>
-            <BackIcon
-              onClick={() => {
-                if (isStaked && currentStep === 3) setSelectedBaker(null)
-                else if (!isStaked && currentStep === 2) setSelectedBaker(null)
-                handleOneStepBack()
-              }}
-            />
+            <Flex>
+              <BackIcon
+                display={currentStep > 1 ? 'block' : 'none'}
+                onClick={() => {
+                  if (isStaked && currentStep === 3) setSelectedBaker(null)
+                  else if (!isStaked && currentStep === 2)
+                    setSelectedBaker(null)
+                  handleOneStepBack()
+                }}
+              />
+            </Flex>
             <CloseIcon
               onClick={() => {
                 closeReset()

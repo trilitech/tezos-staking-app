@@ -18,35 +18,35 @@ export const TermAndPolicy = ({ ...styles }: FlexProps) => {
         fontWeight={400}
         {...styles}
       >
-        <Text color={isConnected ? '#2D3748' : '#FFFFFF'}>
-          © 2024 Trilitech Limited
+        <Text color={isConnected ? 'gray.700' : '#FFFFFF'}>
+          © {new Date().getFullYear()} Tezos
           <Divider mx='5px' />{' '}
           <Link href='/termsOfUseStakingApp/' target='_blank'>
             <Text as='span' _hover={{ cursor: 'pointer' }}>
-              Terms of Use
+              Terms
             </Text>
           </Link>
           <Divider mx='5px' />{' '}
           <Link href='/privacy_policy/' target='_blank'>
             <Text as='span' _hover={{ cursor: 'pointer' }}>
-              Privacy Policy
+              Privacy
             </Text>
           </Link>
           <Divider mx='5px' />{' '}
-          <Link href='/cookie_policy/' target='_blank'>
+          <Link href='/faqs/'>
             <Text as='span' _hover={{ cursor: 'pointer' }}>
-              Cookie Policy
+              Help
             </Text>
           </Link>
         </Text>
 
-        <Text color={isConnected ? '#718096' : '#E2E8F0'}>
+        <Text color={isConnected ? 'gray.500' : 'gray.200'}>
           Powered by{' '}
           <Link href='https://tezos.com' target='_blank'>
             <Text
               as='span'
               textDecor='underline'
-              _hover={{ color: `${isConnected ? '#003ee0' : 'white'}` }}
+              _hover={{ color: `${isConnected ? 'darkBlue' : 'white'}` }}
               transition='color 0.2s ease-in-out'
             >
               Tezos
@@ -65,7 +65,7 @@ const Divider = ({ ...styles }: TextProps) => {
     <Text
       as='span'
       fontWeight={400}
-      color={isConnected ? '#CBD5E0' : '#718096'}
+      color={isConnected ? 'gray.300' : 'gray.500'}
       {...styles}
     >
       |

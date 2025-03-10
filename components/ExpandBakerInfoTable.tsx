@@ -12,19 +12,19 @@ import {
   Tr,
   Td,
   TableContainer,
-  Flex
+  Flex,
+  Image
 } from '@chakra-ui/react'
 import { BakerInfo } from './Operations/tezInterfaces'
 import { mutezToTez } from '@/utils/mutezToTez'
 
 export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
-  const [isToggle, setIsToggle] = useState(true)
+  const [isToggle, setIsToggle] = useState(false)
 
   return (
     <Accordion
       borderBottom='0px solid transparent'
       w='100%'
-      defaultIndex={0}
       allowToggle
       onChange={() => setIsToggle(!isToggle)}
     >
@@ -35,7 +35,7 @@ export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
               fontSize='14px'
               fontWeight={600}
               lineHeight='18px'
-              color='#4A5568'
+              color='gray.600'
             >
               BAKER&#39;S INFO
             </Text>
@@ -45,78 +45,92 @@ export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
               fontSize='14px'
               fontWeight={600}
               lineHeight='18px'
-              color='#4A5568'
+              color='gray.600'
             >
               {isToggle ? 'See Less' : 'See More'}
             </Text>
-            <AccordionIcon color='#A0AEC0' w='18px' h='18px' />
+            <AccordionIcon color='gray.400' w='18px' h='18px' />
           </Flex>
         </AccordionButton>
 
         <AccordionPanel py={0} px={0}>
-          <TableContainer bg='#EDF2F7' borderRadius='8px' whiteSpace='wrap'>
+          <TableContainer bg='gray.100' borderRadius='8px' whiteSpace='wrap'>
             <Table>
               <Tbody>
                 <Tr>
                   <Td borderBottom='1px solid #E2E8F0'>
                     <Flex alignItems='center' gap='5px'>
                       <Text
+                        w='max-content'
                         fontSize='14px'
                         fontWeight={600}
                         lineHeight='22px'
-                        color='#4A5568'
+                        color='gray.600'
                       >
-                        STAKING:
+                        TOTAL:
                       </Text>
                     </Flex>
                   </Td>
                   <Td borderBottom='1px solid #E2E8F0' w='100%'>
-                    <Flex alignItems='center' gap='4px'>
-                      <Text fontSize='14px' fontWeight={600} color='#171923'>
+                    <Flex justifyContent='flex-end' alignItems='end' gap='4px'>
+                      <Text display='inline-flex' gap={1} alignItems='center' fontSize='14px' fontWeight={600} color='gray.900'>
                         {Math.floor(mutezToTez(baker?.totalStakedBalance ?? 0))}{' '}
-                        ꜩ
+                        <Image mt='4px' h='14px' src='/images/T3.svg' alt='Tezos Logo' />
                       </Text>
                     </Flex>
                   </Td>
                 </Tr>
+
                 <Tr>
                   <Td borderBottom='1px solid #E2E8F0'>
                     <Flex alignItems='center' gap='5px'>
                       <Text
+                        w='max-content'
                         fontSize='14px'
                         fontWeight={600}
                         lineHeight='22px'
-                        color='#4A5568'
-                      >
-                        FREE SPACE:
-                      </Text>
-                    </Flex>
-                  </Td>
-                  <Td borderBottom='1px solid #E2E8F0' w='100%'>
-                    <Flex alignItems='center' gap='4px'>
-                      <Text fontSize='14px' fontWeight={600} color='#171923'>
-                        {Math.floor(baker?.stakingFreeSpace ?? 0)} ꜩ
-                      </Text>
-                    </Flex>
-                  </Td>
-                </Tr>
-                <Tr>
-                  <Td>
-                    <Flex alignItems='center' gap='5px'>
-                      <Text
-                        fontSize='14px'
-                        fontWeight={600}
-                        lineHeight='22px'
-                        color='#4A5568'
+                        color='gray.600'
                       >
                         FEE:
                       </Text>
                     </Flex>
                   </Td>
-                  <Td>
-                    <Flex alignItems='center' gap='4px' w='100%'>
-                      <Text fontSize='14px' fontWeight={600} color='#171923'>
+                  <Td borderBottom='1px solid #E2E8F0'>
+                    <Flex
+                      justifyContent='flex-end'
+                      alignItems='center'
+                      gap='4px'
+                      w='100%'
+                    >
+                      <Text fontSize='14px' fontWeight={600} color='gray.900'>
                         {baker?.stakingFees}%
+                      </Text>
+                    </Flex>
+                  </Td>
+                </Tr>
+                <Tr>
+                  <Td>
+                    <Flex alignItems='center' gap='5px'>
+                      <Text
+                        w='max-content'
+                        fontSize='14px'
+                        fontWeight={600}
+                        lineHeight='22px'
+                        color='gray.600'
+                      >
+                        FREE SPACE:
+                      </Text>
+                    </Flex>
+                  </Td>
+                  <Td w='100%'>
+                    <Flex
+                      justifyContent='flex-end'
+                      alignItems='center'
+                      gap='4px'
+                    >
+                      <Text display='inline-flex' gap={1} alignItems='center' fontSize='14px' fontWeight={600} color='gray.900'>
+                        {Math.floor(baker?.stakingFreeSpace ?? 0)}
+                        <Image mt='4px' h='14px' src='/images/T3.svg' alt='Tezos Logo' />
                       </Text>
                     </Flex>
                   </Td>
