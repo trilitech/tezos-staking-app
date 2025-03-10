@@ -223,9 +223,9 @@ export const AccountBody = ({
               gap='3'
               p='4'
               alignItems='center'
-              bg='green.100'
+              bg='#C6F6D5'
               borderLeft='4px solid'
-              borderColor='green.500'
+              borderColor='#38A169'
             >
               <Image
                 w='24px'
@@ -240,7 +240,7 @@ export const AccountBody = ({
               <EndIcon
                 onClick={() => setSuccessClose(false)}
                 cursor='pointer'
-                color='green.500'
+                color='#38A169'
               />
             </Flex>
           )}
