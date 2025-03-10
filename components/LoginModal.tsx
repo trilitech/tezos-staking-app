@@ -32,7 +32,7 @@ export const LoginModal = () => {
         textAlign='center'
         lineHeight='36px'
         mb={['30px', '40px']}
-        color='#171923'
+        color='gray.900'
       >
         Stake on Tezos to Earn Rewards
       </Text>
@@ -62,7 +62,7 @@ export const LoginModal = () => {
           fontWeight={600}
           fontSize='16px'
           textDecor='underline'
-          _hover={{ color: '#003EE0' }}
+          _hover={{ color: 'darkBlue' }}
           transition='color 0.2s ease-in-out'
         >
           Learn more
@@ -116,7 +116,7 @@ const MobileSteps = ({ ...styles }: FlexProps) => {
               py='4px'
               fontSize='14px'
               lineHeight='18px'
-              color='#4A5568'
+              color='gray.600'
             >
               {index + 1}
             </Text>
@@ -130,7 +130,7 @@ const MobileSteps = ({ ...styles }: FlexProps) => {
             fontWeight={600}
             fontSize='14px'
             lineHeight='18px'
-            color='#4A5568'
+            color='gray.600'
             key={index}
           >
             {data}

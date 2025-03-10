@@ -19,6 +19,7 @@ import { TertiaryButton } from './buttons/TertiaryButton'
 import { simplifyAddress } from '@/utils/simpliftAddress'
 import useClipboard from '@/utils/useClipboard'
 import { useConnection } from '../providers/ConnectionProvider'
+import { PrimaryButton } from './buttons/PrimaryButton'
 
 export const MobileAccountBanner = ({
   address,
@@ -72,7 +73,7 @@ export const MobileAccountBanner = ({
         }}
         onClick={onOpen}
       >
-        <Icon as={HamburgerIcon} w='18px' h='18px' color='#171923' />
+        <Icon as={HamburgerIcon} w='18px' h='18px' color='gray.900' />
       </Button>
       <Drawer placement='bottom' onClose={onClose} isOpen={isOpen} size='xl'>
         <DrawerOverlay />
@@ -106,6 +107,9 @@ export const MobileAccountBanner = ({
           </DrawerBody>
           <DrawerFooter display='flex' flexDir='column'>
             <Image mb='24px' src='/images/mobile-footer-line.svg' alt='line' />
+            <PrimaryButton mb={4} onClick={disconnect}>
+              Help
+            </PrimaryButton>
             <TertiaryButton onClick={disconnect}>Disconnect</TertiaryButton>
           </DrawerFooter>
         </DrawerContent>

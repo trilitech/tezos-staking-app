@@ -2,7 +2,6 @@ import React from 'react'
 import { Flex, Image } from '@chakra-ui/react'
 import { Header, Description } from '@/components/modalBody'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
-import { RoundBorderText } from '../Delegate/DelegateStart'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 
 export const UnstakeStart = ({
@@ -12,17 +11,11 @@ export const UnstakeStart = ({
 }) => {
   return (
     <Flex flexDir='column' alignItems='center'>
-      <Image w='25px' mb='15px' src='/images/alert-icon.svg' alt='alert icon' />
+      <Image w='25px' mb='15px' src='/images/error-icon.svg' alt='alert icon' />
       <Header mb='15px'>Important Notice</Header>
       <Description mb='24px'>
-        After submitting an unstake, the chosen amount will become finalizable
-        after 4 cycles (~10 days). Then, you will need to finalize unstaked
-        balances in order to make them spendable.
+        Unstaking takes approximately 10 days, and you must finalize the process via the main dashboard. Once you do, your tez will be made available in your spendable balance.
       </Description>
-      <Flex mb='24px' fontSize={['14px', '16px']}>
-        <RoundBorderText step={1} text='UNSTAKE' />
-        <RoundBorderText step={2} text='FINALIZE' />
-      </Flex>
       <PrimaryButton
         onClick={() => {
           trackGAEvent(GAAction.BUTTON_CLICK, GACategory.CHOOSE_I_UNDERSTAND)

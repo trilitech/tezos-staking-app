@@ -12,7 +12,7 @@ export const Description = ({
       w={['310px', null, '360px']}
       fontSize='16px'
       fontWeight={400}
-      color='#2D3748'
+      color='gray.700'
       textAlign='center'
       {...styles}
     >

@@ -61,11 +61,15 @@ export const CookieBanner = () => {
         pos='absolute'
         bottom={[0, null, 10]}
         borderRadius={4}
-        px={[10, 12]}
+        px={[10, null, 12]}
         py={[10, 6]}
         m={0}
         maxW='1232px'
         w={['100%', null, '90%']}
+        borderTopStartRadius='16px'
+        borderBottomStartRadius={[null, null, '16px']}
+        borderTopEndRadius='16px'
+        borderBottomEndRadius={[null, null, '16px']}
       >
         <ModalBody
           display='flex'
@@ -73,13 +77,15 @@ export const CookieBanner = () => {
           justifyContent='space-between'
           alignItems='center'
           gap={10}
+          pb={0}
+          px={0}
         >
           <Box textAlign={['center', null, 'start']}>
             <Text
               fontSize='20px'
               lineHeight='26px'
               color='#10121B'
-              mb={[3, null, 0]}
+              mb={['12px', null, '6px']}
             >
               We use cookies to make your experience better.
             </Text>
@@ -95,7 +101,11 @@ export const CookieBanner = () => {
               </Text>
             </ChakraLink>
           </Box>
-          <Flex flexDir={['column', null, 'row']} gap='18px'>
+          <Flex
+            flexDir={['column', null, 'row']}
+            gap='18px'
+            w={['full', null, 'auto']}
+          >
             <PrimaryButton onClick={() => handleAccept()}>
               <Text>Accept Cookies</Text>
             </PrimaryButton>

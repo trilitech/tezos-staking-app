@@ -46,7 +46,7 @@ export const ConfirmFinalizeUnstake = ({
             trackGAEvent(GAAction.BUTTON_CLICK, GACategory.FINALIZE_END)
             setOpHash(response.opHash)
             setMessage(
-              `You have successfully finalized ${withdrawAmount} ꜩ. These funds are now part of your spendable balance.`
+              `You have successfully finalized ${withdrawAmount} tez. These funds are now part of your spendable balance.`
             )
             setSuccess(true)
             handleOneStepForward()
