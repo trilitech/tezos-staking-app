@@ -223,9 +223,9 @@ export const AccountBody = ({
               gap='3'
               p='4'
               alignItems='center'
-              bg='green.100'
+              bg='#C6F6D5'
               borderLeft='4px solid'
-              borderColor='green.500'
+              borderColor='#38A169'
             >
               <Image
                 w='24px'
@@ -240,7 +240,7 @@ export const AccountBody = ({
               <EndIcon
                 onClick={() => setSuccessClose(false)}
                 cursor='pointer'
-                color='green.500'
+                color='#38A169'
               />
             </Flex>
           )}
@@ -335,7 +335,7 @@ export const AccountBody = ({
                     color='gray.900'
                     fontSize='18px'
                     fontWeight={600}
-                    lineHeight='18px'
+                    lineHeight='22px'
                     noOfLines={1}
                   >
                     {accountInfo?.evaluatedDelegate?.alias ?? simplifyAddress(accountInfo?.evaluatedDelegate?.address ?? '')}
@@ -374,7 +374,7 @@ export const AccountBody = ({
                 color='gray.400'
                 fontSize='18px'
                 fontWeight={600}
-                lineHeight='18px'
+                lineHeight='22px'
               >
                 --
               </Text>

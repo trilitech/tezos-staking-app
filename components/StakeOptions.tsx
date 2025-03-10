@@ -42,14 +42,14 @@ export default function StakeOptions() {
       >
         <Flex
           w='100%'
-          flexDir={['column', null, null, 'row']}
+          flexDir={['column', null, 'row']}
           position='relative'
           bgSize='contain'
           bgRepeat='no-repeat'
           zIndex={2}
           borderRadius='4px'
           py='48px'
-          gap={['43px', null, null, '80px']}
+          gap={['43px', null, '24px', '80px']}
         >
           <Flex
             bg='white'
