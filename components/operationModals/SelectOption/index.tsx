@@ -367,7 +367,7 @@ export const SelectOptionModal = ({
                     src='/images/analyse-icon.svg'
                     alt='Wallet Icon'
                   />
-                  <Text fontSize='sm'>Approximately 10 days for unstaking</Text>
+                  <Text fontSize='sm'>Unstake in just {process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days</Text>
                 </Flex>
                 <Flex
                   flexDir={['column', null, 'row']}

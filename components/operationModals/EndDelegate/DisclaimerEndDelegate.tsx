@@ -17,7 +17,7 @@ export const DisclaimerEndDelegate = ({
         Ending your delegation with a baker while staking with them will automatically unstake your entire staked balance.
         <br />
         <br />
-        While you may delegate to a new baker immediately, you will need to first finalize unstaking with your original baker before you can stake again. To do so, come back in approximately 10 days and finalize the process via the main dashboard.
+        While you may delegate to a new baker immediately, you will need to first finalize unstaking with your original baker before you can stake again. To do so, come back in {process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days and finalize the process via the main dashboard.
       </Description>
       <PrimaryButton
         onClick={async () => {

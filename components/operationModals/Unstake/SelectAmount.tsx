@@ -97,7 +97,7 @@ export const SelectAmount = ({
             setOpHash(response.opHash)
             setTitle('Unstake Requested')
             setMessage(
-              `You have unstaked ${unstakeAmount} tez. After 10 days, you must finalize the unstaking process, after which your staked balance will become available in your wallet again.`
+              `You have unstaked ${unstakeAmount} tez. After ${process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days, you must finalize the unstaking process, after which your staked balance will become available in your wallet again.`
             )
             setOpType('unstake')
             setSuccess(true)

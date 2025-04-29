@@ -256,7 +256,7 @@ export default function StakeOptions() {
                 src='/images/analyse-icon.svg'
                 alt='Wallet Icon'
               />
-              <Text fontSize='lg'>Approximately 10 days for unstaking</Text>
+              <Text fontSize='lg'>Unstake in just {process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days</Text>
             </Flex>
             <Flex
               flexDir={['column', null, 'row']}
