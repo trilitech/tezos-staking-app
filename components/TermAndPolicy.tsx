@@ -19,7 +19,7 @@ export const TermAndPolicy = ({ ...styles }: FlexProps) => {
         {...styles}
       >
         <Text color={isConnected ? 'gray.700' : '#FFFFFF'}>
-          © {new Date().getFullYear()} Tezos
+          © {new Date().getFullYear()} Trilitech Limited
           <Divider mx='5px' />{' '}
           <Link href='/termsOfUseStakingApp/' target='_blank'>
             <Text as='span' _hover={{ cursor: 'pointer' }}>
