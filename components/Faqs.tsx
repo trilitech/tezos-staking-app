@@ -51,7 +51,7 @@ export default function Faqs() {
         {
           title: 'If I stake, can I unstake?',
           description:
-            'You can unstake your tez at any time. All you have to do is click the “Unstake” button on the dashboard, which immediately halts rewards from accruing, wait about 10 days (or 4 “cycles”), and then complete the process by clicking on the “Finalize” button. Once that’s done, your funds become available again.'
+            `You can unstake your tez at any time. All you have to do is click the “Unstake” button on the dashboard, which immediately halts rewards from accruing, wait ${process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days (or 4 “cycles”), and then complete the process by clicking on the “Finalize” button. Once that’s done, your funds become available again.`
         },
         {
           title: 'Where can I learn more about the Tezos ecosystem?',
@@ -113,7 +113,7 @@ export default function Faqs() {
         {
           title: 'Can I change my baker after delegating my tez?',
           description:
-            'You can change your baker at any time. All you have to do is choose another baker in the dashboard and click on them to delegate. Note that this may take about 8 days (3 “cycles”) for the change to take effect; until then, you will continue to earn rewards with your original baker.'
+            'You can change your baker at any time. All you have to do is choose another baker in the dashboard and click on them to delegate. Note that this may take 3 days (3 “cycles”) for the change to take effect; until then, you will continue to earn rewards with your original baker.'
         }
       ]
     },
@@ -144,7 +144,7 @@ export default function Faqs() {
         {
           title: 'Can I change my baker after staking my tez?',
           description:
-            'If you want to change your baker, you will need to unstake your funds with your original baker first. When the unstaking process completes after approximately 11 days (4 “cycles”), you can stake your newly available funds with the new baker.'
+            `If you want to change your baker, you will need to unstake your funds with your original baker first. When the unstaking process completes after ${process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days (4 “cycles”), you can stake your newly available funds with the new baker.`
         }
       ]
     },
@@ -165,7 +165,7 @@ export default function Faqs() {
         {
           title: 'How do staking rewards accrue?',
           description:
-            'Staking rewards accrue every cycle, which lasts approximately 2.5 days.'
+            'Staking rewards accrue every cycle, which lasts approximately 1 days.'
         },
         {
           title: 'Do I need to claim my staking rewards?',
