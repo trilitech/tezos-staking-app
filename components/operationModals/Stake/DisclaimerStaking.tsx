@@ -33,7 +33,7 @@ export const DisclaimerStaking = ({
       <Header mb='15px'>Disclaimer</Header>
       <Description w='340px' sx={{ 'a': { textDecoration: 'underline', textUnderlineOffset: '15%' } }}>
         Staked balances are locked in your account until they are manually
-        unstaked, which will take approximately 10 days to be finalized.
+        unstaked, which will take {process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days to be finalized.
         <br />
         <br />
         Staked funds are exposed to slashing risks. You might lose a portion of your stake if the
