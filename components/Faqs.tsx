@@ -113,7 +113,7 @@ export default function Faqs() {
         {
           title: 'Can I change my baker after delegating my tez?',
           description:
-            'You can change your baker at any time. All you have to do is choose another baker in the dashboard and click on them to delegate. Note that this may take about 8 days (3 “cycles”) for the change to take effect; until then, you will continue to earn rewards with your original baker.'
+            'You can change your baker at any time. All you have to do is choose another baker in the dashboard and click on them to delegate. Note that this may take 3 days (3 “cycles”) for the change to take effect; until then, you will continue to earn rewards with your original baker.'
         }
       ]
     },
