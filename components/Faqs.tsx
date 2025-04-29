@@ -165,7 +165,7 @@ export default function Faqs() {
         {
           title: 'How do staking rewards accrue?',
           description:
-            'Staking rewards accrue every cycle, which lasts 1 days.'
+            'Staking rewards accrue every cycle, which lasts 1 day.'
         },
         {
           title: 'Do I need to claim my staking rewards?',
