@@ -3,7 +3,7 @@
 import { Heading, Text, Flex, Button } from '@chakra-ui/react'
 import { useConnection } from '@/providers/ConnectionProvider'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
-import { AnchorButton } from '@/components/ui/AnchorButton'
+import Link from 'next/link'
 
 export default function FooterCta() {
   const { connect } = useConnection()
@@ -62,9 +62,9 @@ export default function FooterCta() {
               Visit the FAQ page to find answers to questions about delegation,
               staking, and more.
             </Text>
-            <AnchorButton href='/faqs' primary w={['full', '180px']}>
-              Visit FAQ
-            </AnchorButton>
+            <Button primary w={['full', '180px']} asChild>
+              <Link href='/faqs'>Visit FAQ</Link>
+            </Button>
           </Flex>
           <Flex
             bg='linear-gradient(90deg, rgba(106, 50, 122, 0.1) 0%, rgba(100, 93, 250, 0.1) 100%)'

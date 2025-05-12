@@ -1,7 +1,7 @@
 'use client'
 
-import { Box, Heading, Text, Flex, Image } from '@chakra-ui/react'
-import { AnchorButton } from '@/components/ui/AnchorButton'
+import { Box, Heading, Text, Flex, Image, Button } from '@chakra-ui/react'
+import Link from 'next/link'
 
 export default function StakeOptions() {
   return (
@@ -174,16 +174,16 @@ export default function StakeOptions() {
               alignSelf={['center', 'start']}
               position={'relative'}
             >
-              <AnchorButton
+              <Button
                 scrollPadding={80}
                 scrollMarginBottom={70}
-                href='/faqs/#delegating'
                 // hideExternalLinkIcon={true}
                 secondary
                 w='full'
+                asChild
               >
-                Learn More
-              </AnchorButton>
+                <Link href='/faqs/#delegating'>Learn More</Link>
+              </Button>
             </Flex>
           </Flex>
           <Flex
@@ -309,15 +309,15 @@ export default function StakeOptions() {
               alignSelf={['center', 'start']}
               position={'relative'}
             >
-              <AnchorButton
+              <Button
                 scrollPadding={80}
                 scrollMarginBottom={70}
-                href='/faqs/#staking'
                 secondary
                 w='full'
+                asChild
               >
-                Learn More
-              </AnchorButton>
+                <Link href='/faqs/#staking'>Learn More</Link>
+              </Button>
             </Flex>
           </Flex>
         </Flex>

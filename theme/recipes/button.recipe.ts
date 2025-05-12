@@ -108,7 +108,4 @@ export const buttonRecipe = defineRecipe({
       }
     }
   }
-
-  // ---- defaults ----
-  //   defaultVariants: { size: 'md', visual: 'primary' }
 })

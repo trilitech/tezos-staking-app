@@ -31,14 +31,31 @@ export const DisclaimerStaking = ({
     <Flex flexDir='column' alignItems='center'>
       <Image w='25px' mb='15px' src='/images/error-icon.svg' alt='alert icon' />
       <Header mb='15px'>Disclaimer</Header>
-      <Description w='340px' sx={{ 'a': { textDecoration: 'underline', textUnderlineOffset: '15%' } }}>
+      <Description
+        w='340px'
+        css={{ a: { textDecoration: 'underline', textUnderlineOffset: '15%' } }}
+      >
         Staked balances are locked in your account until they are manually
-        unstaked, which will take {process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days to be finalized.
+        unstaked, which will take {process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days to
+        be finalized.
         <br />
         <br />
-        Staked funds are exposed to slashing risks. You might lose a portion of your stake if the
-        chosen baker is <a target='_blank' href='https://octez.tezos.com/docs/active/consensus.html#slashing'>slashed</a> for not following{' '}
-        <a target='_blank' href='https://octez.tezos.com/docs/active/consensus.html'>Tezos consensus mechanism rules</a>.
+        Staked funds are exposed to slashing risks. You might lose a portion of
+        your stake if the chosen baker is{' '}
+        <a
+          target='_blank'
+          href='https://octez.tezos.com/docs/active/consensus.html#slashing'
+        >
+          slashed
+        </a>{' '}
+        for not following{' '}
+        <a
+          target='_blank'
+          href='https://octez.tezos.com/docs/active/consensus.html'
+        >
+          Tezos consensus mechanism rules
+        </a>
+        .
       </Description>
       <Flex
         gap='24px'
@@ -62,7 +79,14 @@ export const DisclaimerStaking = ({
           lineHeight='22px'
         >
           I confirm that I have read and agreed with the{' '}
-          <Text as='a' href='/termsOfUseStakingApp/' target='_blank' textDecor='underline' textUnderlineOffset='15%' _hover={{ cursor: 'pointer' }}>
+          <Text
+            as='a'
+            href='/termsOfUseStakingApp/'
+            target='_blank'
+            textDecor='underline'
+            textUnderlineOffset='15%'
+            _hover={{ cursor: 'pointer' }}
+          >
             Terms of Use.
           </Text>
         </Text>

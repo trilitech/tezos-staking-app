@@ -25,7 +25,7 @@ interface ChooseBakerProps {
 export function shuffleBakerList(bakerList: BakerInfo[]) {
   for (let i = bakerList?.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
-      ;[bakerList[i], bakerList[j]] = [bakerList[j], bakerList[i]]
+    ;[bakerList[i], bakerList[j]] = [bakerList[j], bakerList[i]]
   }
   return bakerList
 }
@@ -49,8 +49,12 @@ export const ChooseBaker = ({
     const acceptingBakers = bakerList.filter(baker => baker.acceptsStaking)
     if (!currentBakerAddress) return acceptingBakers
 
-    const currentBaker = acceptingBakers.find(b => b.address === currentBakerAddress)
-    const otherBakers = acceptingBakers.filter(b => b.address !== currentBakerAddress)
+    const currentBaker = acceptingBakers.find(
+      b => b.address === currentBakerAddress
+    )
+    const otherBakers = acceptingBakers.filter(
+      b => b.address !== currentBakerAddress
+    )
 
     return currentBaker ? [currentBaker, ...otherBakers] : acceptingBakers
   })
@@ -140,9 +144,16 @@ export const ChooseBaker = ({
       .filter(baker => baker.acceptsStaking)
 
     if (currentBakerAddress) {
-      const currentBaker = bakerList.find(b => b.address === currentBakerAddress)
-      if (currentBaker && filteredBaker.some(b => b.address === currentBakerAddress)) {
-        const otherBakers = filteredBaker.filter(b => b.address !== currentBakerAddress)
+      const currentBaker = bakerList.find(
+        b => b.address === currentBakerAddress
+      )
+      if (
+        currentBaker &&
+        filteredBaker.some(b => b.address === currentBakerAddress)
+      ) {
+        const otherBakers = filteredBaker.filter(
+          b => b.address !== currentBakerAddress
+        )
         setBakersShown([currentBaker, ...otherBakers])
       } else {
         setBakersShown(filteredBaker)
@@ -159,10 +170,10 @@ export const ChooseBaker = ({
   useEffect(() => {
     if (!bakersShown.length) {
       setTimeout(() => {
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-      }, 1);
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
+      }, 1)
     }
-  }, [bakersShown]);
+  }, [bakersShown])
 
   return (
     <Flex flexDir='column' justify='center'>
@@ -175,7 +186,12 @@ export const ChooseBaker = ({
       >
         Select Baker
         <ControlledTooltip label='Bakers on Tezos validate transactions and secure the network.'>
-          <Image w='16px' h='16px' src='/images/info-icon-dapp.svg' alt='info' />
+          <Image
+            w='16px'
+            h='16px'
+            src='/images/info-icon-dapp.svg'
+            alt='info'
+          />
         </ControlledTooltip>
       </Header>
       <InputGroup size='md'>
@@ -183,7 +199,7 @@ export const ChooseBaker = ({
           onChange={handleChange}
           pr='4.5rem'
           placeholder='Search by Name or Paste tz address'
-          sx={{
+          css={{
             '::placeholder': {
               fontSize: '16px'
             }
@@ -274,10 +290,16 @@ const SortText = ({
         px='10px'
         py='6px'
         onClick={onClick}
-        _hover={{ '@media(hover: hover)': { cursor: 'pointer', color: 'gray.700', bg: 'gray.50' } }}
+        _hover={{
+          '@media(hover: hover)': {
+            cursor: 'pointer',
+            color: 'gray.700',
+            bg: 'gray.50'
+          }
+        }}
         borderRadius='8px'
         transition='all 0.3s ease-out'
-        sx={getSyle(order)}
+        css={getSyle(order)}
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
         onTouchStart={() => setIsHover(true)}
@@ -286,32 +308,52 @@ const SortText = ({
         <Text fontSize='14px' fontWeight={600} lineHeight='18px'>
           {children}
         </Text>
-        {!order ? <Flex ml='6px'>
-          <ControlledTooltip label={tooltipLabel}>
-            <Image w='18px' h='18px' src='/images/info-icon-dapp.svg' alt='info' />
-          </ControlledTooltip></Flex>
-          :
-          order === 'desc' ? (
-            <DescIcon fill={isHover ? 'gray.400' : '#FFFFFF'} />
-          ) : order === 'asc' ? (
-            <AscIcon fill={isHover ? 'gray.400' : '#FFFFFF'} />
-          ) : (
-            <></>
-          )}
+        {!order ? (
+          <Flex ml='6px'>
+            <ControlledTooltip label={tooltipLabel}>
+              <Image
+                w='18px'
+                h='18px'
+                src='/images/info-icon-dapp.svg'
+                alt='info'
+              />
+            </ControlledTooltip>
+          </Flex>
+        ) : order === 'desc' ? (
+          <DescIcon fill={isHover ? 'gray.400' : '#FFFFFF'} />
+        ) : order === 'asc' ? (
+          <AscIcon fill={isHover ? 'gray.400' : '#FFFFFF'} />
+        ) : (
+          <></>
+        )}
       </Flex>
-
     </Flex>
   )
 }
 
-const ControlledTooltip = ({ label, children }: { label: string, children: React.ReactNode }) => {
-  const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
+const ControlledTooltip = ({
+  label,
+  children
+}: {
+  label: string
+  children: React.ReactNode
+}) => {
+  const { isOpen, onOpen, onClose, onToggle } = useDisclosure()
 
   return (
-    <Tooltip label={label} isOpen={isOpen} hasArrow bg='gray.700' borderRadius='4px' color='white' p='3' mx='10px'>
+    <Tooltip
+      label={label}
+      isOpen={isOpen}
+      hasArrow
+      bg='gray.700'
+      borderRadius='4px'
+      color='white'
+      p='3'
+      mx='10px'
+    >
       <span onMouseEnter={onOpen} onMouseLeave={onClose} onClick={onToggle}>
         {children}
       </span>
     </Tooltip>
-  );
-};
+  )
+}

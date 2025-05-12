@@ -23,7 +23,7 @@ export const BakerBoxList = ({
       maxH={['340px', '420px']}
       pb='40px'
       gap='12px'
-      sx={{
+      css={{
         '::-webkit-scrollbar': {
           width: '4px'
         },
@@ -35,7 +35,7 @@ export const BakerBoxList = ({
       }}
     >
       {!bakerList.length ? (
-        <Text textAlign="center" color="gray.600" fontSize="16px">
+        <Text textAlign='center' color='gray.600' fontSize='16px'>
           No bakers match your search
         </Text>
       ) : (

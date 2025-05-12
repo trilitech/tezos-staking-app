@@ -5,7 +5,7 @@ import {
   Heading,
   Text,
   Flex,
-  Divider,
+  Separator,
   Button,
   Image
 } from '@chakra-ui/react'
@@ -119,7 +119,7 @@ export default function Hero() {
                   Start Earning
                 </Button>
               </Flex>
-              <Divider
+              <Separator
                 pt={5}
                 display={['none', 'block']}
                 borderColor='transparent'

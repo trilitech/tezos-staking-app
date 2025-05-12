@@ -1,9 +1,16 @@
-import { Box, Button, Flex, Image, Link, Text } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Flex,
+  Image,
+  Link as ChakraLink,
+  Text
+} from '@chakra-ui/react'
 import { useConnection } from '@/providers/ConnectionProvider'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { AnchorButton } from '@/components/ui/AnchorButton'
+import Link from 'next/link'
 
 export const Header = () => {
   const { isConnected, connect, disconnect } = useConnection()
@@ -48,7 +55,7 @@ export const Header = () => {
           alignItems='center'
         >
           <Flex flex={1}>
-            <Link href='/'>
+            <ChakraLink href='/'>
               <Button
                 as='div'
                 display='inline-flex'
@@ -65,18 +72,20 @@ export const Header = () => {
                   alt='Tezos Logo'
                 />
               </Button>
-            </Link>
+            </ChakraLink>
           </Flex>
           <Flex alignItems='center' justifyContent='end' flex={1} gap={4}>
-            <AnchorButton href='/faqs' px={[0, null, '24px']} ternary>
-              <Image
-                pr={[0, null, '8px']}
-                maxW='110px'
-                src='/images/info-icon.svg'
-                alt='Wallet Icon'
-              />
-              <Text display={['none', null, 'inline']}>Help</Text>
-            </AnchorButton>
+            <Button px={[0, null, '24px']} ternary asChild>
+              <Link href='/faqs'>
+                <Image
+                  pr={[0, null, '8px']}
+                  maxW='110px'
+                  src='/images/info-icon.svg'
+                  alt='Wallet Icon'
+                />
+                <Text display={['none', null, 'inline']}>Help</Text>
+              </Link>
+            </Button>
 
             {isConnected !== undefined && (
               <Button

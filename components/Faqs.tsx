@@ -5,6 +5,7 @@ import {
   Heading,
   Text,
   Flex,
+  Button,
   Accordion,
   AccordionItem,
   AccordionButton,
@@ -13,7 +14,7 @@ import {
 } from '@chakra-ui/react'
 import { Header } from './Header'
 import React from 'react'
-import { AnchorButton } from './ui/AnchorButton'
+import Link from 'next/link'
 
 export default function Faqs() {
   const paragraphs = [
@@ -212,7 +213,7 @@ export default function Faqs() {
             gap='12px'
           >
             {paragraphs.map(paragraph => (
-              <AnchorButton
+              <Button
                 ternary
                 border='1px solid'
                 borderColor='gray.200'
@@ -220,11 +221,11 @@ export default function Faqs() {
                 px='12px'
                 fontSize='xs'
                 height='30px'
-                href={'#' + paragraph.id}
                 key={paragraph.id}
+                asChild
               >
-                {paragraph.title}
-              </AnchorButton>
+                <Link href={'#' + paragraph.id}>{paragraph.title}</Link>
+              </Button>
             ))}
           </Flex>
           {faqs?.map((faq, index) => (
@@ -273,7 +274,7 @@ export default function Faqs() {
                       fontSize='md'
                     >
                       <Text
-                        sx={{ a: { textDecoration: 'underline' } }}
+                        css={{ a: { textDecoration: 'underline' } }}
                         fontSize={['sm', null, 'md']}
                         dangerouslySetInnerHTML={{ __html: data.description }}
                       />

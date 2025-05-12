@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react'
 import {
   Flex,
   Text,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalBody,
+  Dialog,
   Box,
-  Link as ChakraLink
+  Link as ChakraLink,
+  chakra
 } from '@chakra-ui/react'
 import Link from 'next/link'
 import { PrimaryButton } from './buttons/PrimaryButton'
@@ -50,28 +48,46 @@ export const CookieBanner = () => {
   }
 
   return (
-    <Modal
+    <Dialog.Root
       isOpen={isOpen}
       onClose={() => {
         console.log('click')
       }}
     >
-      <ModalOverlay />
-      <ModalContent
-        pos='absolute'
-        bottom={[0, null, 10]}
-        borderRadius={4}
-        px={[10, null, 12]}
-        py={[10, 6]}
-        m={0}
-        maxW='1232px'
-        w={['100%', null, '90%']}
-        borderTopStartRadius='16px'
-        borderBottomStartRadius={[null, null, '16px']}
-        borderTopEndRadius='16px'
-        borderBottomEndRadius={[null, null, '16px']}
+      <Dialog.Backdrop />
+      <Dialog.Content asChild>
+        <chakra.div
+          pos='absolute'
+          bottom={{ base: 0, md: 10 }}
+          borderRadius='4px'
+          px={{ base: 10, md: 12 }}
+          py={{ base: 10, md: 6 }}
+          m='0'
+          maxW='1232px'
+          w={{ base: '100%', md: '90%' }}
+          borderTopStartRadius='16px'
+          borderBottomStartRadius={{ md: '16px' }}
+          borderTopEndRadius='16px'
+          borderBottomEndRadius={{ md: '16px' }}
+        >
+          {/* dialog content */}
+        </chakra.div>
+      </Dialog.Content>
+      {/* <Dialog.Content
+      // pos='absolute'
+      // bottom={[0, null, 10]}
+      // borderRadius={4}
+      // px={[10, null, 12]}
+      // py={[10, 6]}
+      // m={0}
+      // maxW='1232px'
+      // w={['100%', null, '90%']}
+      // borderTopStartRadius='16px'
+      // borderBottomStartRadius={[null, null, '16px']}
+      // borderTopEndRadius='16px'
+      // borderBottomEndRadius={[null, null, '16px']}
       >
-        <ModalBody
+        <Dialog.Body
           display='flex'
           flexDir={['column', null, 'row']}
           justifyContent='space-between'
@@ -113,8 +129,8 @@ export const CookieBanner = () => {
               <Text>Necessary Only</Text>
             </SecondaryButton>
           </Flex>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+        </Dialog.Body>
+      </Dialog.Content> */}
+    </Dialog.Root>
   )
 }

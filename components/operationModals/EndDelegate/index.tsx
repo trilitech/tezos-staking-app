@@ -1,12 +1,5 @@
 import React from 'react'
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  Flex
-} from '@chakra-ui/react'
+import { Dialog, Flex } from '@chakra-ui/react'
 import useCurrentStep from '@/utils/useCurrentStep'
 import { ConfirmEndDelegate } from './ConfirmEndDelegate'
 import { BackIcon, CloseIcon } from '@/components/icons'
@@ -58,15 +51,15 @@ export const EndDelegationModal = ({
   }
 
   return (
-    <Modal
-      isCentered
+    <Dialog.Root
+      placement='center'
       isOpen={isOpen}
       onClose={onClose}
       closeOnOverlayClick={false}
     >
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>
+      <Dialog.Backdrop />
+      <Dialog.Content>
+        <Dialog.Header>
           <Flex justify='space-between' alignItems='center'>
             <Flex>
               <BackIcon
@@ -81,15 +74,15 @@ export const EndDelegationModal = ({
               }}
             />
           </Flex>
-        </ModalHeader>
+        </Dialog.Header>
 
-        <ModalBody>
+        <Dialog.Body>
           {isStaked && totalStep === 2 && (
             <Stepper totalStep={totalStep} currentStep={currentStep} />
           )}
           <Flex flexDir='column'>{getCurrentStepBody(currentStep)}</Flex>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+        </Dialog.Body>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

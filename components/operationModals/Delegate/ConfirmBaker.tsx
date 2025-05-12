@@ -68,10 +68,10 @@ export const ConfirmBaker = ({
         </InputLeftElement>
 
         <Input
-          isDisabled
+          disabled
           pr='4.5rem'
           pl='48px'
-          sx={{
+          css={{
             '::placeholder': {
               fontSize: '16px'
             }

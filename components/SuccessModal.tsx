@@ -1,15 +1,12 @@
 import React from 'react'
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalBody,
-  ModalCloseButton,
+  Dialog,
   useDisclosure,
   Image,
   Flex,
   Text,
-  Link as ChakraLink
+  Link as ChakraLink,
+  Button
 } from '@chakra-ui/react'
 import { PrimaryButton } from './buttons/PrimaryButton'
 import Link from 'next/link'
@@ -72,14 +69,14 @@ export const SuccessModal = ({
   const { onClose } = useDisclosure()
 
   return (
-    <Modal isOpen={open} onClose={onClose} isCentered>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalCloseButton
-          sx={{
+    <Dialog.Root isOpen={open} onClose={onClose} placement='center'>
+      <Dialog.Backdrop />
+      <Dialog.Content>
+        <Button
+          css={{
             '& svg': {
-              w: '14px',
-              h: '14px'
+              width: '14px',
+              height: '14px'
             }
           }}
           onClick={() => {
@@ -88,7 +85,7 @@ export const SuccessModal = ({
             onSuccessClose()
           }}
         />
-        <ModalBody px='40px' mt='40px'>
+        <Dialog.Body px='40px' mt='40px'>
           <Flex
             textAlign='center'
             flexDir='column'
@@ -147,8 +144,8 @@ export const SuccessModal = ({
               <ExternalLinkIcon color='gray.400' />
             </ChakraLink>
           </Flex>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+        </Dialog.Body>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }
