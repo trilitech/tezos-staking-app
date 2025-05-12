@@ -5,6 +5,7 @@ import useClipboard from '@/utils/useClipboard'
 import { simplifyAddress } from '@/utils/simpliftAddress'
 import { CopyAlert } from './CopyAlert'
 import { CopyIcon } from './icons/CopyIcon'
+import { AnchorButton } from './ui/AnchorButton'
 
 export const AccountBanner = ({
   address,
@@ -59,13 +60,12 @@ export const AccountBanner = ({
         </Flex>
       </Flex>
       <Flex gap='3'>
-        <Button
+        <AnchorButton
           border='solid 1px #EDF2F7'
           px='12px'
           py='24px'
           borderRadius='8px'
           bg='transparent'
-          as='a'
           href='/faqs'
           target='_blank'
           _hover={{
@@ -78,7 +78,7 @@ export const AccountBanner = ({
             src='/images/help-icon-dapp.svg'
             alt='logout'
           />
-        </Button>
+        </AnchorButton>
         <Button
           border='solid 1px #EDF2F7'
           px='12px'

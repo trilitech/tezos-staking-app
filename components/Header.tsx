@@ -3,6 +3,7 @@ import { useConnection } from '@/providers/ConnectionProvider'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { AnchorButton } from '@/components/ui/AnchorButton'
 
 export const Header = () => {
   const { isConnected, connect, disconnect } = useConnection()
@@ -67,12 +68,7 @@ export const Header = () => {
             </Link>
           </Flex>
           <Flex alignItems='center' justifyContent='end' flex={1} gap={4}>
-            <Button
-              as='a'
-              href='/faqs'
-              variant='ternary'
-              px={[0, null, '24px']}
-            >
+            <AnchorButton href='/faqs' px={[0, null, '24px']} ternary>
               <Image
                 pr={[0, null, '8px']}
                 maxW='110px'
@@ -80,16 +76,23 @@ export const Header = () => {
                 alt='Wallet Icon'
               />
               <Text display={['none', null, 'inline']}>Help</Text>
-            </Button>
+            </AnchorButton>
 
             {isConnected !== undefined && (
               <Button
-                onClick={isConnected ? disconnect : () => {
-                  trackGAEvent(GAAction.BUTTON_CLICK, GACategory.WALLET_BEGIN);
-                  setConnectClicked(true);
-                  connect();
-                }}
-                variant={isConnected ? 'ternary' : 'primary'}
+                onClick={
+                  isConnected
+                    ? disconnect
+                    : () => {
+                        trackGAEvent(
+                          GAAction.BUTTON_CLICK,
+                          GACategory.WALLET_BEGIN
+                        )
+                        setConnectClicked(true)
+                        connect()
+                      }
+                }
+                {...(isConnected ? { ternary: true } : { primary: true })}
                 border={isConnected ? 'solid 2px #EDF2F7' : undefined}
                 px={isConnected ? '12px' : ['12px', null, '24px']}
                 py={isConnected ? '24px' : undefined}
@@ -97,12 +100,18 @@ export const Header = () => {
                 minW={isConnected ? undefined : ['48px', null, 'auto']}
               >
                 <Image
-                  w="24px"
-                  h="24px"
-                  src={isConnected ? '/images/logout_white.svg' : '/images/wallet-icon.svg'}
+                  w='24px'
+                  h='24px'
+                  src={
+                    isConnected
+                      ? '/images/logout_white.svg'
+                      : '/images/wallet-icon.svg'
+                  }
                   alt={isConnected ? 'Logout' : 'Wallet Icon'}
                 />
-                {!isConnected && <Text display={['none', null, 'inline']}>Connect</Text>}
+                {!isConnected && (
+                  <Text display={['none', null, 'inline']}>Connect</Text>
+                )}
               </Button>
             )}
           </Flex>

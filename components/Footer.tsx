@@ -1,7 +1,8 @@
 'use client'
 
-import { Box, Flex, Text, Button } from '@chakra-ui/react'
+import { Box, Flex, Text } from '@chakra-ui/react'
 import Link from 'next/link'
+import { AnchorButton } from './ui/AnchorButton'
 
 export default function Footer() {
   return (
@@ -54,11 +55,11 @@ export default function Footer() {
               w='2px'
               display={['none', null, 'block']}
             />
-            <Button
+            <AnchorButton
               as='a'
               href='/termsOfUseStakingApp/'
               target='_blank'
-              variant='ternary'
+              ternary
               px='12px'
               py='6px'
               fontSize={['sm', null, '18px']}
@@ -66,7 +67,7 @@ export default function Footer() {
               height='36px'
             >
               Terms
-            </Button>
+            </AnchorButton>
             <Box
               mx='24px'
               my='auto'
@@ -76,11 +77,10 @@ export default function Footer() {
               w='2px'
               display={['none', null, 'block']}
             />
-            <Button
-              as='a'
+            <AnchorButton
               href='/privacy_policy/'
               target='_blank'
-              variant='ternary'
+              ternary
               px='12px'
               py='6px'
               fontSize={['sm', null, '18px']}
@@ -88,7 +88,7 @@ export default function Footer() {
               height='36px'
             >
               Privacy
-            </Button>
+            </AnchorButton>
             <Box
               mx='24px'
               my='auto'
@@ -97,10 +97,9 @@ export default function Footer() {
               h='12px'
               w='2px'
             />
-            <Button
-              as='a'
+            <AnchorButton
               href='/faqs'
-              variant='ternary'
+              ternary
               px='12px'
               py='6px'
               fontSize={['sm', null, '18px']}
@@ -108,7 +107,7 @@ export default function Footer() {
               height='36px'
             >
               Help
-            </Button>
+            </AnchorButton>
           </Flex>
           <Flex
             mt={['12px', null, 0]}

@@ -1,6 +1,7 @@
 'use client'
 
-import { Box, Heading, Text, Flex, Image, Button } from '@chakra-ui/react'
+import { Box, Heading, Text, Flex, Image } from '@chakra-ui/react'
+import { AnchorButton } from '@/components/ui/AnchorButton'
 
 export default function StakeOptions() {
   return (
@@ -173,17 +174,16 @@ export default function StakeOptions() {
               alignSelf={['center', 'start']}
               position={'relative'}
             >
-              <Button
+              <AnchorButton
                 scrollPadding={80}
                 scrollMarginBottom={70}
-                as='a'
                 href='/faqs/#delegating'
                 // hideExternalLinkIcon={true}
-                variant='secondary'
+                secondary
                 w='full'
               >
                 Learn More
-              </Button>
+              </AnchorButton>
             </Flex>
           </Flex>
           <Flex
@@ -256,7 +256,9 @@ export default function StakeOptions() {
                 src='/images/analyse-icon.svg'
                 alt='Wallet Icon'
               />
-              <Text fontSize='lg'>Unstake in just {process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days</Text>
+              <Text fontSize='lg'>
+                Unstake in just {process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days
+              </Text>
             </Flex>
             <Flex
               flexDir={['column', null, 'row']}
@@ -307,16 +309,15 @@ export default function StakeOptions() {
               alignSelf={['center', 'start']}
               position={'relative'}
             >
-              <Button
+              <AnchorButton
                 scrollPadding={80}
                 scrollMarginBottom={70}
-                as='a'
                 href='/faqs/#staking'
-                variant='secondary'
+                secondary
                 w='full'
               >
                 Learn More
-              </Button>
+              </AnchorButton>
             </Flex>
           </Flex>
         </Flex>

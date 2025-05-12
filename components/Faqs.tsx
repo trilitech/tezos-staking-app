@@ -5,7 +5,6 @@ import {
   Heading,
   Text,
   Flex,
-  Button,
   Accordion,
   AccordionItem,
   AccordionButton,
@@ -14,6 +13,7 @@ import {
 } from '@chakra-ui/react'
 import { Header } from './Header'
 import React from 'react'
+import { AnchorButton } from './ui/AnchorButton'
 
 export default function Faqs() {
   const paragraphs = [
@@ -50,8 +50,7 @@ export default function Faqs() {
         },
         {
           title: 'If I stake, can I unstake?',
-          description:
-            `You can unstake your tez at any time. All you have to do is click the “Unstake” button on the dashboard, which immediately halts rewards from accruing, wait ${process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days (or 4 “cycles”), and then complete the process by clicking on the “Finalize” button. Once that’s done, your funds become available again.`
+          description: `You can unstake your tez at any time. All you have to do is click the “Unstake” button on the dashboard, which immediately halts rewards from accruing, wait ${process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days (or 4 “cycles”), and then complete the process by clicking on the “Finalize” button. Once that’s done, your funds become available again.`
         },
         {
           title: 'Where can I learn more about the Tezos ecosystem?',
@@ -143,8 +142,7 @@ export default function Faqs() {
         },
         {
           title: 'Can I change my baker after staking my tez?',
-          description:
-            `If you want to change your baker, you will need to unstake your funds with your original baker first. When the unstaking process completes after ${process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days (4 “cycles”), you can stake your newly available funds with the new baker.`
+          description: `If you want to change your baker, you will need to unstake your funds with your original baker first. When the unstaking process completes after ${process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days (4 “cycles”), you can stake your newly available funds with the new baker.`
         }
       ]
     },
@@ -164,8 +162,7 @@ export default function Faqs() {
         },
         {
           title: 'How do staking rewards accrue?',
-          description:
-            'Staking rewards accrue every cycle, which lasts 1 day.'
+          description: 'Staking rewards accrue every cycle, which lasts 1 day.'
         },
         {
           title: 'Do I need to claim my staking rewards?',
@@ -215,20 +212,19 @@ export default function Faqs() {
             gap='12px'
           >
             {paragraphs.map(paragraph => (
-              <Button
-                variant='ternary'
+              <AnchorButton
+                ternary
                 border='1px solid'
                 borderColor='gray.200'
                 py='6px'
                 px='12px'
                 fontSize='xs'
                 height='30px'
-                as='a'
                 href={'#' + paragraph.id}
                 key={paragraph.id}
               >
                 {paragraph.title}
-              </Button>
+              </AnchorButton>
             ))}
           </Flex>
           {faqs?.map((faq, index) => (
@@ -276,7 +272,11 @@ export default function Faqs() {
                       color='white.600'
                       fontSize='md'
                     >
-                      <Text sx={{ a: { textDecoration: 'underline' } }} fontSize={['sm', null, 'md']} dangerouslySetInnerHTML={{ __html: data.description }} />
+                      <Text
+                        sx={{ a: { textDecoration: 'underline' } }}
+                        fontSize={['sm', null, 'md']}
+                        dangerouslySetInnerHTML={{ __html: data.description }}
+                      />
                     </AccordionPanel>
                   </AccordionItem>
                 ))}
