@@ -5,14 +5,14 @@ import {
   Text,
   Button,
   FlexProps,
-  Drawer,
   DrawerBody,
-  DrawerOverlay,
   DrawerContent,
-  DrawerCloseButton,
   DrawerFooter,
-  useDisclosure,
-  Icon
+  Icon,
+  DrawerRoot,
+  DrawerBackdrop,
+  DrawerCloseTrigger,
+  DrawerTrigger
 } from '@chakra-ui/react'
 import { Menu as HamburgerIcon } from 'lucide-react'
 import { TertiaryButton } from './buttons/TertiaryButton'
@@ -26,7 +26,7 @@ export const MobileAccountBanner = ({
   name,
   ...styles
 }: { address: string; name: string } & FlexProps) => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [open, setOpen] = useState(false)
   const { copyTextToClipboard } = useClipboard()
   const { disconnect } = useConnection()
 
@@ -41,7 +41,7 @@ export const MobileAccountBanner = ({
         width: window.innerWidth,
         height: window.innerHeight
       })
-      if (windowSize.width >= 768) onClose()
+      if (windowSize.width >= 768) setOpen(false)
     }
 
     // Set up event listener for window resize
@@ -62,24 +62,30 @@ export const MobileAccountBanner = ({
       {...styles}
     >
       <Image w='92px' h='32px' src='/images/logo.svg' alt='Tezos Logo' />
-      <Button
-        border='solid 1px #E2E8F0'
-        px='15px'
-        py='8px'
-        borderRadius='4px'
-        bg='transparent'
-        _hover={{
-          bg: 'transparent'
-        }}
-        onClick={onOpen}
+      <DrawerTrigger asChild>
+        <Button
+          border='solid 1px #E2E8F0'
+          px='15px'
+          py='8px'
+          borderRadius='4px'
+          bg='transparent'
+          _hover={{
+            bg: 'transparent'
+          }}
+          onClick={() => setOpen(true)}
+        >
+          <Icon as={HamburgerIcon} w='18px' h='18px' color='gray.900' />
+        </Button>
+      </DrawerTrigger>
+      <DrawerRoot
+        placement='bottom'
+        open={open}
+        onOpenChange={e => setOpen(e.open)}
+        size='xl'
       >
-        <Icon as={HamburgerIcon} w='18px' h='18px' color='gray.900' />
-      </Button>
-      <Drawer placement='bottom' onClose={onClose} isOpen={isOpen} size='xl'>
-        <DrawerOverlay />
+        <DrawerBackdrop />
         <DrawerContent borderRadius='10px' py='40px'>
-          <DrawerCloseButton />
-
+          <DrawerCloseTrigger />
           <DrawerBody>
             <Flex flexDir='column' alignItems='center' gap='16px'>
               <Text fontSize='18px' fontWeight={600}>
@@ -113,7 +119,7 @@ export const MobileAccountBanner = ({
             <TertiaryButton onClick={disconnect}>Disconnect</TertiaryButton>
           </DrawerFooter>
         </DrawerContent>
-      </Drawer>
+      </DrawerRoot>
     </Flex>
   )
 }

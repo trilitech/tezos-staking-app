@@ -55,23 +55,22 @@ export const CookieBanner = () => {
       }}
     >
       <Dialog.Backdrop />
-      <Dialog.Content asChild>
-        <chakra.div
-          pos='absolute'
-          bottom={{ base: 0, md: 10 }}
-          borderRadius='4px'
-          px={{ base: 10, md: 12 }}
-          py={{ base: 10, md: 6 }}
-          m='0'
-          maxW='1232px'
-          w={{ base: '100%', md: '90%' }}
-          borderTopStartRadius='16px'
-          borderBottomStartRadius={{ md: '16px' }}
-          borderTopEndRadius='16px'
-          borderBottomEndRadius={{ md: '16px' }}
-        >
-          {/* dialog content */}
-        </chakra.div>
+      <Dialog.Content
+        pos='absolute'
+        bottom={{ base: 0, md: 10 }}
+        borderRadius='4px'
+        px={{ base: 10, md: 12 }}
+        py={{ base: 10, md: 6 }}
+        m='0'
+        maxW='1232px'
+        w={{ base: '100%', md: '90%' }}
+        borderTopStartRadius='16px'
+        borderBottomStartRadius={{ md: '16px' }}
+        borderTopEndRadius='16px'
+        borderBottomEndRadius={{ md: '16px' }}
+        asChild
+      >
+        <chakra.div>{/* dialog content */}</chakra.div>
       </Dialog.Content>
       {/* <Dialog.Content
       // pos='absolute'
