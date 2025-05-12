@@ -14,7 +14,7 @@ import {
   useDisclosure,
   Icon
 } from '@chakra-ui/react'
-import { HamburgerIcon } from '@chakra-ui/icons'
+import { Menu as HamburgerIcon } from 'lucide-react'
 import { TertiaryButton } from './buttons/TertiaryButton'
 import { simplifyAddress } from '@/utils/simpliftAddress'
 import useClipboard from '@/utils/useClipboard'

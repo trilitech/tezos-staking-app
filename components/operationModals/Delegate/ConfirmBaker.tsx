@@ -13,7 +13,7 @@ import {
 import { BakerInfo } from '@/components/Operations/tezInterfaces'
 import { Header, ColumnHeader } from '@/components/modalBody'
 import { BakerDetailsTable } from '@/components/modalBody/BakerDetailsTable'
-import { CloseIcon } from '@chakra-ui/icons'
+import { X as CloseIcon } from 'lucide-react'
 import { useOperationResponse } from '@/providers/OperationResponseProvider'
 import { useConnection } from '@/providers/ConnectionProvider'
 import { setDelegate } from '@/components/Operations/operations'
@@ -135,7 +135,9 @@ export const ConfirmBaker = ({
             if (!canStake && handleNStepForward) {
               setOpType('pending_unstake')
               setTitle('Pending Unstake Operation!')
-              setMessage(`You have successfully delegated your balance to the new baker.<br /><br />Before staking with a new baker, you must wait for your current unstake operations to be finalized. The unstaking process takes ${process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days.`)
+              setMessage(
+                `You have successfully delegated your balance to the new baker.<br /><br />Before staking with a new baker, you must wait for your current unstake operations to be finalized. The unstaking process takes ${process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days.`
+              )
               setOpHash(response.opHash)
               setSuccess(true)
               handleNStepForward(3)
@@ -144,9 +146,9 @@ export const ConfirmBaker = ({
                 if (isChangeBaker) {
                   setOpType('change_baker')
                   setMessage(
-                    isStaked ?
-                      `You have successfully changed your baker and unstaked with your previous baker. Unstaking takes ${process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days, after which you must finalize the process. Once you do, your tez will be made available in your spendable balance.` :
-                      'You have successfully delegated your balance to the baker. You can now choose to stake your tez with the same baker to earn higher rewards.'
+                    isStaked
+                      ? `You have successfully changed your baker and unstaked with your previous baker. Unstaking takes ${process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days, after which you must finalize the process. Once you do, your tez will be made available in your spendable balance.`
+                      : 'You have successfully delegated your balance to the baker. You can now choose to stake your tez with the same baker to earn higher rewards.'
                   )
                   trackGAEvent(
                     GAAction.BUTTON_CLICK,

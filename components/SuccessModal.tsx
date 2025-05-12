@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react'
 import { PrimaryButton } from './buttons/PrimaryButton'
 import Link from 'next/link'
-import { ExternalLinkIcon } from '@chakra-ui/icons'
+import { ExternalLink as ExternalLinkIcon } from 'lucide-react'
 import { OpType } from '@/providers/OperationResponseProvider'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 
@@ -98,7 +98,11 @@ export const SuccessModal = ({
             <Image
               w='24px'
               h='24px'
-              src={opType === 'pending_unstake' ? '/images/error-icon.svg' : '/images/check.svg'}
+              src={
+                opType === 'pending_unstake'
+                  ? '/images/error-icon.svg'
+                  : '/images/check.svg'
+              }
               alt={opType === 'pending_unstake' ? 'error icon' : 'check icon'}
               mb='16px'
             />
