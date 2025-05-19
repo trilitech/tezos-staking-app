@@ -6,8 +6,6 @@ import {
   Flex,
   Image,
   Tabs,
-  TabList,
-  Tab,
   useBreakpointValue
 } from '@chakra-ui/react'
 import { useState } from 'react'
@@ -182,15 +180,15 @@ export default function DashboardInfo() {
             ) : (
               <>
                 <Flex w='100%' justifyContent='center'>
-                  <Tabs
+                  <Tabs.Root
                     backgroundColor='white'
-                    variant='soft-rounded'
+                    // variant='soft-rounded'
                     colorScheme='gray'
                     bg='transparent'
                     w='fit-content'
-                    onChange={index => setActiveIndex(index)}
+                    onValueChange={e => setActiveIndex(Number(e.value))}
                   >
-                    <TabList borderRadius='12px' bg='white' p='6px'>
+                    <Tabs.List borderRadius='12px' bg='white' p='6px'>
                       <CustomTab text='Connect' />
                       <Box
                         mx='12px'
@@ -210,8 +208,8 @@ export default function DashboardInfo() {
                         w='2px'
                       />
                       <CustomTab text='Manage' />
-                    </TabList>
-                  </Tabs>
+                    </Tabs.List>
+                  </Tabs.Root>
                 </Flex>
 
                 <Flex
@@ -325,7 +323,7 @@ export default function DashboardInfo() {
 
 const CustomTab = ({ text }: { text: string }) => {
   return (
-    <Tab
+    <Tabs.Root
       fontSize='lg'
       px='12px'
       py='6px'
@@ -333,6 +331,6 @@ const CustomTab = ({ text }: { text: string }) => {
       _hover={{ bg: '#edf2f6' }}
     >
       {text}
-    </Tab>
+    </Tabs.Root>
   )
 }

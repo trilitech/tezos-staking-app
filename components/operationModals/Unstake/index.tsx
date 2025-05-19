@@ -1,12 +1,5 @@
 import React, { useState } from 'react'
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  Flex
-} from '@chakra-ui/react'
+import { Dialog, Flex } from '@chakra-ui/react'
 import { UnstakeStart } from './UnstakeStart'
 import { SelectAmount } from './SelectAmount'
 import useCurrentStep from '@/utils/useCurrentStep'
@@ -60,15 +53,14 @@ export const UnstakeModal = ({
   }
 
   return (
-    <Modal
-      isCentered
-      isOpen={isOpen}
-      onClose={onClose}
-      closeOnOverlayClick={false}
+    <Dialog.Root
+      placement='center'
+      open={isOpen}
+      closeOnInteractOutside={false}
     >
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>
+      <Dialog.Backdrop />
+      <Dialog.Content>
+        <Dialog.Header>
           <Flex justify='space-between' alignItems='center'>
             <Flex>
               <BackIcon
@@ -83,15 +75,15 @@ export const UnstakeModal = ({
               }}
             />
           </Flex>
-        </ModalHeader>
+        </Dialog.Header>
 
-        <ModalBody>
+        <Dialog.Body>
           <Flex flexDir='column'>
             <Stepper totalStep={totalStep} currentStep={currentStep} />
             {getCurrentStepBody(currentStep)}
           </Flex>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+        </Dialog.Body>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

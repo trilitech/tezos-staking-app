@@ -8,6 +8,9 @@ const nextConfig = {
       fs: false
     }
     return config
+  },
+  experimental: {
+    optimizePackageImports: ['@chakra-ui/react']
   }
 }
 

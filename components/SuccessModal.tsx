@@ -1,19 +1,16 @@
 import React from 'react'
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalBody,
-  ModalCloseButton,
+  Dialog,
   useDisclosure,
   Image,
   Flex,
   Text,
-  Link as ChakraLink
+  Link as ChakraLink,
+  Button
 } from '@chakra-ui/react'
 import { PrimaryButton } from './buttons/PrimaryButton'
 import Link from 'next/link'
-import { ExternalLinkIcon } from '@chakra-ui/icons'
+import { ExternalLink as ExternalLinkIcon } from 'lucide-react'
 import { OpType } from '@/providers/OperationResponseProvider'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 
@@ -72,14 +69,14 @@ export const SuccessModal = ({
   const { onClose } = useDisclosure()
 
   return (
-    <Modal isOpen={open} onClose={onClose} isCentered>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalCloseButton
-          sx={{
+    <Dialog.Root open={open} placement='center'>
+      <Dialog.Backdrop />
+      <Dialog.Content>
+        <Button
+          css={{
             '& svg': {
-              w: '14px',
-              h: '14px'
+              width: '14px',
+              height: '14px'
             }
           }}
           onClick={() => {
@@ -88,7 +85,7 @@ export const SuccessModal = ({
             onSuccessClose()
           }}
         />
-        <ModalBody px='40px' mt='40px'>
+        <Dialog.Body px='40px' mt='40px'>
           <Flex
             textAlign='center'
             flexDir='column'
@@ -98,7 +95,11 @@ export const SuccessModal = ({
             <Image
               w='24px'
               h='24px'
-              src={opType === 'pending_unstake' ? '/images/error-icon.svg' : '/images/check.svg'}
+              src={
+                opType === 'pending_unstake'
+                  ? '/images/error-icon.svg'
+                  : '/images/check.svg'
+              }
               alt={opType === 'pending_unstake' ? 'error icon' : 'check icon'}
               mb='16px'
             />
@@ -143,8 +144,8 @@ export const SuccessModal = ({
               <ExternalLinkIcon color='gray.400' />
             </ChakraLink>
           </Flex>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+        </Dialog.Body>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

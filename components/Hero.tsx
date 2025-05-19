@@ -5,7 +5,7 @@ import {
   Heading,
   Text,
   Flex,
-  Divider,
+  Separator,
   Button,
   Image
 } from '@chakra-ui/react'
@@ -22,7 +22,7 @@ export default function Hero() {
       backgroundSize='cover'
       backgroundBlendMode='multiply'
       bg="linear-gradient(90deg, #6C235E 0%, #5C72FA 100%), url('/images/hero-pattern.png')"
-    // px={['24px', null, '40px']}
+      // px={['24px', null, '40px']}
     >
       <Box px={['24px', null, '40px']}>
         <Header />
@@ -109,17 +109,17 @@ export default function Hero() {
                 <Button
                   scrollPadding={80}
                   scrollMarginBottom={70}
-                  variant='primary'
                   w={['full', null, '180px']}
                   onClick={() => {
                     trackGAEvent(GAAction.BUTTON_CLICK, GACategory.WALLET_BEGIN)
                     connect()
                   }}
+                  primary
                 >
                   Start Earning
                 </Button>
               </Flex>
-              <Divider
+              <Separator
                 pt={5}
                 display={['none', 'block']}
                 borderColor='transparent'

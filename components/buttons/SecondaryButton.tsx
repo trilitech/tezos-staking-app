@@ -13,7 +13,7 @@ export const SecondaryButton = ({
 } & ButtonProps) => {
   return (
     <Button
-      w='100%'
+      // w='100%'
       bg={disabled ? 'gray.200' : 'white'}
       color={disabled ? 'gray.400' : 'blue'}
       border={disabled ? 'gray.200' : '#0052FF 2px solid'}
@@ -26,7 +26,7 @@ export const SecondaryButton = ({
       _hover={{
         bg: disabled ? 'gray.200' : 'blue',
         cursor: disabled ? 'not-allowed' : 'pointer',
-        color: disabled ? 'gray.400' : 'white',
+        color: disabled ? 'gray.400' : 'white'
       }}
       onClick={disabled ? undefined : onClick}
       disabled={disabled}

@@ -55,17 +55,17 @@ export default function Footer() {
               display={['none', null, 'block']}
             />
             <Button
-              as='a'
-              href='/termsOfUseStakingApp/'
-              target='_blank'
-              variant='ternary'
+              ternary
               px='12px'
               py='6px'
               fontSize={['sm', null, '18px']}
               fontWeight='400'
               height='36px'
+              asChild
             >
-              Terms
+              <Link href='/termsOfUseStakingApp/' target='_blank'>
+                Terms
+              </Link>
             </Button>
             <Box
               mx='24px'
@@ -77,17 +77,17 @@ export default function Footer() {
               display={['none', null, 'block']}
             />
             <Button
-              as='a'
-              href='/privacy_policy/'
-              target='_blank'
-              variant='ternary'
+              ternary
               px='12px'
               py='6px'
               fontSize={['sm', null, '18px']}
               fontWeight='400'
               height='36px'
+              asChild
             >
-              Privacy
+              <Link href='/privacy_policy/' target='_blank'>
+                Privacy
+              </Link>
             </Button>
             <Box
               mx='24px'
@@ -98,16 +98,15 @@ export default function Footer() {
               w='2px'
             />
             <Button
-              as='a'
-              href='/faqs'
-              variant='ternary'
+              ternary
               px='12px'
               py='6px'
               fontSize={['sm', null, '18px']}
               fontWeight='400'
               height='36px'
+              asChild
             >
-              Help
+              <Link href='/faqs'>Help</Link>
             </Button>
           </Flex>
           <Flex

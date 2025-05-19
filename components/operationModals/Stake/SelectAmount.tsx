@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Flex, InputGroup, Input, Image, Text } from '@chakra-ui/react'
+import { Flex, InputGroup, Input, Image, Text, Field } from '@chakra-ui/react'
 import { Header, ColumnHeader, BalanceBox } from '@/components/modalBody'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
@@ -14,16 +14,19 @@ export const SelectAmount = ({
   spendableBalance: number
   handleOneStepForward: () => void
   setStakedAmount: (arg: number) => void
-  stakedAmount: number,
-  inputRef: React.RefObject<HTMLInputElement>
+  stakedAmount: number
+  inputRef: React.RefObject<HTMLInputElement> | null
 }) => {
   useEffect(() => {
     if (inputRef?.current) {
       setTimeout(() => {
-        window.scrollTo({ top: document.body.scrollHeight * 0.6, behavior: 'smooth' });
-      }, 1);
+        window.scrollTo({
+          top: document.body.scrollHeight * 0.6,
+          behavior: 'smooth'
+        })
+      }, 1)
     }
-  }, [inputRef]);
+  }, [inputRef])
 
   const handleChange = (event: any) => {
     const val = Number(event.target.value)
@@ -39,11 +42,10 @@ export const SelectAmount = ({
       <ColumnHeader mb='12px'>SPENDABLE BALANCE</ColumnHeader>
       <BalanceBox balance={spendableBalance} />
       <ColumnHeader mb='12px'>ENTER AMOUNT</ColumnHeader>
-      <InputGroup size='md' mb='30px'>
+      <Field.Root mb='30px' required>
         <Input
           ref={inputRef}
           h='46px'
-          isRequired
           type='number'
           onChange={handleChange}
           value={stakedAmount ? stakedAmount : undefined}
@@ -52,7 +54,7 @@ export const SelectAmount = ({
           fontWeight={600}
           _placeholder={{ fontWeight: 600 }}
         />
-      </InputGroup>
+      </Field.Root>
       {isInsufficient && (
         <Flex alignItems='center' gap='8px' mb='30px'>
           <Image src='/images/AlertIcon.svg' alt='alert icon' />

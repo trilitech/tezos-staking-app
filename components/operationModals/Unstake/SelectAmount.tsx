@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import {
   Flex,
+  Box,
   InputGroup,
-  InputRightElement,
   Input,
   Button,
-  Spinner
+  Spinner,
+  Field
 } from '@chakra-ui/react'
 import { Header, ColumnHeader, BalanceBox } from '@/components/modalBody'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
@@ -47,10 +48,31 @@ export const SelectAmount = ({
       <ColumnHeader mb='12px'>STAKED</ColumnHeader>
       <BalanceBox balance={stakedAmount} />
       <ColumnHeader mb='12px'>ENTER AMOUNT</ColumnHeader>
-      <InputGroup size='md' mb='30px'>
+      <InputGroup
+        mb='30px'
+        endElement={
+          <Box width='4.5rem' pr='12px' h='100%'>
+            <Button
+              borderRadius='8px'
+              bg={unstakeAmount === stakedAmount ? 'gray.400' : 'blue'}
+              color='white'
+              fontWeight={600}
+              fontSize='16px'
+              h='34px'
+              px='12px'
+              py='6px'
+              _hover={{
+                bg: unstakeAmount === stakedAmount ? 'gray.400' : 'blue'
+              }}
+              onClick={setMax}
+            >
+              Max
+            </Button>
+          </Box>
+        }
+      >
         <Input
           h='46px'
-          isRequired
           type='number'
           onChange={handleChange}
           value={unstakeAmount ? unstakeAmount : undefined}
@@ -59,24 +81,6 @@ export const SelectAmount = ({
           fontWeight={600}
           _placeholder={{ fontWeight: 600, fontSize: '16px' }}
         />
-        <InputRightElement width='4.5rem' pr='12px' h='100%'>
-          <Button
-            borderRadius='8px'
-            bg={unstakeAmount === stakedAmount ? 'gray.400' : 'blue'}
-            color='white'
-            fontWeight={600}
-            fontSize='16px'
-            h='34px'
-            px='12px'
-            py='6px'
-            _hover={{
-              bg: unstakeAmount === stakedAmount ? 'gray.400' : 'blue'
-            }}
-            onClick={setMax}
-          >
-            Max
-          </Button>
-        </InputRightElement>
       </InputGroup>
       <PrimaryButton
         disabled={!unstakeAmount}

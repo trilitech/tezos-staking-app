@@ -1,6 +1,7 @@
 'use client'
 
 import { Box, Heading, Text, Flex, Image, Button } from '@chakra-ui/react'
+import Link from 'next/link'
 
 export default function StakeOptions() {
   return (
@@ -176,13 +177,12 @@ export default function StakeOptions() {
               <Button
                 scrollPadding={80}
                 scrollMarginBottom={70}
-                as='a'
-                href='/faqs/#delegating'
                 // hideExternalLinkIcon={true}
-                variant='secondary'
+                secondary
                 w='full'
+                asChild
               >
-                Learn More
+                <Link href='/faqs/#delegating'>Learn More</Link>
               </Button>
             </Flex>
           </Flex>
@@ -256,7 +256,9 @@ export default function StakeOptions() {
                 src='/images/analyse-icon.svg'
                 alt='Wallet Icon'
               />
-              <Text fontSize='lg'>Unstake in just {process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days</Text>
+              <Text fontSize='lg'>
+                Unstake in just {process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days
+              </Text>
             </Flex>
             <Flex
               flexDir={['column', null, 'row']}
@@ -310,12 +312,11 @@ export default function StakeOptions() {
               <Button
                 scrollPadding={80}
                 scrollMarginBottom={70}
-                as='a'
-                href='/faqs/#staking'
-                variant='secondary'
+                secondary
                 w='full'
+                asChild
               >
-                Learn More
+                <Link href='/faqs/#staking'>Learn More</Link>
               </Button>
             </Flex>
           </Flex>

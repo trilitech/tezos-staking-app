@@ -3,6 +3,7 @@
 import { Heading, Text, Flex, Button } from '@chakra-ui/react'
 import { useConnection } from '@/providers/ConnectionProvider'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
+import Link from 'next/link'
 
 export default function FooterCta() {
   const { connect } = useConnection()
@@ -61,8 +62,8 @@ export default function FooterCta() {
               Visit the FAQ page to find answers to questions about delegation,
               staking, and more.
             </Text>
-            <Button as='a' href='/faqs' variant='primary' w={['full', '180px']}>
-              Visit FAQ
+            <Button primary w={['full', '180px']} asChild>
+              <Link href='/faqs'>Visit FAQ</Link>
             </Button>
           </Flex>
           <Flex
@@ -95,10 +96,11 @@ export default function FooterCta() {
               color={'black'}
               pb={['24px', null, '24px']}
             >
-              Unlock the potential of your tez. Delegate or stake now and see your rewards grow.
+              Unlock the potential of your tez. Delegate or stake now and see
+              your rewards grow.
             </Text>
             <Button
-              variant='primary'
+              primary
               w={['full', '180px']}
               onClick={() => {
                 trackGAEvent(GAAction.BUTTON_CLICK, GACategory.WALLET_BEGIN)

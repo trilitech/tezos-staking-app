@@ -1,10 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
+  Dialog,
   Flex,
   Text,
   Button,
@@ -13,12 +9,16 @@ import {
   Heading,
   useDisclosure
 } from '@chakra-ui/react'
-import { BakerInfo, StakingOpsStatus } from '@/components/Operations/tezInterfaces'
+import {
+  BakerInfo,
+  StakingOpsStatus
+} from '@/components/Operations/tezInterfaces'
 import { CloseIcon } from '@/components/icons'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
 import { DelegationModal } from '../Delegate'
 import { StakeModal } from '../Stake'
+import Link from 'next/link'
 
 export interface DelegateModalProps {
   isOpen: boolean
@@ -40,16 +40,18 @@ export const SelectOptionModal = ({
 
   return (
     <>
-      <Modal
-        isCentered
-        isOpen={isOpen}
-        onClose={onClose}
-        closeOnOverlayClick={false}
+      <Dialog.Root
+        placement='center'
+        open={isOpen}
+        closeOnInteractOutside={false}
         scrollBehavior='inside'
       >
-        <ModalOverlay />
-        <ModalContent pb='0px' maxW='100%' w={['100%', null, '974px']}>
-          <ModalHeader p={['24px', null, '40px']} pb={['12px !important', null, '20px']}>
+        <Dialog.Backdrop />
+        <Dialog.Content pb='0px' maxW='100%' w={['100%', null, '974px']}>
+          <Dialog.Header
+            p={['24px', null, '40px']}
+            pb={['12px !important', null, '20px']}
+          >
             <Flex h='36px' position='relative' alignItems='center' w='100%'>
               <Button
                 position='absolute'
@@ -60,20 +62,21 @@ export const SelectOptionModal = ({
                 borderRadius='8px'
                 bg='transparent'
                 as='a'
-                href='/faqs'
-                target='_blank'
                 gap='2'
                 _hover={{
                   bg: '#f8fafc'
                 }}
+                asChild
               >
-                <Image
-                  w='24px'
-                  h='24px'
-                  src='/images/help-icon-dapp.svg'
-                  alt='logout'
-                />
-                <Text fontSize='sm'>Help</Text>
+                <Link href='/faqs' target='_blank'>
+                  <Image
+                    w='24px'
+                    h='24px'
+                    src='/images/help-icon-dapp.svg'
+                    alt='logout'
+                  />
+                  <Text fontSize='sm'>Help</Text>
+                </Link>
               </Button>
 
               <Text
@@ -105,9 +108,9 @@ export const SelectOptionModal = ({
             >
               Select Your Option
             </Text>
-          </ModalHeader>
+          </Dialog.Header>
 
-          <ModalBody px={['24px', null, '40px']} pb='0px'>
+          <Dialog.Body px={['24px', null, '40px']} pb='0px'>
             <Flex
               w='100%'
               flexDir={['column', null, 'row']}
@@ -207,11 +210,7 @@ export const SelectOptionModal = ({
                         src='/images/error-icon-gray.svg'
                         alt='Wallet Icon'
                       />
-                      <Text
-                        pr='4px'
-                        color='gray.600'
-                        fontSize='sm'
-                      >
+                      <Text pr='4px' color='gray.600' fontSize='sm'>
                         Risk
                       </Text>
                     </Flex>
@@ -248,11 +247,7 @@ export const SelectOptionModal = ({
                         src='/images/trophy-icon.svg'
                         alt='Wallet Icon'
                       />
-                      <Text
-                        pr='4px'
-                        color='gray.600'
-                        fontSize='sm'
-                      >
+                      <Text pr='4px' color='gray.600' fontSize='sm'>
                         Reward
                       </Text>
                     </Flex>
@@ -292,7 +287,7 @@ export const SelectOptionModal = ({
                         delegateModal.onOpen()
                       }, 1)
                     }}
-                    variant='secondary'
+                    secondary
                     w='full'
                   >
                     Delegate
@@ -338,7 +333,9 @@ export const SelectOptionModal = ({
                     src='/images/pie-chart-icon.svg'
                     alt='Wallet Icon'
                   />
-                  <Text fontSize='sm'>Stake however much tez you&#39;d like</Text>
+                  <Text fontSize='sm'>
+                    Stake however much tez you&#39;d like
+                  </Text>
                 </Flex>
                 <Flex
                   display={['none', null, 'flex']}
@@ -367,7 +364,9 @@ export const SelectOptionModal = ({
                     src='/images/analyse-icon.svg'
                     alt='Wallet Icon'
                   />
-                  <Text fontSize='sm'>Unstake in just {process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days</Text>
+                  <Text fontSize='sm'>
+                    Unstake in just {process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days
+                  </Text>
                 </Flex>
                 <Flex
                   flexDir={['column', null, 'row']}
@@ -387,11 +386,7 @@ export const SelectOptionModal = ({
                         src='/images/error-icon-gray.svg'
                         alt='Wallet Icon'
                       />
-                      <Text
-                        pr='4px'
-                        color='gray.600'
-                        fontSize='sm'
-                      >
+                      <Text pr='4px' color='gray.600' fontSize='sm'>
                         Risk
                       </Text>
                     </Flex>
@@ -422,11 +417,7 @@ export const SelectOptionModal = ({
                         src='/images/trophy-icon.svg'
                         alt='Wallet Icon'
                       />
-                      <Text
-                        pr='4px'
-                        color='gray.600'
-                        fontSize='sm'
-                      >
+                      <Text pr='4px' color='gray.600' fontSize='sm'>
                         Reward
                       </Text>
                     </Flex>
@@ -456,7 +447,7 @@ export const SelectOptionModal = ({
                         stakeModal.onOpen()
                       }, 1)
                     }}
-                    variant='secondary'
+                    secondary
                     w='full'
                   >
                     Stake
@@ -464,18 +455,18 @@ export const SelectOptionModal = ({
                 </Flex>
               </Flex>
             </Flex>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+          </Dialog.Body>
+        </Dialog.Content>
+      </Dialog.Root>
       <DelegationModal
-        isOpen={delegateModal.isOpen}
+        isOpen={delegateModal.open}
         onClose={delegateModal.onClose}
         bakerList={bakerList}
         currentBakerAddress={undefined}
       />
       <StakeModal
         openedFromStartEarning={true}
-        isOpen={stakeModal.isOpen}
+        isOpen={stakeModal.open}
         onClose={stakeModal.onClose}
         spendableBalance={spendableBalance}
         bakerList={bakerList}
