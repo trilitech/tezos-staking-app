@@ -15,7 +15,7 @@ export const ErrorModal = ({
   const { onClose } = useDisclosure()
 
   return (
-    <Dialog.Root isOpen onClose={onClose} size='lg' placement='center'>
+    <Dialog.Root open size='lg' placement='center'>
       <Dialog.Backdrop />
       <Dialog.Content>
         <Dialog.Body h='800px' py='50px' textAlign='center'>

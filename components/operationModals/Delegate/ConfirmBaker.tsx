@@ -3,8 +3,7 @@ import {
   Flex,
   InputGroup,
   Input,
-  InputRightElement,
-  InputLeftElement,
+  Box,
   Image,
   Spinner,
   Text,
@@ -55,18 +54,36 @@ export const ConfirmBaker = ({
       <Header pb='24px'>
         {isChangeBaker ? 'Confirm Baker' : 'Delegate to Baker'}
       </Header>
-      <InputGroup size='md' mb='30px'>
-        <InputLeftElement h='100%'>
-          <Image
-            ml='12px'
-            w='30px'
-            h='30px'
-            objectFit='cover'
-            src={`${process.env.NEXT_PUBLIC_TZKT_AVATARS_URL}/${selectedBaker.address}`}
-            alt='baker avatar'
-          />
-        </InputLeftElement>
-
+      <InputGroup
+        startElement={
+          <Box h='100%'>
+            <Image
+              ml='12px'
+              w='30px'
+              h='30px'
+              objectFit='cover'
+              src={`${process.env.NEXT_PUBLIC_TZKT_AVATARS_URL}/${selectedBaker.address}`}
+              alt='baker avatar'
+            />
+          </Box>
+        }
+        endElement={
+          <Box mr='12px' h='100%' w='75px'>
+            <Icon
+              as={CloseIcon}
+              _hover={{ cursor: 'pointer' }}
+              onClick={() => {
+                setSelectedBaker(null)
+                handleOneStepBack()
+              }}
+              w='14px'
+              h='14px'
+              transform='translateX(20px)'
+            />
+          </Box>
+        }
+        mb='30px'
+      >
         <Input
           disabled
           pr='4.5rem'
@@ -81,20 +98,6 @@ export const ConfirmBaker = ({
           overflowX='auto'
           _disabled={{ opacity: 1, fontWeight: 600, color: 'gray.900' }}
         />
-
-        <InputRightElement mr='12px' h='100%' w='75px'>
-          <Icon
-            as={CloseIcon}
-            _hover={{ cursor: 'pointer' }}
-            onClick={() => {
-              setSelectedBaker(null)
-              handleOneStepBack()
-            }}
-            w='14px'
-            h='14px'
-            transform='translateX(20px)'
-          />
-        </InputRightElement>
       </InputGroup>
 
       {selectedBaker.acceptsStaking ? (

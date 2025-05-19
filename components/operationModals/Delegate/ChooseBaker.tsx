@@ -3,12 +3,12 @@ import {
   Flex,
   InputGroup,
   Input,
-  InputRightElement,
+  Box,
   Text,
-  Tooltip,
   Image,
   useDisclosure
 } from '@chakra-ui/react'
+import { Tooltip } from '@/components/ui/tooltip'
 import { BakerInfo } from '@/components/Operations/tezInterfaces'
 import { Header } from '@/components/modalBody'
 import { SearchIcon } from '@/components/icons'
@@ -194,7 +194,13 @@ export const ChooseBaker = ({
           />
         </ControlledTooltip>
       </Header>
-      <InputGroup size='md'>
+      <InputGroup
+        endElement={
+          <Box h='100%'>
+            <SearchIcon />
+          </Box>
+        }
+      >
         <Input
           onChange={handleChange}
           pr='4.5rem'
@@ -208,10 +214,6 @@ export const ChooseBaker = ({
           h='48px'
           overflowX='auto'
         />
-
-        <InputRightElement h='100%'>
-          <SearchIcon />
-        </InputRightElement>
       </InputGroup>
 
       <Flex
@@ -338,18 +340,22 @@ const ControlledTooltip = ({
   label: string
   children: React.ReactNode
 }) => {
-  const { isOpen, onOpen, onClose, onToggle } = useDisclosure()
+  const { open, onOpen, onClose, onToggle } = useDisclosure()
 
   return (
     <Tooltip
-      label={label}
-      isOpen={isOpen}
-      hasArrow
-      bg='gray.700'
-      borderRadius='4px'
-      color='white'
-      p='3'
-      mx='10px'
+      content={label}
+      open={open}
+      showArrow
+      contentProps={{
+        css: {
+          bg: 'gray.700',
+          borderRadius: '4px',
+          color: 'white',
+          padding: 3,
+          mx: '10px'
+        }
+      }}
     >
       <span onMouseEnter={onOpen} onMouseLeave={onClose} onClick={onToggle}>
         {children}

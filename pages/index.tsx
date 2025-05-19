@@ -58,7 +58,7 @@ export default function Home() {
           stakingFees: baker.edgeOfBakingOverStaking / 10000000,
           stakingFreeSpace: mutezToTez(
             baker.stakedBalance * mutezToTez(baker.limitOfStakingOverBaking) -
-            baker.externalStakedBalance
+              baker.externalStakedBalance
           ),
           totalStakedBalance: baker.totalStakedBalance
         }
@@ -108,7 +108,7 @@ export default function Home() {
         <meta property='og:image' content='' />
         <meta property='twitter:image' content='' />
       </Head>
-      {isConnected === undefined ? (
+      {/* {isConnected === undefined ? (
         <Spinner />
       ) : isConnected ? (
         <Center
@@ -218,8 +218,9 @@ export default function Home() {
           <FooterCta />
           <Footer />
         </Center>
-      )}
+      )} */}
 
+      <Box color='black'>Hello</Box>
       <CookieBanner />
     </>
   )

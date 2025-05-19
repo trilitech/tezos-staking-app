@@ -7,6 +7,7 @@ import { useConnection } from '@/providers/ConnectionProvider'
 import { stake } from '@/components/Operations/operations'
 import { useOperationResponse } from '@/providers/OperationResponseProvider'
 import { ErrorBlock } from '@/components/ErrorBlock'
+import Link from 'next/link'
 
 export const DisclaimerStaking = ({
   stakedAmount,
@@ -65,13 +66,16 @@ export const DisclaimerStaking = ({
         py='16px'
         px='22px'
       >
-        <Checkbox
-          isChecked={isChecked}
+        <Checkbox.Root
+          checked={isChecked}
           onChange={() => {
             trackGAEvent(GAAction.BUTTON_CLICK, GACategory.ACCEPT_DISCLAIMER)
             setIsChecked(!isChecked)
           }}
-        />
+        >
+          <Checkbox.HiddenInput />
+          <Checkbox.Control />
+        </Checkbox.Root>
         <Text
           color='gray.700'
           fontSize='16px'
@@ -80,14 +84,14 @@ export const DisclaimerStaking = ({
         >
           I confirm that I have read and agreed with the{' '}
           <Text
-            as='a'
-            href='/termsOfUseStakingApp/'
-            target='_blank'
             textDecor='underline'
             textUnderlineOffset='15%'
             _hover={{ cursor: 'pointer' }}
+            asChild
           >
-            Terms of Use.
+            <Link href='/termsOfUseStakingApp/' target='_blank'>
+              Terms of Use.
+            </Link>
           </Text>
         </Text>
       </Flex>

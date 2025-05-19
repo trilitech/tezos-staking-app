@@ -1,12 +1,5 @@
 import React, { useState } from 'react'
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  Flex
-} from '@chakra-ui/react'
+import { Dialog, Flex } from '@chakra-ui/react'
 import { BakerInfo } from '@/components/Operations/tezInterfaces'
 import { DelegateStart } from './DelegateStart'
 import { ChooseBaker } from './ChooseBaker'
@@ -87,16 +80,14 @@ export const DelegationModal = ({
   }
 
   return (
-    <Modal
-      isCentered
-      isOpen={isOpen}
-      onClose={onClose}
-      closeOnOverlayClick={false}
-      autoFocus={false}
+    <Dialog.Root
+      placement='center'
+      open={isOpen}
+      closeOnInteractOutside={false}
     >
-      <ModalOverlay />
-      <ModalContent w={['100%', bigModal ? '540px' : '480px']}>
-        <ModalHeader>
+      <Dialog.Backdrop />
+      <Dialog.Content w={['100%', bigModal ? '540px' : '480px']}>
+        <Dialog.Header>
           <Flex justify='space-between' alignItems='center'>
             <Flex>
               <BackIcon
@@ -118,15 +109,15 @@ export const DelegationModal = ({
               }}
             />
           </Flex>
-        </ModalHeader>
+        </Dialog.Header>
 
-        <ModalBody>
+        <Dialog.Body>
           <Flex flexDir='column'>
             <Stepper totalStep={totalStep} currentStep={currentStep} />
             {getCurrentStepBody(currentStep)}
           </Flex>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+        </Dialog.Body>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

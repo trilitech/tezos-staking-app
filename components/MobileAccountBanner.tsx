@@ -5,14 +5,9 @@ import {
   Text,
   Button,
   FlexProps,
-  DrawerBody,
-  DrawerContent,
-  DrawerFooter,
   Icon,
-  DrawerRoot,
-  DrawerBackdrop,
-  DrawerCloseTrigger,
-  DrawerTrigger
+  Drawer,
+  Box
 } from '@chakra-ui/react'
 import { Menu as HamburgerIcon } from 'lucide-react'
 import { TertiaryButton } from './buttons/TertiaryButton'
@@ -62,7 +57,7 @@ export const MobileAccountBanner = ({
       {...styles}
     >
       <Image w='92px' h='32px' src='/images/logo.svg' alt='Tezos Logo' />
-      <DrawerTrigger asChild>
+      <Box>
         <Button
           border='solid 1px #E2E8F0'
           px='15px'
@@ -76,17 +71,17 @@ export const MobileAccountBanner = ({
         >
           <Icon as={HamburgerIcon} w='18px' h='18px' color='gray.900' />
         </Button>
-      </DrawerTrigger>
-      <DrawerRoot
+      </Box>
+      <Drawer.Root
         placement='bottom'
         open={open}
         onOpenChange={e => setOpen(e.open)}
         size='xl'
       >
-        <DrawerBackdrop />
-        <DrawerContent borderRadius='10px' py='40px'>
-          <DrawerCloseTrigger />
-          <DrawerBody>
+        <Drawer.Backdrop />
+        <Drawer.Content borderRadius='10px' py='40px'>
+          <Drawer.CloseTrigger />
+          <Drawer.Body>
             <Flex flexDir='column' alignItems='center' gap='16px'>
               <Text fontSize='18px' fontWeight={600}>
                 {name}
@@ -110,16 +105,16 @@ export const MobileAccountBanner = ({
                 />
               </Flex>
             </Flex>
-          </DrawerBody>
-          <DrawerFooter display='flex' flexDir='column'>
+          </Drawer.Body>
+          <Drawer.Footer display='flex' flexDir='column'>
             <Image mb='24px' src='/images/mobile-footer-line.svg' alt='line' />
             <PrimaryButton mb={4} onClick={disconnect}>
               Help
             </PrimaryButton>
             <TertiaryButton onClick={disconnect}>Disconnect</TertiaryButton>
-          </DrawerFooter>
-        </DrawerContent>
-      </DrawerRoot>
+          </Drawer.Footer>
+        </Drawer.Content>
+      </Drawer.Root>
     </Flex>
   )
 }

@@ -1,19 +1,15 @@
 import React, { useRef, useState } from 'react'
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  Flex
-} from '@chakra-ui/react'
+import { Dialog, Flex } from '@chakra-ui/react'
 import { StakeStart } from './StakeStart'
 import { SelectAmount } from './SelectAmount'
 import useCurrentStep from '@/utils/useCurrentStep'
 import { Stepper } from '@/components/modalBody/Stepper'
 import { BackIcon, CloseIcon } from '@/components/icons'
 import { ChooseBaker } from '../Delegate/ChooseBaker'
-import { BakerInfo, StakingOpsStatus } from '@/components/Operations/tezInterfaces'
+import {
+  BakerInfo,
+  StakingOpsStatus
+} from '@/components/Operations/tezInterfaces'
 import { ConfirmBaker } from '../Delegate/ConfirmBaker'
 import { DisclaimerStaking } from './DisclaimerStaking'
 
@@ -46,7 +42,7 @@ export const StakeModal = ({
 }: StakeModal) => {
   const [stakedAmount, setStakedAmount] = useState(0)
   const [selectedBaker, setSelectedBaker] = useState<BakerInfo | null>(null)
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null!)
 
   const firstStep = openedFromStartEarning
     ? StakeStatus.StakeStart
@@ -54,8 +50,13 @@ export const StakeModal = ({
 
   const totalStep = openedFromStartEarning ? 5 : 2
 
-  const { currentStep, handleOneStepBack, handleOneStepForward, resetStep, handleNStepForward } =
-    useCurrentStep(onClose, totalStep)
+  const {
+    currentStep,
+    handleOneStepBack,
+    handleOneStepForward,
+    resetStep,
+    handleNStepForward
+  } = useCurrentStep(onClose, totalStep)
 
   const closeReset = () => {
     resetStep()
@@ -118,17 +119,16 @@ export const StakeModal = ({
   }
 
   return (
-    <Modal
-      isCentered
-      isOpen={isOpen}
-      onClose={onClose}
-      closeOnOverlayClick={false}
-      initialFocusRef={inputRef}
-      autoFocus={!bigModal}
+    <Dialog.Root
+      placement='center'
+      open={isOpen}
+      closeOnInteractOutside={false}
+      // initialFocusEl={inputRef}
+      // autoFocus={!bigModal}
     >
-      <ModalOverlay />
-      <ModalContent w={['100%', bigModal ? '540px' : '480px']} >
-        <ModalHeader>
+      <Dialog.Backdrop />
+      <Dialog.Content w={['100%', bigModal ? '540px' : '480px']}>
+        <Dialog.Header>
           <Flex justify='space-between' alignItems='center'>
             <Flex>
               <BackIcon
@@ -143,9 +143,9 @@ export const StakeModal = ({
               }}
             />
           </Flex>
-        </ModalHeader>
+        </Dialog.Header>
 
-        <ModalBody>
+        <Dialog.Body>
           <Flex flexDir='column'>
             <Stepper totalStep={totalStep} currentStep={currentStep} />
             {getCurrentStepBody(
@@ -154,8 +154,8 @@ export const StakeModal = ({
                 : currentStep
             )}
           </Flex>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+        </Dialog.Body>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

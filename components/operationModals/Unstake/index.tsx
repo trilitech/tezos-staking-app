@@ -55,9 +55,8 @@ export const UnstakeModal = ({
   return (
     <Dialog.Root
       placement='center'
-      isOpen={isOpen}
-      onClose={onClose}
-      closeOnOverlayClick={false}
+      open={isOpen}
+      closeOnInteractOutside={false}
     >
       <Dialog.Backdrop />
       <Dialog.Content>

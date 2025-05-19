@@ -1,12 +1,5 @@
 import React, { useState } from 'react'
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  Flex
-} from '@chakra-ui/react'
+import { Dialog, Flex } from '@chakra-ui/react'
 import { BakerInfo } from '@/components/Operations/tezInterfaces'
 import { ChangeStart } from './ChangeStart'
 import { ChooseBaker } from '../Delegate/ChooseBaker'
@@ -49,7 +42,9 @@ export const ChangeBakerModal = ({
     setSelectedBaker(null)
   }
 
-  const bigModal = (isStaked && currentStep === StakedDelegateStatus.ChooseBaker) || (!isStaked && currentStep === UnStakedDelegateStatus.ChooseBaker)
+  const bigModal =
+    (isStaked && currentStep === StakedDelegateStatus.ChooseBaker) ||
+    (!isStaked && currentStep === UnStakedDelegateStatus.ChooseBaker)
 
   const getCurrentStepBody = (currentStep: number, isStaked: boolean) => {
     if (isStaked) {
@@ -112,16 +107,17 @@ export const ChangeBakerModal = ({
   }
 
   return (
-    <Modal
-      isCentered
-      isOpen={isOpen}
-      onClose={onClose}
-      closeOnOverlayClick={false}
-      autoFocus={false}
+    <Dialog.Root
+      placement='center'
+      open={isOpen}
+      closeOnInteractOutside={false}
     >
-      <ModalOverlay />
-      <ModalContent pb={bigModal ? '0px' : '40px'} w={['100%', bigModal ? '600px' : '480px']}>
-        <ModalHeader>
+      <Dialog.Backdrop />
+      <Dialog.Content
+        pb={bigModal ? '0px' : '40px'}
+        w={['100%', bigModal ? '600px' : '480px']}
+      >
+        <Dialog.Header>
           <Flex justify='space-between' alignItems='center'>
             <Flex>
               <BackIcon
@@ -141,15 +137,15 @@ export const ChangeBakerModal = ({
               }}
             />
           </Flex>
-        </ModalHeader>
+        </Dialog.Header>
 
-        <ModalBody>
+        <Dialog.Body>
           <Flex flexDir='column'>
             <Stepper totalStep={totalStep} currentStep={currentStep} />
             {getCurrentStepBody(currentStep, isStaked)}
           </Flex>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+        </Dialog.Body>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

@@ -1,17 +1,6 @@
 'use client'
 
-import {
-  Box,
-  Heading,
-  Text,
-  Flex,
-  Button,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon
-} from '@chakra-ui/react'
+import { Box, Heading, Text, Flex, Button, Accordion } from '@chakra-ui/react'
 import { Header } from './Header'
 import React from 'react'
 import Link from 'next/link'
@@ -240,16 +229,17 @@ export default function Faqs() {
               >
                 {faq.title}
               </Text>
-              <Accordion pt='30px' defaultIndex={index === 0 ? [0] : undefined}>
+              <Accordion.Root pt='30px'>
                 {faq.faqs.map(data => (
-                  <AccordionItem
+                  <Accordion.Item
                     key={data.title}
                     py='20px'
                     borderTopWidth='1px'
                     borderColor='gray.500'
                     borderBottom={0}
+                    value={data.title}
                   >
-                    <AccordionButton
+                    <Accordion.ItemTrigger
                       _hover={{ backgroundColor: 'transparent' }}
                       pl={0}
                       alignItems='center'
@@ -264,9 +254,9 @@ export default function Faqs() {
                           {data.title}
                         </Text>
                       </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel
+                      <Accordion.ItemIndicator />
+                    </Accordion.ItemTrigger>
+                    <Accordion.ItemContent
                       pl={0}
                       pb='20px'
                       pt='15px'
@@ -278,10 +268,10 @@ export default function Faqs() {
                         fontSize={['sm', null, 'md']}
                         dangerouslySetInnerHTML={{ __html: data.description }}
                       />
-                    </AccordionPanel>
-                  </AccordionItem>
+                    </Accordion.ItemContent>
+                  </Accordion.Item>
                 ))}
-              </Accordion>
+              </Accordion.Root>
             </React.Fragment>
           ))}
         </Flex>

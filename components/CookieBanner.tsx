@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {
-  Flex,
-  Text,
-  Dialog,
-  Box,
-  Link as ChakraLink,
-  chakra
-} from '@chakra-ui/react'
+import { Flex, Text, Dialog, Box, Link as ChakraLink } from '@chakra-ui/react'
 import Link from 'next/link'
 import { PrimaryButton } from './buttons/PrimaryButton'
 import { SecondaryButton } from './buttons/SecondaryButton'
@@ -48,88 +41,71 @@ export const CookieBanner = () => {
   }
 
   return (
-    <Dialog.Root
-      isOpen={isOpen}
-      onClose={() => {
-        console.log('click')
-      }}
-    >
+    <Dialog.Root open={isOpen}>
       <Dialog.Backdrop />
-      <Dialog.Content
-        pos='absolute'
-        bottom={{ base: 0, md: 10 }}
-        borderRadius='4px'
-        px={{ base: 10, md: 12 }}
-        py={{ base: 10, md: 6 }}
-        m='0'
-        maxW='1232px'
-        w={{ base: '100%', md: '90%' }}
-        borderTopStartRadius='16px'
-        borderBottomStartRadius={{ md: '16px' }}
-        borderTopEndRadius='16px'
-        borderBottomEndRadius={{ md: '16px' }}
-        asChild
-      >
-        <chakra.div>{/* dialog content */}</chakra.div>
-      </Dialog.Content>
-      {/* <Dialog.Content
-      // pos='absolute'
-      // bottom={[0, null, 10]}
-      // borderRadius={4}
-      // px={[10, null, 12]}
-      // py={[10, 6]}
-      // m={0}
-      // maxW='1232px'
-      // w={['100%', null, '90%']}
-      // borderTopStartRadius='16px'
-      // borderBottomStartRadius={[null, null, '16px']}
-      // borderTopEndRadius='16px'
-      // borderBottomEndRadius={[null, null, '16px']}
-      >
-        <Dialog.Body
-          display='flex'
-          flexDir={['column', null, 'row']}
-          justifyContent='space-between'
-          alignItems='center'
-          gap={10}
-          pb={0}
-          px={0}
+      <Dialog.Positioner>
+        <Dialog.Content
+          pos='absolute'
+          left='50%'
+          transform='translateX(-50%)'
+          bottom={[0, null, 10]}
+          borderRadius={4}
+          maxW='1232px'
+          px={[10, null, 12]}
+          py={[10, 6]}
+          m={0}
+          w={['100%', null, '90%']}
+          borderTopStartRadius='16px'
+          borderBottomStartRadius={[null, null, '16px']}
+          borderTopEndRadius='16px'
+          borderBottomEndRadius={[null, null, '16px']}
+          bg='white'
         >
-          <Box textAlign={['center', null, 'start']}>
-            <Text
-              fontSize='20px'
-              lineHeight='26px'
-              color='#10121B'
-              mb={['12px', null, '6px']}
-            >
-              We use cookies to make your experience better.
-            </Text>
-            <ChakraLink as={Link} href='/cookie_policy/' target='_blank'>
-              <Text
-                fontSize='18px'
-                fontWeight={600}
-                lineHeight='24px'
-                textDecor='underline'
-                color='#10121B'
-              >
-                Cookie Policy
-              </Text>
-            </ChakraLink>
-          </Box>
-          <Flex
+          <Dialog.Body
+            display='flex'
             flexDir={['column', null, 'row']}
-            gap='18px'
-            w={['full', null, 'auto']}
+            justifyContent='space-between'
+            alignItems='center'
+            gap={10}
+            pb={0}
+            px={0}
           >
-            <PrimaryButton onClick={() => handleAccept()}>
-              <Text>Accept Cookies</Text>
-            </PrimaryButton>
-            <SecondaryButton onClick={() => handleAccept()}>
-              <Text>Necessary Only</Text>
-            </SecondaryButton>
-          </Flex>
-        </Dialog.Body>
-      </Dialog.Content> */}
+            <Box textAlign={['center', null, 'start']}>
+              <Text
+                fontSize='20px'
+                lineHeight='26px'
+                color='#10121B'
+                mb={['12px', null, '6px']}
+              >
+                We use cookies to make your experience better.
+              </Text>
+              <ChakraLink as={Link} href='/cookie_policy/' target='_blank'>
+                <Text
+                  fontSize='18px'
+                  fontWeight={600}
+                  lineHeight='24px'
+                  textDecor='underline'
+                  color='#10121B'
+                >
+                  Cookie Policy
+                </Text>
+              </ChakraLink>
+            </Box>
+            <Flex
+              flexDir={['column', null, 'row']}
+              gap='18px'
+              w={['full', null, 'auto']}
+            >
+              <PrimaryButton onClick={() => handleAccept()}>
+                <Text>Accept Cookies</Text>
+              </PrimaryButton>
+              <SecondaryButton onClick={() => handleAccept()}>
+                <Text>Necessary Only</Text>
+              </SecondaryButton>
+            </Flex>
+          </Dialog.Body>
+        </Dialog.Content>
+      </Dialog.Positioner>
     </Dialog.Root>
   )
 }

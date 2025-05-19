@@ -69,7 +69,7 @@ export const SuccessModal = ({
   const { onClose } = useDisclosure()
 
   return (
-    <Dialog.Root isOpen={open} onClose={onClose} placement='center'>
+    <Dialog.Root open={open} placement='center'>
       <Dialog.Backdrop />
       <Dialog.Content>
         <Button
