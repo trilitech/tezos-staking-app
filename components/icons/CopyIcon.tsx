@@ -19,7 +19,6 @@ export const CopyIcon = createIcon({
       />
     </>
   ),
-  // optional default size:
   defaultProps: {
     boxSize: '18px'
   }

@@ -140,10 +140,10 @@ export default function Home() {
               address={delegateData?.address ?? ''}
               display={['flex', null, 'none']}
             /> */}
-            {/* <AccountBody
+            <AccountBody
               delegateData={delegateData as DelegateData}
               bakerList={bakerList as BakerInfo[]}
-            /> */}
+            />
             <TermAndPolicy pt='10px' />
           </Flex>
         </Center>
