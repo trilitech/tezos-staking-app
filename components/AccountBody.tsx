@@ -437,7 +437,7 @@ export const AccountBody = ({
                 onClick={() => {
                   selectOptionModal.onOpen()
                 }}
-                w='100%'
+                flex='1'
               >
                 Start Earning
               </PrimaryButton>
@@ -451,7 +451,7 @@ export const AccountBody = ({
                   trackGAEvent(GAAction.BUTTON_CLICK, GACategory.CHOOSE_UNSTAKE)
                   unstakeModal.onOpen()
                 }}
-                w='100%'
+                flex='1'
               >
                 Unstake
               </SecondaryButton>
@@ -464,7 +464,7 @@ export const AccountBody = ({
                   trackGAEvent(GAAction.BUTTON_CLICK, GACategory.CHOOSE_STAKE)
                   stakeModal.onOpen()
                 }}
-                w='100%'
+                flex='1'
               >
                 Stake
               </PrimaryButton>

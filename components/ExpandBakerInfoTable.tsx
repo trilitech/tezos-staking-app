@@ -2,19 +2,23 @@ import React, { useState } from 'react'
 import { Accordion, Box, Text, Table, Flex, Image } from '@chakra-ui/react'
 import { BakerInfo } from './Operations/tezInterfaces'
 import { mutezToTez } from '@/utils/mutezToTez'
-import { ChevronDown, ChevronUp } from 'lucide-react'
 
 export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
   const [isToggle, setIsToggle] = useState(false)
 
   return (
     <Accordion.Root
-      borderBottom='0px solid transparent'
+      collapsible
       w='100%'
-      onChange={() => setIsToggle(!isToggle)}
+      borderBottom='0px solid transparent'
+      onValueChange={details => setIsToggle(details.value.length > 0)}
     >
-      <Accordion.Item px={0} py={0} w='100%' value=''>
-        <Accordion.ItemTrigger _hover={{ bg: 'transparent' }} py='20px' px={0}>
+      <Accordion.Item px={0} py={0} w='100%' value='baker-info'>
+        <Accordion.ItemTrigger
+          _hover={{ bg: 'transparent', cursor: 'pointer' }}
+          py='20px'
+          px={0}
+        >
           <Box as='span' flex='1' textAlign='left'>
             <Text
               fontSize='14px'
@@ -22,7 +26,7 @@ export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
               lineHeight='18px'
               color='gray.600'
             >
-              BAKER&#39;S INFO
+              BAKER’S INFO
             </Text>
           </Box>
           <Flex alignItems='center'>
@@ -43,10 +47,14 @@ export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
         </Accordion.ItemTrigger>
 
         <Accordion.ItemContent py={0} px={0}>
-          <Table.Root bg='gray.100' borderRadius='8px' whiteSpace='wrap'>
+          <Table.Root borderRadius='8px' whiteSpace='wrap'>
             <Table.Body>
-              <Table.Row>
-                <Table.Cell borderBottom='1px solid #E2E8F0'>
+              <Table.Row bg='gray.100'>
+                <Table.Cell
+                  borderBottom='1px solid #E2E8F0'
+                  px='24px'
+                  py='16px'
+                >
                   <Flex alignItems='center' gap='5px'>
                     <Text
                       w='max-content'
@@ -81,8 +89,12 @@ export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
                 </Table.Cell>
               </Table.Row>
 
-              <Table.Row>
-                <Table.Cell borderBottom='1px solid #E2E8F0'>
+              <Table.Row bg='gray.100'>
+                <Table.Cell
+                  borderBottom='1px solid #E2E8F0'
+                  px='24px'
+                  py='16px'
+                >
                   <Flex alignItems='center' gap='5px'>
                     <Text
                       w='max-content'
@@ -108,8 +120,13 @@ export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
                   </Flex>
                 </Table.Cell>
               </Table.Row>
-              <Table.Row>
-                <Table.Cell>
+
+              <Table.Row bg='gray.100'>
+                <Table.Cell
+                  px='24px'
+                  py='16px'
+                  borderBottom='1px solid #E2E8F0'
+                >
                   <Flex alignItems='center' gap='5px'>
                     <Text
                       w='max-content'
@@ -122,7 +139,7 @@ export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
                     </Text>
                   </Flex>
                 </Table.Cell>
-                <Table.Cell w='100%'>
+                <Table.Cell w='100%' borderBottom='1px solid #E2E8F0'>
                   <Flex justifyContent='flex-end' alignItems='center' gap='4px'>
                     <Text
                       display='inline-flex'

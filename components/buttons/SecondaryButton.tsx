@@ -13,7 +13,6 @@ export const SecondaryButton = ({
 } & ButtonProps) => {
   return (
     <Button
-      // w='100%'
       bg={disabled ? 'gray.200' : 'white'}
       color={disabled ? 'gray.400' : 'blue'}
       border={disabled ? 'gray.200' : '#0052FF 2px solid'}
