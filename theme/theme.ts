@@ -48,61 +48,6 @@ const customConfig = defineConfig({
     slotRecipes: {
       dialog: dialogRecipe
     }
-    // components: {
-    //   Modal: {
-    //     defaultProps: {
-    //       size: 'xl'
-    //     },
-    //     baseStyle: {
-    //       overlay: {
-    //         bg: '#171923D9',
-    //         backdropFilter: 'blur(5px)'
-    //       },
-    //       header: {
-    //         pt: '16px',
-    //         pb: '11px',
-    //         px: '16px'
-    //       },
-    //       dialog: {
-    //         w: { base: '100%', md: '480px' },
-    //         borderRadius: '16px',
-    //         borderBottomRadius: { base: 0, md: '16px' },
-    //         pb: '40px',
-    //         pos: { base: 'fixed', md: 'relative' },
-    //         bottom: { base: 0, md: 'auto' },
-    //         maxHeight: 'calc(100% - 1.5rem)'
-    //       },
-    //       body: {
-    //         pt: '0px',
-    //         pb: '0px',
-    //         px: { base: '24px', md: '40px' }
-    //       }
-    //     }
-    //   },
-    //   Checkbox: {
-    //     baseStyle: {
-    //       control: {
-    //         width: '20px',
-    //         height: '20px',
-    //         borderColor: '#b8bec4',
-    //         _checked: {
-    //           bg: '#0052FF',
-    //           borderColor: '#0052FF',
-    //           color: 'white',
-    //           _hover: {
-    //             bg: '#0052FF',
-    //             borderColor: '#0052FF'
-    //           }
-    //         },
-    //         _focus: {
-    //           boxShadow: 'none'
-    //         }
-    //       },
-    //       icon: {
-    //         bg: '#0052FF'
-    //       }
-    //     }
-    //   },
   }
 })
 

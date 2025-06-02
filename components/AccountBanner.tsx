@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, FlexProps, Image, Text, Button } from '@chakra-ui/react'
+import { Flex, FlexProps, Image, Text, Button, Box } from '@chakra-ui/react'
 import { useConnection } from '@/providers/ConnectionProvider'
 import useClipboard from '@/utils/useClipboard'
 import { simplifyAddress } from '@/utils/simpliftAddress'
@@ -32,7 +32,7 @@ export const AccountBanner = ({
       {isCopied && <CopyAlert />}
 
       <Image w='110px' h='38px' src='/images/logo.svg' alt='Tezos Logo' />
-      <Flex flexDir='column' gap='5px' pos='relative'>
+      <Flex flexDir='column' gap='5px' pos='relative' color='black'>
         <Text
           fontWeight={600}
           fontSize='16px'
@@ -50,13 +50,13 @@ export const AccountBanner = ({
               textDecoration: 'underline'
             }
           }}
-          role='group'
+          className='group'
           onClick={() => copyTextToClipboard(address)}
         >
           <Text fontWeight={400} lineHeight='18px' fontSize='14px'>
             {simplifyAddress(address)}
           </Text>
-          <CopyIcon fill='gray.400' _groupHover={{ fill: 'blue' }} />
+          <CopyIcon color='gray.400' _groupHover={{ color: 'blue' }} />
         </Flex>
       </Flex>
       <Flex gap='3'>

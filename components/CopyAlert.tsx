@@ -15,6 +15,8 @@ export const CopyAlert = () => {
       status='success'
       borderRadius='10px'
       zIndex={999}
+      bg='transparent'
+      color='black'
     >
       <CircleCheck />
       Copied

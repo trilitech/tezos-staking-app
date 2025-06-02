@@ -108,14 +108,17 @@ export default function Home() {
         <meta property='og:image' content='' />
         <meta property='twitter:image' content='' />
       </Head>
-      {/* {isConnected === undefined ? (
+      {isConnected === undefined ? (
         <Spinner />
       ) : isConnected ? (
         <Center
           py='20px'
           minH='100vh'
           bg='gray.300'
-          bgImage={['/images/bg-blue-mobile.svg', '/images/bg-blue-desktop.svg']}
+          bgImage={[
+            '/images/bg-blue-mobile.svg',
+            '/images/bg-blue-desktop.svg'
+          ]}
           backgroundPosition='center'
           backgroundRepeat='no-repeat'
           backgroundSize='cover'
@@ -132,15 +135,15 @@ export default function Home() {
               address={delegateData?.address ?? ''}
               display={['none', null, 'flex']}
             />
-            <MobileAccountBanner
+            {/* <MobileAccountBanner
               name='Your Wallet'
               address={delegateData?.address ?? ''}
               display={['flex', null, 'none']}
-            />
-            <AccountBody
+            /> */}
+            {/* <AccountBody
               delegateData={delegateData as DelegateData}
               bakerList={bakerList as BakerInfo[]}
-            />
+            /> */}
             <TermAndPolicy pt='10px' />
           </Flex>
         </Center>
@@ -218,9 +221,7 @@ export default function Home() {
           <FooterCta />
           <Footer />
         </Center>
-      )} */}
-
-      <Box color='black'>Hello</Box>
+      )}
       <CookieBanner />
     </>
   )
