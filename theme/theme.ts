@@ -6,7 +6,8 @@ const customConfig = defineConfig({
   globalCss: {
     body: {
       bg: '#F0F0FF',
-      fontFamily: 'Inter, sans-serif'
+      fontFamily: 'Inter, sans-serif',
+      color: 'black'
     }
   },
   theme: {

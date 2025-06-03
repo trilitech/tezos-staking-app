@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Dialog, Flex } from '@chakra-ui/react'
+import { Dialog, Flex, Portal } from '@chakra-ui/react'
 import { BakerInfo } from '@/components/Operations/tezInterfaces'
 import { ChangeStart } from './ChangeStart'
 import { ChooseBaker } from '../Delegate/ChooseBaker'
@@ -109,43 +109,49 @@ export const ChangeBakerModal = ({
   return (
     <Dialog.Root
       placement='center'
+      // size='cover'
       open={isOpen}
       closeOnInteractOutside={false}
+      motionPreset='slide-in-bottom'
     >
-      <Dialog.Backdrop />
-      <Dialog.Content
-        pb={bigModal ? '0px' : '40px'}
-        w={['100%', bigModal ? '600px' : '480px']}
-      >
-        <Dialog.Header>
-          <Flex justify='space-between' alignItems='center'>
-            <Flex>
-              <BackIcon
-                display={currentStep > 1 ? 'block' : 'none'}
-                onClick={() => {
-                  if (isStaked && currentStep === 3) setSelectedBaker(null)
-                  else if (!isStaked && currentStep === 2)
-                    setSelectedBaker(null)
-                  handleOneStepBack()
-                }}
-              />
-            </Flex>
-            <CloseIcon
-              onClick={() => {
-                closeReset()
-                onClose()
-              }}
-            />
-          </Flex>
-        </Dialog.Header>
+      <Portal>
+        <Dialog.Backdrop />
+        <Dialog.Positioner>
+          <Dialog.Content
+            pb={bigModal ? '0px' : '40px'}
+            w={['100%', bigModal ? '600px' : '480px']}
+          >
+            <Dialog.Header>
+              <Flex justify='space-between' alignItems='center' w='full'>
+                <Flex>
+                  <BackIcon
+                    display={currentStep > 1 ? 'block' : 'none'}
+                    onClick={() => {
+                      if (isStaked && currentStep === 3) setSelectedBaker(null)
+                      else if (!isStaked && currentStep === 2)
+                        setSelectedBaker(null)
+                      handleOneStepBack()
+                    }}
+                  />
+                </Flex>
+                <CloseIcon
+                  onClick={() => {
+                    closeReset()
+                    onClose()
+                  }}
+                />
+              </Flex>
+            </Dialog.Header>
 
-        <Dialog.Body>
-          <Flex flexDir='column'>
-            <Stepper totalStep={totalStep} currentStep={currentStep} />
-            {getCurrentStepBody(currentStep, isStaked)}
-          </Flex>
-        </Dialog.Body>
-      </Dialog.Content>
+            <Dialog.Body>
+              <Flex flexDir='column'>
+                <Stepper totalStep={totalStep} currentStep={currentStep} />
+                {getCurrentStepBody(currentStep, isStaked)}
+              </Flex>
+            </Dialog.Body>
+          </Dialog.Content>
+        </Dialog.Positioner>
+      </Portal>
     </Dialog.Root>
   )
 }

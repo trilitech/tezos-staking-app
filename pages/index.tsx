@@ -135,11 +135,11 @@ export default function Home() {
               address={delegateData?.address ?? ''}
               display={['none', null, 'flex']}
             />
-            {/* <MobileAccountBanner
+            <MobileAccountBanner
               name='Your Wallet'
               address={delegateData?.address ?? ''}
               display={['flex', null, 'none']}
-            /> */}
+            />
             <AccountBody
               delegateData={delegateData as DelegateData}
               bakerList={bakerList as BakerInfo[]}
