@@ -1,5 +1,5 @@
 import { RecipeComponentProps } from '@chakra-ui/react'
-import { buttonRecipe } from '@/theme/recipes/button.recipe'
+import { buttonRecipe } from '../theme/recipes/button.recipe'
 
 type VisualVariants = keyof typeof buttonRecipe.variants.visual
 type SizeVariants = keyof typeof buttonRecipe.variants.size
