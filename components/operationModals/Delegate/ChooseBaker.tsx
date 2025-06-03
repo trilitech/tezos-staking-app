@@ -194,16 +194,11 @@ export const ChooseBaker = ({
           />
         </ControlledTooltip>
       </Header>
-      <InputGroup
-        endElement={
-          <Box h='100%'>
-            <SearchIcon />
-          </Box>
-        }
-      >
+      <InputGroup>
         <Input
           onChange={handleChange}
           pr='4.5rem'
+          pl={4}
           placeholder='Search by Name or Paste tz address'
           css={{
             '::placeholder': {
@@ -349,9 +344,11 @@ const ControlledTooltip = ({
       showArrow
       contentProps={{
         css: {
+          '--tooltip-bg': '#2D3748',
           bg: 'gray.700',
           borderRadius: '4px',
           color: 'white',
+          fontSize: '14px',
           padding: 3,
           mx: '10px'
         }

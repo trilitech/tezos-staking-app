@@ -62,7 +62,7 @@ export default function FooterCta() {
               Visit the FAQ page to find answers to questions about delegation,
               staking, and more.
             </Text>
-            <Button primary w={['full', '180px']} asChild>
+            <Button visual='primary' w={['full', '180px']} asChild>
               <Link href='/faqs'>Visit FAQ</Link>
             </Button>
           </Flex>
@@ -100,7 +100,7 @@ export default function FooterCta() {
               your rewards grow.
             </Text>
             <Button
-              primary
+              visual='primary'
               w={['full', '180px']}
               onClick={() => {
                 trackGAEvent(GAAction.BUTTON_CLICK, GACategory.WALLET_BEGIN)

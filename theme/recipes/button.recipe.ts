@@ -12,8 +12,8 @@ export const buttonRecipe = defineRecipe({
     size: {
       md: { fontSize: '18px', fontWeight: '700' }
     },
-    primary: {
-      true: {
+    visual: {
+      primary: {
         color: 'white',
         display: 'flex',
         minW: '161px',
@@ -26,10 +26,8 @@ export const buttonRecipe = defineRecipe({
         bg: '#171923',
         _hover: { bg: '#1A202C' },
         _disabled: { bg: '#E2E8F0' }
-      }
-    },
-    secondary: {
-      true: {
+      },
+      secondary: {
         color: '#0052FF',
         display: 'flex',
         minW: '161px',
@@ -43,10 +41,8 @@ export const buttonRecipe = defineRecipe({
         bg: 'white',
         _hover: { bg: '#0052FF', color: 'white' },
         _disabled: { bg: '#E2E8F0' }
-      }
-    },
-    ternary: {
-      true: {
+      },
+      ternary: {
         color: 'white',
         display: 'flex',
         h: '48px',
@@ -57,20 +53,16 @@ export const buttonRecipe = defineRecipe({
         flexShrink: 0,
         borderRadius: '8px',
         _hover: { bg: 'rgba(255,255,255,.04)' }
-      }
-    },
-    quaternary: {
-      true: {
+      },
+      quaternary: {
         lineHeight: '16px',
         bg: 'teal.800',
         color: 'white',
         w: 'full',
         h: '56px',
         _hover: { bg: 'teal.700' }
-      }
-    },
-    outline: {
-      true: {
+      },
+      outline: {
         lineHeight: '16px',
         border: '1px solid',
         borderColor: 'purple.500',
@@ -78,28 +70,22 @@ export const buttonRecipe = defineRecipe({
         h: '56px',
         color: 'teal.800',
         _hover: { bg: 'purple.700', color: 'teal.800' }
-      }
-    },
-    ghost: {
-      true: {
+      },
+      ghost: {
         bg: 'transparent',
         color: 'purple.200',
         w: 'full',
         h: '56px',
         _hover: { bg: 'transparent' },
         _focus: { bg: 'transparent' }
-      }
-    },
-    white: {
-      true: {
+      },
+      white: {
         bg: '#ffffff',
         color: 'black',
         w: 'full',
         _hover: { bg: 'gray.100' }
-      }
-    },
-    buy: {
-      true: {
+      },
+      buy: {
         bg: 'linear-gradient(90deg,#5BFFA5 0%,#AA86FF 100%)',
         color: 'gray.975',
         w: 'full',

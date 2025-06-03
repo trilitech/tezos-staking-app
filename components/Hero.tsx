@@ -114,7 +114,7 @@ export default function Hero() {
                     trackGAEvent(GAAction.BUTTON_CLICK, GACategory.WALLET_BEGIN)
                     connect()
                   }}
-                  primary
+                  visual='primary'
                 >
                   Start Earning
                 </Button>

@@ -24,10 +24,10 @@ export const BakerBoxList = ({
       pb='40px'
       gap='12px'
       css={{
-        '::-webkit-scrollbar': {
+        '&::-webkit-scrollbar': {
           width: '4px'
         },
-        '::-webkit-scrollbar-thumb': {
+        '&::-webkit-scrollbar-thumb': {
           background: 'gray.200',
           borderRadius: '8px',
           height: '100px'

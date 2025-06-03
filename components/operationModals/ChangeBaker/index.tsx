@@ -109,7 +109,6 @@ export const ChangeBakerModal = ({
   return (
     <Dialog.Root
       placement='center'
-      // size='cover'
       open={isOpen}
       closeOnInteractOutside={false}
       motionPreset='slide-in-bottom'

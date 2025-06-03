@@ -55,7 +55,7 @@ export default function Footer() {
               display={['none', null, 'block']}
             />
             <Button
-              ternary
+              visual='ternary'
               px='12px'
               py='6px'
               fontSize={['sm', null, '18px']}
@@ -77,7 +77,7 @@ export default function Footer() {
               display={['none', null, 'block']}
             />
             <Button
-              ternary
+              visual='ternary'
               px='12px'
               py='6px'
               fontSize={['sm', null, '18px']}
@@ -98,7 +98,7 @@ export default function Footer() {
               w='2px'
             />
             <Button
-              ternary
+              visual='ternary'
               px='12px'
               py='6px'
               fontSize={['sm', null, '18px']}

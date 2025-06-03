@@ -178,7 +178,7 @@ export default function StakeOptions() {
                 scrollPadding={80}
                 scrollMarginBottom={70}
                 // hideExternalLinkIcon={true}
-                secondary
+                visual='secondary'
                 w='full'
                 asChild
               >
@@ -312,7 +312,7 @@ export default function StakeOptions() {
               <Button
                 scrollPadding={80}
                 scrollMarginBottom={70}
-                secondary
+                visual='secondary'
                 w='full'
                 asChild
               >

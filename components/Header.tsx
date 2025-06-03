@@ -75,7 +75,7 @@ export const Header = () => {
             </ChakraLink>
           </Flex>
           <Flex alignItems='center' justifyContent='end' flex={1} gap={4}>
-            <Button px={[0, null, '24px']} ternary asChild>
+            <Button px={[0, null, '24px']} visual='ternary' asChild>
               <Link href='/faqs'>
                 <Image
                   pr={[0, null, '8px']}
