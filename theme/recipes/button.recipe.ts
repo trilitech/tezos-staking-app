@@ -45,6 +45,7 @@ export const buttonRecipe = defineRecipe({
       ternary: {
         color: 'white',
         display: 'flex',
+        bg: 'transparent',
         h: '48px',
         px: '24px',
         justifyContent: 'center',
