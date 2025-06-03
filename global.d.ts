@@ -1,9 +1,8 @@
 import { RecipeComponentProps } from '@chakra-ui/react'
+// Use a **relative** import to your recipe file:
 import { buttonRecipe } from './theme/recipes/button.recipe'
 
-type VisualVariants = keyof typeof buttonRecipe.variants.visual
-type SizeVariants = keyof typeof buttonRecipe.variants.size
-
+// Now augment the ButtonProps interface so it includes `visual` (and any other recipe props)
 declare module '@chakra-ui/react' {
   export interface ButtonProps
     extends RecipeComponentProps<typeof buttonRecipe> {}
