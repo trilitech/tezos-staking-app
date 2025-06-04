@@ -45,11 +45,11 @@ const customConfig = defineConfig({
       }
     },
     recipes: {
-      button: buttonRecipe,
-      checkbox: checkboxRecipe
+      button: buttonRecipe
     },
     slotRecipes: {
-      dialog: dialogRecipe
+      dialog: dialogRecipe,
+      checkbox: checkboxRecipe
     }
   }
 })
