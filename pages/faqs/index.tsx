@@ -1,5 +1,3 @@
-'use client'
-
 import { Center } from '@chakra-ui/react'
 import Head from 'next/head'
 import { CookieBanner } from '@/components/CookieBanner'

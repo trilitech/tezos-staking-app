@@ -1,5 +1,3 @@
-'use client'
-
 import { Box, Heading, Text, Flex, Button, Accordion } from '@chakra-ui/react'
 import { CustomButton } from './buttons/CustomButton'
 import { Header } from './Header'
@@ -230,7 +228,7 @@ export default function Faqs() {
               >
                 {faq.title}
               </Text>
-              <Accordion.Root pt='30px'>
+              <Accordion.Root pt='30px' defaultValue={['What is staking?']}>
                 {faq.faqs.map(data => (
                   <Accordion.Item
                     key={data.title}
@@ -241,7 +239,10 @@ export default function Faqs() {
                     value={data.title}
                   >
                     <Accordion.ItemTrigger
-                      _hover={{ backgroundColor: 'transparent' }}
+                      _hover={{
+                        backgroundColor: 'transparent',
+                        cursor: 'pointer'
+                      }}
                       pl={0}
                       alignItems='center'
                       py={0}

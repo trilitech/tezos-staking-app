@@ -1,5 +1,3 @@
-'use client'
-
 import { Heading, Text, Flex } from '@chakra-ui/react'
 import { CustomButton } from './buttons/CustomButton'
 import { useConnection } from '@/providers/ConnectionProvider'
