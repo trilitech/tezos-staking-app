@@ -12,7 +12,7 @@ import {
 import { Header } from './Header'
 import { useConnection } from '@/providers/ConnectionProvider'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
-import { CustomButton } from './buttons/Button'
+import { CustomButton } from './buttons/CustomButton'
 
 export default function Hero() {
   const { connect } = useConnection()

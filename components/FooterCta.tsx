@@ -1,7 +1,7 @@
 'use client'
 
 import { Heading, Text, Flex } from '@chakra-ui/react'
-import { CustomButton } from './buttons/Button'
+import { CustomButton } from './buttons/CustomButton'
 import { useConnection } from '@/providers/ConnectionProvider'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 import Link from 'next/link'

@@ -1,7 +1,7 @@
 'use client'
 
 import { Box, Heading, Text, Flex, Image } from '@chakra-ui/react'
-import { CustomButton } from './buttons/Button'
+import { CustomButton } from './buttons/CustomButton'
 import Link from 'next/link'
 
 export default function StakeOptions() {

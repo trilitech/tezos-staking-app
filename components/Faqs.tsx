@@ -1,7 +1,7 @@
 'use client'
 
 import { Box, Heading, Text, Flex, Button, Accordion } from '@chakra-ui/react'
-import { CustomButton } from './buttons/Button'
+import { CustomButton } from './buttons/CustomButton'
 import { Header } from './Header'
 import React from 'react'
 import Link from 'next/link'

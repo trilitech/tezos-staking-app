@@ -1,7 +1,7 @@
 'use client'
 
 import { Box, Flex, Text, Button } from '@chakra-ui/react'
-import { CustomButton } from './buttons/Button'
+import { CustomButton } from './buttons/CustomButton'
 import Link from 'next/link'
 
 export default function Footer() {

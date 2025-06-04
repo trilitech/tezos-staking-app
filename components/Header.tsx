@@ -11,7 +11,7 @@ import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { CustomButton } from './buttons/Button'
+import { CustomButton } from './buttons/CustomButton'
 
 export const Header = () => {
   const { isConnected, connect, disconnect } = useConnection()
