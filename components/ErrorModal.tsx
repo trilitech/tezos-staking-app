@@ -19,8 +19,8 @@ export const ErrorModal = ({
       <Dialog.Backdrop />
       <Dialog.Positioner>
         <Dialog.Content>
-          <Dialog.Body h='800px' py='50px' textAlign='center'>
-            <Text fontWeight={600} mb='20px'>
+          <Dialog.Body h='800px' mt='35px' mb='10px' textAlign='center'>
+            <Text fontWeight={600} mb='20px' fontSize='16px'>
               {message}
             </Text>
             <PrimaryButton onClick={onClick} w='full'>

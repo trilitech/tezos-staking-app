@@ -23,8 +23,10 @@ export const buttonRecipe = defineRecipe({
         gap: '8px',
         borderRadius: '8px',
         bg: '#171923',
-        _hover: { bg: '#1A202C' },
-        _disabled: { bg: '#E2E8F0' }
+        _hover: { bg: '#1A202C', cursor: 'pointer' },
+        _disabled: { bg: '#E2E8F0' },
+        fontSize: '18px',
+        fontWeight: 600
       },
       secondary: {
         color: '#0052FF',
@@ -52,7 +54,9 @@ export const buttonRecipe = defineRecipe({
         gap: '8px',
         flexShrink: 0,
         borderRadius: '8px',
-        _hover: { bg: 'rgba(255,255,255,.04)' }
+        _hover: { bg: 'rgba(255,255,255,.04)' },
+        fontSize: '18px',
+        fontWeight: 600
       },
       quaternary: {
         lineHeight: '16px',

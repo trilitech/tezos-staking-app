@@ -89,7 +89,8 @@ export const Header = () => {
             </CustomButton>
 
             {isConnected !== undefined && (
-              <Button
+              <CustomButton
+                variant='primary'
                 onClick={
                   isConnected
                     ? disconnect
@@ -122,7 +123,7 @@ export const Header = () => {
                 {!isConnected && (
                   <Text display={['none', null, 'inline']}>Connect</Text>
                 )}
-              </Button>
+              </CustomButton>
             )}
           </Flex>
         </Flex>
