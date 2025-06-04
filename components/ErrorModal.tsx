@@ -17,14 +17,18 @@ export const ErrorModal = ({
   return (
     <Dialog.Root open size='lg' placement='center'>
       <Dialog.Backdrop />
-      <Dialog.Content>
-        <Dialog.Body h='800px' py='50px' textAlign='center'>
-          <Text fontWeight={600} mb='20px'>
-            {message}
-          </Text>
-          <PrimaryButton onClick={onClick}>{btnText}</PrimaryButton>
-        </Dialog.Body>
-      </Dialog.Content>
+      <Dialog.Positioner>
+        <Dialog.Content>
+          <Dialog.Body h='800px' py='50px' textAlign='center'>
+            <Text fontWeight={600} mb='20px'>
+              {message}
+            </Text>
+            <PrimaryButton onClick={onClick} w='full'>
+              {btnText}
+            </PrimaryButton>
+          </Dialog.Body>
+        </Dialog.Content>
+      </Dialog.Positioner>
     </Dialog.Root>
   )
 }
