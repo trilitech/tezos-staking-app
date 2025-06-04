@@ -62,7 +62,7 @@ export const UnstakeModal = ({
       <Dialog.Positioner>
         <Dialog.Content>
           <Dialog.Header>
-            <Flex justify='space-between' alignItems='center' w='fulll'>
+            <Flex justify='space-between' alignItems='center' w='full'>
               <Flex>
                 <BackIcon
                   display={currentStep > 1 ? 'block' : 'none'}
