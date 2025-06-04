@@ -1,8 +1,17 @@
-import { Box, Button, Flex, Image, Link, Text } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Flex,
+  Image,
+  Link as ChakraLink,
+  Text
+} from '@chakra-ui/react'
 import { useConnection } from '@/providers/ConnectionProvider'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { CustomButton } from './buttons/CustomButton'
 
 export const Header = () => {
   const { isConnected, connect, disconnect } = useConnection()
@@ -47,7 +56,7 @@ export const Header = () => {
           alignItems='center'
         >
           <Flex flex={1}>
-            <Link href='/'>
+            <ChakraLink href='/'>
               <Button
                 as='div'
                 display='inline-flex'
@@ -64,32 +73,37 @@ export const Header = () => {
                   alt='Tezos Logo'
                 />
               </Button>
-            </Link>
+            </ChakraLink>
           </Flex>
           <Flex alignItems='center' justifyContent='end' flex={1} gap={4}>
-            <Button
-              as='a'
-              href='/faqs'
-              variant='ternary'
-              px={[0, null, '24px']}
-            >
-              <Image
-                pr={[0, null, '8px']}
-                maxW='110px'
-                src='/images/info-icon.svg'
-                alt='Wallet Icon'
-              />
-              <Text display={['none', null, 'inline']}>Help</Text>
-            </Button>
+            <CustomButton px={[0, null, '24px']} variant='ternary' asChild>
+              <Link href='/faqs'>
+                <Image
+                  pr={[0, null, '8px']}
+                  maxW='110px'
+                  src='/images/info-icon.svg'
+                  alt='Wallet Icon'
+                />
+                <Text display={['none', null, 'inline']}>Help</Text>
+              </Link>
+            </CustomButton>
 
             {isConnected !== undefined && (
-              <Button
-                onClick={isConnected ? disconnect : () => {
-                  trackGAEvent(GAAction.BUTTON_CLICK, GACategory.WALLET_BEGIN);
-                  setConnectClicked(true);
-                  connect();
-                }}
-                variant={isConnected ? 'ternary' : 'primary'}
+              <CustomButton
+                variant='primary'
+                onClick={
+                  isConnected
+                    ? disconnect
+                    : () => {
+                        trackGAEvent(
+                          GAAction.BUTTON_CLICK,
+                          GACategory.WALLET_BEGIN
+                        )
+                        setConnectClicked(true)
+                        connect()
+                      }
+                }
+                {...(isConnected ? { ternary: true } : { primary: true })}
                 border={isConnected ? 'solid 2px #EDF2F7' : undefined}
                 px={isConnected ? '12px' : ['12px', null, '24px']}
                 py={isConnected ? '24px' : undefined}
@@ -97,13 +111,19 @@ export const Header = () => {
                 minW={isConnected ? undefined : ['48px', null, 'auto']}
               >
                 <Image
-                  w="24px"
-                  h="24px"
-                  src={isConnected ? '/images/logout_white.svg' : '/images/wallet-icon.svg'}
+                  w='24px'
+                  h='24px'
+                  src={
+                    isConnected
+                      ? '/images/logout_white.svg'
+                      : '/images/wallet-icon.svg'
+                  }
                   alt={isConnected ? 'Logout' : 'Wallet Icon'}
                 />
-                {!isConnected && <Text display={['none', null, 'inline']}>Connect</Text>}
-              </Button>
+                {!isConnected && (
+                  <Text display={['none', null, 'inline']}>Connect</Text>
+                )}
+              </CustomButton>
             )}
           </Flex>
         </Flex>

@@ -1,17 +1,16 @@
-'use client'
-
 import {
   Box,
   Heading,
   Text,
   Flex,
-  Divider,
+  Separator,
   Button,
   Image
 } from '@chakra-ui/react'
 import { Header } from './Header'
 import { useConnection } from '@/providers/ConnectionProvider'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
+import { CustomButton } from './buttons/CustomButton'
 
 export default function Hero() {
   const { connect } = useConnection()
@@ -22,7 +21,7 @@ export default function Hero() {
       backgroundSize='cover'
       backgroundBlendMode='multiply'
       bg="linear-gradient(90deg, #6C235E 0%, #5C72FA 100%), url('/images/hero-pattern.png')"
-    // px={['24px', null, '40px']}
+      // px={['24px', null, '40px']}
     >
       <Box px={['24px', null, '40px']}>
         <Header />
@@ -106,20 +105,20 @@ export default function Hero() {
                 alignSelf={['center', 'start']}
                 position={'relative'}
               >
-                <Button
+                <CustomButton
                   scrollPadding={80}
                   scrollMarginBottom={70}
-                  variant='primary'
                   w={['full', null, '180px']}
                   onClick={() => {
                     trackGAEvent(GAAction.BUTTON_CLICK, GACategory.WALLET_BEGIN)
                     connect()
                   }}
+                  variant='primary'
                 >
                   Start Earning
-                </Button>
+                </CustomButton>
               </Flex>
-              <Divider
+              <Separator
                 pt={5}
                 display={['none', 'block']}
                 borderColor='transparent'

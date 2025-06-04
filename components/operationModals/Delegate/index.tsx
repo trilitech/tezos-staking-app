@@ -1,12 +1,5 @@
 import React, { useState } from 'react'
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  Flex
-} from '@chakra-ui/react'
+import { Dialog, Flex } from '@chakra-ui/react'
 import { BakerInfo } from '@/components/Operations/tezInterfaces'
 import { DelegateStart } from './DelegateStart'
 import { ChooseBaker } from './ChooseBaker'
@@ -87,46 +80,46 @@ export const DelegationModal = ({
   }
 
   return (
-    <Modal
-      isCentered
-      isOpen={isOpen}
-      onClose={onClose}
-      closeOnOverlayClick={false}
-      autoFocus={false}
+    <Dialog.Root
+      placement='center'
+      open={isOpen}
+      closeOnInteractOutside={false}
     >
-      <ModalOverlay />
-      <ModalContent w={['100%', bigModal ? '540px' : '480px']}>
-        <ModalHeader>
-          <Flex justify='space-between' alignItems='center'>
-            <Flex>
-              <BackIcon
-                display={currentStep > 1 ? 'block' : 'none'}
+      <Dialog.Backdrop />
+      <Dialog.Positioner>
+        <Dialog.Content w={['100%', bigModal ? '540px' : '480px']}>
+          <Dialog.Header>
+            <Flex justify='space-between' alignItems='center' w='full'>
+              <Flex>
+                <BackIcon
+                  display={currentStep > 1 ? 'block' : 'none'}
+                  onClick={() => {
+                    if (currentStep === 3) setSelectedBaker(null)
+                    handleOneStepBack()
+                  }}
+                />
+              </Flex>
+              <CloseIcon
                 onClick={() => {
-                  if (currentStep === 3) setSelectedBaker(null)
-                  handleOneStepBack()
+                  trackGAEvent(
+                    GAAction.BUTTON_CLICK,
+                    GACategory.CHOOSE_BAKER_CLOSED
+                  )
+                  closeReset()
+                  onClose()
                 }}
               />
             </Flex>
-            <CloseIcon
-              onClick={() => {
-                trackGAEvent(
-                  GAAction.BUTTON_CLICK,
-                  GACategory.CHOOSE_BAKER_CLOSED
-                )
-                closeReset()
-                onClose()
-              }}
-            />
-          </Flex>
-        </ModalHeader>
+          </Dialog.Header>
 
-        <ModalBody>
-          <Flex flexDir='column'>
-            <Stepper totalStep={totalStep} currentStep={currentStep} />
-            {getCurrentStepBody(currentStep)}
-          </Flex>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+          <Dialog.Body>
+            <Flex flexDir='column'>
+              <Stepper totalStep={totalStep} currentStep={currentStep} />
+              {getCurrentStepBody(currentStep)}
+            </Flex>
+          </Dialog.Body>
+        </Dialog.Content>
+      </Dialog.Positioner>
+    </Dialog.Root>
   )
 }

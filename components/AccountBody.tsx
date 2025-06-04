@@ -161,7 +161,12 @@ export const AccountBody = ({
     unstakedOps,
     accountInfo?.totalFinalizableAmount
   )
-  if (isLoading || !Boolean(bakerList) || !stakingOpsStatus.loadingDone || isFirstTime === undefined)
+  if (
+    isLoading ||
+    !Boolean(bakerList) ||
+    !stakingOpsStatus.loadingDone ||
+    isFirstTime === undefined
+  )
     return (
       <Flex py='120px' w='100%' justifyContent='center'>
         <Spinner />
@@ -206,7 +211,7 @@ export const AccountBody = ({
           w='100%'
           mb={
             (stakingOpsStatus.Delegated && !stakingOpsStatus.CanStake) ||
-              (successClose && successMessage)
+            (successClose && successMessage)
               ? '24px'
               : 0
           }
@@ -261,7 +266,14 @@ export const AccountBody = ({
             <Text fontSize='14px' color='gray.600' fontWeight={600}>
               SPENDABLE
             </Text>
-            <Text display='inline-flex' gap={1} alignItems='center' fontWeight={600} fontSize='18px' color='gray.900'>
+            <Text
+              display='inline-flex'
+              gap={1}
+              alignItems='center'
+              fontWeight={600}
+              fontSize='18px'
+              color='gray.900'
+            >
               {!!spendableBalance ? spendableBalance : 0}{' '}
               <Image mt='4px' h='18px' src='/images/T3.svg' alt='Tezos Logo' />
             </Text>
@@ -279,13 +291,30 @@ export const AccountBody = ({
                   alt='lock icon'
                 />
               )}
-              <Text display='inline-flex' gap={1} alignItems='center' fontWeight={600} fontSize='18px' color='gray.900'>
+              <Text
+                display='inline-flex'
+                gap={1}
+                alignItems='center'
+                fontWeight={600}
+                fontSize='18px'
+                color='gray.900'
+              >
                 {!!stakedBalance ? stakedBalance : 0}{' '}
-                <Image mt='4px' h='18px' src='/images/T3.svg' alt='Tezos Logo' />
+                <Image
+                  mt='4px'
+                  h='18px'
+                  src='/images/T3.svg'
+                  alt='Tezos Logo'
+                />
               </Text>
             </Flex>
           </Flex>
-          <Flex gap='4px' flexDir='column' borderTop='1px solid #EDF2F7' pt='20px'>
+          <Flex
+            gap='4px'
+            flexDir='column'
+            borderTop='1px solid #EDF2F7'
+            pt='20px'
+          >
             <Flex justify='space-between' alignItems='center'>
               <Text fontSize='14px' color='gray.600' fontWeight={600}>
                 DELEGATION
@@ -316,7 +345,12 @@ export const AccountBody = ({
               )}
             </Flex>
           </Flex>
-          <Flex flexDir='column' gap='4px' borderTop='1px solid #EDF2F7' pt='20px'>
+          <Flex
+            flexDir='column'
+            gap='4px'
+            borderTop='1px solid #EDF2F7'
+            pt='20px'
+          >
             <Flex justify='space-between' alignItems='center'>
               <Text fontSize='14px' color='gray.600' fontWeight={600}>
                 BAKER
@@ -336,9 +370,12 @@ export const AccountBody = ({
                     fontSize='18px'
                     fontWeight={600}
                     lineHeight='22px'
-                    noOfLines={1}
+                    lineClamp={1}
                   >
-                    {accountInfo?.evaluatedDelegate?.alias ?? simplifyAddress(accountInfo?.evaluatedDelegate?.address ?? '')}
+                    {accountInfo?.evaluatedDelegate?.alias ??
+                      simplifyAddress(
+                        accountInfo?.evaluatedDelegate?.address ?? ''
+                      )}
                   </Text>
                   <Image
                     h='18px'
@@ -400,7 +437,7 @@ export const AccountBody = ({
                 onClick={() => {
                   selectOptionModal.onOpen()
                 }}
-                w='100%'
+                flex='1'
               >
                 Start Earning
               </PrimaryButton>
@@ -414,7 +451,7 @@ export const AccountBody = ({
                   trackGAEvent(GAAction.BUTTON_CLICK, GACategory.CHOOSE_UNSTAKE)
                   unstakeModal.onOpen()
                 }}
-                w='100%'
+                flex='1'
               >
                 Unstake
               </SecondaryButton>
@@ -427,7 +464,7 @@ export const AccountBody = ({
                   trackGAEvent(GAAction.BUTTON_CLICK, GACategory.CHOOSE_STAKE)
                   stakeModal.onOpen()
                 }}
-                w='100%'
+                flex='1'
               >
                 Stake
               </PrimaryButton>
@@ -436,28 +473,28 @@ export const AccountBody = ({
         </Flex>
         {/* below are all operation modals. TODO: how to make this more nit, rather than put all modals here, maybe a function/hook? */}
         <SelectOptionModal
-          isOpen={selectOptionModal.isOpen}
+          isOpen={selectOptionModal.open}
           onClose={selectOptionModal.onClose}
           bakerList={bakerList}
           spendableBalance={spendableBalance}
           stakingOpsStatus={stakingOpsStatus}
         />
         <DelegationModal
-          isOpen={delegateModal.isOpen}
+          isOpen={delegateModal.open}
           onClose={delegateModal.onClose}
           bakerList={bakerList}
           currentBakerAddress={accountInfo?.evaluatedDelegate?.address}
         />
         <ChangeBakerModal
           isStaked={!!accountInfo?.stakedBalance}
-          isOpen={changeBakerModal.isOpen}
+          isOpen={changeBakerModal.open}
           onClose={changeBakerModal.onClose}
           bakerList={bakerList}
           currentBakerAddress={accountInfo?.evaluatedDelegate?.address}
         />
         <EndDelegationModal
           isStaked={!!accountInfo?.stakedBalance}
-          isOpen={endDelegateModal.isOpen}
+          isOpen={endDelegateModal.open}
           onClose={endDelegateModal.onClose}
           spendableBalance={spendableBalance}
           bakerName={
@@ -469,13 +506,13 @@ export const AccountBody = ({
         <StakeModal
           openedFromStartEarning={false}
           bakerList={bakerList}
-          isOpen={stakeModal.isOpen}
+          isOpen={stakeModal.open}
           onClose={stakeModal.onClose}
           spendableBalance={spendableBalance}
           currentBakerAddress={accountInfo?.evaluatedDelegate?.address}
         />
         <UnstakeModal
-          isOpen={unstakeModal.isOpen}
+          isOpen={unstakeModal.open}
           onClose={unstakeModal.onClose}
           stakedAmount={stakedBalance}
         />

@@ -13,7 +13,6 @@ export const PrimaryButton = ({
 } & ButtonProps) => {
   return (
     <Button
-      w='100%'
       bg={disabled ? 'gray.200' : 'blue'}
       color={disabled ? 'gray.400' : 'white'}
       borderRadius='8px'
