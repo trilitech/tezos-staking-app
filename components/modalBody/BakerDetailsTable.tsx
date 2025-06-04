@@ -18,13 +18,14 @@ export const BakerDetailsTable = ({
     <>
       {isCopied && <CopyAlert />}
 
-      <Table.Root bg='gray.100' borderRadius='8px' mb='30px' whiteSpace='wrap'>
+      <Table.Root borderRadius='8px' mb='30px' whiteSpace='wrap'>
         <Table.Body>
-          <Table.Row>
+          <Table.Row bg='gray.100'>
             <Table.Cell
               borderBottom='1px solid #E2E8F0'
               pl={[3, 4]}
               pr={[0, 4]}
+              py='16px'
             >
               <Flex alignItems='center' gap='6px'>
                 <Image
@@ -60,9 +61,10 @@ export const BakerDetailsTable = ({
               </Flex>
             </Table.Cell>
           </Table.Row>
-          <Table.Row>
+          <Table.Row bg='gray.100'>
             <Table.Cell
               borderBottom='1px solid #E2E8F0'
+              py='16px'
               px={[3, 4]}
               pr={[0, 4]}
             >
@@ -99,9 +101,10 @@ export const BakerDetailsTable = ({
               </Text>
             </Table.Cell>
           </Table.Row>
-          <Table.Row>
+          <Table.Row bg='gray.100'>
             <Table.Cell
               borderBottom='1px solid #E2E8F0'
+              py='16px'
               px={[3, 4]}
               pr={[0, 4]}
             >
@@ -129,8 +132,13 @@ export const BakerDetailsTable = ({
               </Text>
             </Table.Cell>
           </Table.Row>
-          <Table.Row>
-            <Table.Cell px={[3, 4]} pr={[0, 4]}>
+          <Table.Row bg='gray.100'>
+            <Table.Cell
+              px={[3, 4]}
+              pr={[0, 4]}
+              py='16px'
+              borderBottom='1px solid #E2E8F0'
+            >
               <Text
                 color='gray.600'
                 fontSize='14px'
@@ -140,7 +148,11 @@ export const BakerDetailsTable = ({
                 FREE SPACE:
               </Text>
             </Table.Cell>
-            <Table.Cell textAlign='end' px={[3, 4]}>
+            <Table.Cell
+              textAlign='end'
+              px={[3, 4]}
+              borderBottom='1px solid #E2E8F0'
+            >
               <Text
                 display='inline-flex'
                 gap={1}

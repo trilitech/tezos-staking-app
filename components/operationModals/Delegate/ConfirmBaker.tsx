@@ -56,37 +56,31 @@ export const ConfirmBaker = ({
       </Header>
       <InputGroup
         startElement={
-          <Box h='100%'>
-            <Image
-              ml='12px'
-              w='30px'
-              h='30px'
-              objectFit='cover'
-              src={`${process.env.NEXT_PUBLIC_TZKT_AVATARS_URL}/${selectedBaker.address}`}
-              alt='baker avatar'
-            />
-          </Box>
+          <Image
+            ml='12px'
+            w='30px'
+            h='30px'
+            objectFit='cover'
+            src={`${process.env.NEXT_PUBLIC_TZKT_AVATARS_URL}/${selectedBaker.address}`}
+            alt='baker avatar'
+          />
         }
         endElement={
-          <Box mr='12px' h='100%' w='75px'>
-            <Icon
-              as={CloseIcon}
-              _hover={{ cursor: 'pointer' }}
-              onClick={() => {
-                setSelectedBaker(null)
-                handleOneStepBack()
-              }}
-              w='14px'
-              h='14px'
-              transform='translateX(20px)'
-            />
-          </Box>
+          <Icon
+            mr='12px'
+            as={CloseIcon}
+            _hover={{ cursor: 'pointer' }}
+            onClick={() => {
+              setSelectedBaker(null)
+              handleOneStepBack()
+            }}
+          />
         }
         mb='30px'
       >
         <Input
           disabled
-          pr='4.5rem'
+          borderColor='#e2e8f0'
           pl='48px'
           css={{
             '::placeholder': {
