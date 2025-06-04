@@ -38,6 +38,7 @@ export const DelegateStart = ({
           trackGAEvent(GAAction.BUTTON_CLICK, GACategory.CONTINUE_DELEGATION)
           handleOneStepForward()
         }}
+        w='full'
       >
         Select Baker
       </PrimaryButton>
@@ -72,7 +73,7 @@ export const RoundBorderText = ({
   step: number
 }) => {
   return (
-    <Flex>
+    <Flex alignItems='center'>
       <Flex
         justify='center'
         alignItems='center'
