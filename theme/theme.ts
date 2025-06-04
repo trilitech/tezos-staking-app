@@ -1,4 +1,4 @@
-import { createSystem, defaultConfig, defineConfig } from '@chakra-ui/react'
+import { createSystem, defaultBaseConfig, defineConfig } from '@chakra-ui/react'
 import { buttonRecipe } from './recipes/button.recipe'
 import { dialogRecipe } from './recipes/dialog-recipe'
 import { checkboxRecipe } from './recipes/checkbox.recipe'
@@ -54,4 +54,4 @@ const customConfig = defineConfig({
   }
 })
 
-export const system = createSystem(defaultConfig, customConfig)
+export const system = createSystem(defaultBaseConfig, customConfig)
