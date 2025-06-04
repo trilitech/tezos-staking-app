@@ -1,6 +1,7 @@
 'use client'
 
 import { Box, Heading, Text, Flex, Button, Accordion } from '@chakra-ui/react'
+import { CustomButton } from './buttons/Button'
 import { Header } from './Header'
 import React from 'react'
 import Link from 'next/link'
@@ -202,7 +203,7 @@ export default function Faqs() {
             gap='12px'
           >
             {paragraphs.map(paragraph => (
-              <Button
+              <CustomButton
                 variant='ternary'
                 border='1px solid'
                 borderColor='gray.200'
@@ -214,7 +215,7 @@ export default function Faqs() {
                 asChild
               >
                 <Link href={'#' + paragraph.id}>{paragraph.title}</Link>
-              </Button>
+              </CustomButton>
             ))}
           </Flex>
           {faqs?.map((faq, index) => (

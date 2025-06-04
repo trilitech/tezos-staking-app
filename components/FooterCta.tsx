@@ -1,6 +1,7 @@
 'use client'
 
-import { Heading, Text, Flex, Button } from '@chakra-ui/react'
+import { Heading, Text, Flex } from '@chakra-ui/react'
+import { CustomButton } from './buttons/Button'
 import { useConnection } from '@/providers/ConnectionProvider'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 import Link from 'next/link'
@@ -62,9 +63,9 @@ export default function FooterCta() {
               Visit the FAQ page to find answers to questions about delegation,
               staking, and more.
             </Text>
-            <Button variant='primary' w={['full', '180px']} asChild>
+            <CustomButton variant='primary' w={['full', '180px']} asChild>
               <Link href='/faqs'>Visit FAQ</Link>
-            </Button>
+            </CustomButton>
           </Flex>
           <Flex
             bg='linear-gradient(90deg, rgba(106, 50, 122, 0.1) 0%, rgba(100, 93, 250, 0.1) 100%)'
@@ -99,7 +100,7 @@ export default function FooterCta() {
               Unlock the potential of your tez. Delegate or stake now and see
               your rewards grow.
             </Text>
-            <Button
+            <CustomButton
               variant='primary'
               w={['full', '180px']}
               onClick={() => {
@@ -108,7 +109,7 @@ export default function FooterCta() {
               }}
             >
               Start Earning
-            </Button>
+            </CustomButton>
           </Flex>
         </Flex>
       </Flex>

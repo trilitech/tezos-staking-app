@@ -1,6 +1,7 @@
 'use client'
 
 import { Box, Flex, Text, Button } from '@chakra-ui/react'
+import { CustomButton } from './buttons/Button'
 import Link from 'next/link'
 
 export default function Footer() {
@@ -54,7 +55,7 @@ export default function Footer() {
               w='2px'
               display={['none', null, 'block']}
             />
-            <Button
+            <CustomButton
               variant='ternary'
               px='12px'
               py='6px'
@@ -66,7 +67,7 @@ export default function Footer() {
               <Link href='/termsOfUseStakingApp/' target='_blank'>
                 Terms
               </Link>
-            </Button>
+            </CustomButton>
             <Box
               mx='24px'
               my='auto'
@@ -76,7 +77,7 @@ export default function Footer() {
               w='2px'
               display={['none', null, 'block']}
             />
-            <Button
+            <CustomButton
               variant='ternary'
               px='12px'
               py='6px'
@@ -88,7 +89,7 @@ export default function Footer() {
               <Link href='/privacy_policy/' target='_blank'>
                 Privacy
               </Link>
-            </Button>
+            </CustomButton>
             <Box
               mx='24px'
               my='auto'
@@ -97,7 +98,7 @@ export default function Footer() {
               h='12px'
               w='2px'
             />
-            <Button
+            <CustomButton
               variant='ternary'
               px='12px'
               py='6px'
@@ -107,7 +108,7 @@ export default function Footer() {
               asChild
             >
               <Link href='/faqs'>Help</Link>
-            </Button>
+            </CustomButton>
           </Flex>
           <Flex
             mt={['12px', null, 0]}

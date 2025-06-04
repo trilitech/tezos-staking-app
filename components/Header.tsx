@@ -11,6 +11,7 @@ import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { CustomButton } from './buttons/Button'
 
 export const Header = () => {
   const { isConnected, connect, disconnect } = useConnection()
@@ -75,7 +76,7 @@ export const Header = () => {
             </ChakraLink>
           </Flex>
           <Flex alignItems='center' justifyContent='end' flex={1} gap={4}>
-            <Button px={[0, null, '24px']} variant='ternary' asChild>
+            <CustomButton px={[0, null, '24px']} variant='ternary' asChild>
               <Link href='/faqs'>
                 <Image
                   pr={[0, null, '8px']}
@@ -85,7 +86,7 @@ export const Header = () => {
                 />
                 <Text display={['none', null, 'inline']}>Help</Text>
               </Link>
-            </Button>
+            </CustomButton>
 
             {isConnected !== undefined && (
               <Button

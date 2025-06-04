@@ -1,6 +1,7 @@
 'use client'
 
-import { Box, Heading, Text, Flex, Image, Button } from '@chakra-ui/react'
+import { Box, Heading, Text, Flex, Image } from '@chakra-ui/react'
+import { CustomButton } from './buttons/Button'
 import Link from 'next/link'
 
 export default function StakeOptions() {
@@ -174,7 +175,7 @@ export default function StakeOptions() {
               alignSelf={['center', 'start']}
               position={'relative'}
             >
-              <Button
+              <CustomButton
                 scrollPadding={80}
                 scrollMarginBottom={70}
                 // hideExternalLinkIcon={true}
@@ -183,7 +184,7 @@ export default function StakeOptions() {
                 asChild
               >
                 <Link href='/faqs/#delegating'>Learn More</Link>
-              </Button>
+              </CustomButton>
             </Flex>
           </Flex>
           <Flex
@@ -309,7 +310,7 @@ export default function StakeOptions() {
               alignSelf={['center', 'start']}
               position={'relative'}
             >
-              <Button
+              <CustomButton
                 scrollPadding={80}
                 scrollMarginBottom={70}
                 variant='secondary'
@@ -317,7 +318,7 @@ export default function StakeOptions() {
                 asChild
               >
                 <Link href='/faqs/#staking'>Learn More</Link>
-              </Button>
+              </CustomButton>
             </Flex>
           </Flex>
         </Flex>

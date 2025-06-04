@@ -12,6 +12,7 @@ import {
 import { Header } from './Header'
 import { useConnection } from '@/providers/ConnectionProvider'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
+import { CustomButton } from './buttons/Button'
 
 export default function Hero() {
   const { connect } = useConnection()
@@ -106,7 +107,7 @@ export default function Hero() {
                 alignSelf={['center', 'start']}
                 position={'relative'}
               >
-                <Button
+                <CustomButton
                   scrollPadding={80}
                   scrollMarginBottom={70}
                   w={['full', null, '180px']}
@@ -117,7 +118,7 @@ export default function Hero() {
                   variant='primary'
                 >
                   Start Earning
-                </Button>
+                </CustomButton>
               </Flex>
               <Separator
                 pt={5}
