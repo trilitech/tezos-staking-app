@@ -228,7 +228,12 @@ export default function Faqs() {
               >
                 {faq.title}
               </Text>
-              <Accordion.Root pt='30px' defaultValue={['What is staking?']}>
+              <Accordion.Root
+                pt='30px'
+                defaultValue={
+                  faq.id === 'introduction' ? ['What is staking?'] : []
+                }
+              >
                 {faq.faqs.map(data => (
                   <Accordion.Item
                     key={data.title}
@@ -246,6 +251,7 @@ export default function Faqs() {
                       pl={0}
                       alignItems='center'
                       py={0}
+                      pb='20px'
                     >
                       <Box flex='1' textAlign='left'>
                         <Text
@@ -258,13 +264,7 @@ export default function Faqs() {
                       </Box>
                       <Accordion.ItemIndicator />
                     </Accordion.ItemTrigger>
-                    <Accordion.ItemContent
-                      pl={0}
-                      pb='20px'
-                      pt='15px'
-                      color='white.600'
-                      fontSize='md'
-                    >
+                    <Accordion.ItemContent color='white.600' fontSize='md'>
                       <Text
                         css={{ a: { textDecoration: 'underline' } }}
                         fontSize={['sm', null, 'md']}
