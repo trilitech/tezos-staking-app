@@ -116,8 +116,8 @@ export default function Home() {
           minH='100vh'
           bg='gray.300'
           bgImage={[
-            '/images/bg-blue-mobile.svg',
-            '/images/bg-blue-desktop.svg'
+            'url(/images/bg-blue-mobile.svg)',
+            'url(/images/bg-blue-desktop.svg)'
           ]}
           backgroundPosition='center'
           backgroundRepeat='no-repeat'
