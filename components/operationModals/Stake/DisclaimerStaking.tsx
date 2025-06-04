@@ -96,6 +96,7 @@ export const DisclaimerStaking = ({
         </Text>
       </Flex>
       <PrimaryButton
+        w='full'
         disabled={!isChecked}
         onClick={async () => {
           if (!Tezos || !beaconWallet) {

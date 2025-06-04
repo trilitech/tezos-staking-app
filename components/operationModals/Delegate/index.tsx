@@ -86,38 +86,40 @@ export const DelegationModal = ({
       closeOnInteractOutside={false}
     >
       <Dialog.Backdrop />
-      <Dialog.Content w={['100%', bigModal ? '540px' : '480px']}>
-        <Dialog.Header>
-          <Flex justify='space-between' alignItems='center'>
-            <Flex>
-              <BackIcon
-                display={currentStep > 1 ? 'block' : 'none'}
+      <Dialog.Positioner>
+        <Dialog.Content w={['100%', bigModal ? '540px' : '480px']}>
+          <Dialog.Header>
+            <Flex justify='space-between' alignItems='center' w='full'>
+              <Flex>
+                <BackIcon
+                  display={currentStep > 1 ? 'block' : 'none'}
+                  onClick={() => {
+                    if (currentStep === 3) setSelectedBaker(null)
+                    handleOneStepBack()
+                  }}
+                />
+              </Flex>
+              <CloseIcon
                 onClick={() => {
-                  if (currentStep === 3) setSelectedBaker(null)
-                  handleOneStepBack()
+                  trackGAEvent(
+                    GAAction.BUTTON_CLICK,
+                    GACategory.CHOOSE_BAKER_CLOSED
+                  )
+                  closeReset()
+                  onClose()
                 }}
               />
             </Flex>
-            <CloseIcon
-              onClick={() => {
-                trackGAEvent(
-                  GAAction.BUTTON_CLICK,
-                  GACategory.CHOOSE_BAKER_CLOSED
-                )
-                closeReset()
-                onClose()
-              }}
-            />
-          </Flex>
-        </Dialog.Header>
+          </Dialog.Header>
 
-        <Dialog.Body>
-          <Flex flexDir='column'>
-            <Stepper totalStep={totalStep} currentStep={currentStep} />
-            {getCurrentStepBody(currentStep)}
-          </Flex>
-        </Dialog.Body>
-      </Dialog.Content>
+          <Dialog.Body>
+            <Flex flexDir='column'>
+              <Stepper totalStep={totalStep} currentStep={currentStep} />
+              {getCurrentStepBody(currentStep)}
+            </Flex>
+          </Dialog.Body>
+        </Dialog.Content>
+      </Dialog.Positioner>
     </Dialog.Root>
   )
 }

@@ -59,31 +59,33 @@ export const UnstakeModal = ({
       closeOnInteractOutside={false}
     >
       <Dialog.Backdrop />
-      <Dialog.Content>
-        <Dialog.Header>
-          <Flex justify='space-between' alignItems='center'>
-            <Flex>
-              <BackIcon
-                display={currentStep > 1 ? 'block' : 'none'}
-                onClick={handleOneStepBack}
+      <Dialog.Positioner>
+        <Dialog.Content>
+          <Dialog.Header>
+            <Flex justify='space-between' alignItems='center' w='fulll'>
+              <Flex>
+                <BackIcon
+                  display={currentStep > 1 ? 'block' : 'none'}
+                  onClick={handleOneStepBack}
+                />
+              </Flex>
+              <CloseIcon
+                onClick={() => {
+                  closeReset()
+                  onClose()
+                }}
               />
             </Flex>
-            <CloseIcon
-              onClick={() => {
-                closeReset()
-                onClose()
-              }}
-            />
-          </Flex>
-        </Dialog.Header>
+          </Dialog.Header>
 
-        <Dialog.Body>
-          <Flex flexDir='column'>
-            <Stepper totalStep={totalStep} currentStep={currentStep} />
-            {getCurrentStepBody(currentStep)}
-          </Flex>
-        </Dialog.Body>
-      </Dialog.Content>
+          <Dialog.Body>
+            <Flex flexDir='column'>
+              <Stepper totalStep={totalStep} currentStep={currentStep} />
+              {getCurrentStepBody(currentStep)}
+            </Flex>
+          </Dialog.Body>
+        </Dialog.Content>
+      </Dialog.Positioner>
     </Dialog.Root>
   )
 }

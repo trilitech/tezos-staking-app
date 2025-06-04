@@ -3,7 +3,6 @@ import {
   Flex,
   InputGroup,
   Input,
-  Box,
   Text,
   Image,
   useDisclosure

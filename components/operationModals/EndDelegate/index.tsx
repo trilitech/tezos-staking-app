@@ -57,31 +57,33 @@ export const EndDelegationModal = ({
       closeOnInteractOutside={false}
     >
       <Dialog.Backdrop />
-      <Dialog.Content>
-        <Dialog.Header>
-          <Flex justify='space-between' alignItems='center'>
-            <Flex>
-              <BackIcon
-                display={currentStep > 1 ? 'block' : 'none'}
-                onClick={handleOneStepBack}
+      <Dialog.Positioner>
+        <Dialog.Content>
+          <Dialog.Header>
+            <Flex justify='space-between' alignItems='center' w='full'>
+              <Flex>
+                <BackIcon
+                  display={currentStep > 1 ? 'block' : 'none'}
+                  onClick={handleOneStepBack}
+                />
+              </Flex>
+              <CloseIcon
+                onClick={() => {
+                  closeReset()
+                  onClose()
+                }}
               />
             </Flex>
-            <CloseIcon
-              onClick={() => {
-                closeReset()
-                onClose()
-              }}
-            />
-          </Flex>
-        </Dialog.Header>
+          </Dialog.Header>
 
-        <Dialog.Body>
-          {isStaked && totalStep === 2 && (
-            <Stepper totalStep={totalStep} currentStep={currentStep} />
-          )}
-          <Flex flexDir='column'>{getCurrentStepBody(currentStep)}</Flex>
-        </Dialog.Body>
-      </Dialog.Content>
+          <Dialog.Body>
+            {isStaked && totalStep === 2 && (
+              <Stepper totalStep={totalStep} currentStep={currentStep} />
+            )}
+            <Flex flexDir='column'>{getCurrentStepBody(currentStep)}</Flex>
+          </Dialog.Body>
+        </Dialog.Content>
+      </Dialog.Positioner>
     </Dialog.Root>
   )
 }

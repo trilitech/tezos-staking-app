@@ -203,7 +203,7 @@ export default function Faqs() {
           >
             {paragraphs.map(paragraph => (
               <Button
-                visual='ternary'
+                variant='ternary'
                 border='1px solid'
                 borderColor='gray.200'
                 py='6px'

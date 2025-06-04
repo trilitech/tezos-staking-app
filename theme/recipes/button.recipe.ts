@@ -6,13 +6,12 @@ export const buttonRecipe = defineRecipe({
     borderRadius: '4px',
     fontFamily: 'var(--font-raptor-v2)'
   },
-
   // ---- variants ----
   variants: {
     size: {
       md: { fontSize: '18px', fontWeight: '700' }
     },
-    visual: {
+    variant: {
       primary: {
         color: 'white',
         display: 'flex',

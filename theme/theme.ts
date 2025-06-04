@@ -1,6 +1,7 @@
 import { createSystem, defaultConfig, defineConfig } from '@chakra-ui/react'
 import { buttonRecipe } from './recipes/button.recipe'
 import { dialogRecipe } from './recipes/dialog-recipe'
+import { checkboxRecipe } from './recipes/checkbox.recipe'
 
 const customConfig = defineConfig({
   globalCss: {
@@ -44,7 +45,8 @@ const customConfig = defineConfig({
       }
     },
     recipes: {
-      button: buttonRecipe
+      button: buttonRecipe,
+      checkbox: checkboxRecipe
     },
     slotRecipes: {
       dialog: dialogRecipe

@@ -53,22 +53,24 @@ export const FinalizeUnstakeModal = ({
       closeOnInteractOutside={false}
     >
       <Dialog.Backdrop />
-      <Dialog.Content>
-        <Dialog.Header>
-          <Flex justify='end'>
-            <CloseIcon
-              onClick={() => {
-                closeReset()
-                onClose()
-              }}
-            />
-          </Flex>
-        </Dialog.Header>
+      <Dialog.Positioner>
+        <Dialog.Content>
+          <Dialog.Header>
+            <Flex justify='end' w='full'>
+              <CloseIcon
+                onClick={() => {
+                  closeReset()
+                  onClose()
+                }}
+              />
+            </Flex>
+          </Dialog.Header>
 
-        <Dialog.Body>
-          <Flex flexDir='column'>{getCurrentStepBody(currentStep)}</Flex>
-        </Dialog.Body>
-      </Dialog.Content>
+          <Dialog.Body>
+            <Flex flexDir='column'>{getCurrentStepBody(currentStep)}</Flex>
+          </Dialog.Body>
+        </Dialog.Content>
+      </Dialog.Positioner>
     </Dialog.Root>
   )
 }

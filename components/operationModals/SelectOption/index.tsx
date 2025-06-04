@@ -287,7 +287,7 @@ export const SelectOptionModal = ({
                         delegateModal.onOpen()
                       }, 1)
                     }}
-                    visual='secondary'
+                    variant='secondary'
                     w='full'
                   >
                     Delegate
@@ -447,7 +447,7 @@ export const SelectOptionModal = ({
                         stakeModal.onOpen()
                       }, 1)
                     }}
-                    visual='secondary'
+                    variant='secondary'
                     w='full'
                   >
                     Stake

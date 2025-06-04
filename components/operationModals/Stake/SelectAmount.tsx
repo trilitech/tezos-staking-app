@@ -46,10 +46,9 @@ export const SelectAmount = ({
         <Input
           ref={inputRef}
           h='46px'
-          type='number'
           onChange={handleChange}
           value={stakedAmount ? stakedAmount : undefined}
-          pr='4.5rem'
+          px='16px'
           placeholder='0.00'
           fontWeight={600}
           _placeholder={{ fontWeight: 600 }}

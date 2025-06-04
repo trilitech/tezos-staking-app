@@ -127,35 +127,37 @@ export const StakeModal = ({
       // autoFocus={!bigModal}
     >
       <Dialog.Backdrop />
-      <Dialog.Content w={['100%', bigModal ? '540px' : '480px']}>
-        <Dialog.Header>
-          <Flex justify='space-between' alignItems='center'>
-            <Flex>
-              <BackIcon
-                display={currentStep > 1 ? 'block' : 'none'}
-                onClick={handleOneStepBack}
+      <Dialog.Positioner>
+        <Dialog.Content w={['100%', bigModal ? '540px' : '480px']}>
+          <Dialog.Header>
+            <Flex justify='space-between' alignItems='center' w='full'>
+              <Flex>
+                <BackIcon
+                  display={currentStep > 1 ? 'block' : 'none'}
+                  onClick={handleOneStepBack}
+                />
+              </Flex>
+              <CloseIcon
+                onClick={() => {
+                  closeReset()
+                  onClose()
+                }}
               />
             </Flex>
-            <CloseIcon
-              onClick={() => {
-                closeReset()
-                onClose()
-              }}
-            />
-          </Flex>
-        </Dialog.Header>
+          </Dialog.Header>
 
-        <Dialog.Body>
-          <Flex flexDir='column'>
-            <Stepper totalStep={totalStep} currentStep={currentStep} />
-            {getCurrentStepBody(
-              firstStep === StakeStatus.SelectAmount
-                ? currentStep + 3
-                : currentStep
-            )}
-          </Flex>
-        </Dialog.Body>
-      </Dialog.Content>
+          <Dialog.Body>
+            <Flex flexDir='column'>
+              <Stepper totalStep={totalStep} currentStep={currentStep} />
+              {getCurrentStepBody(
+                firstStep === StakeStatus.SelectAmount
+                  ? currentStep + 3
+                  : currentStep
+              )}
+            </Flex>
+          </Dialog.Body>
+        </Dialog.Content>
+      </Dialog.Positioner>
     </Dialog.Root>
   )
 }
