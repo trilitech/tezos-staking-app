@@ -15,7 +15,7 @@ export const SelectAmount = ({
   handleOneStepForward: () => void
   setStakedAmount: (arg: number) => void
   stakedAmount: number
-  inputRef: React.RefObject<HTMLInputElement> | null
+  inputRef: React.RefObject<HTMLInputElement>
 }) => {
   useEffect(() => {
     if (inputRef?.current) {

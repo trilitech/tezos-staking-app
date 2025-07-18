@@ -80,6 +80,7 @@ export const ConfirmBaker = ({
       >
         <Input
           disabled
+          aria-describedby='chosen-baker-display-only'
           borderColor='#e2e8f0'
           pl='48px'
           css={{
