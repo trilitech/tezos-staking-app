@@ -1,4 +1,3 @@
-'use client'
 import { useRef } from 'react'
 import {
   Box,
@@ -6,8 +5,6 @@ import {
   Flex,
   Image,
   Tabs,
-  TabList,
-  Tab,
   useBreakpointValue
 } from '@chakra-ui/react'
 import { useState } from 'react'
@@ -182,16 +179,24 @@ export default function DashboardInfo() {
             ) : (
               <>
                 <Flex w='100%' justifyContent='center'>
-                  <Tabs
+                  <Tabs.Root
                     backgroundColor='white'
-                    variant='soft-rounded'
                     colorScheme='gray'
                     bg='transparent'
                     w='fit-content'
-                    onChange={index => setActiveIndex(index)}
+                    onValueChange={e => setActiveIndex(Number(e.value))}
                   >
-                    <TabList borderRadius='12px' bg='white' p='6px'>
-                      <CustomTab text='Connect' />
+                    <Tabs.List
+                      borderRadius='12px'
+                      bg='white'
+                      p='6px'
+                      border='1px solid white'
+                    >
+                      <CustomTab
+                        text='Connect'
+                        onClick={() => setActiveIndex(0)}
+                        isSelected={activeIndex === 0}
+                      />
                       <Box
                         mx='12px'
                         my='auto'
@@ -200,7 +205,11 @@ export default function DashboardInfo() {
                         h='12px'
                         w='2px'
                       />
-                      <CustomTab text='Select' />
+                      <CustomTab
+                        text='Select'
+                        onClick={() => setActiveIndex(1)}
+                        isSelected={activeIndex === 1}
+                      />
                       <Box
                         mx='12px'
                         my='auto'
@@ -209,9 +218,13 @@ export default function DashboardInfo() {
                         h='12px'
                         w='2px'
                       />
-                      <CustomTab text='Manage' />
-                    </TabList>
-                  </Tabs>
+                      <CustomTab
+                        text='Manage'
+                        onClick={() => setActiveIndex(2)}
+                        isSelected={activeIndex === 2}
+                      />
+                    </Tabs.List>
+                  </Tabs.Root>
                 </Flex>
 
                 <Flex
@@ -323,16 +336,27 @@ export default function DashboardInfo() {
   )
 }
 
-const CustomTab = ({ text }: { text: string }) => {
+const CustomTab = ({
+  text,
+  onClick,
+  isSelected
+}: {
+  text: string
+  onClick: () => void
+  isSelected: boolean
+}) => {
   return (
-    <Tab
+    <Box
       fontSize='lg'
       px='12px'
       py='6px'
       borderRadius='8px'
-      _hover={{ bg: '#edf2f6' }}
+      bg={isSelected ? '#edf2f6' : ''}
+      _hover={{ bg: '#edf2f6', cursor: 'pointer' }}
+      onClick={onClick}
+      fontWeight={600}
     >
       {text}
-    </Tab>
+    </Box>
   )
 }

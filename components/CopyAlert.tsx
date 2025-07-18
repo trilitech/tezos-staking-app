@@ -1,9 +1,10 @@
 import React from 'react'
-import { Alert, AlertIcon } from '@chakra-ui/react'
+import { Alert } from '@chakra-ui/react'
+import { CircleCheck } from 'lucide-react'
 
 export const CopyAlert = () => {
   return (
-    <Alert
+    <Alert.Root
       pos='absolute'
       top='20px'
       left='0'
@@ -14,9 +15,11 @@ export const CopyAlert = () => {
       status='success'
       borderRadius='10px'
       zIndex={999}
+      bg='transparent'
+      color='black'
     >
-      <AlertIcon />
+      <CircleCheck />
       Copied
-    </Alert>
+    </Alert.Root>
   )
 }

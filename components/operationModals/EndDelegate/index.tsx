@@ -1,12 +1,5 @@
 import React from 'react'
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  Flex
-} from '@chakra-ui/react'
+import { Dialog, Flex } from '@chakra-ui/react'
 import useCurrentStep from '@/utils/useCurrentStep'
 import { ConfirmEndDelegate } from './ConfirmEndDelegate'
 import { BackIcon, CloseIcon } from '@/components/icons'
@@ -58,38 +51,39 @@ export const EndDelegationModal = ({
   }
 
   return (
-    <Modal
-      isCentered
-      isOpen={isOpen}
-      onClose={onClose}
-      closeOnOverlayClick={false}
+    <Dialog.Root
+      placement='center'
+      open={isOpen}
+      closeOnInteractOutside={false}
     >
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>
-          <Flex justify='space-between' alignItems='center'>
-            <Flex>
-              <BackIcon
-                display={currentStep > 1 ? 'block' : 'none'}
-                onClick={handleOneStepBack}
+      <Dialog.Backdrop />
+      <Dialog.Positioner>
+        <Dialog.Content>
+          <Dialog.Header>
+            <Flex justify='space-between' alignItems='center' w='full'>
+              <Flex>
+                <BackIcon
+                  display={currentStep > 1 ? 'block' : 'none'}
+                  onClick={handleOneStepBack}
+                />
+              </Flex>
+              <CloseIcon
+                onClick={() => {
+                  closeReset()
+                  onClose()
+                }}
               />
             </Flex>
-            <CloseIcon
-              onClick={() => {
-                closeReset()
-                onClose()
-              }}
-            />
-          </Flex>
-        </ModalHeader>
+          </Dialog.Header>
 
-        <ModalBody>
-          {isStaked && totalStep === 2 && (
-            <Stepper totalStep={totalStep} currentStep={currentStep} />
-          )}
-          <Flex flexDir='column'>{getCurrentStepBody(currentStep)}</Flex>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+          <Dialog.Body>
+            {isStaked && totalStep === 2 && (
+              <Stepper totalStep={totalStep} currentStep={currentStep} />
+            )}
+            <Flex flexDir='column'>{getCurrentStepBody(currentStep)}</Flex>
+          </Dialog.Body>
+        </Dialog.Content>
+      </Dialog.Positioner>
+    </Dialog.Root>
   )
 }

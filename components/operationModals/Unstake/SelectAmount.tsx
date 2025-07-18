@@ -1,12 +1,5 @@
 import React, { useState } from 'react'
-import {
-  Flex,
-  InputGroup,
-  InputRightElement,
-  Input,
-  Button,
-  Spinner
-} from '@chakra-ui/react'
+import { Flex, Box, InputGroup, Input, Button, Spinner } from '@chakra-ui/react'
 import { Header, ColumnHeader, BalanceBox } from '@/components/modalBody'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
 import { unstake } from '@/components/Operations/operations'
@@ -47,20 +40,11 @@ export const SelectAmount = ({
       <ColumnHeader mb='12px'>STAKED</ColumnHeader>
       <BalanceBox balance={stakedAmount} />
       <ColumnHeader mb='12px'>ENTER AMOUNT</ColumnHeader>
-      <InputGroup size='md' mb='30px'>
-        <Input
-          h='46px'
-          isRequired
-          type='number'
-          onChange={handleChange}
-          value={unstakeAmount ? unstakeAmount : undefined}
-          pr='4.5rem'
-          placeholder='0.00'
-          fontWeight={600}
-          _placeholder={{ fontWeight: 600, fontSize: '16px' }}
-        />
-        <InputRightElement width='4.5rem' pr='12px' h='100%'>
+      <InputGroup
+        mb='30px'
+        endElement={
           <Button
+            mr={3}
             borderRadius='8px'
             bg={unstakeAmount === stakedAmount ? 'gray.400' : 'blue'}
             color='white'
@@ -76,7 +60,18 @@ export const SelectAmount = ({
           >
             Max
           </Button>
-        </InputRightElement>
+        }
+      >
+        <Input
+          h='46px'
+          type='number'
+          onChange={handleChange}
+          value={unstakeAmount ? unstakeAmount : undefined}
+          pl={3}
+          placeholder='0.00'
+          fontWeight={600}
+          _placeholder={{ fontWeight: 600, fontSize: '16px' }}
+        />
       </InputGroup>
       <PrimaryButton
         disabled={!unstakeAmount}
