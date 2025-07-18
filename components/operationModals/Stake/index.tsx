@@ -123,8 +123,7 @@ export const StakeModal = ({
       placement='center'
       open={isOpen}
       closeOnInteractOutside={false}
-      // initialFocusEl={inputRef}
-      // autoFocus={!bigModal}
+      initialFocusEl={() => inputRef.current}
     >
       <Dialog.Backdrop />
       <Dialog.Positioner>

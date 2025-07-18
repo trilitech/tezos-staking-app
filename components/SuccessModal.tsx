@@ -5,7 +5,8 @@ import {
   Image,
   Flex,
   Text,
-  Link as ChakraLink
+  Link as ChakraLink,
+  Portal
 } from '@chakra-ui/react'
 import { PrimaryButton } from './buttons/PrimaryButton'
 import Link from 'next/link'
@@ -69,82 +70,91 @@ export const SuccessModal = ({
   const { onClose } = useDisclosure()
 
   return (
-    <Dialog.Root open={open} placement='center'>
-      <Dialog.Backdrop />
-      <Dialog.Positioner>
-        <Dialog.Content>
-          <Dialog.Header display='flex' justifyContent='end'>
-            <CloseIcon
-              onClick={() => {
-                resetOperation()
-                onClose()
-                onSuccessClose()
-              }}
-            />
-          </Dialog.Header>
-          <Dialog.Body px='40px'>
-            <Flex
-              textAlign='center'
-              flexDir='column'
-              justify='center'
-              alignItems='center'
-            >
-              <Image
-                w='24px'
-                h='24px'
-                src={
-                  opType === 'pending_unstake'
-                    ? '/images/error-icon.svg'
-                    : '/images/check.svg'
-                }
-                alt={opType === 'pending_unstake' ? 'error icon' : 'check icon'}
-                mb='16px'
-              />
-              <Text fontWeight={600} color='gray.900' fontSize='24px' mb='16px'>
-                {!!title ? title : 'Nicely Done!'}
-              </Text>
-              <Text
-                fontWeight={400}
-                color='gray.700'
-                fontSize='16px'
-                maxW='300px'
-                mb='30px'
-                lineHeight='22px'
-                dangerouslySetInnerHTML={{ __html: desc }}
-              />
-              <PrimaryButton
+    <Portal>
+      <Dialog.Root open={open} placement='center'>
+        <Dialog.Backdrop />
+        <Dialog.Positioner>
+          <Dialog.Content>
+            <Dialog.Header display='flex' justifyContent='end'>
+              <CloseIcon
                 onClick={() => {
-                  setGAEvent(opType)
                   resetOperation()
                   onClose()
                   onSuccessClose()
-                  setSuccessMessage(getSuccessMessage(opType, amount))
                 }}
-                w='full'
-              >
-                Continue
-              </PrimaryButton>
-              <ChakraLink
-                as={Link}
-                href={tzktLink}
-                target='_blank'
-                display='flex'
+              />
+            </Dialog.Header>
+            <Dialog.Body px='40px'>
+              <Flex
+                textAlign='center'
+                flexDir='column'
+                justify='center'
                 alignItems='center'
-                gap='5px'
-                mt='24px'
-                _hover={{
-                  cursor: 'pointer'
-                }}
               >
-                <Text color='gray.700' fontSize='14px' fontWeight={600}>
-                  View in TzKT
+                <Image
+                  w='24px'
+                  h='24px'
+                  src={
+                    opType === 'pending_unstake'
+                      ? '/images/error-icon.svg'
+                      : '/images/check.svg'
+                  }
+                  alt={
+                    opType === 'pending_unstake' ? 'error icon' : 'check icon'
+                  }
+                  mb='16px'
+                />
+                <Text
+                  fontWeight={600}
+                  color='gray.900'
+                  fontSize='24px'
+                  mb='16px'
+                >
+                  {!!title ? title : 'Nicely Done!'}
                 </Text>
-                <ExternalLinkIcon width='16px' height='16px' />
-              </ChakraLink>
-            </Flex>
-          </Dialog.Body>
-        </Dialog.Content>
-      </Dialog.Positioner>
-    </Dialog.Root>
+                <Text
+                  fontWeight={400}
+                  color='gray.700'
+                  fontSize='16px'
+                  maxW='300px'
+                  mb='30px'
+                  lineHeight='22px'
+                  dangerouslySetInnerHTML={{ __html: desc }}
+                />
+                <PrimaryButton
+                  onClick={() => {
+                    setGAEvent(opType)
+                    resetOperation()
+                    onClose()
+                    onSuccessClose()
+                    setSuccessMessage(getSuccessMessage(opType, amount))
+                  }}
+                  w='full'
+                >
+                  Continue
+                </PrimaryButton>
+                <ChakraLink
+                  as={Link}
+                  href={tzktLink}
+                  target='_blank'
+                  display='flex'
+                  alignItems='center'
+                  gap='5px'
+                  mt='24px'
+                  _hover={{
+                    cursor: 'pointer'
+                  }}
+                >
+                  <Text color='gray.700' fontSize='14px' fontWeight={600}>
+                    View in TzKT
+                  </Text>
+                  <ExternalLinkIcon width='16px' height='16px' />
+                </ChakraLink>
+              </Flex>
+            </Dialog.Body>
+          </Dialog.Content>
+        </Dialog.Positioner>
+      </Dialog.Root>
+    </Portal>
   )
 }

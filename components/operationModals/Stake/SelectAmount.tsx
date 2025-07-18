@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Flex, InputGroup, Input, Image, Text, Field } from '@chakra-ui/react'
+import { Flex, Input, Image, Text, Field } from '@chakra-ui/react'
 import { Header, ColumnHeader, BalanceBox } from '@/components/modalBody'
 import { PrimaryButton } from '@/components/buttons/PrimaryButton'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
