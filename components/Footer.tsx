@@ -1,6 +1,5 @@
-'use client'
-
 import { Box, Flex, Text, Button } from '@chakra-ui/react'
+import { CustomButton } from './buttons/CustomButton'
 import Link from 'next/link'
 
 export default function Footer() {
@@ -54,19 +53,19 @@ export default function Footer() {
               w='2px'
               display={['none', null, 'block']}
             />
-            <Button
-              as='a'
-              href='/termsOfUseStakingApp/'
-              target='_blank'
+            <CustomButton
               variant='ternary'
               px='12px'
               py='6px'
               fontSize={['sm', null, '18px']}
               fontWeight='400'
               height='36px'
+              asChild
             >
-              Terms
-            </Button>
+              <Link href='/termsOfUseStakingApp/' target='_blank'>
+                Terms
+              </Link>
+            </CustomButton>
             <Box
               mx='24px'
               my='auto'
@@ -76,19 +75,19 @@ export default function Footer() {
               w='2px'
               display={['none', null, 'block']}
             />
-            <Button
-              as='a'
-              href='/privacy_policy/'
-              target='_blank'
+            <CustomButton
               variant='ternary'
               px='12px'
               py='6px'
               fontSize={['sm', null, '18px']}
               fontWeight='400'
               height='36px'
+              asChild
             >
-              Privacy
-            </Button>
+              <Link href='/privacy_policy/' target='_blank'>
+                Privacy
+              </Link>
+            </CustomButton>
             <Box
               mx='24px'
               my='auto'
@@ -97,18 +96,17 @@ export default function Footer() {
               h='12px'
               w='2px'
             />
-            <Button
-              as='a'
-              href='/faqs'
+            <CustomButton
               variant='ternary'
               px='12px'
               py='6px'
               fontSize={['sm', null, '18px']}
               fontWeight='400'
               height='36px'
+              asChild
             >
-              Help
-            </Button>
+              <Link href='/faqs'>Help</Link>
+            </CustomButton>
           </Flex>
           <Flex
             mt={['12px', null, 0]}

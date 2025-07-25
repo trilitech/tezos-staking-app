@@ -49,7 +49,14 @@ export const UnstakeOperationBox = ({
     >
       <Box w='100%'>
         <Flex flexDir='column'>
-          <Text display='inline-flex' gap={1} alignItems='center' pb='4px' fontSize='18px' color='gray.900'>
+          <Text
+            display='inline-flex'
+            gap={1}
+            alignItems='center'
+            pb='4px'
+            fontSize='18px'
+            color='gray.900'
+          >
             <Text as='span' fontWeight={600}>
               {amount}
             </Text>{' '}
@@ -123,7 +130,7 @@ export const UnstakeOperationBox = ({
         <FinalizeUnstakeModal
           spendableBalance={spendableBalance}
           withdrawAmount={mutezToTez(totalFinalizableAmount)}
-          isOpen={finalizeUnstakeModal.isOpen}
+          isOpen={finalizeUnstakeModal.open}
           onClose={finalizeUnstakeModal.onClose}
         />
       )}

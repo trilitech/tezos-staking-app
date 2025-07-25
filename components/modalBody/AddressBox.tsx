@@ -13,6 +13,17 @@ export const AddressBox = ({ address }: { address: string }) => {
       mb='30px'
       gap='5px'
       overflowX='auto'
+      css={{
+        '&::-webkit-scrollbar': {
+          width: '1px',
+          height: '3px'
+        },
+        '&::-webkit-scrollbar-thumb': {
+          background: 'gray.200',
+          borderRadius: '8px',
+          height: '100px'
+        }
+      }}
     >
       <Image
         w='30px'

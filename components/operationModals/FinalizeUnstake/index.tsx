@@ -1,12 +1,5 @@
 import React from 'react'
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  Flex
-} from '@chakra-ui/react'
+import { Dialog, Flex } from '@chakra-ui/react'
 import useCurrentStep from '@/utils/useCurrentStep'
 import { ConfirmFinalizeUnstake } from './ConfirmFinalizeUnstake'
 import { CloseIcon } from '@/components/icons'
@@ -54,29 +47,30 @@ export const FinalizeUnstakeModal = ({
   }
 
   return (
-    <Modal
-      isCentered
-      isOpen={isOpen}
-      onClose={onClose}
-      closeOnOverlayClick={false}
+    <Dialog.Root
+      placement='center'
+      open={isOpen}
+      closeOnInteractOutside={false}
     >
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>
-          <Flex justify='end'>
-            <CloseIcon
-              onClick={() => {
-                closeReset()
-                onClose()
-              }}
-            />
-          </Flex>
-        </ModalHeader>
+      <Dialog.Backdrop />
+      <Dialog.Positioner>
+        <Dialog.Content>
+          <Dialog.Header>
+            <Flex justify='end' w='full'>
+              <CloseIcon
+                onClick={() => {
+                  closeReset()
+                  onClose()
+                }}
+              />
+            </Flex>
+          </Dialog.Header>
 
-        <ModalBody>
-          <Flex flexDir='column'>{getCurrentStepBody(currentStep)}</Flex>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+          <Dialog.Body>
+            <Flex flexDir='column'>{getCurrentStepBody(currentStep)}</Flex>
+          </Dialog.Body>
+        </Dialog.Content>
+      </Dialog.Positioner>
+    </Dialog.Root>
   )
 }

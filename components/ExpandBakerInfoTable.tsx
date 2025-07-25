@@ -1,20 +1,5 @@
 import React, { useState } from 'react'
-import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-  Box,
-  Text,
-  Table,
-  Tbody,
-  Tr,
-  Td,
-  TableContainer,
-  Flex,
-  Image
-} from '@chakra-ui/react'
+import { Accordion, Box, Text, Table, Flex, Image } from '@chakra-ui/react'
 import { BakerInfo } from './Operations/tezInterfaces'
 import { mutezToTez } from '@/utils/mutezToTez'
 
@@ -22,14 +7,23 @@ export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
   const [isToggle, setIsToggle] = useState(false)
 
   return (
-    <Accordion
-      borderBottom='0px solid transparent'
+    <Accordion.Root
+      collapsible
       w='100%'
-      allowToggle
-      onChange={() => setIsToggle(!isToggle)}
+      onValueChange={details => setIsToggle(details.value.length > 0)}
     >
-      <AccordionItem px={0} py={0} w='100%'>
-        <AccordionButton _hover={{ bg: 'transparent' }} py='20px' px={0}>
+      <Accordion.Item
+        px={0}
+        py={0}
+        w='100%'
+        value='baker-info'
+        borderBottom='1px solid transparent'
+      >
+        <Accordion.ItemTrigger
+          _hover={{ bg: 'transparent', cursor: 'pointer' }}
+          py='20px'
+          px={0}
+        >
           <Box as='span' flex='1' textAlign='left'>
             <Text
               fontSize='14px'
@@ -37,7 +31,7 @@ export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
               lineHeight='18px'
               color='gray.600'
             >
-              BAKER&#39;S INFO
+              BAKER’S INFO
             </Text>
           </Box>
           <Flex alignItems='center'>
@@ -49,97 +43,132 @@ export const ExpandBakerInfoTable = ({ baker }: { baker?: BakerInfo }) => {
             >
               {isToggle ? 'See Less' : 'See More'}
             </Text>
-            <AccordionIcon color='gray.400' w='18px' h='18px' />
+            <Accordion.ItemIndicator
+              color='gray.400'
+              width='18px'
+              height='18px'
+            />
           </Flex>
-        </AccordionButton>
+        </Accordion.ItemTrigger>
 
-        <AccordionPanel py={0} px={0}>
-          <TableContainer bg='gray.100' borderRadius='8px' whiteSpace='wrap'>
-            <Table>
-              <Tbody>
-                <Tr>
-                  <Td borderBottom='1px solid #E2E8F0'>
-                    <Flex alignItems='center' gap='5px'>
-                      <Text
-                        w='max-content'
-                        fontSize='14px'
-                        fontWeight={600}
-                        lineHeight='22px'
-                        color='gray.600'
-                      >
-                        TOTAL:
-                      </Text>
-                    </Flex>
-                  </Td>
-                  <Td borderBottom='1px solid #E2E8F0' w='100%'>
-                    <Flex justifyContent='flex-end' alignItems='end' gap='4px'>
-                      <Text display='inline-flex' gap={1} alignItems='center' fontSize='14px' fontWeight={600} color='gray.900'>
-                        {Math.floor(mutezToTez(baker?.totalStakedBalance ?? 0))}{' '}
-                        <Image mt='4px' h='14px' src='/images/T3.svg' alt='Tezos Logo' />
-                      </Text>
-                    </Flex>
-                  </Td>
-                </Tr>
+        <Accordion.ItemContent py={0} px={0}>
+          <Table.Root borderRadius='8px' whiteSpace='wrap'>
+            <Table.Body>
+              <Table.Row bg='gray.100'>
+                <Table.Cell
+                  borderBottom='1px solid #E2E8F0'
+                  px='24px'
+                  py='16px'
+                >
+                  <Flex alignItems='center' gap='5px'>
+                    <Text
+                      w='max-content'
+                      fontSize='14px'
+                      fontWeight={600}
+                      lineHeight='22px'
+                      color='gray.600'
+                    >
+                      TOTAL:
+                    </Text>
+                  </Flex>
+                </Table.Cell>
+                <Table.Cell borderBottom='1px solid #E2E8F0' w='100%' pr='24px'>
+                  <Flex justifyContent='flex-end' alignItems='end' gap='4px'>
+                    <Text
+                      display='inline-flex'
+                      gap={1}
+                      alignItems='center'
+                      fontSize='14px'
+                      fontWeight={600}
+                      color='gray.900'
+                    >
+                      {Math.floor(mutezToTez(baker?.totalStakedBalance ?? 0))}{' '}
+                      <Image
+                        mt='4px'
+                        h='14px'
+                        src='/images/T3.svg'
+                        alt='Tezos Logo'
+                      />
+                    </Text>
+                  </Flex>
+                </Table.Cell>
+              </Table.Row>
 
-                <Tr>
-                  <Td borderBottom='1px solid #E2E8F0'>
-                    <Flex alignItems='center' gap='5px'>
-                      <Text
-                        w='max-content'
-                        fontSize='14px'
-                        fontWeight={600}
-                        lineHeight='22px'
-                        color='gray.600'
-                      >
-                        FEE:
-                      </Text>
-                    </Flex>
-                  </Td>
-                  <Td borderBottom='1px solid #E2E8F0'>
-                    <Flex
-                      justifyContent='flex-end'
-                      alignItems='center'
-                      gap='4px'
-                      w='100%'
+              <Table.Row bg='gray.100'>
+                <Table.Cell
+                  borderBottom='1px solid #E2E8F0'
+                  px='24px'
+                  py='16px'
+                >
+                  <Flex alignItems='center' gap='5px'>
+                    <Text
+                      w='max-content'
+                      fontSize='14px'
+                      fontWeight={600}
+                      lineHeight='22px'
+                      color='gray.600'
                     >
-                      <Text fontSize='14px' fontWeight={600} color='gray.900'>
-                        {baker?.stakingFees}%
-                      </Text>
-                    </Flex>
-                  </Td>
-                </Tr>
-                <Tr>
-                  <Td>
-                    <Flex alignItems='center' gap='5px'>
-                      <Text
-                        w='max-content'
-                        fontSize='14px'
-                        fontWeight={600}
-                        lineHeight='22px'
-                        color='gray.600'
-                      >
-                        FREE SPACE:
-                      </Text>
-                    </Flex>
-                  </Td>
-                  <Td w='100%'>
-                    <Flex
-                      justifyContent='flex-end'
-                      alignItems='center'
-                      gap='4px'
+                      FEE:
+                    </Text>
+                  </Flex>
+                </Table.Cell>
+                <Table.Cell borderBottom='1px solid #E2E8F0' pr='24px'>
+                  <Flex
+                    justifyContent='flex-end'
+                    alignItems='center'
+                    gap='4px'
+                    w='100%'
+                  >
+                    <Text fontSize='14px' fontWeight={600} color='gray.900'>
+                      {baker?.stakingFees}%
+                    </Text>
+                  </Flex>
+                </Table.Cell>
+              </Table.Row>
+
+              <Table.Row bg='gray.100'>
+                <Table.Cell
+                  px='24px'
+                  py='16px'
+                  borderBottom='1px solid #E2E8F0'
+                >
+                  <Flex alignItems='center' gap='5px'>
+                    <Text
+                      w='max-content'
+                      fontSize='14px'
+                      fontWeight={600}
+                      lineHeight='22px'
+                      color='gray.600'
                     >
-                      <Text display='inline-flex' gap={1} alignItems='center' fontSize='14px' fontWeight={600} color='gray.900'>
-                        {Math.floor(baker?.stakingFreeSpace ?? 0)}
-                        <Image mt='4px' h='14px' src='/images/T3.svg' alt='Tezos Logo' />
-                      </Text>
-                    </Flex>
-                  </Td>
-                </Tr>
-              </Tbody>
-            </Table>
-          </TableContainer>
-        </AccordionPanel>
-      </AccordionItem>
-    </Accordion>
+                      FREE SPACE:
+                    </Text>
+                  </Flex>
+                </Table.Cell>
+                <Table.Cell w='100%' borderBottom='1px solid #E2E8F0' pr='24px'>
+                  <Flex justifyContent='flex-end' alignItems='center' gap='4px'>
+                    <Text
+                      display='inline-flex'
+                      gap={1}
+                      alignItems='center'
+                      fontSize='14px'
+                      fontWeight={600}
+                      color='gray.900'
+                    >
+                      {Math.floor(baker?.stakingFreeSpace ?? 0)}
+                      <Image
+                        mt='4px'
+                        h='14px'
+                        src='/images/T3.svg'
+                        alt='Tezos Logo'
+                      />
+                    </Text>
+                  </Flex>
+                </Table.Cell>
+              </Table.Row>
+            </Table.Body>
+          </Table.Root>
+        </Accordion.ItemContent>
+      </Accordion.Item>
+    </Accordion.Root>
   )
 }

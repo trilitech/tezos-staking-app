@@ -1,19 +1,15 @@
 import React, { useRef, useState } from 'react'
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  Flex
-} from '@chakra-ui/react'
+import { Dialog, Flex } from '@chakra-ui/react'
 import { StakeStart } from './StakeStart'
 import { SelectAmount } from './SelectAmount'
 import useCurrentStep from '@/utils/useCurrentStep'
 import { Stepper } from '@/components/modalBody/Stepper'
 import { BackIcon, CloseIcon } from '@/components/icons'
 import { ChooseBaker } from '../Delegate/ChooseBaker'
-import { BakerInfo, StakingOpsStatus } from '@/components/Operations/tezInterfaces'
+import {
+  BakerInfo,
+  StakingOpsStatus
+} from '@/components/Operations/tezInterfaces'
 import { ConfirmBaker } from '../Delegate/ConfirmBaker'
 import { DisclaimerStaking } from './DisclaimerStaking'
 
@@ -46,7 +42,7 @@ export const StakeModal = ({
 }: StakeModal) => {
   const [stakedAmount, setStakedAmount] = useState(0)
   const [selectedBaker, setSelectedBaker] = useState<BakerInfo | null>(null)
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null!)
 
   const firstStep = openedFromStartEarning
     ? StakeStatus.StakeStart
@@ -54,8 +50,13 @@ export const StakeModal = ({
 
   const totalStep = openedFromStartEarning ? 5 : 2
 
-  const { currentStep, handleOneStepBack, handleOneStepForward, resetStep, handleNStepForward } =
-    useCurrentStep(onClose, totalStep)
+  const {
+    currentStep,
+    handleOneStepBack,
+    handleOneStepForward,
+    resetStep,
+    handleNStepForward
+  } = useCurrentStep(onClose, totalStep)
 
   const closeReset = () => {
     resetStep()
@@ -118,44 +119,44 @@ export const StakeModal = ({
   }
 
   return (
-    <Modal
-      isCentered
-      isOpen={isOpen}
-      onClose={onClose}
-      closeOnOverlayClick={false}
-      initialFocusRef={inputRef}
-      autoFocus={!bigModal}
+    <Dialog.Root
+      placement='center'
+      open={isOpen}
+      closeOnInteractOutside={false}
+      initialFocusEl={() => inputRef.current}
     >
-      <ModalOverlay />
-      <ModalContent w={['100%', bigModal ? '540px' : '480px']} >
-        <ModalHeader>
-          <Flex justify='space-between' alignItems='center'>
-            <Flex>
-              <BackIcon
-                display={currentStep > 1 ? 'block' : 'none'}
-                onClick={handleOneStepBack}
+      <Dialog.Backdrop />
+      <Dialog.Positioner>
+        <Dialog.Content w={['100%', bigModal ? '540px' : '480px']}>
+          <Dialog.Header>
+            <Flex justify='space-between' alignItems='center' w='full'>
+              <Flex>
+                <BackIcon
+                  display={currentStep > 1 ? 'block' : 'none'}
+                  onClick={handleOneStepBack}
+                />
+              </Flex>
+              <CloseIcon
+                onClick={() => {
+                  closeReset()
+                  onClose()
+                }}
               />
             </Flex>
-            <CloseIcon
-              onClick={() => {
-                closeReset()
-                onClose()
-              }}
-            />
-          </Flex>
-        </ModalHeader>
+          </Dialog.Header>
 
-        <ModalBody>
-          <Flex flexDir='column'>
-            <Stepper totalStep={totalStep} currentStep={currentStep} />
-            {getCurrentStepBody(
-              firstStep === StakeStatus.SelectAmount
-                ? currentStep + 3
-                : currentStep
-            )}
-          </Flex>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+          <Dialog.Body>
+            <Flex flexDir='column'>
+              <Stepper totalStep={totalStep} currentStep={currentStep} />
+              {getCurrentStepBody(
+                firstStep === StakeStatus.SelectAmount
+                  ? currentStep + 3
+                  : currentStep
+              )}
+            </Flex>
+          </Dialog.Body>
+        </Dialog.Content>
+      </Dialog.Positioner>
+    </Dialog.Root>
   )
 }
