@@ -162,9 +162,9 @@ export const ConfirmBaker = ({
                     GACategory.START_DELEGATE_END
                   )
                 }
+                setSuccess(true) // dont show success modal if opened from start earning
               }
               setOpHash(response.opHash)
-              setSuccess(true)
               handleOneStepForward()
             }
           } else {
