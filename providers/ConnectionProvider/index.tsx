@@ -1,13 +1,21 @@
-import { Context, createContext, useContext, useState, useEffect } from 'react'
+import {
+  Context,
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useRef
+} from 'react'
 import { WalletApi } from './types'
 import { TezosToolkit } from '@taquito/taquito'
 import {
   createBeaconWallet,
   Tezos as TzosInstance,
-  connectBeacon
+  requestBeaconPermissions
 } from './beacon'
 import { BeaconWallet } from '@taquito/beacon-wallet'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
+import { BeaconEvent } from '@airgap/beacon-sdk'
 
 interface ConnectionContextType extends Partial<WalletApi> {
   connect: () => Promise<void>
@@ -26,33 +34,55 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
   const [beaconWallet, setBeaconWallet] = useState<BeaconWallet | undefined>(
     undefined
   )
-  const wallet = createBeaconWallet()
+  const walletRef = useRef<BeaconWallet | undefined>(undefined)
+  const subscribedRef = useRef<boolean>(false)
+  if (typeof window !== 'undefined' && !walletRef.current) {
+    walletRef.current = createBeaconWallet()
+  }
 
-  // check if connected to a wallet when refresh
+  // On mount, sync active account and set provider
   useEffect(() => {
-    const checkIsConnected = async () => {
-      const activeAccount = await wallet?.client.getActiveAccount()
-      return activeAccount
-    }
-
-    checkIsConnected()
-      .then(activeAccount => {
-        setIsConnected(activeAccount ? true : false)
-        setAddress(activeAccount?.address)
-        setBeaconWallet(wallet)
-        if (isConnected) {
+    const init = async () => {
+      try {
+        const wallet = walletRef.current
+        // Ensure subscription exists before any account changes
+        if (wallet && !subscribedRef.current) {
+          wallet.client.subscribeToEvent(
+            BeaconEvent.ACTIVE_ACCOUNT_SET,
+            account => {
+              if (account && walletRef.current) {
+                setIsConnected(true)
+                setAddress(account.address)
+                setBeaconWallet(walletRef.current)
+                TzosInstance.setWalletProvider(walletRef.current)
+                setTezos(TzosInstance)
+              } else {
+                reset()
+              }
+            }
+          )
+          subscribedRef.current = true
+        }
+        const activeAccount = await wallet?.client.getActiveAccount()
+        if (activeAccount && wallet) {
+          setIsConnected(true)
+          setAddress(activeAccount.address)
+          setBeaconWallet(wallet)
           TzosInstance.setWalletProvider(wallet)
           setTezos(TzosInstance)
+        } else {
+          reset()
         }
-      })
-      .catch(error => {
+      } catch (error) {
         console.error('Error:', error)
         reset()
-      })
-  }, [isConnected, address])
+      }
+    }
+    init()
+  }, [])
 
   const reset = () => {
-    setIsConnected(undefined)
+    setIsConnected(false)
     setAddress(undefined)
     setBeaconWallet(undefined)
     setTezos(undefined)
@@ -62,13 +92,17 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
     <ConnectionContext.Provider
       value={{
         connect: async () => {
-          return await connectBeacon()
-            .then(({ address, Tezos, beaconWallet }) => {
-              setAddress(address)
+          const wallet = walletRef.current
+          if (!wallet) {
+            throw new Error('Wallet not initialized')
+          }
+          return await requestBeaconPermissions(wallet)
+            .then(response => {
+              setAddress(response.address)
               setIsConnected(true)
-              setTezos(Tezos)
-              setBeaconWallet(beaconWallet)
-              location.reload()
+              setBeaconWallet(wallet)
+              TzosInstance.setWalletProvider(wallet)
+              setTezos(TzosInstance)
               trackGAEvent(GAAction.CONNECT_SUCCESS, GACategory.WALLET_SUCCESS)
             })
             .catch(() => {
@@ -80,9 +114,11 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
             })
         },
         disconnect: async () => {
-          await wallet?.clearActiveAccount()
+          const wallet = walletRef.current
+          await wallet?.client.removeAllAccounts()
           setAddress(undefined)
           setIsConnected(false)
+          reset()
         },
         address,
         isConnected,
