@@ -21,7 +21,11 @@ export default function Document() {
         />
         <meta
           name='twitter:image'
+<<<<<<< HEAD
           content={`${siteUrl}/images/stake.tezos.com-twitter-card.webp`}
+=======
+          content='/images/stake.tezos.com-twitter-card.webp'
+>>>>>>> 4a2550c (add twitter card)
         />
       </Head>
       <body>
