@@ -6,6 +6,21 @@ export default function Document() {
     <Html lang='en' suppressHydrationWarning>
       <Head>
         <link rel='icon' href='/favicon.ico' />
+        {/* Twitter Card metadata */}
+        <meta name='twitter:card' content='summary_large_image' />
+        <meta name='twitter:site' content='@tezos' />
+        <meta
+          name='twitter:title'
+          content='Earn rewards for contributing to network security'
+        />
+        <meta
+          name='twitter:description'
+          content="Stake your tez to earn greater rewards for participating in Tezos' proof-of-stake mechanism."
+        />
+        <meta
+          name='twitter:image'
+          content='/images/stake.tezos.com-twitter-card.webp'
+        />
       </Head>
       <body>
         <Main />
