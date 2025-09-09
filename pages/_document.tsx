@@ -2,6 +2,8 @@ import { Html, Head, Main, NextScript } from 'next/document'
 import Script from 'next/script'
 
 export default function Document() {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+
   return (
     <Html lang='en' suppressHydrationWarning>
       <Head>
@@ -19,7 +21,7 @@ export default function Document() {
         />
         <meta
           name='twitter:image'
-          content='/images/stake.tezos.com-twitter-card.webp'
+          content={`${siteUrl}/images/stake.tezos.com-twitter-card.webp`}
         />
       </Head>
       <body>
