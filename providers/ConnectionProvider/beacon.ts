@@ -3,54 +3,38 @@ import { TezosToolkit } from '@taquito/taquito'
 import { RpcClient, RpcClientCache } from '@taquito/rpc'
 import { NetworkType, PermissionScope, BeaconEvent } from '@airgap/beacon-sdk'
 
-import Home from '@/pages'
-import { AccountRedirectListener } from '@/components/WalletDisconnect'
-
 const rpc = new RpcClientCache(
   new RpcClient(process.env.NEXT_PUBLIC_RPC_ENDPOINT as string)
 )
 export const Tezos = new TezosToolkit(rpc)
+
+// Use a global singleton to prevent multiple instances across HMR/StrictMode
+const g = globalThis as any
+if (typeof window !== 'undefined') {
+  if (!g.__BEACON_WALLET__) {
+    g.__BEACON_WALLET__ = new BeaconWallet({
+      name: 'Stake XTZ',
+      appUrl: window.location.origin,
+      network: { type: process.env.NEXT_PUBLIC_NETWORK as NetworkType },
+      featuredWallets: ['kukai', 'trust', 'temple', 'umami']
+    })
+  }
+  if (!g.__BEACON_SUBSCRIBED__ && g.__BEACON_WALLET__) {
+    g.__BEACON_WALLET__.client.subscribeToEvent(
+      BeaconEvent.ACTIVE_ACCOUNT_SET,
+      () => {}
+    )
+    g.__BEACON_SUBSCRIBED__ = true
+  }
+}
+
+export const createBeaconWallet = () =>
+  typeof window === 'undefined'
+    ? undefined
+    : (g.__BEACON_WALLET__ as BeaconWallet)
+
 export async function requestBeaconPermissions(wallet: BeaconWallet) {
   return await wallet.client.requestPermissions({
     scopes: [PermissionScope.OPERATION_REQUEST, PermissionScope.SIGN]
   })
-}
-export const createBeaconWallet = () =>
-  typeof window === 'undefined'
-    ? undefined
-    : new BeaconWallet({
-        name: 'Stake XTZ',
-        appUrl: '', // need to fill this
-        network: { type: process.env.NEXT_PUBLIC_NETWORK as NetworkType },
-        featuredWallets: ['kukai', 'trust', 'temple', 'umami']
-      })
-
-export const connectBeacon = async () => {
-  const beaconWallet = createBeaconWallet()
-  Tezos.setWalletProvider(beaconWallet)
-
-  if (!beaconWallet) {
-    throw new Error('Tried to connect on the server')
-  } else {
-    beaconWallet.client.subscribeToEvent(
-      BeaconEvent.ACTIVE_ACCOUNT_SET,
-      async account => {
-        console.log(
-          `${BeaconEvent.ACTIVE_ACCOUNT_SET} triggered: `,
-          account?.address
-        )
-        if (!account) {
-          // go to homepage
-          AccountRedirectListener()
-          return
-        }
-      }
-    )
-    const response = await requestBeaconPermissions(beaconWallet)
-    return {
-      address: response.address,
-      Tezos: Tezos,
-      beaconWallet: beaconWallet
-    }
-  }
 }

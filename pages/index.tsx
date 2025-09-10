@@ -68,7 +68,7 @@ export default function Home() {
     } else if (bakerListQueryData.status === 'error') {
       console.error('Fail to get the baker list')
     }
-  }, [bakerListQueryData.status])
+  }, [bakerListQueryData.status, bakerListQueryData.data])
 
   const { data, error } = useQuery({
     queryKey: ['accountInfoData'],
