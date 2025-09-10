@@ -14,10 +14,14 @@ export const DisclaimerEndDelegate = ({
       <Image w='25px' mb='15px' src='/images/error-icon.svg' alt='alert icon' />
       <Header mb='15px'>Important Notice</Header>
       <Description mb={['30px', null, '24px']} maxW='340px'>
-        Ending your delegation with a baker while staking with them will automatically unstake your entire staked balance.
+        Ending your delegation with a baker while staking with them will
+        automatically unstake your entire staked balance.
         <br />
         <br />
-        While you may delegate to a new baker immediately, you will need to first finalize unstaking with your original baker before you can stake again. To do so, come back in {process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days and finalize the process via the main dashboard.
+        While you may delegate to a new baker immediately, you must wait until
+        the unstaking process, which takes{' '}
+        {process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days, is completed before you can
+        stake again.
       </Description>
       <PrimaryButton
         onClick={async () => {
