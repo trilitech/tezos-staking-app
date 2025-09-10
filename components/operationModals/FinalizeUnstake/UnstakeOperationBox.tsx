@@ -88,7 +88,7 @@ export const UnstakeOperationBox = ({
             </Text>
             <Flex alignItems='center' gap='6px'>
               <Text fontSize='14px' color='gray.600' fontStyle='italic'>
-                Finalizable in{' '}
+                Finalized in{' '}
                 <Link
                   href={
                     (process.env.NEXT_PUBLIC_TZKT_UI_URL ?? 'tzkt.io') +
