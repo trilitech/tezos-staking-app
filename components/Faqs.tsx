@@ -25,7 +25,7 @@ export default function Faqs() {
         {
           title: 'I thought I was staking long before June 2024?',
           description:
-            'Before June 2024, you could delegate to a baker, but not stake with them. Delegation has sometimes been loosely referred to as staking, but is a different mechanism; delegated tez remains liquid and earns half the rewards of staking, whereas staked tez is locked and earns twice the rewards of delegation.'
+            'Before June 2024, you could delegate to a baker, but not stake with them. Delegation has sometimes been loosely referred to as staking, but is a different mechanism; delegated tez remains liquid and earns half the rewards of staking, whereas staked tez is locked and earns three times the rewards of delegation.'
         },
         {
           title: 'What is stake.tezos.com?',
@@ -35,11 +35,11 @@ export default function Faqs() {
         {
           title: 'Why should I stake my tez?',
           description:
-            'By staking your tez with a baker, you help them manage the security of the Tezos network – and in doing so, you earn rewards. Staking can potentially offer twice the rewards of delegation (see the “Delegation” section below).'
+            'By staking your tez with a baker, you help them manage the security of the Tezos network – and in doing so, you earn rewards. Staking rewards are three times delegation rewards (see the “Delegation” section below for more information).'
         },
         {
           title: 'If I stake, can I unstake?',
-          description: `You can unstake your tez at any time. All you have to do is click the “Unstake” button on the dashboard, which immediately halts rewards from accruing, wait ${process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days (or 4 “cycles”), and then complete the process by clicking on the “Finalize” button. Once that’s done, your funds become available again.`
+          description: `You can unstake your tez at any time. All you have to do is click the “Unstake” button on the dashboard, which immediately halts rewards from accruing, and wait 4 days (or 4 “cycles”). Once four days have passed, your funds become available again.`
         },
         {
           title: 'Where can I learn more about the Tezos ecosystem?',
