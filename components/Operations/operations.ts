@@ -110,8 +110,11 @@ function processOpErrors(err: any, op: string): string {
     errMsg = `Error occured in ${op} operation, try again.`
     if (!!err.message) {
       errMsg = `${errMsg} ${err.message.replace(/ *\[[^)]*\] */g, '')}`
-    } else if (!!err.errorType) {
-      errMsg = `${errMsg} ${BeaconError.getError(err.errorType, err.errorData).message.replace(/ *\[[^)]*\] */g, '')}`
+    } else if ('fullDescription' in err) {
+      const desc = (err as BeaconError).fullDescription?.description
+      if (desc) {
+        errMsg = `${errMsg} ${desc}`
+      }
     }
   }
   return errMsg
