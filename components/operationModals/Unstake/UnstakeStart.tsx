@@ -14,7 +14,9 @@ export const UnstakeStart = ({
       <Image w='25px' mb='15px' src='/images/error-icon.svg' alt='alert icon' />
       <Header mb='15px'>Important Notice</Header>
       <Description mb='24px'>
-        Unstaking takes {process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days, and you must finalize the process via the main dashboard. Once you do, your tez will be made available in your spendable balance.
+        Unstaking takes {process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days to complete.
+        Once {process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days have passed, your tez
+        will become available as part of your spendable balance.
       </Description>
       <PrimaryButton
         onClick={() => {

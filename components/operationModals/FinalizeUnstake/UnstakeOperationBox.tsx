@@ -25,11 +25,9 @@ export const UnstakeOperationBox = ({
   let amount = 0
   let requestedCycle = 0
   let cyclesRemaining = 0
-  let canFinalize = false
 
   if (!!totalFinalizableAmount) {
     amount = mutezToTez(totalFinalizableAmount)
-    canFinalize = true
   }
 
   if (!!unstakeOp) {
@@ -88,7 +86,7 @@ export const UnstakeOperationBox = ({
             </Text>
             <Flex alignItems='center' gap='6px'>
               <Text fontSize='14px' color='gray.600' fontStyle='italic'>
-                Finalizable in{' '}
+                Finalized in{' '}
                 <Link
                   href={
                     (process.env.NEXT_PUBLIC_TZKT_UI_URL ?? 'tzkt.io') +
@@ -114,18 +112,6 @@ export const UnstakeOperationBox = ({
           </Flex>
         )}
       </Box>
-      {canFinalize && (
-        <TertiaryButton
-          w={['100%', null, 'auto']}
-          onClick={() => {
-            trackGAEvent(GAAction.BUTTON_CLICK, GACategory.FINALIZE_BEGIN)
-            finalizeUnstakeModal.onOpen()
-          }}
-        >
-          Finalize
-        </TertiaryButton>
-      )}
-
       {!!totalFinalizableAmount && (
         <FinalizeUnstakeModal
           spendableBalance={spendableBalance}
