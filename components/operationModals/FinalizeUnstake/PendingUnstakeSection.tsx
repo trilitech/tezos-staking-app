@@ -35,7 +35,6 @@ export const PendingUnstakeSection = ({
         {/* Can finalize amount */}
         {!!totalFinalizableAmount && (
           <UnstakeOperationBox
-            spendableBalance={spendableBalance}
             totalFinalizableAmount={totalFinalizableAmount}
           />
         )}
@@ -44,11 +43,7 @@ export const PendingUnstakeSection = ({
         {unstOps
           .filter(op => op.numCyclesToFinalize > 0)
           .map((op, index) => (
-            <UnstakeOperationBox
-              spendableBalance={spendableBalance}
-              key={index}
-              unstakeOp={op}
-            />
+            <UnstakeOperationBox key={index} unstakeOp={op} />
           ))}
       </Flex>
     </Box>

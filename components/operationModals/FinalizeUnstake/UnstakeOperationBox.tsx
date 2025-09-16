@@ -1,22 +1,16 @@
 import React from 'react'
-import { Box, Text, Flex, Image, useDisclosure } from '@chakra-ui/react'
+import { Box, Text, Flex, Image } from '@chakra-ui/react'
 import { UnstakedOperation } from '@/components/Operations/tezInterfaces'
 import { mutezToTez } from '@/utils/mutezToTez'
-import { TertiaryButton } from '@/components/buttons/TertiaryButton'
-import { FinalizeUnstakeModal } from '.'
 import Link from 'next/link'
-import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 
 export const UnstakeOperationBox = ({
   unstakeOp,
-  totalFinalizableAmount,
-  spendableBalance
+  totalFinalizableAmount
 }: {
   unstakeOp?: UnstakedOperation
   totalFinalizableAmount?: number
-  spendableBalance: number
 }) => {
-  const finalizeUnstakeModal = useDisclosure()
   const consensusRightDelay = Number(
     process.env.NEXT_PUBLIC_CONSENSUS_RIGHTS_DELAY
   )
@@ -112,14 +106,6 @@ export const UnstakeOperationBox = ({
           </Flex>
         )}
       </Box>
-      {!!totalFinalizableAmount && (
-        <FinalizeUnstakeModal
-          spendableBalance={spendableBalance}
-          withdrawAmount={mutezToTez(totalFinalizableAmount)}
-          isOpen={finalizeUnstakeModal.open}
-          onClose={finalizeUnstakeModal.onClose}
-        />
-      )}
     </Flex>
   )
 }
