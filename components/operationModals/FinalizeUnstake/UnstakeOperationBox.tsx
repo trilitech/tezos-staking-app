@@ -1,22 +1,16 @@
 import React from 'react'
-import { Box, Text, Flex, Image, useDisclosure } from '@chakra-ui/react'
+import { Box, Text, Flex, Image } from '@chakra-ui/react'
 import { UnstakedOperation } from '@/components/Operations/tezInterfaces'
 import { mutezToTez } from '@/utils/mutezToTez'
-import { TertiaryButton } from '@/components/buttons/TertiaryButton'
-import { FinalizeUnstakeModal } from '.'
 import Link from 'next/link'
-import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
 
 export const UnstakeOperationBox = ({
   unstakeOp,
-  totalFinalizableAmount,
-  spendableBalance
+  totalFinalizableAmount
 }: {
   unstakeOp?: UnstakedOperation
   totalFinalizableAmount?: number
-  spendableBalance: number
 }) => {
-  const finalizeUnstakeModal = useDisclosure()
   const consensusRightDelay = Number(
     process.env.NEXT_PUBLIC_CONSENSUS_RIGHTS_DELAY
   )
@@ -25,11 +19,9 @@ export const UnstakeOperationBox = ({
   let amount = 0
   let requestedCycle = 0
   let cyclesRemaining = 0
-  let canFinalize = false
 
   if (!!totalFinalizableAmount) {
     amount = mutezToTez(totalFinalizableAmount)
-    canFinalize = true
   }
 
   if (!!unstakeOp) {
@@ -88,7 +80,7 @@ export const UnstakeOperationBox = ({
             </Text>
             <Flex alignItems='center' gap='6px'>
               <Text fontSize='14px' color='gray.600' fontStyle='italic'>
-                Finalizable in{' '}
+                Finalized in{' '}
                 <Link
                   href={
                     (process.env.NEXT_PUBLIC_TZKT_UI_URL ?? 'tzkt.io') +
@@ -114,26 +106,6 @@ export const UnstakeOperationBox = ({
           </Flex>
         )}
       </Box>
-      {canFinalize && (
-        <TertiaryButton
-          w={['100%', null, 'auto']}
-          onClick={() => {
-            trackGAEvent(GAAction.BUTTON_CLICK, GACategory.FINALIZE_BEGIN)
-            finalizeUnstakeModal.onOpen()
-          }}
-        >
-          Finalize
-        </TertiaryButton>
-      )}
-
-      {!!totalFinalizableAmount && (
-        <FinalizeUnstakeModal
-          spendableBalance={spendableBalance}
-          withdrawAmount={mutezToTez(totalFinalizableAmount)}
-          isOpen={finalizeUnstakeModal.open}
-          onClose={finalizeUnstakeModal.onClose}
-        />
-      )}
     </Flex>
   )
 }

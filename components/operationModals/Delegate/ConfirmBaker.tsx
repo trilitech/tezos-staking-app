@@ -145,7 +145,7 @@ export const ConfirmBaker = ({
                   setOpType('change_baker')
                   setMessage(
                     isStaked
-                      ? `You have successfully changed your baker and unstaked with your previous baker. Unstaking takes ${process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days, after which you must finalize the process. Once you do, your tez will be made available in your spendable balance.`
+                      ? `You have successfully changed your baker and unstaked with your previous baker, which will take ${process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days to complete.</br /><br />Once ${process.env.NEXT_PUBLIC_UNSTAKE_DAYS} days have passed, your tez will become available as part of your spendable balance.`
                       : 'You have successfully delegated your balance to the baker. You can now choose to stake your tez with the same baker to earn higher rewards.'
                   )
                   trackGAEvent(
