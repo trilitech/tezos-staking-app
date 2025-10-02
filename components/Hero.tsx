@@ -117,6 +117,21 @@ export default function Hero() {
                 >
                   Start Earning
                 </CustomButton>
+                <CustomButton
+                  scrollPadding={80}
+                  scrollMarginBottom={70}
+                  w={['full', null, '180px']}
+                  onClick={() => {
+                    trackGAEvent(GAAction.BUTTON_CLICK, GACategory.LEARN_MORE)
+                    window.open(
+                      'https://docs.tezos.com/using/staking',
+                      '_blank'
+                    )
+                  }}
+                  variant='primary'
+                >
+                  Learn More
+                </CustomButton>
               </Flex>
               <Separator
                 pt={5}
