@@ -122,7 +122,6 @@ export default function Hero() {
                   scrollMarginBottom={70}
                   w={['full', null, '180px']}
                   onClick={() => {
-                    trackGAEvent(GAAction.BUTTON_CLICK, GACategory.LEARN_MORE)
                     window.open(
                       'https://docs.tezos.com/using/staking',
                       '_blank'
