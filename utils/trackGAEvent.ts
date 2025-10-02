@@ -37,9 +37,7 @@ export enum GACategory {
   END_STAKE_END = 'end_stake_end',
 
   FINALIZE_BEGIN = 'finalize_begin',
-  FINALIZE_END = 'finalize_end',
-
-  LEARN_MORE = 'learn_more'
+  FINALIZE_END = 'finalize_end'
 }
 
 export const trackGAEvent = (action: GAAction, category: GACategory) => {
