@@ -43,6 +43,25 @@ export const buttonRecipe = defineRecipe({
         _hover: { bg: '#0052FF', color: 'white' },
         _disabled: { bg: '#E2E8F0' }
       },
+      altSecondary: {
+        color: '#FFF',
+        display: 'flex',
+        fontWeight: 600,
+        minW: '161px',
+        h: '48px',
+        px: '24px',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: '8px',
+        borderRadius: '8px',
+        border: '2px solid #FFF',
+        _hover: {
+          bg: 'rgba(255, 255, 255, 0.04)',
+          color: '#FFF',
+          cursor: 'pointer'
+        },
+        _disabled: { bg: '#E2E8F0', color: '#A0AEC0' }
+      },
       ternary: {
         color: 'white',
         display: 'flex',
