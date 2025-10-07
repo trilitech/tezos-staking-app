@@ -1,12 +1,4 @@
-import {
-  Box,
-  Heading,
-  Text,
-  Flex,
-  Separator,
-  Button,
-  Image
-} from '@chakra-ui/react'
+import { Box, Heading, Text, Flex, Separator, Image } from '@chakra-ui/react'
 import { Header } from './Header'
 import { useConnection } from '@/providers/ConnectionProvider'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
@@ -116,6 +108,23 @@ export default function Hero() {
                   variant='primary'
                 >
                   Start Earning
+                </CustomButton>
+                <CustomButton
+                  w={['full', null, '180px']}
+                  onClick={() => {
+                    window.open(
+                      'https://docs.tezos.com/using/staking',
+                      '_blank'
+                    )
+                  }}
+                  variant='altSecondary'
+                >
+                  Learn More
+                  <Image
+                    w={4.5}
+                    src='/images/arrow-up-right.svg'
+                    alt='arrow icon'
+                  />
                 </CustomButton>
               </Flex>
               <Separator
