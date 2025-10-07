@@ -120,6 +120,11 @@ export default function Hero() {
                   variant='altSecondary'
                 >
                   Learn More
+                  <Image
+                    w={4.5}
+                    src='/images/arrow-up-right.svg'
+                    alt='arrow icon'
+                  />
                 </CustomButton>
               </Flex>
               <Separator
