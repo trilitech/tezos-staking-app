@@ -1,12 +1,4 @@
-import {
-  Box,
-  Heading,
-  Text,
-  Flex,
-  Separator,
-  Button,
-  Image
-} from '@chakra-ui/react'
+import { Box, Heading, Text, Flex, Separator, Image } from '@chakra-ui/react'
 import { Header } from './Header'
 import { useConnection } from '@/providers/ConnectionProvider'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
@@ -118,8 +110,6 @@ export default function Hero() {
                   Start Earning
                 </CustomButton>
                 <CustomButton
-                  scrollPadding={80}
-                  scrollMarginBottom={70}
                   w={['full', null, '180px']}
                   onClick={() => {
                     window.open(
@@ -127,9 +117,14 @@ export default function Hero() {
                       '_blank'
                     )
                   }}
-                  variant='primary'
+                  variant='altSecondary'
                 >
                   Learn More
+                  <Image
+                    w={4.5}
+                    src='/images/arrow-up-right.svg'
+                    alt='arrow icon'
+                  />
                 </CustomButton>
               </Flex>
               <Separator
