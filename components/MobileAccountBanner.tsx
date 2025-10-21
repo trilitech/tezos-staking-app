@@ -7,7 +7,8 @@ import {
   FlexProps,
   Icon,
   Drawer,
-  Box
+  Box,
+  Portal
 } from '@chakra-ui/react'
 import { Menu as HamburgerIcon } from 'lucide-react'
 import { TertiaryButton } from './buttons/TertiaryButton'
@@ -78,42 +79,50 @@ export const MobileAccountBanner = ({
         onOpenChange={e => setOpen(e.open)}
         size='xl'
       >
-        <Drawer.Backdrop />
-        <Drawer.Content borderRadius='10px' py='40px'>
-          <Drawer.CloseTrigger />
-          <Drawer.Body>
-            <Flex flexDir='column' alignItems='center' gap='16px'>
-              <Text fontSize='18px' fontWeight={600}>
-                {name}
-              </Text>
-              <Flex
-                alignItems='center'
-                justify='center'
-                gap='4px'
-                border='solid 1px #E2E8F0'
-                borderRadius='100px'
-                w='200px'
-                px='16px'
-                py='8px'
-                onClick={() => copyTextToClipboard(address)}
-              >
-                <Text fontSize='14px'>{simplifyAddress(address)}</Text>
+        <Portal>
+          <Drawer.Backdrop />
+          <Drawer.Positioner>
+            <Drawer.Content borderRadius='10px' py='40px'>
+              <Drawer.CloseTrigger />
+              <Drawer.Body>
+                <Flex flexDir='column' alignItems='center' gap='16px'>
+                  <Text fontSize='18px' fontWeight={600}>
+                    {name}
+                  </Text>
+                  <Flex
+                    alignItems='center'
+                    justify='center'
+                    gap='4px'
+                    border='solid 1px #E2E8F0'
+                    borderRadius='100px'
+                    w='200px'
+                    px='16px'
+                    py='8px'
+                    onClick={() => copyTextToClipboard(address)}
+                  >
+                    <Text fontSize='14px'>{simplifyAddress(address)}</Text>
+                    <Image
+                      _hover={{ cursor: 'pointer' }}
+                      src='/images/copy-icon.svg'
+                      alt='copy icon'
+                    />
+                  </Flex>
+                </Flex>
+              </Drawer.Body>
+              <Drawer.Footer display='flex' flexDir='column'>
                 <Image
-                  _hover={{ cursor: 'pointer' }}
-                  src='/images/copy-icon.svg'
-                  alt='copy icon'
+                  mb='24px'
+                  src='/images/mobile-footer-line.svg'
+                  alt='line'
                 />
-              </Flex>
-            </Flex>
-          </Drawer.Body>
-          <Drawer.Footer display='flex' flexDir='column'>
-            <Image mb='24px' src='/images/mobile-footer-line.svg' alt='line' />
-            <PrimaryButton mb={4} onClick={disconnect}>
-              Help
-            </PrimaryButton>
-            <TertiaryButton onClick={disconnect}>Disconnect</TertiaryButton>
-          </Drawer.Footer>
-        </Drawer.Content>
+                <PrimaryButton mb={4} onClick={disconnect}>
+                  Help
+                </PrimaryButton>
+                <TertiaryButton onClick={disconnect}>Disconnect</TertiaryButton>
+              </Drawer.Footer>
+            </Drawer.Content>
+          </Drawer.Positioner>
+        </Portal>
       </Drawer.Root>
     </Flex>
   )
