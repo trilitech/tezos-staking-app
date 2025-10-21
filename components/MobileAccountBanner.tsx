@@ -85,7 +85,7 @@ export const MobileAccountBanner = ({
           <Drawer.Positioner>
             <Drawer.Content
               pos='relative'
-              borderRadius='10px'
+              borderTopRadius='10px'
               py={10}
               px={10}
               bg='white'
