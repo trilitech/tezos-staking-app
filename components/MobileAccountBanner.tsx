@@ -8,7 +8,8 @@ import {
   Icon,
   Drawer,
   Box,
-  Portal
+  Portal,
+  CloseButton
 } from '@chakra-ui/react'
 import { Menu as HamburgerIcon } from 'lucide-react'
 import { TertiaryButton } from './buttons/TertiaryButton'
@@ -82,8 +83,21 @@ export const MobileAccountBanner = ({
         <Portal>
           <Drawer.Backdrop />
           <Drawer.Positioner>
-            <Drawer.Content borderRadius='10px' py='40px'>
-              <Drawer.CloseTrigger />
+            <Drawer.Content
+              pos='relative'
+              borderRadius='10px'
+              py={10}
+              px={10}
+              bg='white'
+            >
+              <CloseButton
+                position='absolute'
+                top='0px'
+                right='10px'
+                w='fit-content'
+                color='gray.600'
+                onClick={() => setOpen(false)}
+              />
               <Drawer.Body>
                 <Flex flexDir='column' alignItems='center' gap='16px'>
                   <Text fontSize='18px' fontWeight={600}>
@@ -109,13 +123,13 @@ export const MobileAccountBanner = ({
                   </Flex>
                 </Flex>
               </Drawer.Body>
-              <Drawer.Footer display='flex' flexDir='column'>
-                <Image
-                  mb='24px'
-                  src='/images/mobile-footer-line.svg'
-                  alt='line'
-                />
-                <PrimaryButton mb={4} onClick={disconnect}>
+              <Image
+                my='24px'
+                src='/images/mobile-footer-line.svg'
+                alt='line'
+              />
+              <Drawer.Footer display='flex' flexDir='column' gap='16px'>
+                <PrimaryButton w='full' onClick={disconnect}>
                   Help
                 </PrimaryButton>
                 <TertiaryButton onClick={disconnect}>Disconnect</TertiaryButton>
