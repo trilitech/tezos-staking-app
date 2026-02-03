@@ -39,6 +39,7 @@ jsFiles.forEach(({ source, target }) => {
   
   // Remove existing symlink or file if it exists
   if (fs.existsSync(targetPath)) {
+    console.log(`Removing existing file/symlink: ${target}`);
     fs.unlinkSync(targetPath);
   }
   
@@ -46,6 +47,8 @@ jsFiles.forEach(({ source, target }) => {
   if (fs.existsSync(sourcePath)) {
     fs.symlinkSync(source, targetPath);
     console.log(`Created symlink: ${target} -> ${source}`);
+  } else {
+    console.warn(`Warning: Source file not found: ${source}`);
   }
 });
 
