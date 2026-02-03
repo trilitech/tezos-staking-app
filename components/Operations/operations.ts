@@ -1,13 +1,13 @@
-import { PermissionScope } from '@airgap/beacon-sdk'
-import { TezosToolkit } from '@taquito/taquito'
-import { BeaconWallet } from '@taquito/beacon-wallet'
+import { PermissionScope } from '@tezos-x/octez.connect-sdk'
+import { TezosToolkit } from '@tezos-x/octez.js'
+import { BeaconWallet } from '@tezos-x/octez.js-dapp-wallet'
 import { requestBeaconPermissions } from '@/providers/ConnectionProvider/beacon'
 export interface OperationResult {
   success: boolean
   opHash: string
   message: string
 }
-import { BeaconError } from '@airgap/beacon-sdk'
+import { BeaconError } from '@tezos-x/octez.connect-sdk'
 
 async function checkActiveAccount(wallet: BeaconWallet) {
   const activeAccount = await wallet.client.getActiveAccount()
