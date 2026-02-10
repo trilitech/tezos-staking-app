@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "postinstall": "node scripts/fix-octez-packages.js"
+    "lint": "next lint"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.19.2",
@@ -15,7 +14,7 @@
     "@tanstack/react-query": "^5.37.1",
     "@tezos-x/octez.connect-sdk": "0.9.0",
     "@tezos-x/octez.js": "0.9.0",
-    "@tezos-x/octez.js-dapp-wallet": "0.9.0",
+    "@tezos-x/octez.js-dapp-wallet": "0.9.1",
     "@tezos-x/octez.js-rpc": "0.9.0",
     "axios": "^1.7.2",
     "bufferutil": "^4.0.8",

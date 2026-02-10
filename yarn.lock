@@ -1440,16 +1440,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tezos-x/octez.js-dapp-wallet@npm:0.9.0":
-  version: 0.9.0
-  resolution: "@tezos-x/octez.js-dapp-wallet@npm:0.9.0"
+"@tezos-x/octez.js-dapp-wallet@npm:0.9.1":
+  version: 0.9.1
+  resolution: "@tezos-x/octez.js-dapp-wallet@npm:0.9.1"
   dependencies:
     "@tezos-x/octez.connect-dapp": "npm:^0.9.0"
     "@tezos-x/octez.js": "npm:*"
     "@tezos-x/octez.js-core": "npm:*"
     crypto-browserify: "npm:^3.12.1"
     util: "npm:^0.12.5"
-  checksum: 10c0/2822901914211b1d8e9c75e476d9f6b7a51d1c9477e960068e5df8eafd733c8a28e7758a7eb413355ee2f3e0c1710037f60bec57ff5d435816b1411954103de0
+  checksum: 10c0/f7c403ebb91c3b50df57d7c8f508cea586f895ddc9d35a05edd54cc898acce41db857c3e17146d4df3f6946ab225a46f0fa034c5e444629bc2a24c14bba7f468
   languageName: node
   linkType: hard
 
@@ -7648,7 +7648,7 @@ __metadata:
     "@tanstack/react-query": "npm:^5.37.1"
     "@tezos-x/octez.connect-sdk": "npm:0.9.0"
     "@tezos-x/octez.js": "npm:0.9.0"
-    "@tezos-x/octez.js-dapp-wallet": "npm:0.9.0"
+    "@tezos-x/octez.js-dapp-wallet": "npm:0.9.1"
     "@tezos-x/octez.js-rpc": "npm:0.9.0"
     "@types/js-cookie": "npm:^3"
     "@types/lodash": "npm:^4"
