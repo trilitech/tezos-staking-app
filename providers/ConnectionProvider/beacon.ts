@@ -1,7 +1,7 @@
-import { BeaconWallet } from '@taquito/beacon-wallet'
-import { TezosToolkit } from '@taquito/taquito'
-import { RpcClient, RpcClientCache } from '@taquito/rpc'
-import { NetworkType, PermissionScope, BeaconEvent } from '@airgap/beacon-sdk'
+import { BeaconWallet } from '@tezos-x/octez.js-dapp-wallet'
+import { TezosToolkit } from '@tezos-x/octez.js'
+import { RpcClient, RpcClientCache } from '@tezos-x/octez.js-rpc'
+import { NetworkType, PermissionScope, BeaconEvent } from '@tezos-x/octez.connect-sdk'
 
 const rpc = new RpcClientCache(
   new RpcClient(process.env.NEXT_PUBLIC_RPC_ENDPOINT as string)
