@@ -1329,7 +1329,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tezos-x/octez.connect-sdk@npm:0.9.0":
+"@tezos-x/octez.connect-sdk@npm:^0.9.0":
   version: 0.9.0
   resolution: "@tezos-x/octez.connect-sdk@npm:0.9.0"
   dependencies:
@@ -1440,7 +1440,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tezos-x/octez.js-dapp-wallet@npm:0.9.1":
+"@tezos-x/octez.js-dapp-wallet@npm:^0.9.1":
   version: 0.9.1
   resolution: "@tezos-x/octez.js-dapp-wallet@npm:0.9.1"
   dependencies:
@@ -1499,7 +1499,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tezos-x/octez.js-rpc@npm:*, @tezos-x/octez.js-rpc@npm:0.9.0":
+"@tezos-x/octez.js-rpc@npm:*, @tezos-x/octez.js-rpc@npm:^0.9.0":
   version: 0.9.0
   resolution: "@tezos-x/octez.js-rpc@npm:0.9.0"
   dependencies:
@@ -1552,7 +1552,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tezos-x/octez.js@npm:*, @tezos-x/octez.js@npm:0.9.0":
+"@tezos-x/octez.js@npm:*, @tezos-x/octez.js@npm:^0.9.0":
   version: 0.9.0
   resolution: "@tezos-x/octez.js@npm:0.9.0"
   dependencies:
@@ -7646,10 +7646,10 @@ __metadata:
     "@chakra-ui/react": "npm:^3.19.2"
     "@emotion/react": "npm:^11.14.0"
     "@tanstack/react-query": "npm:^5.37.1"
-    "@tezos-x/octez.connect-sdk": "npm:0.9.0"
-    "@tezos-x/octez.js": "npm:0.9.0"
-    "@tezos-x/octez.js-dapp-wallet": "npm:0.9.1"
-    "@tezos-x/octez.js-rpc": "npm:0.9.0"
+    "@tezos-x/octez.connect-sdk": "npm:^0.9.0"
+    "@tezos-x/octez.js": "npm:^0.9.0"
+    "@tezos-x/octez.js-dapp-wallet": "npm:^0.9.1"
+    "@tezos-x/octez.js-rpc": "npm:^0.9.0"
     "@types/js-cookie": "npm:^3"
     "@types/lodash": "npm:^4"
     "@types/react": "npm:^19.1.3"
