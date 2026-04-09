@@ -197,6 +197,109 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ecadlabs/beacon-core@npm:4.8.1-ecad.2":
+  version: 4.8.1-ecad.2
+  resolution: "@ecadlabs/beacon-core@npm:4.8.1-ecad.2"
+  dependencies:
+    "@ecadlabs/beacon-types": "npm:4.8.1-ecad.2"
+    "@ecadlabs/beacon-utils": "npm:4.8.1-ecad.2"
+    "@stablelib/ed25519": "npm:^2.0.2"
+    "@stablelib/nacl": "npm:^2.0.1"
+    "@stablelib/utf8": "npm:^2.0.1"
+    "@stablelib/x25519-session": "npm:^2.0.1"
+    broadcast-channel: "npm:^7.1.0"
+    bs58check: "npm:4.0.0"
+  checksum: 10c0/5859059888a540d8cfcb4e422eba0add7b02b52a7b709db9b93a98a6a5186657353175bdd1f4362547a8d9743312f940aef4fa14294c6345333d8727767272fc
+  languageName: node
+  linkType: hard
+
+"@ecadlabs/beacon-dapp@npm:^4.8.1-ecad":
+  version: 4.8.1-ecad.2
+  resolution: "@ecadlabs/beacon-dapp@npm:4.8.1-ecad.2"
+  dependencies:
+    "@ecadlabs/beacon-core": "npm:4.8.1-ecad.2"
+    "@ecadlabs/beacon-transport-matrix": "npm:4.8.1-ecad.2"
+    "@ecadlabs/beacon-transport-postmessage": "npm:4.8.1-ecad.2"
+    "@ecadlabs/beacon-transport-walletconnect": "npm:4.8.1-ecad.2"
+    "@ecadlabs/beacon-ui": "npm:4.8.1-ecad.2"
+    broadcast-channel: "npm:^7.1.0"
+  checksum: 10c0/dfa6a84076f29a6d0d911b34a841f8cadf0cd2a8c7cdfa1544aade024daf4542424390e2d72e846ef2db96a927c675edac5ff0589d71bdede00ee2ed0a158d8f
+  languageName: node
+  linkType: hard
+
+"@ecadlabs/beacon-transport-matrix@npm:4.8.1-ecad.2":
+  version: 4.8.1-ecad.2
+  resolution: "@ecadlabs/beacon-transport-matrix@npm:4.8.1-ecad.2"
+  dependencies:
+    "@ecadlabs/beacon-core": "npm:4.8.1-ecad.2"
+    "@ecadlabs/beacon-utils": "npm:4.8.1-ecad.2"
+    axios: "npm:^1.8.4"
+  checksum: 10c0/132fc9551a036c8d184ee891cbe7a4cbabd3ddedebf69c4f395a02dbbfcafb1c2044ffb20aa2f2b11446ee073c539d60218959927fe16b68ddf1ab3aca15bbf4
+  languageName: node
+  linkType: hard
+
+"@ecadlabs/beacon-transport-postmessage@npm:4.8.1-ecad.2":
+  version: 4.8.1-ecad.2
+  resolution: "@ecadlabs/beacon-transport-postmessage@npm:4.8.1-ecad.2"
+  dependencies:
+    "@ecadlabs/beacon-core": "npm:4.8.1-ecad.2"
+    "@ecadlabs/beacon-types": "npm:4.8.1-ecad.2"
+    "@ecadlabs/beacon-utils": "npm:4.8.1-ecad.2"
+  checksum: 10c0/893cf25b8d4da3be44a45e272a2ba61029706b943ae8468903f296b6fdac78a83917e79ea6ccf0cc86c19f8b730ac30cfcc60ccf2ae9ed24ed7113a55ca223af
+  languageName: node
+  linkType: hard
+
+"@ecadlabs/beacon-transport-walletconnect@npm:4.8.1-ecad.2":
+  version: 4.8.1-ecad.2
+  resolution: "@ecadlabs/beacon-transport-walletconnect@npm:4.8.1-ecad.2"
+  dependencies:
+    "@ecadlabs/beacon-core": "npm:4.8.1-ecad.2"
+    "@ecadlabs/beacon-types": "npm:4.8.1-ecad.2"
+    "@ecadlabs/beacon-utils": "npm:4.8.1-ecad.2"
+    "@walletconnect/sign-client": "npm:2.18.0"
+    elliptic: "npm:^6.6.1"
+  checksum: 10c0/8ed573a42f0f0287fed3b0bd1cc0cbce3baa272c77a59717b2821d4c20f688c299a7b7e46cbc7058033d4de2bfa87e441c8f3c1a3ac75e21df44a16ec0cc8baf
+  languageName: node
+  linkType: hard
+
+"@ecadlabs/beacon-types@npm:4.8.1-ecad.2, @ecadlabs/beacon-types@npm:^4.8.1-ecad":
+  version: 4.8.1-ecad.2
+  resolution: "@ecadlabs/beacon-types@npm:4.8.1-ecad.2"
+  dependencies:
+    "@types/chrome": "npm:0.0.315"
+  checksum: 10c0/e91b7c5e6617ad699cbcac479c6db5854d0214396ac39b0831a0348b7f5ca2a06475cc9c2a1066eb762031dc40743b08591c7211cbb90eb55e9c82f5f36f69eb
+  languageName: node
+  linkType: hard
+
+"@ecadlabs/beacon-ui@npm:4.8.1-ecad.2":
+  version: 4.8.1-ecad.2
+  resolution: "@ecadlabs/beacon-ui@npm:4.8.1-ecad.2"
+  dependencies:
+    "@ecadlabs/beacon-core": "npm:4.8.1-ecad.2"
+    "@ecadlabs/beacon-transport-postmessage": "npm:4.8.1-ecad.2"
+    "@ecadlabs/beacon-types": "npm:4.8.1-ecad.2"
+    "@ecadlabs/beacon-utils": "npm:4.8.1-ecad.2"
+    "@walletconnect/utils": "npm:2.18.0"
+    qrcode-svg: "npm:^1.1.0"
+    react: "npm:^19.1.0"
+    react-dom: "npm:^19.1.0"
+  checksum: 10c0/a088c31110eb5ef4e0cdd7db35329518b221c1850087f8fbf10bf1ff0133f227d9249d15599ad2dcf2ae304442265d9bfd7a45e6ad01404b4f4a6fd7dcde0eb2
+  languageName: node
+  linkType: hard
+
+"@ecadlabs/beacon-utils@npm:4.8.1-ecad.2":
+  version: 4.8.1-ecad.2
+  resolution: "@ecadlabs/beacon-utils@npm:4.8.1-ecad.2"
+  dependencies:
+    "@stablelib/ed25519": "npm:^2.0.2"
+    "@stablelib/nacl": "npm:^2.0.1"
+    "@stablelib/random": "npm:^2.0.1"
+    "@stablelib/utf8": "npm:^2.0.1"
+    bs58check: "npm:4.0.0"
+  checksum: 10c0/b382f124357159b53ca8d6c7cb9268fd67ae937101c1d8b803d8592cbf1dcfc6721071a94f9a94dc70399e10c5ead92c93c584565de5c24c320f17b943d11dcc
+  languageName: node
+  linkType: hard
+
 "@emnapi/core@npm:^1.4.0":
   version: 1.4.3
   resolution: "@emnapi/core@npm:1.4.3"
@@ -1279,242 +1382,91 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tezos-x/octez.connect-blockchain-substrate@npm:0.9.0":
-  version: 0.9.0
-  resolution: "@tezos-x/octez.connect-blockchain-substrate@npm:0.9.0"
+"@taquito/beacon-wallet@npm:^24.2.0":
+  version: 24.2.0
+  resolution: "@taquito/beacon-wallet@npm:24.2.0"
   dependencies:
-    "@tezos-x/octez.connect-types": "npm:0.9.0"
-    "@tezos-x/octez.connect-ui": "npm:0.9.0"
-  checksum: 10c0/f2e04ba581b9372a6bedddf91f4c2c7a8efa74c76fc23ef97de93bdc7e10ec8458f863aacd95fb7156bfb7d1d0c616dec4a406fe79dc625abbb0f2909eed6993
-  languageName: node
-  linkType: hard
-
-"@tezos-x/octez.connect-blockchain-tezos@npm:0.9.0":
-  version: 0.9.0
-  resolution: "@tezos-x/octez.connect-blockchain-tezos@npm:0.9.0"
-  dependencies:
-    "@tezos-x/octez.connect-types": "npm:0.9.0"
-    "@tezos-x/octez.connect-ui": "npm:0.9.0"
-  checksum: 10c0/bf9b7d2b8d1e04285bc76c201f34d0738efea09ba2571a1d7c998e6e9887541d5d1b23fb07204702258b304fc9946c92796635cf5f4ed344657df89e208b0cc8
-  languageName: node
-  linkType: hard
-
-"@tezos-x/octez.connect-core@npm:0.9.0":
-  version: 0.9.0
-  resolution: "@tezos-x/octez.connect-core@npm:0.9.0"
-  dependencies:
-    "@stablelib/ed25519": "npm:^2.0.2"
-    "@stablelib/nacl": "npm:^2.0.1"
-    "@stablelib/utf8": "npm:^2.0.1"
-    "@stablelib/x25519-session": "npm:^2.0.1"
-    "@tezos-x/octez.connect-types": "npm:0.9.0"
-    "@tezos-x/octez.connect-utils": "npm:0.9.0"
-    broadcast-channel: "npm:^7.1.0"
-    bs58check: "npm:4.0.0"
-  checksum: 10c0/9d789a34eb67b0bd457259f962228dfe9519233efb94b28be88ec8db7ef0d62f19731dc123a7dcc5eff830db1a723306ba4667f646ea5e2e7caa0e8bf8fdaea7
-  languageName: node
-  linkType: hard
-
-"@tezos-x/octez.connect-dapp@npm:0.9.0, @tezos-x/octez.connect-dapp@npm:^0.9.0":
-  version: 0.9.0
-  resolution: "@tezos-x/octez.connect-dapp@npm:0.9.0"
-  dependencies:
-    "@tezos-x/octez.connect-core": "npm:0.9.0"
-    "@tezos-x/octez.connect-transport-matrix": "npm:0.9.0"
-    "@tezos-x/octez.connect-transport-postmessage": "npm:0.9.0"
-    "@tezos-x/octez.connect-transport-walletconnect": "npm:0.9.0"
-    "@tezos-x/octez.connect-ui": "npm:0.9.0"
-    broadcast-channel: "npm:^7.1.0"
-  checksum: 10c0/a616d30207baa04285d728ff707494a5030b7b9cd1bc93f8a8c0c07f5c1285173d10af5361943869089d55bb06a51c43425c6eaf7818583739e7fae9328fca8b
-  languageName: node
-  linkType: hard
-
-"@tezos-x/octez.connect-sdk@npm:^0.9.0":
-  version: 0.9.0
-  resolution: "@tezos-x/octez.connect-sdk@npm:0.9.0"
-  dependencies:
-    "@tezos-x/octez.connect-blockchain-substrate": "npm:0.9.0"
-    "@tezos-x/octez.connect-blockchain-tezos": "npm:0.9.0"
-    "@tezos-x/octez.connect-core": "npm:0.9.0"
-    "@tezos-x/octez.connect-dapp": "npm:0.9.0"
-    "@tezos-x/octez.connect-transport-matrix": "npm:0.9.0"
-    "@tezos-x/octez.connect-transport-postmessage": "npm:0.9.0"
-    "@tezos-x/octez.connect-types": "npm:0.9.0"
-    "@tezos-x/octez.connect-ui": "npm:0.9.0"
-    "@tezos-x/octez.connect-utils": "npm:0.9.0"
-    "@tezos-x/octez.connect-wallet": "npm:0.9.0"
-  checksum: 10c0/429750cb30db12fd8fae7a17be6c59e85907821edc2bced4a6166e57dfcdf5da44018859b5e4fb2d4418b46f039a06ea5857b5b7781aa2bdca4f8e48326f215f
-  languageName: node
-  linkType: hard
-
-"@tezos-x/octez.connect-transport-matrix@npm:0.9.0":
-  version: 0.9.0
-  resolution: "@tezos-x/octez.connect-transport-matrix@npm:0.9.0"
-  dependencies:
-    "@tezos-x/octez.connect-core": "npm:0.9.0"
-    "@tezos-x/octez.connect-utils": "npm:0.9.0"
-    axios: "npm:^1.8.4"
-  checksum: 10c0/5b16b785060bfc3bcf373511f802f2147b33c38bf87ea3afd2b36c374c3d78cc058430d4b9aeb1de8a57202886334ec3370294edb22a4a6ffc204bbb13304d89
-  languageName: node
-  linkType: hard
-
-"@tezos-x/octez.connect-transport-postmessage@npm:0.9.0":
-  version: 0.9.0
-  resolution: "@tezos-x/octez.connect-transport-postmessage@npm:0.9.0"
-  dependencies:
-    "@tezos-x/octez.connect-core": "npm:0.9.0"
-    "@tezos-x/octez.connect-types": "npm:0.9.0"
-    "@tezos-x/octez.connect-utils": "npm:0.9.0"
-  checksum: 10c0/aaccda3e0beee7ea610ed992d032298064e323b02ad3493713dbbc454b8a6f1b03e151c7139ed390a1118878030c1375941ce723f098f25feaecdde41776f3fa
-  languageName: node
-  linkType: hard
-
-"@tezos-x/octez.connect-transport-walletconnect@npm:0.9.0":
-  version: 0.9.0
-  resolution: "@tezos-x/octez.connect-transport-walletconnect@npm:0.9.0"
-  dependencies:
-    "@tezos-x/octez.connect-core": "npm:0.9.0"
-    "@tezos-x/octez.connect-types": "npm:0.9.0"
-    "@tezos-x/octez.connect-utils": "npm:0.9.0"
-    "@walletconnect/sign-client": "npm:2.18.0"
-    elliptic: "npm:^6.6.1"
-  checksum: 10c0/420aff7c9276c6853c3d7fa7b9399ff713b150a2fb34bd2b257213ba27e40e214476606cc7d4914095e1cbf3ba0ba94d67731c9344c1bf1c271a9db269c6e780
-  languageName: node
-  linkType: hard
-
-"@tezos-x/octez.connect-types@npm:0.9.0":
-  version: 0.9.0
-  resolution: "@tezos-x/octez.connect-types@npm:0.9.0"
-  dependencies:
-    "@types/chrome": "npm:0.0.315"
-  checksum: 10c0/b816c54dd6ebf509765a9ac007343906d68fbb746c55671435ed1c96fd2a9e0ebe2486ec4c61c6800857e5dcba8bf18c8bb3940d25cdb12250f3d1e5d5f885fb
-  languageName: node
-  linkType: hard
-
-"@tezos-x/octez.connect-ui@npm:0.9.0":
-  version: 0.9.0
-  resolution: "@tezos-x/octez.connect-ui@npm:0.9.0"
-  dependencies:
-    "@tezos-x/octez.connect-core": "npm:0.9.0"
-    "@tezos-x/octez.connect-transport-postmessage": "npm:0.9.0"
-    "@tezos-x/octez.connect-types": "npm:0.9.0"
-    "@tezos-x/octez.connect-utils": "npm:0.9.0"
-    "@walletconnect/utils": "npm:2.18.0"
-    qrcode-svg: "npm:^1.1.0"
-    react: "npm:^19.1.0"
-    react-dom: "npm:^19.1.0"
-  checksum: 10c0/b6e839b813279ba57c33e62b0c76d77c2b55d6965ce75afa7a68047e4acc36b68f4040d448fa7cf04cd43e2e7f3b03ad05ce609a16d83ac80f36f389ca4d6fd5
-  languageName: node
-  linkType: hard
-
-"@tezos-x/octez.connect-utils@npm:0.9.0":
-  version: 0.9.0
-  resolution: "@tezos-x/octez.connect-utils@npm:0.9.0"
-  dependencies:
-    "@stablelib/ed25519": "npm:^2.0.2"
-    "@stablelib/nacl": "npm:^2.0.1"
-    "@stablelib/random": "npm:^2.0.1"
-    "@stablelib/utf8": "npm:^2.0.1"
-    bs58check: "npm:4.0.0"
-  checksum: 10c0/b30cd4cc99a5e7c15b732276a13c3b38ec6eb87de4860561eb4a8cc354f34704a31a3f7f359f423df157da9d58b0cd70c23ebfb053ba5fc021124dc268ef7742
-  languageName: node
-  linkType: hard
-
-"@tezos-x/octez.connect-wallet@npm:0.9.0":
-  version: 0.9.0
-  resolution: "@tezos-x/octez.connect-wallet@npm:0.9.0"
-  dependencies:
-    "@tezos-x/octez.connect-core": "npm:0.9.0"
-    "@tezos-x/octez.connect-transport-matrix": "npm:0.9.0"
-    "@tezos-x/octez.connect-transport-postmessage": "npm:0.9.0"
-  checksum: 10c0/ee7823ac45f8a87c361d78dab42f8f019d661b471b2c98e6e4a3c6a37f83de40453e7fb599eec4b13b91e73072f49edf08d8813eb9c218189f4f7af5d3704153
-  languageName: node
-  linkType: hard
-
-"@tezos-x/octez.js-core@npm:*":
-  version: 0.9.0
-  resolution: "@tezos-x/octez.js-core@npm:0.9.0"
-  dependencies:
-    json-stringify-safe: "npm:^5.0.1"
-  checksum: 10c0/4d5c81d28f59048492d7a0b12a43e6744ca86fe3e153ccc77773051bac7ffb0f6be2b644c15a79d58255a3a76341429d98b040614630d90584051fa49069f8ee
-  languageName: node
-  linkType: hard
-
-"@tezos-x/octez.js-dapp-wallet@npm:^0.9.1":
-  version: 0.9.1
-  resolution: "@tezos-x/octez.js-dapp-wallet@npm:0.9.1"
-  dependencies:
-    "@tezos-x/octez.connect-dapp": "npm:^0.9.0"
-    "@tezos-x/octez.js": "npm:*"
-    "@tezos-x/octez.js-core": "npm:*"
+    "@ecadlabs/beacon-dapp": "npm:^4.8.1-ecad"
+    "@ecadlabs/beacon-types": "npm:^4.8.1-ecad"
+    "@taquito/core": "npm:^24.2.0"
+    "@taquito/taquito": "npm:^24.2.0"
     crypto-browserify: "npm:^3.12.1"
     util: "npm:^0.12.5"
-  checksum: 10c0/f7c403ebb91c3b50df57d7c8f508cea586f895ddc9d35a05edd54cc898acce41db857c3e17146d4df3f6946ab225a46f0fa034c5e444629bc2a24c14bba7f468
+  checksum: 10c0/b3a8e41798ae7704d9d8c617c793da301100b97cf9c596048ae5a630b4d153c2f1df1cbf24e4ecdc41e48154e7b06d36dbe55ffe5961b3d23215dc42e5430e37
   languageName: node
   linkType: hard
 
-"@tezos-x/octez.js-http-utils@npm:*":
-  version: 0.9.0
-  resolution: "@tezos-x/octez.js-http-utils@npm:0.9.0"
+"@taquito/core@npm:^24.2.0":
+  version: 24.2.0
+  resolution: "@taquito/core@npm:24.2.0"
   dependencies:
-    "@tezos-x/octez.js-core": "npm:*"
+    json-stringify-safe: "npm:^5.0.1"
+  checksum: 10c0/23d7851d18ac03af2abd7f1390613cc65e0a8ef48058b7452615e750126286d0d339f4c837084f471413b24592e2c5831b5bbbaf6be392984b688d8aeb38b89a
+  languageName: node
+  linkType: hard
+
+"@taquito/http-utils@npm:^24.2.0":
+  version: 24.2.0
+  resolution: "@taquito/http-utils@npm:24.2.0"
+  dependencies:
+    "@taquito/core": "npm:^24.2.0"
     node-fetch: "npm:^2.7.0"
-  checksum: 10c0/a29951ad7c1b6d83b002e52458021724d8bf93c8ad1c432e63b4b0a61232b573a73b95605ccb23249021544f5eb4296b5d78af94e1ddc04a65a999757b60c881
+  checksum: 10c0/21bcff5d79d2e6c842fb19f550e9ecd821b33e7391a58c66406b75c7162796f516ef4e5e44f0ea76850bc5c37d576b426fc1f01731ec1b438c76c8302b3579ee
   languageName: node
   linkType: hard
 
-"@tezos-x/octez.js-local-forging@npm:*":
-  version: 0.9.0
-  resolution: "@tezos-x/octez.js-local-forging@npm:0.9.0"
+"@taquito/local-forging@npm:^24.2.0":
+  version: 24.2.0
+  resolution: "@taquito/local-forging@npm:24.2.0"
   dependencies:
-    "@tezos-x/octez.js-core": "npm:*"
-    "@tezos-x/octez.js-utils": "npm:*"
+    "@taquito/core": "npm:^24.2.0"
+    "@taquito/utils": "npm:^24.2.0"
     bignumber.js: "npm:^9.1.2"
     fast-text-encoding: "npm:^1.0.6"
     whatwg-url: "npm:^15.1.0"
-  checksum: 10c0/8d903495025a9ad1a0d3e590d9c898ec11d9a8d523334ff3c0f38beca6bd2cc5af80647fecd02ff7325c6415ed5049fb77670b98b34b1cfb42d317817ace81e7
+  checksum: 10c0/0465341f11431d53f3c5ed707c5fa9997cba58e37cae8f002fc099748d0c630202beb98f7a3cd1cd9a987f30e51ad7f9f6b04785a620b7e5407bb56776c6da8f
   languageName: node
   linkType: hard
 
-"@tezos-x/octez.js-michel-codec@npm:*":
-  version: 0.9.0
-  resolution: "@tezos-x/octez.js-michel-codec@npm:0.9.0"
+"@taquito/michel-codec@npm:^24.2.0":
+  version: 24.2.0
+  resolution: "@taquito/michel-codec@npm:24.2.0"
   dependencies:
-    "@tezos-x/octez.js-core": "npm:*"
-  checksum: 10c0/65926f6a19bf4b138a2ca4c1c92c49046c5749c926182802cf237fc4bf38ca9bde3a723e26f1e7a8587e5e0cef70d42f714d8208204da4bd677c6a367e765664
+    "@taquito/core": "npm:^24.2.0"
+  checksum: 10c0/f06e9f54f205f7b9dd08907f8cc3e44bdeb1f65a24e0307b0f61c98e67d7d7e55a724ca744c38d6180d28edaa37c957aa62691fea56c27f45588b7a126e15a46
   languageName: node
   linkType: hard
 
-"@tezos-x/octez.js-michelson-encoder@npm:*":
-  version: 0.9.0
-  resolution: "@tezos-x/octez.js-michelson-encoder@npm:0.9.0"
+"@taquito/michelson-encoder@npm:^24.2.0":
+  version: 24.2.0
+  resolution: "@taquito/michelson-encoder@npm:24.2.0"
   dependencies:
-    "@tezos-x/octez.js-core": "npm:*"
-    "@tezos-x/octez.js-rpc": "npm:*"
-    "@tezos-x/octez.js-signer": "npm:*"
-    "@tezos-x/octez.js-utils": "npm:*"
+    "@taquito/core": "npm:^24.2.0"
+    "@taquito/rpc": "npm:^24.2.0"
+    "@taquito/signer": "npm:^24.2.0"
+    "@taquito/utils": "npm:^24.2.0"
     bignumber.js: "npm:^9.1.2"
     fast-json-stable-stringify: "npm:^2.1.0"
-  checksum: 10c0/3d770a251e87f0b0ef7dea26019d143975646f8ce675fb6a218682e02b4acc818086d49c9a08c960e0b358f066ebd6c12f6a1b615940ff30930bd59f9c3e641b
+  checksum: 10c0/5675071c2d1cd569037e16d0b4e3688e2e8ad9c8917985e1177ab42d62db40221fed5d3e9a5e6ca6e5ce0d8dfd40b452831fe325324f163ad0d9fdc8e16ce10a
   languageName: node
   linkType: hard
 
-"@tezos-x/octez.js-rpc@npm:*, @tezos-x/octez.js-rpc@npm:^0.9.0":
-  version: 0.9.0
-  resolution: "@tezos-x/octez.js-rpc@npm:0.9.0"
+"@taquito/rpc@npm:^24.2.0":
+  version: 24.2.0
+  resolution: "@taquito/rpc@npm:24.2.0"
   dependencies:
-    "@tezos-x/octez.js-core": "npm:*"
-    "@tezos-x/octez.js-http-utils": "npm:*"
-    "@tezos-x/octez.js-utils": "npm:*"
+    "@taquito/core": "npm:^24.2.0"
+    "@taquito/http-utils": "npm:^24.2.0"
+    "@taquito/utils": "npm:^24.2.0"
     bignumber.js: "npm:^9.1.2"
     whatwg-url: "npm:^15.1.0"
-  checksum: 10c0/698b24e5f75060824d257f84c933b56522d0ddca1d9fc67c3210e5ea38eec4b7f5a209734d0f458d0a1d01432c0683ff831a42c6cb1af7cda03b05917bd281c3
+  checksum: 10c0/8cf43af521ce4ea23892d390e583a3fe6c50d6b03e0e4a8d1d7c1952b9b843b15dbd360c80297b5a3bbfbd6f1684719dddacfa17d8b7daec4059b03d68850011
   languageName: node
   linkType: hard
 
-"@tezos-x/octez.js-signer@npm:*":
-  version: 0.9.0
-  resolution: "@tezos-x/octez.js-signer@npm:0.9.0"
+"@taquito/signer@npm:^24.2.0":
+  version: 24.2.0
+  resolution: "@taquito/signer@npm:24.2.0"
   dependencies:
     "@noble/curves": "npm:^1.9.7"
     "@stablelib/blake2b": "npm:^1.0.1"
@@ -1523,50 +1475,202 @@ __metadata:
     "@stablelib/nacl": "npm:^1.0.4"
     "@stablelib/pbkdf2": "npm:^1.0.1"
     "@stablelib/sha512": "npm:^1.0.1"
-    "@tezos-x/octez.js-core": "npm:*"
-    "@tezos-x/octez.js-utils": "npm:*"
+    "@taquito/core": "npm:^24.2.0"
+    "@taquito/utils": "npm:^24.2.0"
     "@types/bn.js": "npm:^5.1.5"
     bip39: "npm:3.1.0"
     bn.js: "npm:^5.2.2"
     pbkdf2: "npm:^3.1.2"
     typedarray-to-buffer: "npm:^4.0.0"
-  checksum: 10c0/0195ca1764f59e0c2a8325a5216efb6a053a3d310e41ff70a866b3eccd106e3c4f674f88f657d2ca0d7d1efe0e52520e16d4e1dbe6d1589dd95e932efbb60f11
+  checksum: 10c0/b756c5590a3973c1e4de55cee7451e61e3c1ba688cedcc30a5a2881fc54e8a15475c20e82c454e97d6a8da9f41d58c34ec2134ed8497e5890a49181876903d60
   languageName: node
   linkType: hard
 
-"@tezos-x/octez.js-utils@npm:*":
-  version: 0.9.0
-  resolution: "@tezos-x/octez.js-utils@npm:0.9.0"
+"@taquito/taquito@npm:^24.2.0":
+  version: 24.2.0
+  resolution: "@taquito/taquito@npm:24.2.0"
+  dependencies:
+    "@taquito/core": "npm:^24.2.0"
+    "@taquito/http-utils": "npm:^24.2.0"
+    "@taquito/local-forging": "npm:^24.2.0"
+    "@taquito/michel-codec": "npm:^24.2.0"
+    "@taquito/michelson-encoder": "npm:^24.2.0"
+    "@taquito/rpc": "npm:^24.2.0"
+    "@taquito/signer": "npm:^24.2.0"
+    "@taquito/utils": "npm:^24.2.0"
+    bignumber.js: "npm:^9.1.2"
+    rxjs: "npm:^7.8.2"
+  checksum: 10c0/a07c90229959ea877f7417977e4f2b15248d217c1be23985a7b2ea9f2883556c40adb52c52552b933acc0d4fc742030641e6dd73c9c0154868b92e60c8688195
+  languageName: node
+  linkType: hard
+
+"@taquito/utils@npm:^24.2.0":
+  version: 24.2.0
+  resolution: "@taquito/utils@npm:24.2.0"
   dependencies:
     "@noble/curves": "npm:^1.9.7"
     "@stablelib/blake2b": "npm:^1.0.1"
     "@stablelib/ed25519": "npm:^1.0.3"
-    "@tezos-x/octez.js-core": "npm:*"
+    "@taquito/core": "npm:^24.2.0"
     "@types/bs58check": "npm:^2.1.2"
     bignumber.js: "npm:^9.1.2"
     blakejs: "npm:^1.2.1"
     bs58check: "npm:^3.0.1"
     buffer: "npm:^6.0.3"
     typedarray-to-buffer: "npm:^4.0.0"
-  checksum: 10c0/a520857266e79d5972744b7f24c87bccd6febd32bee43b3e311732c58082a99cb7a3b3c6bb4fd4d525b03d6f1093888e5e54f713072444616bef6fc6447f5352
+  checksum: 10c0/8b8fa0f9da8d4143820be64cda7f8e602b067c7fb5fc478ba6097278600826cc1811ee15df02cb8ac6c2f1b1d3fe67562995ae842ec5c845c9a46dd7f6843faf
   languageName: node
   linkType: hard
 
-"@tezos-x/octez.js@npm:*, @tezos-x/octez.js@npm:^0.9.0":
-  version: 0.9.0
-  resolution: "@tezos-x/octez.js@npm:0.9.0"
+"@tezos-x/octez.connect-blockchain-substrate@npm:4.8.3":
+  version: 4.8.3
+  resolution: "@tezos-x/octez.connect-blockchain-substrate@npm:4.8.3"
   dependencies:
-    "@tezos-x/octez.js-core": "npm:*"
-    "@tezos-x/octez.js-http-utils": "npm:*"
-    "@tezos-x/octez.js-local-forging": "npm:*"
-    "@tezos-x/octez.js-michel-codec": "npm:*"
-    "@tezos-x/octez.js-michelson-encoder": "npm:*"
-    "@tezos-x/octez.js-rpc": "npm:*"
-    "@tezos-x/octez.js-signer": "npm:*"
-    "@tezos-x/octez.js-utils": "npm:*"
-    bignumber.js: "npm:^9.1.2"
-    rxjs: "npm:^7.8.2"
-  checksum: 10c0/3988c5328bfd3c4aebda7e82b763fae021364892ab28a92d914f5e456fa14a77ea3006725ddad0ae920d2300b2bfceaa7ba4a0a05ca4c723eec0cf8bb697b84c
+    "@tezos-x/octez.connect-types": "npm:4.8.3"
+    "@tezos-x/octez.connect-ui": "npm:4.8.3"
+  checksum: 10c0/0ab82b07aae182508a7099b935c8399cbe8fc05b043cb267ad5ec05c540741d17b541bbad1f8dd066fe138e58618d3a9c317eed3cfcf6f881a6e134ef8d67009
+  languageName: node
+  linkType: hard
+
+"@tezos-x/octez.connect-blockchain-tezos@npm:4.8.3":
+  version: 4.8.3
+  resolution: "@tezos-x/octez.connect-blockchain-tezos@npm:4.8.3"
+  dependencies:
+    "@tezos-x/octez.connect-types": "npm:4.8.3"
+    "@tezos-x/octez.connect-ui": "npm:4.8.3"
+  checksum: 10c0/008f11e08e124258ebbeb9b5d4bcdd21e96fcbed045568c4fff5c0e3b35cdb73bb4da03f98fb5882abc46eadef44d81cbe26aa11631c3ad8cc3075377138bf68
+  languageName: node
+  linkType: hard
+
+"@tezos-x/octez.connect-core@npm:4.8.3":
+  version: 4.8.3
+  resolution: "@tezos-x/octez.connect-core@npm:4.8.3"
+  dependencies:
+    "@stablelib/ed25519": "npm:^2.0.2"
+    "@stablelib/nacl": "npm:^2.0.1"
+    "@stablelib/utf8": "npm:^2.0.1"
+    "@stablelib/x25519-session": "npm:^2.0.1"
+    "@tezos-x/octez.connect-types": "npm:4.8.3"
+    "@tezos-x/octez.connect-utils": "npm:4.8.3"
+    broadcast-channel: "npm:^7.1.0"
+    bs58check: "npm:4.0.0"
+  checksum: 10c0/9baacb96bfa81e06e45964abc5987106a3061a5ec39a2d0839482b53230ae74f96433c030b1a8bef25962b1162cfb8437801887bf44e23ed4f4491cdc0d6956a
+  languageName: node
+  linkType: hard
+
+"@tezos-x/octez.connect-dapp@npm:4.8.3":
+  version: 4.8.3
+  resolution: "@tezos-x/octez.connect-dapp@npm:4.8.3"
+  dependencies:
+    "@tezos-x/octez.connect-core": "npm:4.8.3"
+    "@tezos-x/octez.connect-transport-matrix": "npm:4.8.3"
+    "@tezos-x/octez.connect-transport-postmessage": "npm:4.8.3"
+    "@tezos-x/octez.connect-transport-walletconnect": "npm:4.8.3"
+    "@tezos-x/octez.connect-ui": "npm:4.8.3"
+    broadcast-channel: "npm:^7.1.0"
+  checksum: 10c0/b857b3fe3a5542f8736a8e24313b195e1e77ace341871b5b77509ec4ecd33510aa3fec609f9c080e5940ea838117a302c20c0c3f8ac784dae302c1f1c2874649
+  languageName: node
+  linkType: hard
+
+"@tezos-x/octez.connect-sdk@npm:^4.8.3":
+  version: 4.8.3
+  resolution: "@tezos-x/octez.connect-sdk@npm:4.8.3"
+  dependencies:
+    "@tezos-x/octez.connect-blockchain-substrate": "npm:4.8.3"
+    "@tezos-x/octez.connect-blockchain-tezos": "npm:4.8.3"
+    "@tezos-x/octez.connect-core": "npm:4.8.3"
+    "@tezos-x/octez.connect-dapp": "npm:4.8.3"
+    "@tezos-x/octez.connect-transport-matrix": "npm:4.8.3"
+    "@tezos-x/octez.connect-transport-postmessage": "npm:4.8.3"
+    "@tezos-x/octez.connect-types": "npm:4.8.3"
+    "@tezos-x/octez.connect-ui": "npm:4.8.3"
+    "@tezos-x/octez.connect-utils": "npm:4.8.3"
+    "@tezos-x/octez.connect-wallet": "npm:4.8.3"
+  checksum: 10c0/66310c01f24b6be90a1e1ec3e3d3b6c9dce1911bda63e5a64679c2e2bfc66f37b567cdc93c756810900286dd3d7100f56708c09524b6dcfa1fdadc40f2c66633
+  languageName: node
+  linkType: hard
+
+"@tezos-x/octez.connect-transport-matrix@npm:4.8.3":
+  version: 4.8.3
+  resolution: "@tezos-x/octez.connect-transport-matrix@npm:4.8.3"
+  dependencies:
+    "@tezos-x/octez.connect-core": "npm:4.8.3"
+    "@tezos-x/octez.connect-utils": "npm:4.8.3"
+    axios: "npm:^1.8.4"
+  checksum: 10c0/72bf38fd81f463de710056115dceb55d0764630197b062c9deb4defcd3ca29af39d2627d3ed12537fde7d80b5ff67c320f37a8fab7f7a51753df147b7a42a493
+  languageName: node
+  linkType: hard
+
+"@tezos-x/octez.connect-transport-postmessage@npm:4.8.3":
+  version: 4.8.3
+  resolution: "@tezos-x/octez.connect-transport-postmessage@npm:4.8.3"
+  dependencies:
+    "@tezos-x/octez.connect-core": "npm:4.8.3"
+    "@tezos-x/octez.connect-types": "npm:4.8.3"
+    "@tezos-x/octez.connect-utils": "npm:4.8.3"
+  checksum: 10c0/f513b369f17f646ed1d625ce0a2d38835497d40ac1ee61539bbb82f7d84d8e78ffb7f0386458f2f45c866f73940d28788db3749ffebf20f499236f9d19739b78
+  languageName: node
+  linkType: hard
+
+"@tezos-x/octez.connect-transport-walletconnect@npm:4.8.3":
+  version: 4.8.3
+  resolution: "@tezos-x/octez.connect-transport-walletconnect@npm:4.8.3"
+  dependencies:
+    "@tezos-x/octez.connect-core": "npm:4.8.3"
+    "@tezos-x/octez.connect-types": "npm:4.8.3"
+    "@tezos-x/octez.connect-utils": "npm:4.8.3"
+    "@walletconnect/sign-client": "npm:2.18.0"
+    elliptic: "npm:^6.6.1"
+  checksum: 10c0/7956f877bbf3f8972d75d6c3e36a400d97ef04991b3a8b80a0c25d2a8443cc9d25a475a843c8dd03b18d46d4b394ac8d6ecf8bf6fdf63bc5cd311f71ad5150ca
+  languageName: node
+  linkType: hard
+
+"@tezos-x/octez.connect-types@npm:4.8.3":
+  version: 4.8.3
+  resolution: "@tezos-x/octez.connect-types@npm:4.8.3"
+  dependencies:
+    "@types/chrome": "npm:0.0.315"
+  checksum: 10c0/387f009d36d3e2e97ced0a45109db03ad2153f28592efa42539f64e310ba50a1405fad94e0f73edb6df9d7453bc8818005c32b25b1bea23f497662c422996feb
+  languageName: node
+  linkType: hard
+
+"@tezos-x/octez.connect-ui@npm:4.8.3":
+  version: 4.8.3
+  resolution: "@tezos-x/octez.connect-ui@npm:4.8.3"
+  dependencies:
+    "@tezos-x/octez.connect-core": "npm:4.8.3"
+    "@tezos-x/octez.connect-transport-postmessage": "npm:4.8.3"
+    "@tezos-x/octez.connect-types": "npm:4.8.3"
+    "@tezos-x/octez.connect-utils": "npm:4.8.3"
+    "@walletconnect/utils": "npm:2.18.0"
+    qrcode-svg: "npm:^1.1.0"
+    react: "npm:^19.1.0"
+    react-dom: "npm:^19.1.0"
+  checksum: 10c0/0a1f2bc16cdf6c8a63555b5d96ca6a4269b21a2785dd9ac0b9885e494543c36b5bd61681aa4b908622f2a3b15ef447c7e1894217db9dd45dc9d0d813dde7cfe5
+  languageName: node
+  linkType: hard
+
+"@tezos-x/octez.connect-utils@npm:4.8.3":
+  version: 4.8.3
+  resolution: "@tezos-x/octez.connect-utils@npm:4.8.3"
+  dependencies:
+    "@stablelib/ed25519": "npm:^2.0.2"
+    "@stablelib/nacl": "npm:^2.0.1"
+    "@stablelib/random": "npm:^2.0.1"
+    "@stablelib/utf8": "npm:^2.0.1"
+    bs58check: "npm:4.0.0"
+  checksum: 10c0/3e9764ae7433863fd759a4821cb3ae19d60d52ac12382792b5711c855386a00b344bcffa7f566780cdcf895a153b82253f7f2c34c6b6962af5a5cb4c64fddd51
+  languageName: node
+  linkType: hard
+
+"@tezos-x/octez.connect-wallet@npm:4.8.3":
+  version: 4.8.3
+  resolution: "@tezos-x/octez.connect-wallet@npm:4.8.3"
+  dependencies:
+    "@tezos-x/octez.connect-core": "npm:4.8.3"
+    "@tezos-x/octez.connect-transport-matrix": "npm:4.8.3"
+    "@tezos-x/octez.connect-transport-postmessage": "npm:4.8.3"
+  checksum: 10c0/ea2fb7b5f25e2f0465ba9835c6ba1e38cb3518a887b6e075204c52291c86aa631eb93c1567639d7aa3dfebcf5dd5061f9a1343e7b97bc045b08c3ae78d7ab46c
   languageName: node
   linkType: hard
 
@@ -7646,10 +7750,10 @@ __metadata:
     "@chakra-ui/react": "npm:^3.19.2"
     "@emotion/react": "npm:^11.14.0"
     "@tanstack/react-query": "npm:^5.37.1"
-    "@tezos-x/octez.connect-sdk": "npm:^0.9.0"
-    "@tezos-x/octez.js": "npm:^0.9.0"
-    "@tezos-x/octez.js-dapp-wallet": "npm:^0.9.1"
-    "@tezos-x/octez.js-rpc": "npm:^0.9.0"
+    "@taquito/beacon-wallet": "npm:^24.2.0"
+    "@taquito/rpc": "npm:^24.2.0"
+    "@taquito/taquito": "npm:^24.2.0"
+    "@tezos-x/octez.connect-sdk": "npm:^4.8.3"
     "@types/js-cookie": "npm:^3"
     "@types/lodash": "npm:^4"
     "@types/react": "npm:^19.1.3"

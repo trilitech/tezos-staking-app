@@ -1,7 +1,7 @@
-import { BeaconWallet } from '@tezos-x/octez.js-dapp-wallet'
-import { TezosToolkit } from '@tezos-x/octez.js'
-import { RpcClient, RpcClientCache } from '@tezos-x/octez.js-rpc'
-import { NetworkType, PermissionScope, BeaconEvent } from '@tezos-x/octez.connect-sdk'
+import { BeaconWallet, BeaconEvent } from '@taquito/beacon-wallet'
+import { TezosToolkit } from '@taquito/taquito'
+import { RpcClient, RpcClientCache } from '@taquito/rpc'
+import { PermissionScope } from '@tezos-x/octez.connect-sdk'
 
 const rpc = new RpcClientCache(
   new RpcClient(process.env.NEXT_PUBLIC_RPC_ENDPOINT as string)
@@ -15,7 +15,7 @@ if (typeof window !== 'undefined') {
     g.__BEACON_WALLET__ = new BeaconWallet({
       name: 'Stake XTZ',
       appUrl: window.location.origin,
-      network: { type: process.env.NEXT_PUBLIC_NETWORK as NetworkType },
+      network: { type: process.env.NEXT_PUBLIC_NETWORK as any },
       featuredWallets: ['kukai', 'trust', 'temple', 'umami']
     })
   }
@@ -35,6 +35,6 @@ export const createBeaconWallet = () =>
 
 export async function requestBeaconPermissions(wallet: BeaconWallet) {
   return await wallet.client.requestPermissions({
-    scopes: [PermissionScope.OPERATION_REQUEST, PermissionScope.SIGN]
+    scopes: [PermissionScope.OPERATION_REQUEST, PermissionScope.SIGN] as any
   })
 }

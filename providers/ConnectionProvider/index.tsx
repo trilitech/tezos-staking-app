@@ -7,15 +7,14 @@ import {
   useRef
 } from 'react'
 import { WalletApi } from './types'
-import { TezosToolkit } from '@tezos-x/octez.js'
+import { TezosToolkit } from '@taquito/taquito'
 import {
   createBeaconWallet,
   Tezos as TzosInstance,
   requestBeaconPermissions
 } from './beacon'
-import { BeaconWallet } from '@tezos-x/octez.js-dapp-wallet'
+import { BeaconWallet, BeaconEvent } from '@taquito/beacon-wallet'
 import { trackGAEvent, GAAction, GACategory } from '@/utils/trackGAEvent'
-import { BeaconEvent } from '@tezos-x/octez.connect-sdk'
 
 interface ConnectionContextType extends Partial<WalletApi> {
   connect: () => Promise<void>
