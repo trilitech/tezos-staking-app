@@ -41,7 +41,7 @@ export enum GACategory {
 }
 
 export const trackGAEvent = (action: GAAction, category: GACategory) => {
-  ;(window as any)?.gtag('event', action, {
+  ;(window as any)?.gtag?.('event', action, {
     event_category: category
   })
 }

@@ -9,7 +9,7 @@ This app helps you to perform stake,unstake, finalize operations introduced in p
 ### Website:
 
 [stake.tezos.com](stake.tezos.com) (mainnet) <br>
-[stake-ghostnet.tezos.com](stake-ghostnet.tezos.com) (ghostnet)
+[stake-shadownet.tezos.com](stake-shadownet.tezos.com) (shadownet)
 
 ### Steps:
 
@@ -20,7 +20,7 @@ This app helps you to perform stake,unstake, finalize operations introduced in p
 2. Choose baker and delegate your tez.
 3. Stake your tez.
 4. Unstake your tez tokens whenever you want.
-5. Wait for 4 cycles (5 for ghostnet) and finalize your unstaked tez.
+5. Wait for the protocol's consensus rights delay (4 cycles on mainnet) and finalize your unstaked tez.
 6. Change baker or end delegation whenever you want.
 
 ## Features
@@ -37,7 +37,7 @@ This app helps you to perform stake,unstake, finalize operations introduced in p
 
 1. Clone the repository.
 2. Install yarn.
-3. Rename .env-mainnet(or .env-ghostnet) to .env
+3. Rename .env-mainnet (or .env-shadownet) to .env
 4. Run the following commands:
 
 ```bash

@@ -6,8 +6,11 @@ import { SecondaryButton } from './buttons/SecondaryButton'
 import Cookies from 'js-cookie'
 
 function injectGoogleAnalyticsScripts() {
+  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+  if (!gaId) return
+
   const script1 = document.createElement('script')
-  script1.src = 'https://www.googletagmanager.com/gtag/js?id=G-39LG2721KV'
+  script1.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`
   script1.async = true
 
   const script2 = document.createElement('script')
@@ -15,7 +18,7 @@ function injectGoogleAnalyticsScripts() {
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-39LG2721KV');
+    gtag('config', '${gaId}');
   `
 
   document.head.appendChild(script1)

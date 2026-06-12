@@ -105,7 +105,8 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
               setTezos(TzosInstance)
               trackGAEvent(GAAction.CONNECT_SUCCESS, GACategory.WALLET_SUCCESS)
             })
-            .catch(() => {
+            .catch(error => {
+              console.error('Wallet connection failed:', error)
               reset()
               trackGAEvent(GAAction.CONNECT_ERROR, GACategory.WALLET_ERROR)
               throw new Error(

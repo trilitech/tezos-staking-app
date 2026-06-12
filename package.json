@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "next dev --webpack",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "next lint"
   },
@@ -12,17 +12,17 @@
     "@chakra-ui/react": "^3.19.2",
     "@emotion/react": "^11.14.0",
     "@tanstack/react-query": "^5.37.1",
-    "@tezos-x/octez.connect-sdk": "^0.9.0",
-    "@tezos-x/octez.js": "^0.9.0",
-    "@tezos-x/octez.js-dapp-wallet": "^0.9.1",
-    "@tezos-x/octez.js-rpc": "^0.9.0",
+    "@tezos-x/octez.connect-sdk": "^1.0.0",
+    "@tezos-x/octez.js": "^1.0.0",
+    "@tezos-x/octez.js-dapp-wallet": "^1.0.0",
+    "@tezos-x/octez.js-rpc": "^1.0.0",
     "axios": "^1.7.2",
     "bufferutil": "^4.0.8",
     "date-fns": "^3.6.0",
     "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
     "lucide-react": "^0.509.0",
-    "next": "14.2.35",
+    "next": "^16.2.7",
     "next-themes": "^0.4.6",
     "pino-pretty": "^11.0.0",
     "posthog-js": "^1.262.0",
@@ -39,7 +39,7 @@
     "@types/react-dom": "^18",
     "@typescript-eslint/parser": "^5.0.1",
     "eslint": "^8.52.0",
-    "eslint-config-next": "14.2.3",
+    "eslint-config-next": "^16.2.7",
     "prettier": "^3.1.0",
     "prettier-eslint": "^16.1.2",
     "typescript": "^5.8.3"
@@ -52,5 +52,8 @@
     "arrowParens": "avoid",
     "semi": false
   },
-  "packageManager": "yarn@4.2.2"
+  "packageManager": "yarn@4.2.2",
+  "engines": {
+    "node": ">=24.0.0"
+  }
 }
