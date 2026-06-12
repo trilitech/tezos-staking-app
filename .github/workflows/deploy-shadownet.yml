@@ -67,7 +67,7 @@ jobs:
             echo "::error::Ghostnet host leaked into shadownet bundle"
             exit 1
           fi
-          if grep -rE "rpc\.tzbeta\.net|stake\.tezos\.com" out/_next/ ; then
+          if grep -rE "rpc\.tzbeta\.net|https?://stake\.tezos\.com|https?://api\.tzkt\.io|https?://tzkt\.io" out/_next/ ; then
             echo "::error::Mainnet RPC/host leaked into shadownet bundle"
             exit 1
           fi
