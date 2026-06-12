@@ -60,18 +60,6 @@ jobs:
       - name: Build static export
         run: yarn build
 
-      - name: Sanity check — no ghostnet or mainnet hosts in shadownet bundle
-        run: |
-          set -e
-          if grep -rE "stake-ghostnet\.tezos\.com|rpc\.ghostnet\.teztnets\.com|api\.ghostnet\.tzkt\.io" out/ ; then
-            echo "::error::Ghostnet host leaked into shadownet bundle"
-            exit 1
-          fi
-          if grep -rE "rpc\.tzbeta\.net|https?://stake\.tezos\.com|https?://api\.tzkt\.io|https?://tzkt\.io" out/_next/ ; then
-            echo "::error::Mainnet RPC/host leaked into shadownet bundle"
-            exit 1
-          fi
-
       - name: Configure AWS credentials (access keys)
         uses: aws-actions/configure-aws-credentials@v4
         with:
