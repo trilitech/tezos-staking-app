@@ -12,9 +12,16 @@ import {
 
 const FLAG_KEY = 'beaconDebug'
 
-// Enabled in dev automatically, or on any build by visiting `?beaconDebug=1`
-// (persisted to localStorage). `?beaconDebug=0` turns it back off. This lets us
-// reproduce the Safari failure on a real deployed URL where ITP actually runs.
+// The panel is OFF by default. It turns on when either:
+//  - the build-time env var NEXT_PUBLIC_BEACON_DEBUG is "true"/"1", or
+//  - the runtime ?beaconDebug=1 query param is used (persisted to localStorage;
+//    ?beaconDebug=0 clears it) — handy for a deployed build where ITP runs.
+// A missing/empty env var is treated as off (no crash).
+const envDebugEnabled = () => {
+  const value = process.env.NEXT_PUBLIC_BEACON_DEBUG
+  return value === 'true' || value === '1'
+}
+
 const useDebugEnabled = () => {
   const [enabled, setEnabled] = useState(false)
   useEffect(() => {
@@ -22,10 +29,7 @@ const useDebugEnabled = () => {
     const param = params.get(FLAG_KEY)
     if (param === '1') localStorage.setItem(FLAG_KEY, '1')
     if (param === '0') localStorage.removeItem(FLAG_KEY)
-    setEnabled(
-      process.env.NODE_ENV !== 'production' ||
-        localStorage.getItem(FLAG_KEY) === '1'
-    )
+    setEnabled(envDebugEnabled() || localStorage.getItem(FLAG_KEY) === '1')
   }, [])
   return enabled
 }
