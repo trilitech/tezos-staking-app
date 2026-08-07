@@ -10,6 +10,7 @@ import { WalletApi } from './types'
 import { TezosToolkit } from '@tezos-x/octez.js'
 import {
   createBeaconWallet,
+  resetBeaconWallet,
   Tezos as TzosInstance,
   requestBeaconPermissions
 } from './beacon'
@@ -40,53 +41,67 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
     walletRef.current = createBeaconWallet()
   }
 
-  // On mount, sync active account and set provider
-  useEffect(() => {
-    const init = async () => {
-      try {
-        const wallet = walletRef.current
-        // Ensure subscription exists before any account changes
-        if (wallet && !subscribedRef.current) {
-          wallet.client.subscribeToEvent(
-            BeaconEvent.ACTIVE_ACCOUNT_SET,
-            account => {
-              if (account && walletRef.current) {
-                setIsConnected(true)
-                setAddress(account.address)
-                setBeaconWallet(walletRef.current)
-                TzosInstance.setWalletProvider(walletRef.current)
-                setTezos(TzosInstance)
-              } else {
-                reset()
-              }
-            }
-          )
-          subscribedRef.current = true
-        }
-        const activeAccount = await wallet?.client.getActiveAccount()
-        if (activeAccount && wallet) {
-          setIsConnected(true)
-          setAddress(activeAccount.address)
-          setBeaconWallet(wallet)
-          TzosInstance.setWalletProvider(wallet)
-          setTezos(TzosInstance)
-        } else {
-          reset()
-        }
-      } catch (error) {
-        console.error('Error:', error)
-        reset()
-      }
-    }
-    init()
-  }, [])
-
   const reset = () => {
     setIsConnected(false)
     setAddress(undefined)
     setBeaconWallet(undefined)
     setTezos(undefined)
   }
+
+  // Push a resolved active account into React state (or reset if there is none).
+  const applyActiveAccount = (
+    account: { address: string } | null | undefined
+  ) => {
+    if (account && walletRef.current) {
+      setIsConnected(true)
+      setAddress(account.address)
+      setBeaconWallet(walletRef.current)
+      TzosInstance.setWalletProvider(walletRef.current)
+      setTezos(TzosInstance)
+    } else {
+      reset()
+    }
+  }
+
+  // Subscribe the provider's handler to a wallet client exactly once per client.
+  const subscribeWallet = (wallet: BeaconWallet | undefined) => {
+    if (wallet && !subscribedRef.current) {
+      wallet.client.subscribeToEvent(BeaconEvent.ACTIVE_ACCOUNT_SET, account =>
+        applyActiveAccount(account)
+      )
+      subscribedRef.current = true
+    }
+  }
+
+  // Fully destroy the current client (wiping all beacon:* storage + transport
+  // state), rebuild a fresh one, re-subscribe and return to a disconnected UI.
+  const hardReset = async () => {
+    try {
+      subscribedRef.current = false
+      walletRef.current = await resetBeaconWallet()
+      subscribeWallet(walletRef.current)
+    } catch (error) {
+      console.warn('[beacon] hard reset failed', error)
+    }
+    reset()
+  }
+
+  // On mount, sync active account and set provider
+  useEffect(() => {
+    const init = async () => {
+      try {
+        const wallet = walletRef.current
+        subscribeWallet(wallet)
+        const activeAccount = await wallet?.client.getActiveAccount()
+        applyActiveAccount(activeAccount)
+      } catch (error) {
+        console.error('Error:', error)
+        reset()
+      }
+    }
+    init()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <ConnectionContext.Provider
@@ -114,11 +129,11 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
             })
         },
         disconnect: async () => {
-          const wallet = walletRef.current
-          await wallet?.client.removeAllAccounts()
-          setAddress(undefined)
-          setIsConnected(false)
-          reset()
+          // `removeAllAccounts()` only cleared the account list and left the
+          // secret seed, peers and transport/matrix/walletconnect state behind
+          // in the browser. Fully destroy and rebuild so nothing stale is
+          // cached — this is what stops Safari from needing a site-data clear.
+          await hardReset()
         },
         address,
         isConnected,
