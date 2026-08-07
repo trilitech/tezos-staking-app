@@ -137,6 +137,38 @@ export async function purgeBeaconStorage(): Promise<void> {
 }
 
 /**
+ * True when storage holds at least one paired peer (a `*peers*` record with a
+ * non-empty array). Beacon records the connected wallet as a peer, so an active
+ * account with NO peer means the transport session was evicted — a dead
+ * connection we should treat as disconnected rather than trust.
+ *
+ * Fail-safe: if storage can't be read we return true so a valid session is
+ * never dropped by mistake; we only report "no peer" after a clean scan.
+ */
+export function hasBeaconPeer(): boolean {
+  if (typeof window === 'undefined') return false
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i)
+      if (!key || !key.toLowerCase().includes('beacon:')) continue
+      if (!key.toLowerCase().includes('peers')) continue
+      const raw = localStorage.getItem(key)
+      if (!raw) continue
+      try {
+        const parsed = JSON.parse(raw)
+        if (Array.isArray(parsed) && parsed.length > 0) return true
+      } catch {
+        // A non-JSON peer value still implies a peer; stay safe and keep it.
+        if (raw.trim().length > 2) return true
+      }
+    }
+  } catch {
+    return true
+  }
+  return false
+}
+
+/**
  * Fully tears down the current Beacon connection and rebuilds a fresh client.
  *
  * `BeaconWallet.disconnect()` (-> `client.destroy()`) gracefully disconnects

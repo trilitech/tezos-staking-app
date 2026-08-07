@@ -122,7 +122,7 @@ export const BeaconDebugPanel = () => {
               onClick={() =>
                 run('Simulate ITP eviction', async () => {
                   const r = await simulateItpEviction()
-                  return `Removed ${r.removedKeys.length} transport keys + ${r.removedDatabases.length} IndexedDB db(s) [${r.removedDatabases.join(', ') || 'none'}]; kept ${r.keptKeys.length} main identity keys. Reload: the app should NOT be usable against the dead transport — either the init probe self-heals to "disconnected", or a later operation fails. Compare against "Test app disconnect()" for the deterministic check.`
+                  return `Removed ${r.removedKeys.length} transport/peer keys [${r.removedKeys.join(', ') || 'none'}] + ${r.removedDatabases.length} IndexedDB db(s) [${r.removedDatabases.join(', ') || 'none'}]; kept ${r.keptKeys.length} identity keys. Reload: the account now has no peer, so the app should show "disconnected" (Connect). A later operation would also drop to Connect.`
                 })
               }
             >

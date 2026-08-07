@@ -12,6 +12,7 @@ import {
   createBeaconWallet,
   resetBeaconWallet,
   purgeBeaconStorage,
+  hasBeaconPeer,
   Tezos as TzosInstance,
   requestBeaconPermissions
 } from './beacon'
@@ -140,12 +141,20 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
         return
       }
 
-      // There is a restored session. Verify the transport can actually be
-      // re-established before trusting it — on Safari the account can survive
-      // while its transport session is dead, which used to leave the app stuck
-      // "connected" with every operation hanging. If the probe hangs or throws,
-      // self-heal by wiping the poisoned state so the user can reconnect
-      // cleanly, rather than having to clear site data by hand.
+      // A restored account with no paired peer means the transport session was
+      // evicted (classic Safari ITP): the account survives but the connection
+      // is dead. Deterministically treat that as disconnected — a fresh visit —
+      // instead of trusting the stale account.
+      if (!hasBeaconPeer()) {
+        console.warn('[beacon] active account has no peer, resetting to connect')
+        await hardReset()
+        return
+      }
+
+      // Peer present, so the session should be live. Verify the transport can
+      // actually be re-established before trusting it; if init() hangs or
+      // throws, self-heal by wiping the poisoned state rather than making the
+      // user clear site data by hand.
       try {
         await withTimeout(wallet.client.init(), INIT_TIMEOUT_MS, 'client.init')
         applyActiveAccount(activeAccount)

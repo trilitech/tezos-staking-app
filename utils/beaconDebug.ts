@@ -18,10 +18,28 @@ const BEACON_IDB_HINTS = ['beacon', 'wallet_connect']
 
 const isBeaconKey = (key: string) => key.toLowerCase().includes('beacon:')
 
-// A key belongs to the main client if it starts with `beacon:`; anything that
-// contains `beacon:` behind a prefix (`P2P-`, `WALLET-`, …) is transport-scoped.
-const isTransportScopedKey = (key: string) =>
-  isBeaconKey(key) && !key.toLowerCase().startsWith('beacon:')
+// Substrings that identify transport / peer / session state, independent of any
+// instance prefix. Deleting these while keeping the account identity keys
+// reproduces "connected but the transport is dead" — the shape a real
+// connection takes on this app (all keys are unprefixed `beacon:*`, e.g.
+// `beacon:postmessage-peers-dapp`, `beacon:sdk-matrix-preserved-state`).
+const TRANSPORT_KEY_HINTS = [
+  'peers',
+  'matrix',
+  'walletconnect',
+  'postmessage',
+  'wc-init',
+  'wc-2',
+  'wc_2'
+]
+
+// A key is transport state if it is behind an instance prefix (`P2P-`,
+// `WALLET-`) OR its name matches a transport/peer/session hint.
+const isTransportKey = (key: string) => {
+  const k = key.toLowerCase()
+  if (isBeaconKey(key) && !k.startsWith('beacon:')) return true
+  return TRANSPORT_KEY_HINTS.some(hint => k.includes(hint))
+}
 
 export interface StorageEntry {
   key: string
@@ -90,16 +108,18 @@ export interface SimulationResult {
 /**
  * Simulate Safari ITP evicting the transport half of the Beacon store while the
  * main account identity survives — the shape that leaves the app stuck
- * "connected" against a dead transport. Deletes the transport-scoped
- * (`P2P-`/`WALLET-`) localStorage keys and all beacon IndexedDB, keeping the
- * unprefixed `beacon:*` account keys so getActiveAccount() still returns.
+ * "connected" against a dead transport. Deletes every transport/peer/session
+ * key (peers, matrix, postmessage, walletconnect — at any prefix) and all
+ * beacon IndexedDB, keeping the account identity keys (accounts,
+ * active-account, seed, sdk_version, user-id) so getActiveAccount() still
+ * returns but no peer remains.
  */
 export const simulateItpEviction = async (): Promise<SimulationResult> => {
   const removedKeys: string[] = []
   const keptKeys: string[] = []
   if (typeof window !== 'undefined') {
     for (const { key } of listBeaconStorage()) {
-      if (isTransportScopedKey(key)) {
+      if (isTransportKey(key)) {
         localStorage.removeItem(key)
         removedKeys.push(key)
       } else {
