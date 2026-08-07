@@ -10,7 +10,8 @@ import { WalletApi } from './types'
 import { TezosToolkit } from '@tezos-x/octez.js'
 import {
   createBeaconWallet,
-  purgeBeaconStorage,
+  purgeBeaconLocalStorage,
+  purgeBeaconIndexedDb,
   hasBeaconPeer,
   Tezos as TzosInstance,
   requestBeaconPermissions
@@ -76,17 +77,20 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
     }
   }
 
-  // "Fresh visit": the single way we ever drop to a disconnected state. Purge
-  // every beacon store and reload — the reloaded page constructs exactly one
-  // clean client. We deliberately do NOT call the SDK's destroy() here:
-  //  - destroy-and-rebuild in place races with the client's async init (doubly
-  //    so under StrictMode's double-invoked mount effect) and leaves the next
-  //    connect with no answer from the wallet;
-  //  - destroy() also stops the Matrix transport mid-sync, which rejects with a
-  //    benign "Syncing stopped manually" error that surfaces in the dev overlay.
-  // The page reload tears everything down cleanly instead.
-  const freshVisit = async () => {
-    await purgeBeaconStorage()
+  // "Fresh visit": the single way we ever drop to a disconnected state. Clear
+  // the localStorage keys that gate connection state (synchronous) and reload —
+  // the reloaded page constructs exactly one clean client. Notes:
+  //  - We do NOT call the SDK's destroy() (it races with the client's async
+  //    init — doubly so under StrictMode — and stops the Matrix transport
+  //    mid-sync, emitting a benign "Syncing stopped manually" rejection). The
+  //    reload tears everything down cleanly instead.
+  //  - We do NOT await the IndexedDB purge: on Safari deleteDatabase() hangs on
+  //    an open connection, which would block the reload forever (the "disconnect
+  //    does nothing until you refresh" bug). Fire it best-effort; the reload
+  //    closes the connections anyway.
+  const freshVisit = () => {
+    purgeBeaconLocalStorage()
+    void purgeBeaconIndexedDb()
     if (typeof window !== 'undefined') window.location.href = '/'
   }
 
@@ -113,7 +117,7 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
       // is dead. Treat it as a fresh visit rather than trusting a dead account.
       if (!hasBeaconPeer()) {
         console.warn('[beacon] active account has no peer; resetting to connect')
-        await freshVisit()
+        freshVisit()
         return
       }
 
@@ -154,15 +158,15 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
             })
         },
         disconnect: async () => {
-          // Fresh visit: purge every beacon store (main + transport namespaces
-          // + IndexedDB) and reload to the connect screen. This is what stops
-          // Safari from ever needing a manual "clear site data".
-          await freshVisit()
+          // Fresh visit: clear beacon localStorage and reload to the connect
+          // screen (IndexedDB cleared best-effort, non-blocking). This is what
+          // stops Safari from ever needing a manual "clear site data".
+          freshVisit()
         },
         resetConnection: async () => {
           // A lost/dead connection is treated exactly like a disconnect: fresh
           // visit. You are either connected or you are not.
-          await freshVisit()
+          freshVisit()
         },
         address,
         isConnected,

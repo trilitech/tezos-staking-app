@@ -97,16 +97,15 @@ const deleteIndexedDb = (name: string): Promise<void> =>
   })
 
 /**
- * Remove every persisted trace of Beacon.
+ * Synchronously remove every `beacon:*` localStorage key.
  *
- * `client.destroy()` only clears the *main* client's unprefixed `beacon:*`
- * keys. The SDK also keeps transport-scoped copies under `P2P-beacon:*` /
- * `WALLET-beacon:*`, plus IndexedDB databases (`beacon` for metrics/bug-report
- * and `WALLET_CONNECT_V2_INDEXED_DB` for the WC session). Those survive
- * destroy() and are exactly the stale state that used to force a manual
- * "clear site data" on Safari, so wipe all of it here.
+ * `client.destroy()` only clears the *main* client's unprefixed keys; the SDK
+ * also keeps transport-scoped copies under `P2P-beacon:*` / `WALLET-beacon:*`.
+ * These keys (active-account, peers, seed) are what gate connection state, so
+ * clearing them synchronously is sufficient for a reloaded page to come up
+ * disconnected. This is the part that must always run before a reload.
  */
-export async function purgeBeaconStorage(): Promise<void> {
+export function purgeBeaconLocalStorage(): void {
   if (typeof window === 'undefined') return
   try {
     const keys: string[] = []
@@ -118,6 +117,19 @@ export async function purgeBeaconStorage(): Promise<void> {
   } catch (error) {
     console.warn('[beacon] purge: localStorage clear failed', error)
   }
+}
+
+/**
+ * Best-effort removal of the beacon IndexedDB databases (`beacon` metrics/
+ * bug-report store and `WALLET_CONNECT_V2_INDEXED_DB` WC session).
+ *
+ * IMPORTANT: this may never resolve on Safari — deleteDatabase() blocks on an
+ * open connection and Safari does not reliably fire onblocked/onsuccess. Callers
+ * that need to reload afterwards MUST NOT await this (fire-and-forget); the page
+ * reload closes the connections regardless.
+ */
+export async function purgeBeaconIndexedDb(): Promise<void> {
+  if (typeof window === 'undefined' || !window.indexedDB) return
   try {
     const factory = indexedDB as IDBFactory & {
       databases?: () => Promise<{ name?: string }[]>
