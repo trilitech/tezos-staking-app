@@ -18,7 +18,47 @@ export const Tezos = new TezosToolkit(rpc)
 // one live instance on globalThis.
 const g = globalThis as any
 
+/**
+ * Repair storage written by an older SDK build before the current SDK reads it.
+ *
+ * Older versions stored `beacon:last-selected-wallet` as a bare string (e.g.
+ * "temple_chrome"); this version expects an object and crashes in
+ * DAppClient.updateStorageWallet() with:
+ *   TypeError: Cannot create property 'name' on string 'temple_chrome'
+ * That write is not awaited inside the SDK, so it surfaces as an unhandled
+ * rejection that our connect/init self-heal cannot catch — the value has to be
+ * fixed before the SDK touches it. The key is cosmetic (wallet name/icon) and
+ * defaults to `undefined`, so removing an incompatible value is safe; the SDK
+ * repopulates it on the next successful connect.
+ */
+const sanitizeBeaconStorage = () => {
+  try {
+    for (let i = localStorage.length - 1; i >= 0; i--) {
+      const key = localStorage.key(i)
+      if (!key || !key.toLowerCase().includes('beacon:')) continue
+      if (!key.toLowerCase().includes('last-selected-wallet')) continue
+      const raw = localStorage.getItem(key)
+      if (raw === null) continue
+      let parsed: unknown
+      try {
+        parsed = JSON.parse(raw)
+      } catch {
+        parsed = raw
+      }
+      if (typeof parsed !== 'object' || parsed === null) {
+        localStorage.removeItem(key)
+        console.warn(
+          `[beacon] removed incompatible storage key ${key} (was ${typeof parsed})`
+        )
+      }
+    }
+  } catch (error) {
+    console.warn('[beacon] storage sanitize failed', error)
+  }
+}
+
 const buildBeaconWallet = (): BeaconWallet => {
+  sanitizeBeaconStorage()
   const wallet = new BeaconWallet({
     name: 'Stake XTZ',
     appUrl: window.location.origin,

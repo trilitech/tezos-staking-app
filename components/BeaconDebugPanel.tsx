@@ -7,6 +7,7 @@ import {
   listBeaconStorage,
   listIndexedDbDatabases,
   simulateItpEviction,
+  simulateStaleLastSelectedWallet,
   StorageEntry
 } from '@/utils/beaconDebug'
 
@@ -126,6 +127,21 @@ export const BeaconDebugPanel = () => {
               }
             >
               Simulate ITP eviction (dead transport)
+            </Button>
+
+            <Button
+              size='xs'
+              bg='#a33'
+              color='white'
+              disabled={busy}
+              onClick={() =>
+                run('Simulate stale wallet key', async () => {
+                  const key = simulateStaleLastSelectedWallet()
+                  return `Wrote ${key} = "temple_chrome" (string). Reload: without the fix the app crashes with "Cannot create property 'name' on string"; with the sanitizer it removes the key and loads.`
+                })
+              }
+            >
+              Simulate stale last-selected-wallet (crash)
             </Button>
 
             <Button

@@ -116,6 +116,20 @@ export const simulateItpEviction = async (): Promise<SimulationResult> => {
 }
 
 /**
+ * Reproduce the older-SDK crash where `beacon:last-selected-wallet` was stored
+ * as a bare string instead of an object. On reload, the unpatched app throws
+ * "Cannot create property 'name' on string ..." from updateStorageWallet();
+ * with the sanitizer in beacon.ts the bad key is removed and the app loads.
+ */
+export const simulateStaleLastSelectedWallet = (): string => {
+  const key = 'beacon:last-selected-wallet'
+  if (typeof window !== 'undefined') {
+    localStorage.setItem(key, 'temple_chrome')
+  }
+  return key
+}
+
+/**
  * Wipe everything Beacon-related — the equivalent of a manual "clear site data"
  * for this origin. Useful as a clean baseline between tests.
  */
