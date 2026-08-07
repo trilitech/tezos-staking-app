@@ -10,32 +10,17 @@ import {
   StorageEntry
 } from '@/utils/beaconDebug'
 
-const FLAG_KEY = 'beaconDebug'
-
-// The panel is OFF by default. It turns on when either:
-//  - the build-time env var NEXT_PUBLIC_BEACON_DEBUG is "true"/"1", or
-//  - the runtime ?beaconDebug=1 query param is used (persisted to localStorage;
-//    ?beaconDebug=0 clears it) — handy for a deployed build where ITP runs.
-// A missing/empty env var is treated as off (no crash).
-const envDebugEnabled = () => {
+// The panel is OFF by default and gated solely on the build-time env var
+// NEXT_PUBLIC_BEACON_DEBUG ("true"/"1" to show it). A missing/empty value is
+// treated as off — no crash. The env var is inlined at build time, so it is
+// stable across server and client render (no hydration flip needed).
+const beaconDebugEnabled = () => {
   const value = process.env.NEXT_PUBLIC_BEACON_DEBUG
   return value === 'true' || value === '1'
 }
 
-const useDebugEnabled = () => {
-  const [enabled, setEnabled] = useState(false)
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    const param = params.get(FLAG_KEY)
-    if (param === '1') localStorage.setItem(FLAG_KEY, '1')
-    if (param === '0') localStorage.removeItem(FLAG_KEY)
-    setEnabled(envDebugEnabled() || localStorage.getItem(FLAG_KEY) === '1')
-  }, [])
-  return enabled
-}
-
 export const BeaconDebugPanel = () => {
-  const enabled = useDebugEnabled()
+  const enabled = beaconDebugEnabled()
   const { isConnected, address, disconnect, resetConnection } = useConnection()
   const [entries, setEntries] = useState<StorageEntry[]>([])
   const [dbs, setDbs] = useState<string[]>([])
