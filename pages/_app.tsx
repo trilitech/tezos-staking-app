@@ -13,20 +13,31 @@ const queryClient = new QueryClient()
 
 export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
-    // The Beacon Matrix (P2P) transport rejects its in-flight sync with a
-    // benign "Syncing stopped manually" error whenever the client is torn down
-    // (e.g. on a disconnect/reload). Nothing awaits it, so it would otherwise
-    // surface as an unhandled rejection / dev error overlay. Swallow only that
-    // exact message; everything else propagates normally.
+    // Beacon spins up several wallet transports at once, and the ones the user
+    // does not pick emit benign background rejections that nothing awaits — so
+    // they surface as unhandled rejections / dev error overlays even though the
+    // real connection is fine:
+    //  - "Syncing stopped manually": Matrix (P2P) transport torn down.
+    //  - "Proposal expired" / "Pairing expired": WalletConnect proposal/pairing
+    //    TTL elapses (~5 min) when the WC QR option is left unused.
+    // Swallow only this known-benign set; every other rejection propagates.
+    const BENIGN_WALLET_REJECTIONS = [
+      'Syncing stopped manually',
+      'Proposal expired',
+      'Pairing expired'
+    ]
     const onRejection = (event: PromiseRejectionEvent) => {
       const reason: any = event.reason
       const message = String(reason?.message ?? reason ?? '')
-      if (message.includes('Syncing stopped manually')) {
+      if (BENIGN_WALLET_REJECTIONS.some(m => message.includes(m))) {
         event.preventDefault()
+        event.stopImmediatePropagation()
       }
     }
-    window.addEventListener('unhandledrejection', onRejection)
-    return () => window.removeEventListener('unhandledrejection', onRejection)
+    // Capture phase so we run before Next's dev-overlay listener where possible.
+    window.addEventListener('unhandledrejection', onRejection, true)
+    return () =>
+      window.removeEventListener('unhandledrejection', onRejection, true)
   }, [])
 
   useEffect(() => {
