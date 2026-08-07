@@ -109,6 +109,7 @@ export const stake = async (
       OP_TIMEOUT_MS
     )
     const response = await op.confirmation()
+    opHash = op.opHash
     const success = response?.completed ?? false
     return { success, opHash, message: '' }
   } catch (err: any) {

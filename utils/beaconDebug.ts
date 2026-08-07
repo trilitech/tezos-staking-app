@@ -79,22 +79,43 @@ export const listIndexedDbDatabases = async (): Promise<string[]> => {
   return []
 }
 
+// Known beacon IndexedDB names, used as a fallback when indexedDB.databases()
+// isn't available (older Safari and others) so the simulations still clear the
+// real Beacon DBs instead of silently no-op'ing.
+const KNOWN_BEACON_DB_NAMES = ['beacon', 'WALLET_CONNECT_V2_INDEXED_DB']
+
 const deleteIndexedDb = (name: string): Promise<void> =>
   new Promise(resolve => {
     if (typeof window === 'undefined' || !window.indexedDB) return resolve()
-    const request = window.indexedDB.deleteDatabase(name)
-    request.onsuccess = () => resolve()
-    request.onerror = () => resolve()
-    request.onblocked = () => resolve()
+    // Safari's deleteDatabase() can hang with no callback when a connection is
+    // still open. Time-box it so this helper stays best-effort and never blocks
+    // the QA panel.
+    const done = () => resolve()
+    const timer = setTimeout(done, 1500)
+    const finish = () => {
+      clearTimeout(timer)
+      resolve()
+    }
+    try {
+      const request = window.indexedDB.deleteDatabase(name)
+      request.onsuccess = finish
+      request.onerror = finish
+      request.onblocked = finish
+    } catch {
+      finish()
+    }
   })
 
 // Delete every beacon-related IndexedDB database and return the names actually
-// targeted (enumerated live, so the reported count matches reality).
+// targeted. Enumerates live where possible; falls back to known names when
+// indexedDB.databases() is unavailable.
 const deleteBeaconIndexedDbs = async (): Promise<string[]> => {
   const existing = await listIndexedDbDatabases()
-  const targets = existing.filter(name =>
-    BEACON_IDB_HINTS.some(hint => name.toLowerCase().includes(hint))
-  )
+  const targets = existing.length
+    ? existing.filter(name =>
+        BEACON_IDB_HINTS.some(hint => name.toLowerCase().includes(hint))
+      )
+    : KNOWN_BEACON_DB_NAMES
   await Promise.all(targets.map(deleteIndexedDb))
   return targets
 }
