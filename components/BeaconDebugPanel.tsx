@@ -122,7 +122,7 @@ export const BeaconDebugPanel = () => {
               onClick={() =>
                 run('Simulate ITP eviction', async () => {
                   const r = await simulateItpEviction()
-                  return `Removed ${r.removedKeys.length} transport keys + ${r.removedDatabases.length} IndexedDB db(s); kept ${r.keptKeys.length} identity keys. Now reload — with the fix the app should recover to "disconnected" within ~12s instead of hanging.`
+                  return `Removed ${r.removedKeys.length} transport keys + ${r.removedDatabases.length} IndexedDB db(s) [${r.removedDatabases.join(', ') || 'none'}]; kept ${r.keptKeys.length} main identity keys. Reload: the app should NOT be usable against the dead transport — either the init probe self-heals to "disconnected", or a later operation fails. Compare against "Test app disconnect()" for the deterministic check.`
                 })
               }
             >
@@ -167,7 +167,7 @@ export const BeaconDebugPanel = () => {
               onClick={() =>
                 run('App disconnect()', async () => {
                   await disconnect()
-                  return 'Called the app\'s disconnect(). Storage below should now be empty of transport/peer/seed keys.'
+                  return 'Called the app\'s disconnect(). Deterministic check: NO account/active-account/transport (P2P-/WALLET-) key should remain below. A fresh client immediately re-seeds a couple of identity keys (sdk_version, seed) and an empty "beacon" IndexedDB — that is expected; the point is that no connected-session state survives.'
                 })
               }
             >

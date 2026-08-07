@@ -78,15 +78,72 @@ export const createBeaconWallet = (): BeaconWallet | undefined => {
   return g.__BEACON_WALLET__ as BeaconWallet
 }
 
+// Names of every beacon-related IndexedDB database. `beacon` is the
+// DAppClient's bug-report/metrics store; WALLET_CONNECT_V2_INDEXED_DB is the
+// WalletConnect session store. Matched by substring so any variant is caught.
+const BEACON_IDB_HINTS = ['beacon', 'wallet_connect']
+
+const deleteIndexedDb = (name: string): Promise<void> =>
+  new Promise(resolve => {
+    try {
+      const request = indexedDB.deleteDatabase(name)
+      request.onsuccess = () => resolve()
+      request.onerror = () => resolve()
+      // A still-open connection defers the delete; don't block the reset on it.
+      request.onblocked = () => resolve()
+    } catch {
+      resolve()
+    }
+  })
+
+/**
+ * Remove every persisted trace of Beacon.
+ *
+ * `client.destroy()` only clears the *main* client's unprefixed `beacon:*`
+ * keys. The SDK also keeps transport-scoped copies under `P2P-beacon:*` /
+ * `WALLET-beacon:*`, plus IndexedDB databases (`beacon` for metrics/bug-report
+ * and `WALLET_CONNECT_V2_INDEXED_DB` for the WC session). Those survive
+ * destroy() and are exactly the stale state that used to force a manual
+ * "clear site data" on Safari, so wipe all of it here.
+ */
+export async function purgeBeaconStorage(): Promise<void> {
+  if (typeof window === 'undefined') return
+  try {
+    const keys: string[] = []
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i)
+      if (key && key.toLowerCase().includes('beacon:')) keys.push(key)
+    }
+    keys.forEach(key => localStorage.removeItem(key))
+  } catch (error) {
+    console.warn('[beacon] purge: localStorage clear failed', error)
+  }
+  try {
+    const factory = indexedDB as IDBFactory & {
+      databases?: () => Promise<{ name?: string }[]>
+    }
+    let names: string[] = []
+    if (typeof factory.databases === 'function') {
+      names = (await factory.databases()).map(d => d.name ?? '').filter(Boolean)
+    }
+    if (!names.length) names = ['beacon', 'WALLET_CONNECT_V2_INDEXED_DB']
+    const targets = names.filter(name =>
+      BEACON_IDB_HINTS.some(hint => name.toLowerCase().includes(hint))
+    )
+    await Promise.all(targets.map(deleteIndexedDb))
+  } catch (error) {
+    console.warn('[beacon] purge: indexedDB clear failed', error)
+  }
+}
+
 /**
  * Fully tears down the current Beacon connection and rebuilds a fresh client.
  *
- * `BeaconWallet.disconnect()` calls `client.destroy()`, which disconnects the
- * transport, runs the WalletConnect IndexedDB cleanup and deletes *every*
- * `beacon:*` key from localStorage (secret seed, peers, matrix + walletconnect
- * session state, accounts). After destroy() the instance is documented as no
- * longer usable, so we drop the singleton and build a brand new one for the
- * next connect.
+ * `BeaconWallet.disconnect()` (-> `client.destroy()`) gracefully disconnects
+ * the transport, but only clears the main client's unprefixed keys — so we
+ * follow it with a full purgeBeaconStorage() to remove the transport-scoped
+ * namespaces and IndexedDB too. The singleton is dropped and a brand new
+ * client built for the next connect.
  *
  * This is the programmatic equivalent of the "clear site data" step users
  * previously had to perform by hand on Safari.
@@ -98,10 +155,12 @@ export async function resetBeaconWallet(): Promise<BeaconWallet | undefined> {
     try {
       await existing.disconnect()
     } catch (error) {
-      console.warn('[beacon] reset: destroy failed, rebuilding anyway', error)
+      console.warn('[beacon] reset: destroy failed, purging anyway', error)
     }
   }
+  // Drop the reference before purging so open IndexedDB connections can close.
   g.__BEACON_WALLET__ = undefined
+  await purgeBeaconStorage()
   return createBeaconWallet()
 }
 

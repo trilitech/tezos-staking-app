@@ -5,27 +5,23 @@
  * None of this is used by the app at runtime — it only backs the gated
  * BeaconDebugPanel so the fixes in ConnectionProvider can be exercised by hand.
  *
- * Beacon persists its state under `beacon:*` keys in localStorage (the SDK may
- * add an instance prefix, so we match by substring), and the WalletConnect
- * transport keeps its session in an IndexedDB database.
+ * Beacon spreads its state across several stores:
+ *  - the main client:      localStorage keys `beacon:*`
+ *  - the P2P transport:    localStorage keys `P2P-beacon:*`
+ *  - the WalletConnect tx: localStorage keys `WALLET-beacon:*`
+ *  - IndexedDB:            `beacon` (metrics/bug-report) and, for a live WC
+ *                          session, `WALLET_CONNECT_V2_INDEXED_DB`
+ * We match by substring so any instance prefix is handled.
  */
 
-const WALLETCONNECT_DB_NAMES = ['WALLET_CONNECT_V2_INDEXED_DB']
-
-// Substrings that identify transport / peer / session state — the parts Safari
-// ITP tends to evict independently, leaving an account pointing at a dead
-// transport. Identity + account state (seed, accounts, active-account,
-// permissions) is deliberately NOT matched so the app still believes it is
-// connected on the next load.
-const TRANSPORT_KEY_HINTS = [
-  'peers',
-  'matrix',
-  'walletconnect',
-  'wc-init',
-  'last-error'
-]
+const BEACON_IDB_HINTS = ['beacon', 'wallet_connect']
 
 const isBeaconKey = (key: string) => key.toLowerCase().includes('beacon:')
+
+// A key belongs to the main client if it starts with `beacon:`; anything that
+// contains `beacon:` behind a prefix (`P2P-`, `WALLET-`, …) is transport-scoped.
+const isTransportScopedKey = (key: string) =>
+  isBeaconKey(key) && !key.toLowerCase().startsWith('beacon:')
 
 export interface StorageEntry {
   key: string
@@ -59,10 +55,10 @@ export const listIndexedDbDatabases = async (): Promise<string[]> => {
       const dbs = await factory.databases()
       return dbs.map(d => d.name ?? '(unnamed)').filter(Boolean)
     } catch {
-      // fall through to the known-names list below
+      // fall through
     }
   }
-  return [...WALLETCONNECT_DB_NAMES]
+  return []
 }
 
 const deleteIndexedDb = (name: string): Promise<void> =>
@@ -74,14 +70,15 @@ const deleteIndexedDb = (name: string): Promise<void> =>
     request.onblocked = () => resolve()
   })
 
-export const deleteWalletConnectIndexedDb = async (): Promise<string[]> => {
+// Delete every beacon-related IndexedDB database and return the names actually
+// targeted (enumerated live, so the reported count matches reality).
+const deleteBeaconIndexedDbs = async (): Promise<string[]> => {
   const existing = await listIndexedDbDatabases()
-  const targets = existing.filter(
-    name => name && name.toLowerCase().includes('wallet_connect')
+  const targets = existing.filter(name =>
+    BEACON_IDB_HINTS.some(hint => name.toLowerCase().includes(hint))
   )
-  const toDelete = targets.length ? targets : WALLETCONNECT_DB_NAMES
-  await Promise.all(toDelete.map(deleteIndexedDb))
-  return toDelete
+  await Promise.all(targets.map(deleteIndexedDb))
+  return targets
 }
 
 export interface SimulationResult {
@@ -92,18 +89,17 @@ export interface SimulationResult {
 
 /**
  * Simulate Safari ITP evicting the transport half of the Beacon store while the
- * account identity survives — the exact shape that leaves the app stuck
- * "connected" against a dead transport.
+ * main account identity survives — the shape that leaves the app stuck
+ * "connected" against a dead transport. Deletes the transport-scoped
+ * (`P2P-`/`WALLET-`) localStorage keys and all beacon IndexedDB, keeping the
+ * unprefixed `beacon:*` account keys so getActiveAccount() still returns.
  */
 export const simulateItpEviction = async (): Promise<SimulationResult> => {
   const removedKeys: string[] = []
   const keptKeys: string[] = []
   if (typeof window !== 'undefined') {
     for (const { key } of listBeaconStorage()) {
-      const isTransport = TRANSPORT_KEY_HINTS.some(hint =>
-        key.toLowerCase().includes(hint)
-      )
-      if (isTransport) {
+      if (isTransportScopedKey(key)) {
         localStorage.removeItem(key)
         removedKeys.push(key)
       } else {
@@ -111,7 +107,7 @@ export const simulateItpEviction = async (): Promise<SimulationResult> => {
       }
     }
   }
-  const removedDatabases = await deleteWalletConnectIndexedDb()
+  const removedDatabases = await deleteBeaconIndexedDbs()
   return { removedKeys, keptKeys, removedDatabases }
 }
 
@@ -141,6 +137,6 @@ export const clearAllBeaconStorage = async (): Promise<SimulationResult> => {
       removedKeys.push(key)
     }
   }
-  const removedDatabases = await deleteWalletConnectIndexedDb()
+  const removedDatabases = await deleteBeaconIndexedDbs()
   return { removedKeys, keptKeys: [], removedDatabases }
 }
