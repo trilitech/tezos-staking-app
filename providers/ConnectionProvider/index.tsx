@@ -76,19 +76,16 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
     }
   }
 
-  // "Fresh visit": the single way we ever drop to a disconnected state. We do
-  // NOT destroy-and-rebuild the client in place — that races with the client's
-  // own async init (and doubly so under React StrictMode's double-invoked mount
-  // effect) and leaves the transport wired to a dead instance, so the next
-  // connect gets no answer from the wallet. Instead we purge every beacon store
-  // and reload: the reloaded page constructs exactly one clean client.
-  const freshVisit = async (notifyWallet = false) => {
-    try {
-      // Best-effort: let the wallet know we're disconnecting. Never rebuild.
-      if (notifyWallet) await walletRef.current?.disconnect()
-    } catch (error) {
-      console.warn('[beacon] teardown during reset failed', error)
-    }
+  // "Fresh visit": the single way we ever drop to a disconnected state. Purge
+  // every beacon store and reload — the reloaded page constructs exactly one
+  // clean client. We deliberately do NOT call the SDK's destroy() here:
+  //  - destroy-and-rebuild in place races with the client's async init (doubly
+  //    so under StrictMode's double-invoked mount effect) and leaves the next
+  //    connect with no answer from the wallet;
+  //  - destroy() also stops the Matrix transport mid-sync, which rejects with a
+  //    benign "Syncing stopped manually" error that surfaces in the dev overlay.
+  // The page reload tears everything down cleanly instead.
+  const freshVisit = async () => {
     await purgeBeaconStorage()
     if (typeof window !== 'undefined') window.location.href = '/'
   }
@@ -157,16 +154,15 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
             })
         },
         disconnect: async () => {
-          // Full teardown as a fresh visit: notify the wallet, purge every
-          // beacon store (main + transport namespaces + IndexedDB), then reload
-          // to the connect screen. This is what stops Safari from ever needing a
-          // manual "clear site data".
-          await freshVisit(true)
+          // Fresh visit: purge every beacon store (main + transport namespaces
+          // + IndexedDB) and reload to the connect screen. This is what stops
+          // Safari from ever needing a manual "clear site data".
+          await freshVisit()
         },
         resetConnection: async () => {
           // A lost/dead connection is treated exactly like a disconnect: fresh
           // visit. You are either connected or you are not.
-          await freshVisit(false)
+          await freshVisit()
         },
         address,
         isConnected,
