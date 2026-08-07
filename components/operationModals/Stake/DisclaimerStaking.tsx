@@ -20,7 +20,7 @@ export const DisclaimerStaking = ({
   handleOneStepForward: () => void
   setStakedAmount: (arg: number) => void
 }) => {
-  const { Tezos, beaconWallet } = useConnection()
+  const { Tezos, beaconWallet, resetConnection } = useConnection()
   const [errorMessage, setErrorMessage] = useState('')
   const [waitingOperation, setWaitingOperation] = useState(false)
   const { setMessage, setSuccess, setAmount, setOpHash, setOpType } =
@@ -109,6 +109,11 @@ export const DisclaimerStaking = ({
           setWaitingOperation(true)
           const response = await stake(Tezos, stakedAmount, beaconWallet)
           setWaitingOperation(false)
+
+          if (response.connectionLost) {
+            await resetConnection()
+            return
+          }
 
           if (response.success) {
             trackGAEvent(GAAction.BUTTON_CLICK, GACategory.START_STAKE_END)

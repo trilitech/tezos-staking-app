@@ -43,7 +43,7 @@ export const ConfirmBaker = ({
   isStaked,
   canStake
 }: ChooseBakerProps) => {
-  const { Tezos, beaconWallet } = useConnection()
+  const { Tezos, beaconWallet, resetConnection } = useConnection()
   const { setMessage, setSuccess, setTitle, setOpHash, setOpType } =
     useOperationResponse()
   const [errorMessage, setErrorMessage] = useState('')
@@ -129,6 +129,10 @@ export const ConfirmBaker = ({
             beaconWallet
           )
           setWaitingOperation(false)
+          if (response.connectionLost) {
+            await resetConnection()
+            return
+          }
           if (response.success) {
             if (!canStake && handleNStepForward) {
               setOpType('pending_unstake')
