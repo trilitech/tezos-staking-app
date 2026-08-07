@@ -4,6 +4,7 @@ import { Provider } from '@/components/ui/provider'
 import { ConnectionProvider } from '@/providers/ConnectionProvider'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { OperationResponseProvider } from '@/providers/OperationResponseProvider'
+import { BeaconDebugPanel } from '@/components/BeaconDebugPanel'
 import { useEffect } from 'react'
 import posthog from 'posthog-js'
 import { PostHogProvider } from 'posthog-js/react'
@@ -29,6 +30,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <ConnectionProvider>
             <Provider>
               <Component {...pageProps} />
+              <BeaconDebugPanel />
             </Provider>
           </ConnectionProvider>
         </QueryClientProvider>
