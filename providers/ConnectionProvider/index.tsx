@@ -28,6 +28,44 @@ interface ConnectionContextType extends Partial<WalletApi> {
 
 const ConnectionContext = createContext<ConnectionContextType | null>(null)
 
+// A stale Beacon session (e.g. after Safari ITP evicts part of the store) makes
+// the transport hang forever with no rejection. Time-box those calls so we can
+// detect the hang and self-heal instead of leaving the user stuck.
+//
+// - INIT: getActiveAccount() is instant, but client.init() re-establishes the
+//   transport for a restored session and is where a dead peer hangs. A healthy
+//   session settles in well under a second, so a generous ceiling only ever
+//   elapses in the genuinely-broken case.
+// - CONNECT: requestPermissions() legitimately waits for the user to approve in
+//   their wallet, so this is a long backstop against a never-settling promise,
+//   not a UX deadline.
+const INIT_TIMEOUT_MS = 12_000
+const CONNECT_TIMEOUT_MS = 180_000
+
+class TimeoutError extends Error {}
+
+const withTimeout = <T,>(
+  promise: Promise<T>,
+  ms: number,
+  label: string
+): Promise<T> =>
+  new Promise<T>((resolve, reject) => {
+    const timer = setTimeout(
+      () => reject(new TimeoutError(`${label} timed out after ${ms}ms`)),
+      ms
+    )
+    promise.then(
+      value => {
+        clearTimeout(timer)
+        resolve(value)
+      },
+      error => {
+        clearTimeout(timer)
+        reject(error)
+      }
+    )
+  })
+
 export const ConnectionProvider = ({ children }: { children: any }) => {
   const [address, setAddress] = useState<string | undefined>(undefined)
   const [Tezos, setTezos] = useState<TezosToolkit | undefined>(undefined)
@@ -89,14 +127,29 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
   // On mount, sync active account and set provider
   useEffect(() => {
     const init = async () => {
+      const wallet = walletRef.current
+      subscribeWallet(wallet)
+      const activeAccount = await wallet?.client
+        .getActiveAccount()
+        .catch(() => undefined)
+
+      if (!activeAccount || !wallet) {
+        reset()
+        return
+      }
+
+      // There is a restored session. Verify the transport can actually be
+      // re-established before trusting it — on Safari the account can survive
+      // while its transport session is dead, which used to leave the app stuck
+      // "connected" with every operation hanging. If the probe hangs or throws,
+      // self-heal by wiping the poisoned state so the user can reconnect
+      // cleanly, rather than having to clear site data by hand.
       try {
-        const wallet = walletRef.current
-        subscribeWallet(wallet)
-        const activeAccount = await wallet?.client.getActiveAccount()
+        await withTimeout(wallet.client.init(), INIT_TIMEOUT_MS, 'client.init')
         applyActiveAccount(activeAccount)
       } catch (error) {
-        console.error('Error:', error)
-        reset()
+        console.error('[beacon] stale session detected on init, resetting', error)
+        await hardReset()
       }
     }
     init()
@@ -111,22 +164,28 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
           if (!wallet) {
             throw new Error('Wallet not initialized')
           }
-          return await requestBeaconPermissions(wallet)
-            .then(response => {
-              setAddress(response.address)
-              setIsConnected(true)
-              setBeaconWallet(wallet)
-              TzosInstance.setWalletProvider(wallet)
-              setTezos(TzosInstance)
-              trackGAEvent(GAAction.CONNECT_SUCCESS, GACategory.WALLET_SUCCESS)
-            })
-            .catch(() => {
-              reset()
-              trackGAEvent(GAAction.CONNECT_ERROR, GACategory.WALLET_ERROR)
-              throw new Error(
-                'Error connecting to wallet, please try again later'
-              )
-            })
+          try {
+            const response = await withTimeout(
+              requestBeaconPermissions(wallet),
+              CONNECT_TIMEOUT_MS,
+              'requestPermissions'
+            )
+            setAddress(response.address)
+            setIsConnected(true)
+            setBeaconWallet(wallet)
+            TzosInstance.setWalletProvider(wallet)
+            setTezos(TzosInstance)
+            trackGAEvent(GAAction.CONNECT_SUCCESS, GACategory.WALLET_SUCCESS)
+          } catch (error) {
+            // A failed or hung permission request usually means a poisoned
+            // transport. Wipe it so the next attempt starts from a clean
+            // client instead of retrying against the same broken state.
+            trackGAEvent(GAAction.CONNECT_ERROR, GACategory.WALLET_ERROR)
+            await hardReset()
+            throw new Error(
+              'Error connecting to wallet, please try again later'
+            )
+          }
         },
         disconnect: async () => {
           // `removeAllAccounts()` only cleared the account list and left the
