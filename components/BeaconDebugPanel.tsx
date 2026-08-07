@@ -33,7 +33,7 @@ const useDebugEnabled = () => {
 
 export const BeaconDebugPanel = () => {
   const enabled = useDebugEnabled()
-  const { isConnected, address, disconnect } = useConnection()
+  const { isConnected, address, disconnect, resetConnection } = useConnection()
   const [entries, setEntries] = useState<StorageEntry[]>([])
   const [dbs, setDbs] = useState<string[]>([])
   const [log, setLog] = useState<string>('')
@@ -187,6 +187,16 @@ export const BeaconDebugPanel = () => {
               }
             >
               Force hard reset (destroy + rebuild)
+            </Button>
+
+            <Button
+              size='xs'
+              bg='#357'
+              color='white'
+              disabled={busy}
+              onClick={() => resetConnection()}
+            >
+              Test resetConnection() (purge + reload to /)
             </Button>
 
             <Flex gap='6px'>

@@ -19,7 +19,7 @@ export const SelectAmount = ({
   setUnstakeAmount: (arg: number) => void
   handleOneStepForward: () => void
 }) => {
-  const { Tezos, beaconWallet } = useConnection()
+  const { Tezos, beaconWallet, resetConnection } = useConnection()
   const { setMessage, setSuccess, setAmount, setOpHash, setTitle, setOpType } =
     useOperationResponse()
   const [errorMessage, setErrorMessage] = useState('')
@@ -86,6 +86,11 @@ export const SelectAmount = ({
           setWaitingOperation(true)
           const response = await unstake(Tezos, unstakeAmount, beaconWallet)
           setWaitingOperation(false)
+
+          if (response.connectionLost) {
+            await resetConnection()
+            return
+          }
 
           if (response.success) {
             trackGAEvent(GAAction.BUTTON_CLICK, GACategory.END_STAKE_END)

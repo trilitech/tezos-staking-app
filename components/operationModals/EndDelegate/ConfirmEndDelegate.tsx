@@ -23,7 +23,7 @@ export const ConfirmEndDelegate = ({
   handleOneStepForward,
   bakerName
 }: ConfirmEndDelegate) => {
-  const { Tezos, beaconWallet } = useConnection()
+  const { Tezos, beaconWallet, resetConnection } = useConnection()
   const { setMessage, setSuccess, setOpHash, setTitle, setOpType } =
     useOperationResponse()
   const [errorMessage, setErrorMessage] = useState('')
@@ -51,6 +51,10 @@ export const ConfirmEndDelegate = ({
           setWaitingOperation(true)
           const response = await setDelegate(Tezos, undefined, beaconWallet)
           setWaitingOperation(false)
+          if (response.connectionLost) {
+            await resetConnection()
+            return
+          }
           if (response.success) {
             trackGAEvent(GAAction.BUTTON_CLICK, GACategory.END_DELEGATE_END)
             setOpHash(response.opHash)

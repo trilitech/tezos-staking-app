@@ -11,6 +11,7 @@ import { TezosToolkit } from '@tezos-x/octez.js'
 import {
   createBeaconWallet,
   resetBeaconWallet,
+  purgeBeaconStorage,
   Tezos as TzosInstance,
   requestBeaconPermissions
 } from './beacon'
@@ -21,6 +22,7 @@ import { BeaconEvent } from '@tezos-x/octez.connect-sdk'
 interface ConnectionContextType extends Partial<WalletApi> {
   connect: () => Promise<void>
   disconnect: () => Promise<void>
+  resetConnection: () => Promise<void>
   isConnected?: boolean
   Tezos?: TezosToolkit
   beaconWallet?: BeaconWallet
@@ -193,6 +195,13 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
           // in the browser. Fully destroy and rebuild so nothing stale is
           // cached — this is what stops Safari from needing a site-data clear.
           await hardReset()
+        },
+        resetConnection: async () => {
+          // A lost/dead connection is treated like a fresh visit: purge every
+          // beacon store and reload to the connect screen. You are either
+          // connected or you are not — no stuck in-between state.
+          await purgeBeaconStorage()
+          if (typeof window !== 'undefined') window.location.href = '/'
         },
         address,
         isConnected,

@@ -1,18 +1,71 @@
-import { PermissionScope } from '@tezos-x/octez.connect-sdk'
 import { TezosToolkit } from '@tezos-x/octez.js'
 import { BeaconWallet } from '@tezos-x/octez.js-dapp-wallet'
-import { requestBeaconPermissions } from '@/providers/ConnectionProvider/beacon'
+import { BeaconError } from '@tezos-x/octez.connect-sdk'
+
 export interface OperationResult {
   success: boolean
   opHash: string
   message: string
+  // True when the failure means the wallet connection itself is gone, so the
+  // app should drop back to a clean "connect" state (a fresh visit) rather than
+  // show an operation error.
+  connectionLost?: boolean
 }
-import { BeaconError } from '@tezos-x/octez.connect-sdk'
+
+// A dead/evicted transport session makes the wallet call hang with no
+// rejection. Time-box the request (not the on-chain confirmation) so we can
+// recover instead of spinning forever. Generous, since a live request also
+// waits for the user to approve in their wallet.
+const OP_TIMEOUT_MS = 180_000
+
+class ConnectionLostError extends Error {}
+class OpTimeoutError extends Error {}
+
+const withTimeout = <T,>(promise: Promise<T>, ms: number): Promise<T> =>
+  new Promise<T>((resolve, reject) => {
+    const timer = setTimeout(() => reject(new OpTimeoutError()), ms)
+    promise.then(
+      value => {
+        clearTimeout(timer)
+        resolve(value)
+      },
+      error => {
+        clearTimeout(timer)
+        reject(error)
+      }
+    )
+  })
+
+// Distinguish "the connection is dead" from a normal operation failure (user
+// rejection, insufficient funds, a chain error). Kept intentionally tight to
+// Beacon transport semantics so a slow RPC / chain error is never mistaken for
+// a lost connection.
+const isConnectionError = (err: any): boolean => {
+  if (err instanceof ConnectionLostError || err instanceof OpTimeoutError) {
+    return true
+  }
+  const text = `${err?.name ?? ''} ${err?.message ?? ''}`.toLowerCase()
+  return [
+    'no active account',
+    'not connected',
+    'no active peer',
+    'transport error',
+    'messaging could not be started'
+  ].some(hint => text.includes(hint))
+}
+
+const connectionLostResult = (): OperationResult => ({
+  success: false,
+  opHash: '',
+  message: '',
+  connectionLost: true
+})
 
 async function checkActiveAccount(wallet: BeaconWallet) {
   const activeAccount = await wallet.client.getActiveAccount()
   if (!activeAccount) {
-    await requestBeaconPermissions(wallet)
+    // No active account at operation time means we are not really connected.
+    throw new ConnectionLostError('No active account')
   }
 }
 
@@ -24,12 +77,16 @@ export const setDelegate = async (
   let opHash = ''
   try {
     await checkActiveAccount(wallet)
-    const op = await Tezos.wallet.setDelegate({ delegate }).send()
+    const op = await withTimeout(
+      Tezos.wallet.setDelegate({ delegate }).send(),
+      OP_TIMEOUT_MS
+    )
     const response = await op.confirmation()
     opHash = op.opHash
     const success = response?.completed ?? false
     return { success, opHash, message: '' }
   } catch (err: any) {
+    if (isConnectionError(err)) return connectionLostResult()
     return {
       success: false,
       opHash: '',
@@ -47,11 +104,15 @@ export const stake = async (
   try {
     await checkActiveAccount(wallet)
 
-    const op = await Tezos.wallet.stake({ amount }).send()
+    const op = await withTimeout(
+      Tezos.wallet.stake({ amount }).send(),
+      OP_TIMEOUT_MS
+    )
     const response = await op.confirmation()
     const success = response?.completed ?? false
     return { success, opHash, message: '' }
   } catch (err: any) {
+    if (isConnectionError(err)) return connectionLostResult()
     return {
       success: false,
       opHash: '',
@@ -69,12 +130,16 @@ export const unstake = async (
   try {
     await checkActiveAccount(wallet)
 
-    const op = await Tezos.wallet.unstake({ amount }).send()
+    const op = await withTimeout(
+      Tezos.wallet.unstake({ amount }).send(),
+      OP_TIMEOUT_MS
+    )
     const response = await op.confirmation()
     opHash = op.opHash
     const success = response?.completed ?? false
     return { success, opHash, message: '' }
   } catch (err: any) {
+    if (isConnectionError(err)) return connectionLostResult()
     return {
       success: false,
       opHash: '',
@@ -90,12 +155,16 @@ export const finalizeUnstake = async (
   let opHash = ''
   try {
     await checkActiveAccount(wallet)
-    const op = await Tezos.wallet.finalizeUnstake({}).send()
+    const op = await withTimeout(
+      Tezos.wallet.finalizeUnstake({}).send(),
+      OP_TIMEOUT_MS
+    )
     const response = await op.confirmation()
     opHash = op.opHash
     const success = response?.completed ?? false
     return { success, opHash, message: '' }
   } catch (err: any) {
+    if (isConnectionError(err)) return connectionLostResult()
     return {
       success: false,
       opHash: '',
