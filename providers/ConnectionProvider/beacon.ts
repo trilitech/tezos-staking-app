@@ -168,34 +168,6 @@ export function hasBeaconPeer(): boolean {
   return false
 }
 
-/**
- * Fully tears down the current Beacon connection and rebuilds a fresh client.
- *
- * `BeaconWallet.disconnect()` (-> `client.destroy()`) gracefully disconnects
- * the transport, but only clears the main client's unprefixed keys — so we
- * follow it with a full purgeBeaconStorage() to remove the transport-scoped
- * namespaces and IndexedDB too. The singleton is dropped and a brand new
- * client built for the next connect.
- *
- * This is the programmatic equivalent of the "clear site data" step users
- * previously had to perform by hand on Safari.
- */
-export async function resetBeaconWallet(): Promise<BeaconWallet | undefined> {
-  if (typeof window === 'undefined') return undefined
-  const existing = g.__BEACON_WALLET__ as BeaconWallet | undefined
-  if (existing) {
-    try {
-      await existing.disconnect()
-    } catch (error) {
-      console.warn('[beacon] reset: destroy failed, purging anyway', error)
-    }
-  }
-  // Drop the reference before purging so open IndexedDB connections can close.
-  g.__BEACON_WALLET__ = undefined
-  await purgeBeaconStorage()
-  return createBeaconWallet()
-}
-
 export async function requestBeaconPermissions(wallet: BeaconWallet) {
   return await wallet.client.requestPermissions({
     scopes: [PermissionScope.OPERATION_REQUEST, PermissionScope.SIGN]

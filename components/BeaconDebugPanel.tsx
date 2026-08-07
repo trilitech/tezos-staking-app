@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Box, Button, Flex, Text } from '@chakra-ui/react'
 import { useConnection } from '@/providers/ConnectionProvider'
-import { resetBeaconWallet } from '@/providers/ConnectionProvider/beacon'
 import {
   clearAllBeaconStorage,
   listBeaconStorage,
@@ -172,21 +171,6 @@ export const BeaconDebugPanel = () => {
               }
             >
               Test app disconnect() (commit 1)
-            </Button>
-
-            <Button
-              size='xs'
-              bg='#357'
-              color='white'
-              disabled={busy}
-              onClick={() =>
-                run('resetBeaconWallet()', async () => {
-                  await resetBeaconWallet()
-                  return 'Called resetBeaconWallet() directly (destroy + rebuild).'
-                })
-              }
-            >
-              Force hard reset (destroy + rebuild)
             </Button>
 
             <Button

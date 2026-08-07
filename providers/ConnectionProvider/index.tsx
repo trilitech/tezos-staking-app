@@ -10,7 +10,6 @@ import { WalletApi } from './types'
 import { TezosToolkit } from '@tezos-x/octez.js'
 import {
   createBeaconWallet,
-  resetBeaconWallet,
   purgeBeaconStorage,
   hasBeaconPeer,
   Tezos as TzosInstance,
@@ -31,44 +30,6 @@ interface ConnectionContextType extends Partial<WalletApi> {
 
 const ConnectionContext = createContext<ConnectionContextType | null>(null)
 
-// A stale Beacon session (e.g. after Safari ITP evicts part of the store) makes
-// the transport hang forever with no rejection. Time-box those calls so we can
-// detect the hang and self-heal instead of leaving the user stuck.
-//
-// - INIT: getActiveAccount() is instant, but client.init() re-establishes the
-//   transport for a restored session and is where a dead peer hangs. A healthy
-//   session settles in well under a second, so a generous ceiling only ever
-//   elapses in the genuinely-broken case.
-// - CONNECT: requestPermissions() legitimately waits for the user to approve in
-//   their wallet, so this is a long backstop against a never-settling promise,
-//   not a UX deadline.
-const INIT_TIMEOUT_MS = 12_000
-const CONNECT_TIMEOUT_MS = 180_000
-
-class TimeoutError extends Error {}
-
-const withTimeout = <T,>(
-  promise: Promise<T>,
-  ms: number,
-  label: string
-): Promise<T> =>
-  new Promise<T>((resolve, reject) => {
-    const timer = setTimeout(
-      () => reject(new TimeoutError(`${label} timed out after ${ms}ms`)),
-      ms
-    )
-    promise.then(
-      value => {
-        clearTimeout(timer)
-        resolve(value)
-      },
-      error => {
-        clearTimeout(timer)
-        reject(error)
-      }
-    )
-  })
-
 export const ConnectionProvider = ({ children }: { children: any }) => {
   const [address, setAddress] = useState<string | undefined>(undefined)
   const [Tezos, setTezos] = useState<TezosToolkit | undefined>(undefined)
@@ -78,6 +39,7 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
   )
   const walletRef = useRef<BeaconWallet | undefined>(undefined)
   const subscribedRef = useRef<boolean>(false)
+  const initRanRef = useRef<boolean>(false)
   if (typeof window !== 'undefined' && !walletRef.current) {
     walletRef.current = createBeaconWallet()
   }
@@ -114,21 +76,29 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
     }
   }
 
-  // Fully destroy the current client (wiping all beacon:* storage + transport
-  // state), rebuild a fresh one, re-subscribe and return to a disconnected UI.
-  const hardReset = async () => {
+  // "Fresh visit": the single way we ever drop to a disconnected state. We do
+  // NOT destroy-and-rebuild the client in place — that races with the client's
+  // own async init (and doubly so under React StrictMode's double-invoked mount
+  // effect) and leaves the transport wired to a dead instance, so the next
+  // connect gets no answer from the wallet. Instead we purge every beacon store
+  // and reload: the reloaded page constructs exactly one clean client.
+  const freshVisit = async (notifyWallet = false) => {
     try {
-      subscribedRef.current = false
-      walletRef.current = await resetBeaconWallet()
-      subscribeWallet(walletRef.current)
+      // Best-effort: let the wallet know we're disconnecting. Never rebuild.
+      if (notifyWallet) await walletRef.current?.disconnect()
     } catch (error) {
-      console.warn('[beacon] hard reset failed', error)
+      console.warn('[beacon] teardown during reset failed', error)
     }
-    reset()
+    await purgeBeaconStorage()
+    if (typeof window !== 'undefined') window.location.href = '/'
   }
 
-  // On mount, sync active account and set provider
+  // On mount, restore the active account (or reset)
   useEffect(() => {
+    // Guard against StrictMode's double-invoked mount effect (dev).
+    if (initRanRef.current) return
+    initRanRef.current = true
+
     const init = async () => {
       const wallet = walletRef.current
       subscribeWallet(wallet)
@@ -143,25 +113,17 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
 
       // A restored account with no paired peer means the transport session was
       // evicted (classic Safari ITP): the account survives but the connection
-      // is dead. Deterministically treat that as disconnected — a fresh visit —
-      // instead of trusting the stale account.
+      // is dead. Treat it as a fresh visit rather than trusting a dead account.
       if (!hasBeaconPeer()) {
-        console.warn('[beacon] active account has no peer, resetting to connect')
-        await hardReset()
+        console.warn('[beacon] active account has no peer; resetting to connect')
+        await freshVisit()
         return
       }
 
-      // Peer present, so the session should be live. Verify the transport can
-      // actually be re-established before trusting it; if init() hangs or
-      // throws, self-heal by wiping the poisoned state rather than making the
-      // user clear site data by hand.
-      try {
-        await withTimeout(wallet.client.init(), INIT_TIMEOUT_MS, 'client.init')
-        applyActiveAccount(activeAccount)
-      } catch (error) {
-        console.error('[beacon] stale session detected on init, resetting', error)
-        await hardReset()
-      }
+      // Account + peer present: trust it. If the transport turns out to be dead,
+      // the first wallet operation detects it and drops to a fresh visit
+      // (see components/Operations/operations.ts + resetConnection).
+      applyActiveAccount(activeAccount)
     }
     init()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -175,42 +137,36 @@ export const ConnectionProvider = ({ children }: { children: any }) => {
           if (!wallet) {
             throw new Error('Wallet not initialized')
           }
-          try {
-            const response = await withTimeout(
-              requestBeaconPermissions(wallet),
-              CONNECT_TIMEOUT_MS,
-              'requestPermissions'
-            )
-            setAddress(response.address)
-            setIsConnected(true)
-            setBeaconWallet(wallet)
-            TzosInstance.setWalletProvider(wallet)
-            setTezos(TzosInstance)
-            trackGAEvent(GAAction.CONNECT_SUCCESS, GACategory.WALLET_SUCCESS)
-          } catch (error) {
-            // A failed or hung permission request usually means a poisoned
-            // transport. Wipe it so the next attempt starts from a clean
-            // client instead of retrying against the same broken state.
-            trackGAEvent(GAAction.CONNECT_ERROR, GACategory.WALLET_ERROR)
-            await hardReset()
-            throw new Error(
-              'Error connecting to wallet, please try again later'
-            )
-          }
+          return await requestBeaconPermissions(wallet)
+            .then(response => {
+              setAddress(response.address)
+              setIsConnected(true)
+              setBeaconWallet(wallet)
+              TzosInstance.setWalletProvider(wallet)
+              setTezos(TzosInstance)
+              trackGAEvent(GAAction.CONNECT_SUCCESS, GACategory.WALLET_SUCCESS)
+            })
+            .catch(() => {
+              // Just reset UI state — do NOT tear down/rebuild the client, or
+              // the next attempt connects against a broken instance.
+              reset()
+              trackGAEvent(GAAction.CONNECT_ERROR, GACategory.WALLET_ERROR)
+              throw new Error(
+                'Error connecting to wallet, please try again later'
+              )
+            })
         },
         disconnect: async () => {
-          // `removeAllAccounts()` only cleared the account list and left the
-          // secret seed, peers and transport/matrix/walletconnect state behind
-          // in the browser. Fully destroy and rebuild so nothing stale is
-          // cached — this is what stops Safari from needing a site-data clear.
-          await hardReset()
+          // Full teardown as a fresh visit: notify the wallet, purge every
+          // beacon store (main + transport namespaces + IndexedDB), then reload
+          // to the connect screen. This is what stops Safari from ever needing a
+          // manual "clear site data".
+          await freshVisit(true)
         },
         resetConnection: async () => {
-          // A lost/dead connection is treated like a fresh visit: purge every
-          // beacon store and reload to the connect screen. You are either
-          // connected or you are not — no stuck in-between state.
-          await purgeBeaconStorage()
-          if (typeof window !== 'undefined') window.location.href = '/'
+          // A lost/dead connection is treated exactly like a disconnect: fresh
+          // visit. You are either connected or you are not.
+          await freshVisit(false)
         },
         address,
         isConnected,
